@@ -1,0 +1,385 @@
+<template>
+            <div class="col-md-12">
+                <h2 style="margin-top: 6px; font-variant: small-caps; font-weight:bold;">Products Management</h2>
+                <hr/>
+                <div class="panel panel-default">
+                  <a href="#d" data-toggle="collapse">
+                    <div class="panel-heading">Create Product</div>
+                  </a>
+                    <div id="d" class="panel-body collapse" v-bind:class="{in:edit}">
+                        <form @submit="createProduct">
+                            <div class="row">
+                                <div class="col-md-12">
+                            <div class="form-group col-md-4">
+                                <label for="productName">Product Name</label>
+                                <input type="text" name="productName" v-validate="'required|regex:^[a-zA-Z]+$'" class="form-control" v-model="newProduct.name" placeholder="Product Name" required>
+                                <span class="text-danger" v-show="errors.has('productName')">
+                                  {{errors.first('productName')}}
+                                </span>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="productCategory">Product Category</label>
+                                <select class="form-control" required name="Category" v-model="newProduct.productCategory" v-validate="'required'" >
+                                    <option value="">Select Category</option>
+                                    <option v-for="category in categories" v-bind:value="category.id">{{category.name}}</option>
+                                </select>
+                                <span class="text-danger" v-show="errors.has('Category')">
+                                  {{errors.first('Category')}}
+                                </span>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="releaseDate">Release Date</label>
+                                <input type="date" name="releaseDate" v-validate="'required|date'" class="form-control" placeholder="Release Date" v-model="newProduct.releaseDate" required>
+                                <span class="text-danger" v-show="errors.has('Release Date')">
+                                  {{errors.first('Release Date')}}
+                                </span>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <button class="col-md-12 btn btn-default" @click="addColorForm">Add Product Color</button>
+                            </div>
+                        </div>
+                        </div>
+                            <div v-for="(find, index) in newProduct.finds" class="well well-sm"> <!--Product Color Form-->
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group col-md-3">
+                                            <label for="colorName">Color Name</label>
+                                            <input type="text" v-validate="'required|regex:^[a-zA-Z]+$'" name="colorName" v-model="find.color" class="form-control" placeholder="Color Name" required>
+                                            <span class="text-danger" v-show="errors.has('colorName')">
+                                              {{errors.first('colorName')}}
+                                            </span>
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <label for="price">Price</label>
+                                            <input type="number" name="Price" v-validate="'required|regex:^[0-9]+$|min_value:1'" v-model="find.price" class="form-control" placeholder="Price" required>
+                                            <span class="text-danger" v-show="errors.has('Price')">
+                                              {{errors.first('Price')}}
+                                            </span>
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <label for="discount">Discount</label>
+                                            <input type="number" name="Discount" v-validate="'required||regex:^[0-9]+$|min_value:1'" class="form-control" v-model="find.discount" placeholder="Discount" required>
+                                            <span class="text-danger" v-show="errors.has('Discount')">
+                                              {{errors.first('Discount')}}
+                                            </span>
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label for="categoryImage">Images</label>
+                                            <input type="file" class="form-control" ref="fileupload" @change="imageChange(index)">
+                                        </div>
+                                        <div class="form-group col-md-2">
+                                            <label for="discount">Cancell </label>
+                                            <br />
+                                            <button class="btn btn-danger col-md-12" @click="removeColorForm(index)">Cancell</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" v-if="edit==true">
+                                    <div class="col-md-12">
+                                        <div v-for="(image, i) in find.product_images">
+                                          <img v-if="localImage==false" v-bind:src="'/ProductImages/'+image.image" class="col-md-1 img-thumbnail" height="auto" @click="deleteImage(index,i)" />
+                                          <img v-if="localImage==true" v-bind:src="image" class="col-md-1 img-thumbnail" height="auto" @click="deleteImage(index,i)" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" v-if="edit==false">
+                                    <div class="col-md-12">
+                                        <div v-for="(image, i) in find.product_images">
+                                          <img v-bind:src="image" class="col-md-1 img-thumbnail" height="auto" @click="deleteImage(index,i)" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div> <!--Product Color Form-->
+                            <div class="form-group col-md-12">
+                                <button v-if="edit==false" type="submit" class="col-md-12 btn btn-default">Submit</button>
+                                <button v-if="edit==true" class="col-md-6 btn btn-default"  @click="saveEditing">Save</button>
+                                <button v-if="edit==true" class="col-md-6 btn btn-default"  @click="cancelEditing">Cancel Editing</button>
+                            </div>
+                        </form>
+
+                        <!-- <pre>{{ $data | json }}</pre> -->
+                    </div>
+                </div>
+                <!-- end of panel -->
+                <div class="panel panel-default">
+                    <div class="panel-heading">Categories</div>
+                    <div class="panel-body">
+                      <table class="table table-bordered">
+                        <thead>
+                          <tr>
+                            <th>Product Name</th>
+                            <th>Product Category</th>
+                            <th>Release Date</th>
+                            <th>Details</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr v-for="(product, index) in allProducts">
+                            <td>{{product.name}}</td>
+                            <td>{{product.product_category.name}}</td>
+                            <td>{{product.release_date}}</td>
+                            <td>
+                              <button class="btn btn-default" v-on:click="showDetails(index)" data-toggle="modal" data-target="#myModal">Details</button>
+                            </td>
+                            <td>
+                              <div class="dropdown">
+                                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Action
+                                <span class="caret"></span></button>
+                                  <ul class="dropdown-menu">
+                                    <li><a href="#" v-on:click="editProduct(index)">Edit</a></li>
+                                    <li><a href="#" v-on:click="deleteProduct(product.id,index)">Delete</a></li>
+                                </ul>
+                              </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                <!-- Model -->
+                <div class="modal fade col-md-12" id="myModal" role="dialog">
+                    <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Product Details</h4>
+                            </div>
+                            <div class="modal-body">
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group col-md-4">
+                                            <label for="productName">Product Name</label>
+                                            <input type="text" readonly class="form-control" v-bind:value="details.productName">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="productCategory">Product Category</label>
+                                            <input type="text" readonly class="form-control" v-bind:value="details.productCategory">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="ReleaseDate">Release Date</label>
+                                            <input type="text" readonly class="form-control" v-bind:value="details.releaseDate">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div v-for="(find, index) in details.finds" class="well well-sm"> <!--Product Color Form-->
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group col-md-6">
+                                                <label for="colorName">Color Name</label>
+                                                <input type="text" v-bind:value="find.color" class="form-control" readonly>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label for="price">Price</label>
+                                                <input type="text" v-bind:value="find.price" class="form-control" readonly>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label for="discount">Discount</label>
+                                                <input type="text" name="Discount" class="form-control" v-bind:value="find.discount+'%'" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div v-for="(image, index) in find.product_images">
+                                                <img v-bind:src="'/ProductImages/'+image.image" class="col-md-3 img-thumbnail" height="auto" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- Model -->
+            </div>
+
+
+
+
+</template>
+
+<script>
+    export default {
+        data(){
+          return{
+            categories:[],
+            allProducts:[],
+            edit:false,
+            localImage:false,
+            editIndex:'',
+            path:'',
+            details:{
+              productName:'',
+              productCategory:'',
+              releaseDate:'',
+              finds:[]
+            },
+            newProduct:{
+                id:'',
+                name:'',
+                productCategory:'',
+                releaseDate:'',
+                finds: [],
+            }
+          }
+        },
+        mounted() {
+            console.log('Component mounted.')
+        },
+        created(){
+            axios.get('../public/categories').then(response=>{
+                this.categories=response.data;
+                //console.log(response.data);
+            });
+
+            axios.get('../public/allProducts').then(response=>{
+              this.allProducts=response.data.data;
+              this.path=response.data.path;
+              console.log(this.allProducts);
+            });
+        },
+        methods:{
+            imageChange(index){
+                event.preventDefault();
+                //console.log(event.target.files[0])
+                this.localImage=true;
+                var fileReader = new FileReader();
+
+                fileReader.readAsDataURL(event.target.files[0])
+
+                fileReader.onload = (event) => {
+                //  this.newProduct.finds[index].images.push(event.target.result);
+                  if(this.edit==false){
+                    this.newProduct.finds[index].product_images.push(event.target.result);
+                  }else{
+                    this.newProduct.finds[index].product_images.push(event.target.result);
+                  }
+                }
+                //console.log(this.images);
+            },
+            deleteImage(index,i){
+              if(this.edit==false){
+                this.newProduct.finds[index].images.splice(i,1);
+              }else{
+                this.newProduct.finds[index].product_images.splice(i,1);
+              }
+              //alert(index+" "+i);
+            },
+            showDetails:function(index){
+                this.details={
+                  productName:this.allProducts[index].name,
+                  productCategory:this.allProducts[index].product_category.name,
+                  releaseDate:this.allProducts[index].release_date,
+                  finds:this.allProducts[index].product_color
+                }
+            },
+            addColorForm: function (e) {
+                e.preventDefault();
+                //this.newProduct.finds.push({ color: '' , price: '', discount: '', images:[]});
+                this.newProduct.finds.push({ color: '' , price: '', discount: '', product_images:[]});
+            },
+
+            removeColorForm:function(index){
+                event.preventDefault();
+                this.newProduct.finds.splice(index,1);
+            },
+
+            createProduct:function(e){
+                e.preventDefault();
+                axios.post('../public/createProduct',this.newProduct).then(response=>{
+                    if(response.data.replay==0){
+                      console.log(response.data.data[0]);
+                      this.allProducts.unshift(response.data.data[0]);
+                       this.newProduct={
+                         id:'',
+                         name:'',
+                         productCategory:'',
+                         releaseDate:'',
+                         finds: [],
+                       };
+                       const input = this.$refs.fileupload;
+                       input.type = 'text';
+                       input.type = 'file';
+                    }else{
+                      alert('Fail to Create Product');
+                      console.log(response.data.replay);
+                    }
+                })
+            },
+            editProduct:function(index){
+              this.localImage=false;
+              this.edit=true;
+              this.editIndex=index;
+              this.newProduct={
+                id:this.allProducts[index].id,
+                name:this.allProducts[index].name,
+                productCategory:this.allProducts[index].product_category.id,
+                releaseDate:this.allProducts[index].release_date,
+                finds:this.allProducts[index].product_color
+              }
+            },
+            saveEditing:function(){
+              event.preventDefault();
+              axios.post('../public/updateProduct',this.newProduct).then(response=>{
+                console.log(response.data);
+              })
+            },
+            cancelEditing:function(){
+              event.preventDefault();
+              this.edit=false;
+              this.editIndex='';
+              this.newProduct={
+                id:'',
+                name:'',
+                productCategory:'',
+                releaseDate:'',
+                finds: [],
+              };
+            },
+            deleteProduct:function(id,index){
+              //alert("Running");
+              axios.get('/deleteProduct/'+id).then(response=>{
+                console.log(response.data);
+                if(response.data==0){
+                    this.allProducts.splice(index,1);
+                }else{
+                  alert('Fail to delete');
+                }
+              });
+            }
+
+        }
+    }
+</script>
+<style scoped>
+.middle {
+  transition: .5s ease;
+  opacity: 0;
+  position: absolute;
+    top: 1px;
+    left: 1px;
+  z-index: 2;
+  text-align: center;
+}
+.img{
+  z-index: 1;
+}
+
+.cont:hover .image {
+  opacity: 0.3;
+}
+
+.cont:hover .middle {
+  opacity: 1;
+}
+
+</style>

@@ -45,16 +45,17 @@ class StaffController extends Controller
         $departmentId=$request->input('department_id');
         $staffTypeId=$request->input('staff_type_id');
         $designationId=$request->input('designation_id');
-        $userId=Auth::User()->id;
+        $user=Auth::user()->id;
         //return array(['name'=>$name,'email'=>$email,'CNIC'=>$cnic,'address'=>$address,'city_id'=>$cityId,'region_id'=>$regionId,'staff_type_id'=>$staffTypeId,'designation_id'=>$designationId,'department_id'=>$departmentId,'created_by'=>$userId]);
         try{
-        $createdStaff=Staff::create(['name'=>$name,'email'=>$email,'CNIC'=>$cnic,'address'=>$address,'city_id'=>$cityId,'region_id'=>$regionId,'staff_type_id'=>$staffTypeId,'designation_id'=>$designationId,'department_id'=>$departmentId,'created_by'=>$userId]);
+        $createdStaff=Staff::create(['name'=>$name,'email'=>$email,'CNIC'=>$cnic,'address'=>$address,'city_id'=>$cityId,'region_id'=>$regionId,'staff_type_id'=>$staffTypeId,'designation_id'=>$designationId,'department_id'=>$departmentId,'created_by'=>$user]);
         }
         catch(\Exception $e){
           $return=array('replay'=>1,'data'=>$e);
           return $return;
         }
-        $return=array('replay'=>0,'data'=>$createdStaff);
+        $staff=Staff::where('id',$id)->with('city')->with('region')->with('department')->with('staffType')->with('designation')->with('user')->where('is_deleted',0)->first();
+        $return=array('replay'=>0,'data'=>$staff);
         return $return;
 
     }

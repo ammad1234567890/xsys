@@ -98,7 +98,7 @@ class RetailerOutletController extends Controller
 
         //SAVE IT TO retailer_images FOLDER
         $file_name=str_random().'.'.$extension;
-        $path=public_path().'/deposit_check_imgs/'.$file_name;
+        $path=public_path().'/deposit_check_img/'.$file_name;
         file_put_contents($path, $decoded);
 
 

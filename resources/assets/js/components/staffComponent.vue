@@ -181,10 +181,10 @@
             console.log('Component mounted.')
         },
         created(){
-              axios.get('../allStaff').then(response=>{
+              axios.get('./allStaff').then(response=>{
                 this.allStaff=response.data;
               });
-              axios.get('../generalData').then(response=>{
+              axios.get('./generalData').then(response=>{
                   this.cities=response.data.city;
                   this.regions=response.data.region;
                   this.departments=response.data.department;
@@ -197,7 +197,7 @@
             e.preventDefault();
             this.$validator.validateAll().then( (result) => {
                if (result) {
-                 axios.post('../createStaff',this.newStaff).then(response=>{
+                 axios.post('./createStaff',this.newStaff).then(response=>{
                    console.log(response.data);
                    if(response.data.replay==0){
                      this.allStaff.unshift(response.data.data);
@@ -244,7 +244,7 @@
             e.preventDefault();
             this.$validator.validateAll().then( (result) => {
                if (result) {
-                 axios.post('/editStaff',this.newStaff).then(response=>{
+                 axios.post('./editStaff',this.newStaff).then(response=>{
                    if(response.data.replay==0){
                      this.allStaff[this.editIndex]=response.data.data;
                      this.newStaff={
@@ -290,7 +290,7 @@
             this.edit=false;
           },
           deleteStaff(index,id){
-            axios.get('/deleteStaff/'+id).then(response=>{
+            axios.get('./deleteStaff/'+id).then(response=>{
               if(resonse.data.replay==0){
                 this.allStaff.splice(index,1);
               }else{

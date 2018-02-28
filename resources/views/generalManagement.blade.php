@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+
       <div class="row">
           <div class="col-md-12">
               <div class="panel panel-default">
@@ -33,10 +33,26 @@
                           <designation-component></designation-component>
                         @endif
                       </div>
+                      <div>
+                        @if(in_array('payment', $permissions))
+                          <payment-component></payment-component>
+                        @endif
+                      </div>
+                      <div>
+                        @if(in_array('currency', $permissions))
+                          <currency-component></currency-component>
+                        @endif
+                      </div>
+                      <div>
+                        @if(in_array('receivestatus', $permissions))
+                          <receivestatus-component></receivestatus-component>
+                        @endif
+                      </div>
+                      
                     </div>
                   </div>
               </div>
           </div>
     </div>
-</div>
+
 @endsection

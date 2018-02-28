@@ -55,7 +55,7 @@
             console.log('Component mounted.')
         },
         created(){
-            axios.get('/allDesignations').then(response=>{
+            axios.get('./allDesignations').then(response=>{
               //console.log(response.data);
               this.allDesignations=response.data;
             })
@@ -63,7 +63,7 @@
         methods:{
           createDesignation(e){
             e.preventDefault();
-            axios.post('/createDesignation',this.designationData).then(response=>{
+            axios.post('./createDesignation',this.designationData).then(response=>{
               if(response.data.return==0){
                 //console.log(response.data.data);
                 this.allDesignations.push(response.data.data);
@@ -86,7 +86,7 @@
           },
           saveEditing(e){
             e.preventDefault();
-            axios.post('/editDesignation',this.DesignationData).then(response=>{
+            axios.post('./editDesignation',this.DesignationData).then(response=>{
                if(response.data.return == 0){
                  this.allDesignations[this.editIndex].designation=this.designationData.designation;
                  this.designationData={

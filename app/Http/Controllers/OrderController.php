@@ -69,23 +69,24 @@ class OrderController extends Controller
         //Add Products
         $total_cost=0;
         foreach($order_products_arr as $order_products){
-            $products=array(
-                'product_color_id'=> $order_products['product_color_id'],
-                'manufacture_order_id'=>$order_id,
-                'quantity'=>$order_products['quantity'],
-                'unit_cost'=>$order_products['cost_per_set'],
-                'created_by'=>$userId
-            );
-            try {
-                DB::beginTransaction();
-                OrderProducts::create($products);
-                DB::commit();
-            } catch (Exception $e) {
-                DB::rollBack();
-                return $e;
-            }
-            $total_cost+=($order_products['quantity'])*($order_products['cost_per_set']);
-            
+           // if($order_products['product_color_id']!=null && $order_products['quantity']!=null){
+                $products=array(
+                    'product_color_id'=> $order_products['product_color_id'],
+                    'manufacture_order_id'=>$order_id,
+                    'quantity'=>$order_products['quantity'],
+                    'unit_cost'=>$order_products['cost_per_set'],
+                    'created_by'=>$userId
+                );
+                try {
+                    DB::beginTransaction();
+                    OrderProducts::create($products);
+                    DB::commit();
+                } catch (Exception $e) {
+                    DB::rollBack();
+                    return $e;
+                }
+                $total_cost+=($order_products['quantity'])*($order_products['cost_per_set']);
+            //}
         }
         
 
@@ -102,19 +103,13 @@ class OrderController extends Controller
         
     }
 
-
-
     //Registered a route with the name of /order/get_orders
     public function get_orders(){
         $records=Order::where('transaction_closed',0)->get();
         return Response::json($records);
     }
 
-    //Registered a route with the name of /order/get_status
-    public function get_orders_status(){
-        $records=ReceiveStatus::get();
-        return Response::json($records);
-    }
+
 
 
     //Registered a route with the name of /order/get_products
@@ -135,15 +130,32 @@ class OrderController extends Controller
         $recieve_status=$request->input('recieve_status_id');
         $order_products=$request->input('order_products');
         $user=Auth::user()->id;
-        $recieved_insert=Receive::create(['manufacturing_order_id'=>$order_id,
-            'collected_by'=>3,
-            'is_qa_pass'=>$qa_check,
-            'qa_description'=>$qa_description,
-            'receive_status_id'=>$recieve_status,
-            'created_by'=>$user]);
-        $receive_id= $recieved_insert->id;
 
-        $received_log=ReceiveLog::create(['recieve_id'=>$receive_id,'recieve_status_id'=>$recieve_status,'created_by'=>$user]);
+        try{
+            DB::beginTransaction();
+            $recieved_insert=Receive::create(['manufacturing_order_id'=>$order_id,
+                'collected_by'=>$collected_person_id,
+                'is_qa_pass'=>$qa_check,
+                'qa_description'=>$qa_description,
+                'receive_status_id'=>$recieve_status,
+                'created_by'=>$user]);
+            $receive_id= $recieved_insert->id;
+            DB::commit();
+        }
+        catch(\Exception $e){
+            DB::rollBack();
+            return $e;
+        }
+
+        try {
+            DB::beginTransaction();
+            $received_log = ReceiveLog::create(['recieve_id' => $receive_id, 'recieve_status_id' => $recieve_status, 'created_by' => $user]);
+            DB::commit();
+        }
+        catch(\Exception $e){
+            DB::rollBack();
+            return $e;
+        }
 
         foreach($order_products as $products){
             $product=array(
@@ -152,8 +164,21 @@ class OrderController extends Controller
                 'product_qty'=>$products['quantity'],
                 'created_by'=>$user
             );
-            ReceiveProducts::create($product);
+            try{
+                ReceiveProducts::create($product);
+            }
+            catch(\Exception $e){
+                DB::rollBack();
+                return $e;
+            }
         }
+
+        return 201;
+    }
+
+    //Registered a route with the name of /order/add_payment
+    public function add_payment(){
+
     }
 
 

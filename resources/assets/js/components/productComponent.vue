@@ -1,7 +1,7 @@
 <template>
+    <div class="container">
+        <div class="row">
             <div class="col-md-12">
-                <h2 style="margin-top: 6px; font-variant: small-caps; font-weight:bold;">Products Management</h2>
-                <hr/>
                 <div class="panel panel-default">
                   <a href="#d" data-toggle="collapse">
                     <div class="panel-heading">Create Product</div>
@@ -29,7 +29,7 @@
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="releaseDate">Release Date</label>
-                                <input type="date" name="releaseDate" v-validate="'required|date'" class="form-control" placeholder="Release Date" v-model="newProduct.releaseDate" required>
+                                <input type="date" name="releaseDate" v-validate="'required'" class="form-control" placeholder="Release Date" v-model="newProduct.releaseDate" required>
                                 <span class="text-danger" v-show="errors.has('Release Date')">
                                   {{errors.first('Release Date')}}
                                 </span>
@@ -138,73 +138,72 @@
                       </table>
                     </div>
                   </div>
-                <!-- Model -->
-                <div class="modal fade col-md-12" id="myModal" role="dialog">
-                    <div class="modal-dialog">
 
-                        <!-- Modal content-->
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title">Product Details</h4>
-                            </div>
-                            <div class="modal-body">
-
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group col-md-4">
-                                            <label for="productName">Product Name</label>
-                                            <input type="text" readonly class="form-control" v-bind:value="details.productName">
-                                        </div>
-                                        <div class="form-group col-md-4">
-                                            <label for="productCategory">Product Category</label>
-                                            <input type="text" readonly class="form-control" v-bind:value="details.productCategory">
-                                        </div>
-                                        <div class="form-group col-md-4">
-                                            <label for="ReleaseDate">Release Date</label>
-                                            <input type="text" readonly class="form-control" v-bind:value="details.releaseDate">
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div v-for="(find, index) in details.finds" class="well well-sm"> <!--Product Color Form-->
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="form-group col-md-6">
-                                                <label for="colorName">Color Name</label>
-                                                <input type="text" v-bind:value="find.color" class="form-control" readonly>
-                                            </div>
-                                            <div class="form-group col-md-3">
-                                                <label for="price">Price</label>
-                                                <input type="text" v-bind:value="find.price" class="form-control" readonly>
-                                            </div>
-                                            <div class="form-group col-md-3">
-                                                <label for="discount">Discount</label>
-                                                <input type="text" name="Discount" class="form-control" v-bind:value="find.discount+'%'" readonly>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div v-for="(image, index) in find.product_images">
-                                                <img v-bind:src="'/ProductImages/'+image.image" class="col-md-3 img-thumbnail" height="auto" />
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-                <!-- Model -->
             </div>
+        </div>
+        <!-- Model -->
+        <div class="modal fade col-md-12" id="myModal" role="dialog">
+         <div class="modal-dialog">
 
+           <!-- Modal content-->
+           <div class="modal-content">
+             <div class="modal-header">
+               <button type="button" class="close" data-dismiss="modal">&times;</button>
+               <h4 class="modal-title">Product Details</h4>
+             </div>
+             <div class="modal-body">
 
+               <div class="row">
+                   <div class="col-md-12">
+                     <div class="form-group col-md-4">
+                         <label for="productName">Product Name</label>
+                         <input type="text" readonly class="form-control" v-bind:value="details.productName">
+                     </div>
+                     <div class="form-group col-md-4">
+                         <label for="productCategory">Product Category</label>
+                         <input type="text" readonly class="form-control" v-bind:value="details.productCategory">
+                     </div>
+                     <div class="form-group col-md-4">
+                         <label for="ReleaseDate">Release Date</label>
+                         <input type="text" readonly class="form-control" v-bind:value="details.releaseDate">
+                     </div>
+                   </div>
+              </div>
 
+              <div v-for="(find, index) in details.finds" class="well well-sm"> <!--Product Color Form-->
+                  <div class="row">
+                      <div class="col-md-12">
+                          <div class="form-group col-md-6">
+                              <label for="colorName">Color Name</label>
+                              <input type="text" v-bind:value="find.color" class="form-control" readonly>
+                          </div>
+                          <div class="form-group col-md-3">
+                              <label for="price">Price</label>
+                              <input type="text" v-bind:value="find.price" class="form-control" readonly>
+                          </div>
+                          <div class="form-group col-md-3">
+                              <label for="discount">Discount</label>
+                              <input type="text" name="Discount" class="form-control" v-bind:value="find.discount+'%'" readonly>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-12">
+                          <div v-for="(image, index) in find.product_images">
+                            <img v-bind:src="'/ProductImages/'+image.image" class="col-md-3 img-thumbnail" height="auto" />
+                          </div>
+                      </div>
+                  </div>
 
+              </div>
+
+             </div>
+           </div>
+
+         </div>
+        </div>
+        <!-- Model -->
+    </div>
 </template>
 
 <script>
@@ -236,12 +235,12 @@
             console.log('Component mounted.')
         },
         created(){
-            axios.get('../public/categories').then(response=>{
+            axios.get('./categories').then(response=>{
                 this.categories=response.data;
                 //console.log(response.data);
             });
 
-            axios.get('../public/allProducts').then(response=>{
+            axios.get('./allProducts').then(response=>{
               this.allProducts=response.data.data;
               this.path=response.data.path;
               console.log(this.allProducts);
@@ -295,7 +294,7 @@
 
             createProduct:function(e){
                 e.preventDefault();
-                axios.post('../public/createProduct',this.newProduct).then(response=>{
+                axios.post('./createProduct',this.newProduct).then(response=>{
                     if(response.data.replay==0){
                       console.log(response.data.data[0]);
                       this.allProducts.unshift(response.data.data[0]);
@@ -329,8 +328,25 @@
             },
             saveEditing:function(){
               event.preventDefault();
-              axios.post('../public/updateProduct',this.newProduct).then(response=>{
-                console.log(response.data);
+              axios.post('./updateProduct',this.newProduct).then(response=>{
+                if(response.data.return==0){
+                  console.log(response.data.data[0]);
+                  console.log(this.allProducts[this.editIndex]);
+                  this.allProducts[this.editIndex]=response.data.data[0];
+                  this.edit=false;
+                  this.editIndex='';
+                  this.newProduct={
+                    id:'',
+                    name:'',
+                    productCategory:'',
+                    releaseDate:'',
+                    finds: [],
+                  };
+                }else{
+                  alert('Fail to edit');
+                  console.log(response.data.data);
+                }
+
               })
             },
             cancelEditing:function(){
@@ -347,7 +363,7 @@
             },
             deleteProduct:function(id,index){
               //alert("Running");
-              axios.get('/deleteProduct/'+id).then(response=>{
+              axios.get('./deleteProduct/'+id).then(response=>{
                 console.log(response.data);
                 if(response.data==0){
                     this.allProducts.splice(index,1);

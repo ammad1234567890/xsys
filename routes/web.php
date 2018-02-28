@@ -98,9 +98,10 @@ Route::get('/order/receive','OrderController@receive_order');
 Route::get('/order/payment','OrderController@order_payment');
 Route::post('/order/create','OrderController@add_new_order');
 Route::get('/order/get_orders','OrderController@get_orders');
-Route::get('/order/get_status','OrderController@get_orders_status');
+
 Route::post('/order/get_products','OrderController@get_products_by_order');
 Route::post('/order/received','OrderController@order_received');
+Route::post('/order/add_payment','OrderController@add_payment');
 //ORDER
 
 
@@ -123,21 +124,24 @@ Route::post('/editRegion','GeneralController@editRegion');
 //Region
 
 //Department
-Route::get('/allDepartments','GeneralController@departments')->middleware('accesscontrol:5');
-Route::post('/createDepartment','GeneralController@createDepartment')->middleware('accesscontrol:5');
-Route::post('/editDepartment','GeneralController@editDepartment')->middleware('accesscontrol:5');
+//middleware('accesscontrol:5')
+Route::get('/allDepartments','GeneralController@departments');
+Route::post('/createDepartment','GeneralController@createDepartment');
+Route::post('/editDepartment','GeneralController@editDepartment');
 //Department
 
 //Staff type
-Route::get('/allStaffType','GeneralController@staffType')->middleware('accesscontrol:6');
-Route::post('/createStaffType','GeneralController@createStaffType')->middleware('accesscontrol:6');
-Route::post('/editStaffType','GeneralController@editStaffType')->middleware('accesscontrol:6');
+//middleware('accesscontrol:6')
+Route::get('/allStaffType','GeneralController@staffType');
+Route::post('/createStaffType','GeneralController@createStaffType');
+Route::post('/editStaffType','GeneralController@editStaffType');
 //Staff type
 
 //Designation
-Route::get('/allDesignations','GeneralController@designations')->middleware('accesscontrol:7');
-Route::post('/createDesignation','GeneralController@createDesignation')->middleware('accesscontrol:7');
-Route::post('/editDesignation','GeneralController@editDesignation')->middleware('accesscontrol:7');
+//middleware('accesscontrol:7')
+Route::get('/allDesignations','GeneralController@designations');
+Route::post('/createDesignation','GeneralController@createDesignation');
+Route::post('/editDesignation','GeneralController@editDesignation');
 //Designation
 
 
@@ -148,3 +152,17 @@ Route::post('/createStaff','StaffController@store');
 Route::post('/editStaff','StaffController@update');
 Route::get('/deleteStaff/{id}','StaffController@destory');
 //Staff Management
+
+
+//Currency
+Route::get('/get_currencies','GeneralController@get_all_currencies');
+Route::post('/add_currency','GeneralController@get_add_currency');
+
+//Payment_types
+Route::get('/get_payment_types','GeneralController@get_all_payment_types');
+Route::post('/add_payment','GeneralController@add_payment');
+
+//RecieveStatus
+Route::get('/order/get_status','GeneralController@get_order_status');
+
+Route::post('/order/add_status','GeneralController@add_order_status');

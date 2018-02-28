@@ -10,17 +10,17 @@ class Staff extends Model
 
     public function city()
     {
-      return $this->belongsTo('App\City');
+      return $this->belongsTo('App\City','city_id');
     }
 
     public function region()
     {
-      return $this->belongsTo('App\Region');
+      return $this->belongsTo('App\Region','region_id');
     }
 
     public function department()
     {
-      return $this->belongsTo('App\Department');
+      return $this->belongsTo('App\Department','department_id');
     }
 
     public function staffType()

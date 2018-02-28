@@ -9,7 +9,11 @@ use App\User;
 use App\Region;
 use App\Department;
 use App\StaffType;
+use App\Currency;
+use App\PaymentType;
 use App\Designation;
+use App\ReceiveStatus;
+use Response;
 
 class GeneralController extends Controller
 {
@@ -19,7 +23,7 @@ class GeneralController extends Controller
     }
     public function index()
     {
-      $permissions=array('city','region','department','staffType','designation');
+      $permissions=array('city','region','department','staffType','designation','payment','currency','receivestatus');
       //$permissions=array('');
       // if($this->checkPermission(3)){
       //   array_push($permissions,'city');
@@ -218,4 +222,48 @@ class GeneralController extends Controller
       return $return;
     }
     //Designation Managemnet
+
+
+    //Route /get_currencies
+    public function get_all_currencies(){
+        $records=Currency::get();
+        return Response::json($records);
+    }
+    //Route /add_currency
+    public function get_add_currency(Request $request){
+        $currency=$request->input('name');
+        $iso=$request->input('iso');
+        $exchange_rate=$request->input('exchange_rate');
+        $user_id= Auth::user()->id;
+        Currency::create(['name'=>$currency, 'iso'=>$iso, 'exchange_rate'=>$exchange_rate, 'created_by'=>$user_id]);
+        return 201;
+    }
+
+    //Route /get_payment_types
+    public function get_all_payment_types(){
+        $records=PaymentType::get();
+        return Response::json($records);
+    }
+
+    //Route /add_payment
+    public function add_payment(Request $request){
+        $type=$request->input('type');
+        $user_id= Auth::user()->id;
+        PaymentType::create(['type'=>$type, 'created_by'=>$user_id]);
+        return 201;
+    }
+
+    //Registered a route with the name of /order/get_status
+    public function get_order_status(){
+        $records=ReceiveStatus::get();
+        return Response::json($records);
+    }
+
+    //Registered a route with the name of /order/add_status
+    public function add_order_status(Request $request){
+        $name=$request->input('name');
+        $user_id= Auth::user()->id;
+        $records=ReceiveStatus::create(['status'=>$name, 'created_by'=>$user_id]);
+        return 201;
+    }
 }

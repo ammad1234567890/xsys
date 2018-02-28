@@ -7,13 +7,15 @@
         <hr/>
         <div class="panel panel-info">
             <div class="panel-heading">Recieving new Order</div>
-
+            <div class="alert alert-success"  v-if="message">
+                <strong>{{message}}</strong>
+            </div>
             <div class="panel-body">
-                <form>
+                <form @submit.prevent="recieve_order_submit">
                     <div class="row">
                         <div class="col-md-6 form-group">
                             <label for="select_order_no">Select Order No</label>
-                            <select class="form-control" v-model="new_recieving.order_id" @change="order_change">
+                            <select class="form-control" v-model="new_recieving.order_id" @change="order_change" required>
                                 <option value="">Select</option>
                                 <option v-for="order in all_orders" v-bind:value="order.id">
                                     ORDER# {{order.id}}
@@ -23,8 +25,9 @@
 
                         <div class="col-md-6 form-group">
                                     <label for="select_collected_by">Collected By</label>
-                                    <select class="form-control">
-                                        <option>Select</option>
+                                    <select class="form-control" v-model="new_recieving.collected_id" required>
+                                        <option value="">Select</option>
+                                        <option v-for="staff in all_staff" v-bind:value="staff.id">{{staff.name}}</option>
                                     </select>
                         </div>
                     </div>
@@ -42,19 +45,28 @@
                                 </div>
                                 <div class="col-md-9 form-group" v-if="new_recieving.qa_check==1">
                                     <label for="select_collected_by">QA Description</label>
-                                    <textarea class="form-control" v-model="new_recieving.qa_description">
+                                    <textarea class="form-control" v-model="new_recieving.qa_description" required>
                             </textarea>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <label for="select_collected_by">Recieved Location Status</label>
-                            <select class="form-control" v-model="new_recieving.recieve_status_id">
-                                <option>Select</option>
-                                <option v-for="status in all_status" v-bind:value="status.id">
-                                    {{status.status}}
-                                </option>
-                            </select>
+                            <div class="col-md-8">
+                                <label for="select_collected_by">Recieved Location Status</label>
+                                <select class="form-control" v-model="new_recieving.recieve_status_id" required>
+                                    <option value="">Select</option>
+                                    <option v-for="status in all_status" v-bind:value="status.id">
+                                        {{status.status}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <label for="select_collected_by"></label>
+                                <a href="../general">
+                                    <i class="fa fa-plus-circle" style="font-size: 27px; margin-top: 37px;"></i>
+                                </a>
+                            </div>
+
                         </div>
                     </div>
 
@@ -64,16 +76,18 @@
 
                             <div class="col-md-6 form-group">
                                 <label for="select_products">Select Order Products</label>
-                                <select class="form-control" v-model="new_recieving.order_products[index].id">
+                                <select class="form-control" v-model="new_recieving.order_products[index].id" required>
                                     <option value="">Select</option>
-                                    <option v-for="(product, index) in all_order_products"  v-bind:value="product.id">{{product.product_color.color}}</option>
+                                    <option v-for="(product, index) in all_order_products"  v-bind:value="product.product_color_id">{{product.product_color.color}}</option>
                                 </select>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label for="product_quanity">Quantity</label>
-                                <input type="text" class="form-control"  v-model="new_recieving.order_products[index].quantity" placeholder="Quantity">
+                                <input type="text" class="form-control"  v-model="new_recieving.order_products[index].quantity" placeholder="Quantity" required>
                             </div>
-
+                            <div class="col-md-12" v-if="index>0">
+                                <button class="btn btn-danger" v-on:click="removeProductForm(index)">Remove</button>
+                            </div>
                             <div class="clearfix"></div>
                         </div>
                     </div>
@@ -122,7 +136,7 @@
 
 
                         <div class="col-md-12">
-                            <button class="btn btn-primary pull-right" v-on:click="recieve_order_submit"><i class="fa fa-check"></i> Order Recieved</button>
+                            <button class="btn btn-primary pull-right"><i class="fa fa-check"></i> Order Recieved</button>
                         </div>
                     </div>
                 </form>
@@ -139,9 +153,11 @@
     export default {
         data(){
             return{
+                message:'',
                 all_orders:[],
                 all_status:[],
                 all_order_products:[],
+                all_staff:[],
                 new_recieving:{
                     id:'',
                     order_id:'',
@@ -168,6 +184,11 @@
             init:function(){
                 this.get_all_orders();
                 this.get_all_status();
+                this.get_all_staff();
+            },
+            removeProductForm:function(index){
+                event.preventDefault();
+                this.new_recieving.order_products.splice(index,1);
             },
             get_all_orders:function(){
                 axios.get('../order/get_orders').then((response)=>{
@@ -178,6 +199,12 @@
                 axios.get('../order/get_status').then((response)=>{
                     this.all_status=response.data;
                 });
+            },
+            get_all_staff:function(){
+                axios.get('../allStaff ').then((response)=>{
+                    this.all_staff=response.data;
+                });
+
             },
             add_more_products:function(e){
                 e.preventDefault();
@@ -199,9 +226,29 @@
             },
             recieve_order_submit:function(e){
                 e.preventDefault();
-                axios.post('../order/received',this.new_recieving).then((response)=>{
-                    alert(response.data);
-                });
+                this.$validator.validateAll();
+                if (!this.errors.any()) {
+                    axios.post('../order/received', this.new_recieving).then((response) => {
+                        if (response.data == 201) {
+                            this.new_recieving.order_id = '';
+                            this.new_recieving.qa_check = 0;
+                            this.new_recieving.collected_id = '';
+                            this.new_recieving.qa_description = '';
+                            this.new_recieving.recieve_status_id = '';
+                            this.new_recieving.order_products.forEach(function (order, index) {
+                                order.id = "";
+                                order.quantity = "";
+                            });
+                            this.message = "Order Recieved Successfully!";
+                            $("html, body").animate({
+                                scrollTop: 0
+                            }, 600);
+                        }
+                        else {
+                            alert($response.data);
+                        }
+                    });
+                }
             }
         }
     }

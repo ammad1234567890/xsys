@@ -55,7 +55,7 @@
             console.log('Component mounted.')
         },
         created(){
-            axios.get('/allDepartments').then(response=>{
+            axios.get('./allDepartments').then(response=>{
               //console.log(response.data);
               this.allDepartments=response.data;
             })
@@ -63,7 +63,7 @@
         methods:{
           createDepartment(e){
             e.preventDefault();
-            axios.post('/createDepartment',this.departmentData).then(response=>{
+            axios.post('./createDepartment',this.departmentData).then(response=>{
               if(response.data.return==0){
                 //console.log(response.data.data);
                 this.allDepartments.push(response.data.data);
@@ -86,7 +86,7 @@
           },
           saveEditing(e){
             e.preventDefault();
-            axios.post('/editDepartment',this.departmentData).then(response=>{
+            axios.post('./editDepartment',this.departmentData).then(response=>{
                if(response.data.return == 0){
                  this.allDepartments[this.editIndex].name=this.departmentData.department;
                  this.departmentData={

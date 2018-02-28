@@ -77,8 +77,7 @@ class RetailerController extends Controller
                     'cnic' => $cnic,
                     'phone_no'=>$phone_no,
                     'image'=>$file_name,
-                    'created_by'=>$user,
-                    'updated_by'=>null));
+                    'created_by'=>$user));
                 DB::commit();
                 //Use 201 for succesfull work.
                 return 201;

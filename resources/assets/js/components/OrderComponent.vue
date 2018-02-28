@@ -11,11 +11,11 @@
                 <strong>{{message}}</strong>
             </div>
             <div class="panel-body">
-                <form>
+                <form @submit.prevent="add_order">
                     <div class="row">
                         <div class="col-md-6 form-group">
                             <label for="estimation_delivery">Estimate Delivery Date</label>
-                            <input type="date" class="form-control" v-model="new_order.estimation_date">
+                            <input name="estimation_delivery" type="date" class="form-control" v-model="new_order.estimation_date" required>
                         </div>
                     </div>
 
@@ -24,26 +24,30 @@
                                 <h4 class="form-section-heading" style="left: 18px;">Product Details</h4>
                             <div class="col-md-6 form-group">
                                 <label for="select_product">Select Product</label>
-                                <select class="form-control" v-model="find.product_id" @change="change_product(index, find.product_id)">
+                                <select name="select_product" class="form-control" v-model="find.product_id" @change="change_product(index, find.product_id)" required>
                                     <option value="" selected>Select</option>
                                     <option v-for="(product, index) in allProducts"  v-bind:value="product.id">{{product.name}}</option>
                                 </select>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label for="select_product_color">Select Product Color</label>
-                                <select class="form-control" v-model="new_order.products[index].product_color_id">
+                                <select class="form-control" v-model="new_order.products[index].product_color_id" required>
                                     <option value="" selected>Select</option>
                                     <option v-for="(product_color, index) in new_order.products[index].product_color"  v-bind:value="product_color.id">{{product_color.color}}</option>
                                 </select>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label for="product_quanity">Quantity</label>
-                                <input type="text" class="form-control" v-model="new_order.products[index].quantity" placeholder="Quantity">
+                                <input type="text" class="form-control" v-model="new_order.products[index].quantity" placeholder="Quantity" required>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label for="cost_per_set">Cost Per Set</label>
-                                <input type="text" class="form-control" v-model="new_order.products[index].cost_per_set" placeholder="Cost">
+                                <input type="text" class="form-control" v-model="new_order.products[index].cost_per_set" placeholder="Cost" required>
                             </div>
+
+                                <div class="col-md-12" v-if="index>0">
+                                    <button class="btn btn-danger" v-on:click="removeProductForm(index)">Remove</button>
+                                </div>
                                 <div class="clearfix"></div>
                         </div>
 
@@ -55,7 +59,7 @@
                         </div>
 
                         <div class="col-md-9">
-                            <button class="btn btn-primary pull-right" v-on:click="add_order"><i class="fa fa-check"></i> Create Order</button>
+                            <button class="btn btn-primary pull-right"><i class="fa fa-check"></i> Create Order</button>
                         </div>
                     </div>
                 </form>
@@ -100,9 +104,12 @@
             init:function(){
               this.get_products();
             },
+            removeProductForm:function(index){
+                event.preventDefault();
+                this.new_order.products.splice(index,1);
+            },
             change_product:function(index, product_id){
                 this.new_order.products[index].product_id=product_id;
-                alert(this.new_order.products[index].product_id);
                 axios.post('../get_product_colors',this.new_order.products[index]).then((response) => {
                     this.new_order.products[index].product_color=response.data;
                    // alert(response.data);
@@ -118,15 +125,16 @@
                 });
             },
             add_order:function(e){
-                e.preventDefault();
-                axios.post('../order/create',this.new_order).then((response) => {
-                    if(response.data==201){
-                        this.new_order.id='';
-                        this.new_order.estimation_date='';
-                        this.new_order.products.product_id='';
-                        this.new_order.products.product_color_id='';
-                        this.new_order.products.quantity='';
-                        this.new_order.products.cost_per_set='';
+                this.$validator.validateAll();
+                if (!this.errors.any()) {
+                    axios.post('../order/create',this.new_order).then((response) => {
+                        if(response.data==201){
+                            this.new_order.id='';
+                            this.new_order.estimation_date='';
+                            this.new_order.products.product_id='';
+                            this.new_order.products.product_color_id='';
+                            this.new_order.products.quantity='';
+                            this.new_order.products.cost_per_set='';
 
                             this.new_order.products.forEach(function(order, index) {
                                 order.product_id="";
@@ -134,15 +142,18 @@
                                 order.quantity="";
                                 order.cost_per_set="";
                             });
-                        this.message="New Order has been Successfully Created!";
-                        $("html, body").animate({
-                            scrollTop: 0
-                        }, 600);
-                    }
-                    else{
-                        alert(response.data);
-                    }
-                });
+                            this.message="New Order has been Successfully Created!";
+                            $("html, body").animate({
+                                scrollTop: 0
+                            }, 600);
+                        }
+                        else{
+                            alert(response.data);
+                        }
+                    });
+
+                }
+
             }
         }
     }

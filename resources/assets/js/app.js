@@ -38,6 +38,9 @@ Vue.component('department-component', require('./components/DepartmentComponent.
 Vue.component('stafftype-component', require('./components/StaffTypeComponent.vue'));
 Vue.component('designation-component', require('./components/DesignationComponent.vue'));
 Vue.component('staff-component', require('./components/staffComponent.vue'));
+Vue.component('payment-component', require('./components/PaymentTypeComponent.vue'));
+Vue.component('currency-component', require('./components/CurrencyComponent.vue'));
+Vue.component('receivestatus-component', require('./components/ReceiveStatusComponent.vue'));
 const app = new Vue({
     el: '#app'
 });

@@ -28,11 +28,11 @@ class CreateTblStaffTable extends Migration
             $table->unsignedInteger('created_by')->index();
             $table->unsignedInteger('updated_by')->index()->nullable();
             $table->unsignedTinyInteger('is_deleted')->default(0);//0 = active | 1=deleted
-            $table->foreign('city_id')->references('id')->on('city')->onDelete('cascade');
-            $table->foreign('region_id')->references('id')->on('region')->onDelete('cascade');
-            $table->foreign('department_id')->references('id')->on('department')->onDelete('cascade');
-            $table->foreign('staff_type_id')->references('id')->on('staff_type')->onDelete('cascade');
-            $table->foreign('designation_id')->references('id')->on('designation')->onDelete('cascade');
+            $table->foreign('city_id')->references('id')->on('tbl_city')->onDelete('cascade');
+            $table->foreign('region_id')->references('id')->on('tbl_region')->onDelete('cascade');
+            $table->foreign('department_id')->references('id')->on('tbl_department')->onDelete('cascade');
+            $table->foreign('staff_type_id')->references('id')->on('tbl_staff_type')->onDelete('cascade');
+            $table->foreign('designation_id')->references('id')->on('tbl_designation')->onDelete('cascade');
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('updated_by')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();

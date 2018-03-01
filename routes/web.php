@@ -98,7 +98,7 @@ Route::get('/order/receive','OrderController@receive_order');
 Route::get('/order/payment','OrderController@order_payment');
 Route::post('/order/create','OrderController@add_new_order');
 Route::get('/order/get_orders','OrderController@get_orders');
-
+Route::post('/order/get_orders_by_id','OrderController@get_orders_by_id');
 Route::post('/order/get_products','OrderController@get_products_by_order');
 Route::post('/order/received','OrderController@order_received');
 Route::post('/order/add_payment','OrderController@add_payment');

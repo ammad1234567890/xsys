@@ -18,6 +18,7 @@ use App\ReceiveStatus;
 use App\Product;
 use App\ProductColor;
 use App\ProductImage;
+use App\OrderPayment;
 use Response;
 
 
@@ -74,6 +75,7 @@ class OrderController extends Controller
                     'product_color_id'=> $order_products['product_color_id'],
                     'manufacture_order_id'=>$order_id,
                     'quantity'=>$order_products['quantity'],
+                    'remaining_qty'=>$order_products['quantity'],
                     'unit_cost'=>$order_products['cost_per_set'],
                     'created_by'=>$userId
                 );
@@ -115,7 +117,7 @@ class OrderController extends Controller
     //Registered a route with the name of /order/get_products
     public function get_products_by_order(Request $request){
         $id= $request->input('order_id');
-        $records= OrderProducts::with('ProductColor')->where('manufacture_order_id', $id)->get();
+        $records= OrderProducts::with('ProductColor.product')->where('manufacture_order_id', $id)->where('remaining_qty','!=',0)->get();
         return Response::json($records);
 
         //print_r($records);
@@ -166,6 +168,10 @@ class OrderController extends Controller
             );
             try{
                 ReceiveProducts::create($product);
+                $data=OrderProducts::Select('remaining_qty')->where('manufacture_order_id',$order_id)->where('product_color_id',$products['id'])->get();
+                $remaining_qty=$data[0]['remaining_qty'];
+                $final_qty=$data[0]['remaining_qty']-$products['quantity'];
+                OrderProducts::where('manufacture_order_id',$order_id)->where('product_color_id',$products['id'])->update(['remaining_qty'=>$final_qty]);
             }
             catch(\Exception $e){
                 DB::rollBack();
@@ -177,11 +183,44 @@ class OrderController extends Controller
     }
 
     //Registered a route with the name of /order/add_payment
-    public function add_payment(){
+    public function add_payment(Request $request){
+        $order_id=$request->input('order_id');
+        $amount=$request->input('amount');
+        $method_id=$request->input('method_id');
+        $currency_id=$request->input('currency_id');
+        $exchange_rate= $request->input('exchange_rate');
+
+        $final_amount=($amount*$exchange_rate);
+        $userId=Auth::user()->id;
+        OrderPayment::create(['manufacture_order_id'=>$order_id,
+            'payment_amount'=>$amount,
+            'total_amount'=>$final_amount,
+            'payment_type_id'=> $method_id,
+            'currency_id'=>$currency_id,
+            'exchange_rate'=>$exchange_rate,
+            'created_by'=>    $userId
+        ]);
+
+        $records=Order::Select('remaining_payment')->get();
+        $remaining_total_payment=$records[0]['remaining_payment'];
+        $remaining_payment=$remaining_total_payment-$final_amount;
+
+        if($remaining_payment==0){
+            Order::where('id', $order_id)->update(['transaction_closed'=>1]);
+        }
+        Order::where('id', $order_id)->update(['remaining_payment'=>$remaining_payment]);
+
+        return 201;
+
 
     }
 
-
+    ///Registered a route with the name of order/get_orders_by_id
+    public function get_orders_by_id(Request $request){
+        $id=$request->input('order_id');
+        $records=Order::where('id', $id)->get();
+        return Response::json($records);
+    }
 
 }
 

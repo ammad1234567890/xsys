@@ -76,14 +76,17 @@
 
                             <div class="col-md-6 form-group">
                                 <label for="select_products">Select Order Products</label>
-                                <select class="form-control" v-model="new_recieving.order_products[index].id" required>
-                                    <option value="">Select</option>
-                                    <option v-for="(product, index) in all_order_products"  v-bind:value="product.product_color_id">{{product.product_color.color}}</option>
+                                <select class="form-control" v-model="selected_order_product_index[index].index_no" @change="change_product(index)" required>
+                                    <option value="-1" selected="selected">Select</option>
+                                    <option v-for="(products, index) in all_order_products"  v-bind:value="index">{{products.product_color.product.name}} ({{products.product_color.color}}) </option>
                                 </select>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label for="product_quanity">Quantity</label>
-                                <input type="text" class="form-control"  v-model="new_recieving.order_products[index].quantity" placeholder="Quantity" required>
+                                <input type="number" class="form-control" name="product_qty" v-model="new_recieving.order_products[index].quantity" :placeholder="'Total Quantity '+new_recieving.order_products[index].max_qty" v-validate="{ max_value: new_recieving.order_products[index].max_qty }"  @change="qty_change(index)" required>
+                                <span class="text-danger" v-show="errors.has('product_qty')">
+                                  {{errors.first('product_qty')}}
+                                </span>
                             </div>
                             <div class="col-md-12" v-if="index>0">
                                 <button class="btn btn-danger" v-on:click="removeProductForm(index)">Remove</button>
@@ -158,6 +161,9 @@
                 all_status:[],
                 all_order_products:[],
                 all_staff:[],
+                selected_order_product_index:[{
+                    index_no:'',
+                }],
                 new_recieving:{
                     id:'',
                     order_id:'',
@@ -169,6 +175,8 @@
                         {
                             id:'',
                             quantity:'',
+                            max_qty:'',
+                            final_qty:''
                         }
                     ],
                 }
@@ -186,9 +194,31 @@
                 this.get_all_status();
                 this.get_all_staff();
             },
+            qty_change:function(changing_index){
+               // alert(parseInt(this.new_recieving.order_products[changing_index].quantity));
+              //  alert(parseInt(this.new_recieving.order_products[changing_index].max_qty));
+                this.new_recieving.order_products[changing_index].final_qty=(parseInt(this.new_recieving.order_products[changing_index].max_qty))-(parseInt(this.new_recieving.order_products[changing_index].quantity))
+               // console.log(parseInt(this.new_recieving.order_products[changing_index].final_qty));
+            },
+            change_product:function(changing_index){
+                //alert(changing_index);
+                //alert(changing_index);
+                    this.new_recieving.order_products[changing_index].quantity='';
+                if(this.selected_order_product_index[changing_index].index_no!="-1"){
+                    this.new_recieving.order_products[changing_index].id=this.all_order_products[this.selected_order_product_index[changing_index].index_no].product_color.id;
+                    this.new_recieving.order_products[changing_index].max_qty=this.all_order_products[this.selected_order_product_index[changing_index].index_no].remaining_qty;
+
+
+                }
+                else{
+                    this.new_recieving.order_products[changing_index].max_qty="";
+                    this.new_recieving.order_products[changing_index].id="";
+                }
+            },
             removeProductForm:function(index){
                 event.preventDefault();
                 this.new_recieving.order_products.splice(index,1);
+                this.selected_order_product_index.splice(index,1);
             },
             get_all_orders:function(){
                 axios.get('../order/get_orders').then((response)=>{
@@ -209,6 +239,7 @@
             add_more_products:function(e){
                 e.preventDefault();
                 this.new_recieving.order_products.push({id:'', quantity:''});
+                this.selected_order_product_index.push({index_no: ''});
             },
             order_change:function(){
                 axios.post('../order/get_products',this.new_recieving).then((response)=>{
@@ -238,7 +269,11 @@
                             this.new_recieving.order_products.forEach(function (order, index) {
                                 order.id = "";
                                 order.quantity = "";
+                                order.max_qty = "";
+                                order.final_qty = "";
                             });
+                            this.all_order_products=[];
+                            this.get_all_orders();
                             this.message = "Order Recieved Successfully!";
                             $("html, body").animate({
                                 scrollTop: 0

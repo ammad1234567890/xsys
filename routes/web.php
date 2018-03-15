@@ -20,23 +20,23 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 //AccessControll
-Route::get('/access','AccessControllController@index')->middleware('accesscontrol:2');//return view for creating role
-Route::get('/permissions','AccessControllController@permission')->middleware('accesscontrol:2'); //return all permissions
+Route::get('/access','AccessControllController@index');//->middleware('accesscontrol:2');//return view for creating role
+Route::get('/permissions','AccessControllController@permission');//->middleware('accesscontrol:2'); //return all permissions
 Route::get('/role','AccessControllController@RolePermission');//returning all roles with permissions
-Route::post('/createrole','AccessControllController@createRole')->middleware('accesscontrol:2'); //creating role
-Route::post('/editRole','AccessControllController@editRole')->middleware('accesscontrol:2');//editing role and its permissions
-Route::get('/deleterole/{id}','AccessControllController@deleteRole')->middleware('accesscontrol:2');//delete specific role
+Route::post('/createrole','AccessControllController@createRole');//->middleware('accesscontrol:2'); //creating role
+Route::post('/editRole','AccessControllController@editRole');//->middleware('accesscontrol:2');//editing role and its permissions
+Route::get('/deleterole/{id}','AccessControllController@deleteRole');//->middleware('accesscontrol:2');//delete specific role
 
-Route::get('/userrole','AccessControllController@userRole')->middleware('accesscontrol:2');
-Route::get('/users','AccessControllController@users')->middleware('accesscontrol:2');
-Route::get('/roles','AccessControllController@roles')->middleware('accesscontrol:2');
-Route::get('/userroles','AccessControllController@userRoles')->middleware('accesscontrol:2');
-Route::post('/edituserrole','AccessControllController@editUserRole')->middleware('accesscontrol:2');
+Route::get('/userrole','AccessControllController@userRole');//->middleware('accesscontrol:2');
+Route::get('/users','AccessControllController@users');//->middleware('accesscontrol:2');
+Route::get('/roles','AccessControllController@roles');//->middleware('accesscontrol:2');
+Route::get('/userroles','AccessControllController@userRoles');//->middleware('accesscontrol:2');
+Route::post('/edituserrole','AccessControllController@editUserRole');//->middleware('accesscontrol:2');
 
 //Product Management
 Route::get('/product','ProductController@index');
 
-Route::get('/test','ProductController@test')->middleware('accesscontrol:1');
+Route::get('/test','ProductController@test');//->middleware('accesscontrol:1');
 
 //Product Management
 
@@ -48,7 +48,21 @@ Route::post('/retailer/edit_retailer','RetailerController@edit_retailer');
 Route::post('/retailer/delete_retailer','RetailerController@deactivate_retailer');
 Route::post('/retailer/reactivate_retailer','RetailerController@activate_retailer');
 Route::get('/retailer/get_retailers','RetailerController@get_all_retailers');
+Route::get('/retailer/create_order','RetailerController@create_order');
+
 //Retailers
+
+//RETAILER ORDE
+Route::post('/retailer/order/create','RetailerController@create_new_order');
+//Route::get('/retailer_order/account_clearance','RetailerOrderController@non_clear_order');
+Route::get('/retailer_order/get_all_non_clear_orders','RetailerOrderController@get_all_non_clear_orders');
+Route::get('/retailer_order/get_orders','RetailerOrderController@get_all_orders');
+Route::get('/retailer_order/orders','RetailerOrderController@orders');
+Route::post('/retailer_order/delete','RetailerOrderController@delete_order');
+Route::get('/retailer_order/payment','RetailerOrderController@order_payment');
+Route::get('/retailer/get_invoices','RetailerOrderController@get_all_invoices');
+Route::post('/retailer/order/add_payment','RetailerOrderController@add_order_payment');
+//RETAILER ORDER
 
 //Outlets
 Route::get('/retailer/outlets', 'RetailerOutletController@index')->name('retailer_outlets');
@@ -58,6 +72,8 @@ Route::post('/outlet/delete_outlet', 'RetailerOutletController@deactivate_outlet
 Route::post('/outlet/reactivate_outlet', 'RetailerOutletController@activate_outlet');
 Route::post('/outlet/update_outlet', 'RetailerOutletController@edit_outlet');
 Route::post('/outlet/change_outlet_image','RetailerOutletController@edit_security_check_image');
+Route::post('/outlet/retailer_outlets','RetailerOutletController@get_retailer_outlets');
+
 //Outlets
 
 //City
@@ -80,6 +96,8 @@ Route::post('/createProduct','ProductController@store');
 Route::get('/deleteProduct/{id}','ProductController@destroy');
 Route::post('/updateProduct','ProductController@update');
 Route::post('/get_product_colors','ProductController@get_colors_by_product');
+Route::get('/productSearch/{search}','ProductController@search');
+Route::get('/productColor/{id}','ProductController@productColor');
 //PRODUCT
 
 //CATEGORY
@@ -96,12 +114,18 @@ Route::post('/createCategory','CategoryController@store');//->middleware('access
 Route::get('/order/create','OrderController@create_order');
 Route::get('/order/receive','OrderController@receive_order');
 Route::get('/order/payment','OrderController@order_payment');
+Route::get('/order/get_orders','OrderController@get_transaction_closed_orders');
+Route::get('/order/all_orders','OrderController@get_orders');
 Route::post('/order/create','OrderController@add_new_order');
-Route::get('/order/get_orders','OrderController@get_orders');
+Route::get('/order/get_all_orders','OrderController@get_all_orders');
 Route::post('/order/get_orders_by_id','OrderController@get_orders_by_id');
 Route::post('/order/get_products','OrderController@get_products_by_order');
 Route::post('/order/received','OrderController@order_received');
+Route::get('/order/received_orders','OrderController@received_orders');
+Route::get('/order/received_order_details','OrderController@received_order_details');
 Route::post('/order/add_payment','OrderController@add_payment');
+Route::post('/order/change_order_status','OrderController@change_order_status');
+Route::post('/order/delete','OrderController@delete_order');
 //ORDER
 
 
@@ -146,6 +170,8 @@ Route::post('/editDesignation','GeneralController@editDesignation');
 
 
 //Staff Management
+Route::get('/manager','StaffController@manager');
+Route::get('/accountant','StaffController@accountant');
 Route::get('/staff','StaffController@index');
 Route::get('/allStaff','StaffController@showAll');
 Route::post('/createStaff','StaffController@store');
@@ -164,5 +190,51 @@ Route::post('/add_payment','GeneralController@add_payment');
 
 //RecieveStatus
 Route::get('/order/get_status','GeneralController@get_order_status');
-
 Route::post('/order/add_status','GeneralController@add_order_status');
+
+//IMEI Upload
+Route::get('/importIMEI', 'IMEIController@importExport');
+Route::get('/downloadExcel/{type}', 'IMEIController@downloadExcel');
+Route::post('/importExcel', 'IMEIController@importExcel');
+//IMEI Upload
+//Warehouse
+//Warehouse Management
+Route::get('/warehouse','WarehouseController@index');
+Route::get('/allWarehouse','WarehouseController@allWarehouses');
+Route::post('/createWarehouse','WarehouseController@store');
+Route::post('/editWarehouse','WarehouseController@update');
+Route::get('/deleteWarehouse/{id}','WarehouseController@destroy');
+//Warehouse Management
+//WarehouseStaff
+Route::get('/warehouseStaff','WarehouseStaffController@index');
+Route::get('/searchStaff/{colum}/{search}','WarehouseStaffController@search');
+Route::post('/createWarehouseStaff','WarehouseStaffController@store');
+Route::get('/warehouseSearchStaff/{id}','WarehouseStaffController@searchStaff');
+Route::get('/removeStaff/{id}','WarehouseStaffController@remove');
+//WarehouseStaff
+//Main Warehouse
+//MainWarehouseReceive
+Route::get('/mainWarehouseReceive','MainWarehouseReceiveController@index');
+Route::get('/currentWarehouse','MainWarehouseReceiveController@currentWarehouse');
+Route::get('/receivSearch/{search}','MainWarehouseReceiveController@receive');
+Route::post('/createMainWarehouseReceive','MainWarehouseReceiveController@store');
+Route::get('/lastWarehouseReceive','MainWarehouseReceiveController@lastWarehouseReceive');
+Route::post('/createReceiveItems','MainWarehouseReceiveController@createReceiveItems');
+//MainWarehouseReceive
+//Main Warehouse
+//Warehouse Issue
+Route::get('/warehouseIssue','WarehouseIssueController@index');
+Route::get('/warehouseIssueRequest','WarehouseIssueController@warehouseIssueRequest');
+Route::get('/getProducts/{id}','WarehouseIssueController@getProducts');
+Route::post('/createIssue','WarehouseIssueController@createIssue');
+//Warehouse Issue
+//Warehouse
+
+//Finance
+Route::get('/finance/orders_approval','FinanceController@non_approved_order');
+Route::post('/finance/approve_order','FinanceController@approve_retailer_order');
+Route::post('/retailer_order/edit_products','RetailerOrderController@edit_order_products');
+//Financee
+
+//BANK
+Route::get('/bank/get_all_banks','BankController@get_all_banks');

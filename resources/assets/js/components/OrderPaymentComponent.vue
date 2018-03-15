@@ -1,37 +1,37 @@
 <template>
 
+    <div class="row">
+        <div class="col-md-12">
 
-    <div class="col-md-12">
+            <h2 style="margin-top: 6px; font-variant: small-caps; font-weight:bold;">Order Payment</h2>
+            <hr/>
+            <div class="panel panel-info">
+                <div class="panel-heading">Add Order Payment</div>
 
-        <h2 style="margin-top: 6px; font-variant: small-caps; font-weight:bold;">Order Payment</h2>
-        <hr/>
-        <div class="panel panel-info">
-            <div class="panel-heading">Add Order Payment</div>
-
-            <div class="panel-body">
-                <div class="alert alert-success"  v-if="message">
-                    <strong>{{message}}</strong>
-                </div>
-                <form @submit.prevent="add_payment">
-
-
+                <div class="panel-body">
+                    <div class="alert alert-success"  v-if="message">
+                        <strong>{{message}}</strong>
+                    </div>
+                    <form @submit.prevent="add_payment">
 
 
 
-                    <div class="row">
-                        <div class="col-md-6 form-group">
-                            <label for="select_order_no">Select Order No</label>
-                            <select class="form-control" v-model="payment_data.order_id" @change="change_order()" required>
-                                <option value="">Select</option>
-                                <option v-for="order in all_orders" v-bind:value="order.id">
-                                    ORDER# {{order.id}}
-                                </option>
-                            </select>
-                        </div>
+
+
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label for="select_order_no">Select Order No</label>
+                                <select class="form-control" v-model="payment_data.order_id" @change="change_order()" required>
+                                    <option value="">Select</option>
+                                    <option v-for="order in all_orders" v-bind:value="order.id">
+                                        ORDER# {{order.id}}
+                                    </option>
+                                </select>
+                            </div>
 
                             <div class="col-md-6 form-group">
                                 <label for="product_quanity">Amount</label>
-                                <input type="text" class="form-control" placeholder="Amount" v-model="payment_data.amount" required>
+                                <input type="text" class="form-control" placeholder="Amount" v-model="payment_data.amount" @change="change_amount()" required>
                             </div>
 
                             <div class="col-md-6 form-group">
@@ -59,35 +59,37 @@
                                 <input type="text" v-model="payment_data.exchange_rate" class="form-control" placeholder="Exchange Rate" readonly>
                             </div>
 
-                        <div class="col-md-6 form-group">
+                            <div class="col-md-6 form-group">
 
-                                    <label for="product_quanity">Total Payment Cost (Rs)</label>
-                                    <input type="text" name="remaining_payment" v-model="payment_data.total_payment" v-validate="{ max_value: remaining_payment }" class="form-control" placeholder="Total Payment" readonly>
+                                <label for="product_quanity">Total Payment Cost (Rs)</label>
+                                <input type="text" name="remaining_payment" v-model="payment_data.total_payment" v-validate="{ max_value: remaining_payment }" class="form-control" placeholder="Total Payment" readonly>
 
                                 <span class="text-danger" v-show="errors.has('remaining_payment')">
                                   {{errors.first('remaining_payment')}}
                                 </span>
 
 
-                        </div>
+                            </div>
 
                             <div class="clearfix"></div>
                         </div>
 
 
 
-                    <div class="row">
+                        <div class="row">
 
 
-                        <div class="col-md-12">
-                            <button class="btn btn-primary pull-right"><i class="fa fa-check"></i> Add Payment</button>
+                            <div class="col-md-12">
+                                <button class="btn btn-primary pull-right"><i class="fa fa-check"></i> Add Payment</button>
+                            </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
 
+                </div>
             </div>
         </div>
     </div>
+
 
 
 </template>
@@ -125,6 +127,11 @@
                 this.get_all_orders();
                 this.get_all_currencies();
                 this.get_all_payment_types();
+            },
+            change_amount(){
+                this.selected_currency_index='';
+                this.payment_data.total_payment='';
+                this.payment_data.exchange_rate='';
             },
             change_order(){
                 axios.post('../order/get_orders_by_id',this.payment_data).then((response)=>{

@@ -142,7 +142,7 @@ class RetailerOutletController extends Controller
                 'aging_amount'=>0,
                 'created_by'=>$user,
 
-                ));
+            ));
             DB::commit();
             //Use 201 for succesfull work.
             return 201;
@@ -151,6 +151,7 @@ class RetailerOutletController extends Controller
             DB::rollBack();
             return $exc;
         }
+        //echo $bussiness_person_cnic;
     }
 
     //Registered a route with the name of /retailer/get_all_outlets
@@ -309,6 +310,13 @@ class RetailerOutletController extends Controller
             DB::rollBack();
             return $exc;
         }
+    }
+
+    //Registered a route with the name of 'outlet/retailer_outlets'
+    public function get_retailer_outlets(Request $request){
+        $retailer_id=$request->input('retailer_id');
+        $records= RetailerOutlet::where('retailer_id', $retailer_id)->get();
+        return Response::json($records);
     }
 
 }

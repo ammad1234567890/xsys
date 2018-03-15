@@ -3,16 +3,16 @@
       <div class="panel-body">
       <form @submit="createRegion">
         <div class="form-group">
-          <label for="Region">Region</label>
+          <label for="Region">Locality</label>
           <input name="region" type="text" class="form-control" v-validate="'required|regex:^[a-zA-Z]+$'" v-model="regionData.region">
           <span class="text-danger" v-show="errors.has('region')">
             {{errors.first('region')}}
           </span>
         </div>
         <div class="form-group">
-          <input v-if="editing==false" type="submit" class="btn btn-default col-md-6" value="Create Region">
+          <input v-if="editing==false" type="submit" class="btn btn-default col-md-6" value="Create Locality">
           <button v-if="editing==true" @click="saveEditing" class="btn btn-default col-md-6">Save Editing</button>
-          <button v-if="editing==false" @click="showRegions" class="btn btn-default col-md-6" data-toggle="collapse" data-target="#regions">Regions</button>
+          <button v-if="editing==false" @click="showRegions" class="btn btn-default col-md-6" data-toggle="collapse" data-target="#regions">Locality</button>
           <button v-if="editing==true" @click="cancelEditing" class="btn btn-default col-md-6">Cancel Editing</button>
         </div>
       </form>

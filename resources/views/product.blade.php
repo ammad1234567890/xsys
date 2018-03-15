@@ -1,5 +1,9 @@
 @extends('layouts.app')
-
 @section('content')
-<product-component></product-component>
+    <div class="content">
+        <div class="container-fluid">
+            <product-component></product-component>
+        </div>
+    </div>
+
 @endsection

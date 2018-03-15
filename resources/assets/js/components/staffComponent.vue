@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div >
+    <div>
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
@@ -11,19 +11,19 @@
                       <form v-on:submit="createStaff">
                         <div class="form-group col-md-6">
                           <label for="name">Name</label>
-                          <input type="text" v-validate="'required|regex:^[a-zA-Z]+$'" v-model="newStaff.name" class="form-control" name="StaffName" placeholder="Full Name" required>
+                          <input type="text" v-validate="'required|regex:^[a-zA-Z ._]+$'" v-model="newStaff.name" class="form-control" name="StaffName" placeholder="Full Name" required>
                           <span class="text-danger" v-show="errors.has('StaffName')">
                             {{errors.first('StaffName')}}
                           </span>
                         </div>
                         <div class="form-group col-md-6">
                           <label for="CNIC">CNIC</label>
-                          <input type="text" v-validate="'required|regex:^[0-9]+$|digits:13'" v-model="newStaff.CNIC" class="form-control" name="cnic" placeholder="CNIC without - /" required>
+                          <input type="text" v-validate="'required|regex:^[0-9]+$|digits:13'" v-model="newStaff.CNIC" v-mask="'99999-9999999-9'" class="form-control" name="cnic" placeholder="CNIC without - /" required>
                           <span class="text-danger" v-show="errors.has('cnic')">
                             {{errors.first('cnic')}}
                           </span>
                         </div>
-                        <div class="form-group col-md-12">
+                        <div class="form-group col-md-6">
                           <label for="address">Address</label>
                           <input type="text" v-validate="'required'" v-model="newStaff.address" class="form-control" name="address" placeholder="Complete Address" required>
                           <span class="text-danger" v-show="errors.has('address')">
@@ -31,30 +31,39 @@
                           </span>
                         </div>
                         <div class="form-group col-md-6">
-                          <label for="email">E-Mail</label>
-                          <input type="email" v-validate="'required|email'" data-vv-value-path="innerValue" :has-error="errors.has('email')" v-model="newStaff.email" class="form-control" name="email" placeholder="E-Mail" required>
-                          <span class="text-danger" v-show="errors.has('email')">
-                            {{errors.first('email')}}
+                          <label for="phoneNumber">Phone Number</label>
+                          <input type="text" v-validate="'required|regex:^[0-9]+$|digits:11'" v-mask="'9999-9999999'" v-model="newStaff.phoneNumber" class="form-control" name="phoneNumber" placeholder="Phone Number" required>
+                          <span class="text-danger" v-show="errors.has('phoneNumber')">
+                            {{errors.first('phoneNumber')}}
                           </span>
                         </div>
                         <div class="form-group col-md-6">
                           <label for="city">Select City</label>
-                          <select class="form-control" name="city" v-validate="'required'" v-model="newStaff.city_id">
+                          <!-- <select class="form-control" name="city" v-validate="'required'" v-model="newStaff.city">
                             <option value="">Select City</option>
                             <option v-for="city in cities" v-bind:value="city.id">{{city.name}}</option>
-                          </select>
+                          </select> -->
+                          <v-select label="name" v-model="newStaff.city" :options="cities"></v-select>
                           <span class="text-danger" v-show="errors.has('city')">
                             {{errors.first('city')}}
                           </span>
                         </div>
                          <div class="form-group col-md-6">
-                          <label for="region">Select Region</label>
-                          <select class="form-control" name="region" v-validate="'required'" v-model="newStaff.region_id">
+                          <label for="region">Select Locality</label>
+                          <!-- <select class="form-control" name="region" v-validate="'required'" v-model="newStaff.region">
                             <option value="">Select Region</option>
                             <option v-for="region in regions" v-bind:value="region.id">{{region.name}}</option>
-                          </select>
+                          </select> -->
+                          <v-select label="name" v-model="newStaff.region" :options="regions"></v-select>
                           <span class="text-danger" v-show="errors.has('region')">
                             {{errors.first('region')}}
+                          </span>
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for="email">E-Mail</label>
+                          <input type="email" v-validate="'required|email'" data-vv-value-path="innerValue" :has-error="errors.has('email')" v-model="newStaff.email" class="form-control" name="email" placeholder="E-Mail" required>
+                          <span class="text-danger" v-show="errors.has('email')">
+                            {{errors.first('email')}}
                           </span>
                         </div>
                         <div class="form-group col-md-6">
@@ -103,28 +112,31 @@
           <div class="panel panel-default">
               <div class="panel-heading">Create Staff</div>
               <div class="panel-body">
-                <table class="table table-bordered">
-                  <thead>
+                <div class="table-responsive">
+                  <table class="table table-bordered">
+                    <thead>
                     <tr>
                       <th>S.No</th>
                       <th>Name</th>
                       <th>E-Mail</th>
                       <th>CNIC</th>
+                      <th>Phone Number</th>
                       <th>Address</th>
                       <th>City</th>
-                      <th>Region</th>
+                      <th>Locality</th>
                       <th>Deparment</th>
                       <th>Staff Type</th>
                       <th>Designation</th>
                       <th>Action</th>
                     </tr>
-                  </thead>
-                  <tbody>
+                    </thead>
+                    <tbody>
                     <tr v-for="(staff, index) in allStaff">
                       <td>{{index +1}}</td>
                       <td>{{staff.name}}</td>
                       <td>{{staff.email}}</td>
                       <td>{{staff.CNIC}}</td>
+                      <td>{{staff.phoneNumber}}</td>
                       <td>{{staff.address}}</td>
                       <td>{{staff.city.name}}</td>
                       <td>{{staff.region.name}}</td>
@@ -133,17 +145,19 @@
                       <td>{{staff.designation.designation}}</td>
                       <td>
                         <div class="dropdown">
-                        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Action
-                        <span class="caret"></span></button>
+                          <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Action
+                            <span class="caret"></span></button>
                           <ul class="dropdown-menu">
                             <li><a href="#" v-on:click="editStaff(index)">Edit</a></li>
                             <li><a href="#" v-on:click="deleteStaff(index,staff.id)">Delete</a></li>
-                        </ul>
-                      </div>
+                          </ul>
+                        </div>
                       </td>
                     </tr>
-                  </tbody>
-                </table>
+                    </tbody>
+                  </table>
+                </div>
+
               </div>
          </div>
     </div>
@@ -152,7 +166,50 @@
 </template>
 
 <script>
+import vSelect from "vue-select"
     export default {
+      components: {vSelect},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         data() {
           return{
             cities:[],
@@ -168,9 +225,10 @@
               name:'',
               email:'',
               CNIC:'',
+              phoneNumber:'',
               address:'',
-              city_id:'',
-              region_id:'',
+              city:'',
+              region:'',
               department_id:'',
               staff_type_id:'',
               designation_id:'',

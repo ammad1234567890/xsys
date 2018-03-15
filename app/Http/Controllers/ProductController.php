@@ -34,7 +34,7 @@ class ProductController extends Controller
        $id=$request->input('product_id');
 
        // $record =  Product::with('productColor')->where('productColor.product_id',$id)->get();
-        $record = ProductColor::with('product')->where('id',$id)->get();
+        $record = ProductColor::with('product')->where('product_id',$id)->get();
         return Response::json($record);
     }
 
@@ -217,5 +217,18 @@ class ProductController extends Controller
           return $e;
         }
         return 0;
+    }
+
+    public function search($data)
+    {
+      //return $data;
+      $searchProducts=Product::where('name','Like','%'.$data.'%')->get();
+      return $searchProducts;
+    }
+
+    public function productColor($id)
+    {
+      $productColor=ProductColor::where('product_id',$id)->where('is_deleted',0)->get();
+      return $productColor;
     }
 }

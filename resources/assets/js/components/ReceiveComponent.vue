@@ -1,6 +1,6 @@
 <template>
 
-
+<div class="row">
     <div class="col-md-12">
 
         <h2 style="margin-top: 6px; font-variant: small-caps; font-weight:bold;">Order Recieving</h2>
@@ -24,11 +24,11 @@
                         </div>
 
                         <div class="col-md-6 form-group">
-                                    <label for="select_collected_by">Collected By</label>
-                                    <select class="form-control" v-model="new_recieving.collected_id" required>
-                                        <option value="">Select</option>
-                                        <option v-for="staff in all_staff" v-bind:value="staff.id">{{staff.name}}</option>
-                                    </select>
+                            <label for="select_collected_by">Collected By</label>
+                            <select class="form-control" v-model="new_recieving.collected_id" required>
+                                <option value="">Select</option>
+                                <option v-for="staff in all_staff" v-bind:value="staff.id">{{staff.name}}</option>
+                            </select>
                         </div>
                     </div>
 
@@ -45,7 +45,7 @@
                                 </div>
                                 <div class="col-md-9 form-group" v-if="new_recieving.qa_check==1">
                                     <label for="select_collected_by">QA Description</label>
-                                    <textarea class="form-control" v-model="new_recieving.qa_description" required>
+                                    <textarea class="form-control" v-model="new_recieving.qa_description">
                             </textarea>
                                 </div>
                             </div>
@@ -147,6 +147,8 @@
             </div>
         </div>
     </div>
+</div>
+
 
 
 </template>
@@ -280,7 +282,7 @@
                             }, 600);
                         }
                         else {
-                            alert($response.data);
+                            alert(response.data);
                         }
                     });
                 }

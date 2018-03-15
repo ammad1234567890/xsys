@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'staff_id' ,'password',
     ];
 
     /*******************************************************
@@ -43,135 +43,68 @@ class User extends Authenticatable
         return false;
     }
 
-
+    public function staffRecord()
+    {
+      return $this->belongsTo('App\Staff')->where('tbl_staff.is_deleted',0);;
+    }
     public function role()
+     {
+       //Make relation with role through tbl_user_role where tbl_user_role.is_deleted is 0 and tbl_role.is_deleted is also 0
+       return $this->belongsToMany('App\Role', 'tbl_user_role', 'user_id', 'role_id')->wherePivot('is_deleted',0)->where('tbl_role.is_deleted',0);
+     }
+
+    public function product()
     {
-      //Make relation with role through tbl_user_role where tbl_user_role.is_deleted is 0 and tbl_role.is_deleted is also 0
-      return $this->belongsToMany('App\Role', 'tbl_user_role', 'user_id', 'role_id')->wherePivot('is_deleted',0)->where('tbl_role.is_deleted',0);
-    }
-
-    public function damage(){
-      return $this->hasMany('App\Damage');
-    }
-
-    public function worker(){
-      return $this->hasMany('App\Worker');
-    }
-
-    public function category(){
-      return $this->hasMany('App\Category');
-    }
-
-    public function item(){
-      return $this->hasMany('App\Item');
-    }
-
-    public function carton_log()
-    {
-      return $this->hasMany('App\Carton_log');
-    }
-
-    public function order_payment(){
-      return $this->hasMany('App\Order_payment');
-    }
-
-    public function order(){
-      return $this->hasMany('App\Order');
-    }
-
-    public function product(){
       return $this->hasMany('App\Product');
     }
-
-    public function carton()
+    public function productCategory()
     {
-      return $this->hasMany('App\Carton');
+      return $this->hasMany('App\ProductCategory');
+    }
+    public function productColor()
+    {
+      return $this->hasMany('App\ProductColor');
+    }
+    public function productImage()
+    {
+      return $this->hasMany('App\ProductImage');
     }
 
-    public function order_product()
+    public function staff()
     {
-      return $this->hasMany('App\Order_product');
+      return $this->hasMany('App\Staff');
     }
 
-    public function collection()
-    {
-      return $this->hasMany('App\Collection');
-    }
-
-    public function collection_product()
-    {
-      return $this->hasMany('App\Collection_product');
-    }
-
-    public function main_stock()
-    {
-      return $this->hasMany('App\Main_stock');
-    }
-
-    public function warehouse()
+    public function warhouse()
     {
       return $this->hasMany('App\Warehouse');
     }
 
-    public function warehouse_stock()
+    public function userRole()
     {
-      return $this->hasMany('App\Warehouse_stock');
+      return $this->hasMany('App\UserRole');
     }
 
-    public function warehouse_staff()
+    public function mainWarehouseReceiveProduct()
     {
-      return $this->hasMany('App\Warehouse_staff');
+      return $this->hasMany('App\MainWarehouseReceiveProduct');
     }
 
-    public function warehouse_receive()
+    public function mainWarehouseReceive()
     {
-      return $this->hasMany('App\Warehouse_receive');
+      return $this->hasMany('App\MainWarehouseReceive');
     }
 
-    public function warehouse_exit()
+    public function warehouseIssue()
     {
-      return $this->hasMany('App\Warehouse_exit');
+      return $this->hasMany('App\WarehouseIssue');
     }
 
-    public function retailer()
+    public function warehouseIssueItem()
     {
-      return $this->hasMany('App\Retailer');
+      return $this->hasMany('App\WarehouseIssueItem');
     }
 
-    public function retailer_outlet()
-    {
-      return $this->hasMany('App\Retailer_outlet');
-    }
-
-    public function retailer_order()
-    {
-      return $this->hasMany('App\Retailer_order');
-    }
-
-    public function delivery_product()
-    {
-      return $this->hasMany('App\Delivery_product');
-    }
-
-    public function retailer_order_product()
-    {
-      return $this->hasMany('App\Retailer_order_product');
-    }
-
-    public function retailer_payment()
-    {
-      return $this->hasMany('App\Retailer_payment');
-    }
-
-    public function retailer_delivery()
-    {
-      return $this->hasMany('App\Retailer_delivery');
-    }
-
-    public function vehicle()
-    {
-      return $this->hasMany('App\Vehicle');
-    }
     /**
      * The attributes that should be hidden for arrays.
      *

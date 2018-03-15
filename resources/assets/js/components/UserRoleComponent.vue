@@ -1,7 +1,7 @@
 <template>
-    <div class="container col-md-12">
+    <div>
         <div class="row">
-            <div class="col-md-10 col-md-offset-1">
+            <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">Assign Role</div>
 
@@ -16,54 +16,61 @@
                             </div>
 
                             <div class="form-group col-md-6">
-                              <label for="permission">Role</label>
-                              <v-select multiple label="role" v-model="newUserRole.roles" :options="Roles" required></v-select>
+                                <label for="permission">Role</label>
+                                <v-select multiple label="role" v-model="newUserRole.roles" :options="Roles" required></v-select>
                             </div>
                             <div class="form-group col-md-12">
                                 <button  class="btn btn-default" v-on:click="saveEditing" v-if="editing==1">Save Editing</button>
                                 <button  class="btn btn-default" v-on:click="cancelEding" v-if="editing==1">Cancel Editing</button>
                             </div>
-                       </form>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
+
         <div class="row">
-            <div class="col-md-10 col-md-offset-1">
-              <div class="panel panel-default">
-                  <div class="panel-heading">Assigned Roles</div>
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Assigned Roles</div>
                     <div class="panel-body">
-                      <table class="table table-bordered">
-                          <thead>
-                          <tr>
-                              <th>S.No</th>
-                              <th>User</th>
-                              <th>Roles</th>
-                              <th>Action</th>
-                          </tr>
-                          <tr v-for="(userRole, index) in UserRoles">
-                              <td>{{index + 1}}</td>
-                              <td>{{userRole.name}} ( <strong>{{userRole.id}}</strong> )</td>
-                              <td>
-                                <span class="btn btn-default" v-for="(role, index) in userRole.role" data-toggle="tooltip" v-bind:title="role.description"> {{ role.role }} </span>
-                              </td>
-                              <td>
-                                <div class="dropdown">
-                                  <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Action
-                                  <span class="caret"></span></button>
-                                    <ul class="dropdown-menu">
-                                      <li><a href="#" v-on:click="edit(index)">Edit</a></li>
-                                      <li><a href="#" v-on:click="deleteRole(role.id,index)">Delete</a></li>
-                                  </ul>
-                                </div>
-                              </td>
-                          </tr>
-                        </thead>
-                      </table>
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th>S.No</th>
+                                <th>User</th>
+                                <th>Roles</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="(userRole, index) in UserRoles">
+                                <td>{{index + 1}}</td>
+                                <td>{{userRole.name}} (<strong>{{userRole.id}}</strong>)</td>
+                                <td>
+                                    <span class="btn btn-default" v-for="(role, index) in userRole.role" data-toggle="tooltip" v-bind:title="role.description"> {{ role.role }} </span>
+                                </td>
+                                <td>
+                                    <div class="dropdown">
+                                        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Action
+                                            <span class="caret"></span></button>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="#" v-on:click="edit(index)">Edit</a></li>
+                                            <li><a href="#" v-on:click="deleteRole(role.id,index)">Delete</a></li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+
+
+                        </table>
                     </div>
-                  </div>
                 </div>
             </div>
+        </div>
+
+
     </div>
 </template>
 
@@ -89,13 +96,13 @@ import vSelect from "vue-select"
             console.log('Component mounted.')
         },
         created(){
-          axios.get('/users').then(response=>{
+          axios.get('./users').then(response=>{
             this.Users=response.data;
           }),
-          axios.get('/roles').then(response=>{
+          axios.get('./roles').then(response=>{
             this.Roles=response.data;
           }),
-          axios.get('/userroles').then(response=>{
+          axios.get('./userroles').then(response=>{
               this.UserRoles=response.data;
           })
         },
@@ -131,7 +138,7 @@ import vSelect from "vue-select"
 
             saveEditing:function(e){
               e.preventDefault();
-              axios.post('/edituserrole',this.newUserRole).then(response=>{
+              axios.post('./edituserrole',this.newUserRole).then(response=>{
                 if(response.data==0){
                   var index=this.editIndex;
                   this.UserRoles[index].name=this.newUserRole.user;
@@ -162,7 +169,7 @@ import vSelect from "vue-select"
                 this.editIndex=null;
             },
             deleteRole:function(id,index){
-                axios.get('/deleterole/'+id).then(response=>{
+                axios.get('./deleterole/'+id).then(response=>{
                   if(response.data==0){
                     this.rolePermission.splice(index,1);
                   }else{

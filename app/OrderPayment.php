@@ -10,4 +10,27 @@ class OrderPayment extends Model
 
     
     protected $table="tbl_manufacturing_payment";
+
+    public function Order(){
+        return $this->belongsTo('App\Order');
+    }
+
+    public function payment_type(){
+        return $this->belongsTo('App\PaymentType','payment_type_id');
+    }
+
+    public function currency(){
+        return $this->belongsTo('App\Currency','currency_id');
+    }
+
+    static $a;
+    public static function updated($v){
+      Retailer::$a=$v;
+    }
+    public function user(){
+      if(Retailer::$a==1){
+            return $this->belongsTo("App\User",'updated_by');
+      }
+      return $this->belongsTo("App\User",'created_by');
+    }
 }

@@ -1,80 +1,84 @@
 <template>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h2 class="panel-title">Create Category</h2>
+                        </div>
 
-            <div class="col-md-12">
-                <h2 style="margin-top: 6px; font-variant: small-caps; font-weight:bold;">Category Management</h2>
-                <hr/>
-                <div class="panel panel-default">
-
-                    <div class="panel-heading">Create Category</div>
-
-                    <div class="panel-body">
-                        <form v-on:submit="CreateCategory">
-                          <div class="form-group col-md-6">
-                            <label for="categoryName">Category Name</label>
-                            <input type="text" v-validate="'required|regex:^[a-zA-Z]+$'" v-model="newCategory.name" class="form-control" name="categoryName" placeholder="Category Name" required>
-                            <span class="text-danger" v-show="errors.has('categoryName')">
+                        <div class="panel-body">
+                            <form v-on:submit="CreateCategory">
+                                <div class="form-group col-md-6">
+                                    <label for="categoryName">Category Name</label>
+                                    <input type="text" v-validate="'required|regex:^[a-zA-Z ._]+$'" v-model="newCategory.name" class="form-control" name="categoryName" placeholder="Category Name" required>
+                                    <span class="text-danger" v-show="errors.has('categoryName')">
                               {{errors.first('categoryName')}}
                             </span>
-                          </div>
-                          <div class="form-group col-md-6">
-                            <label for="categoryImage">Category image</label>
-                            <input type="file" v-validate="'required|mimes:image/jpeg,image/png'" class="form-control" name="categoryImage" ref="fileupload" @change="imageChange">
-                            <span class="text-danger" v-show="errors.has('categoryImage')">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="categoryImage">Category image</label>
+                                    <span class="btn btn-round btn-file">
+                                            <span class="fileinput-new">Select image</span>
+                                    <input type="file" v-validate="'required|mimes:image/jpeg,image/png'" class="form-control" name="categoryImage" ref="fileupload" @change="imageChange">
+                                    </span>
+                                    <span class="text-danger" v-show="errors.has('categoryImage')">
                               {{errors.first('categoryImage')}}
                             </span>
-                          </div>
-                          <div class="form-group col-md-12">
-                            <label for="categoryName">Description</label>
-                            <textarea class="form-control" v-model="newCategory.description">
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label for="categoryName">Description</label>
+                                    <textarea class="form-control" v-model="newCategory.description">
 
                             </textarea>
-                          </div>
-                          <div class="form-group col-md-12">
-                            <input type="submit" value="Submit" v-if="editing==0" class="btn btn-default" />
-                            <button  class="btn btn-default" v-on:click="saveEditing" v-if="editing==1">Save Editing</button>
-                            <button  class="btn btn-default" v-on:click="cancelEding" v-if="editing==1">Cancel Editing</button>
-                          </div>
-                        </form>
-                    </div>
-                </div>
-
-
-
-                  <div class="panel panel-default">
-                      <div class="panel-heading">Categories</div>
-                      <div class="panel-body">
-                        <table class="table table-bordered">
-                          <thead>
-                            <tr>
-                              <th>S.No</th>
-                              <th>Category Name</th>
-                              <th>Description</th>
-                              <th>Action</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                              <tr v-for="(category,index) in allCategories">
-                                <td>{{index+1}}</td>
-                                <td>{{category.name}}</td>
-                                <td>{{category.description}}</td>
-                                <td>
-                                  <div class="dropdown">
-                                  <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Action
-                                  <span class="caret"></span></button>
-                                    <ul class="dropdown-menu">
-                                      <li><a href="#" v-on:click="edit(index)">Edit</a></li>
-                                      <li><a href="#" v-on:click="deleteCategory(category.id,index)">Delete</a></li>
-                                  </ul>
                                 </div>
-                               </td>
-                              </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                  </div>
+                                <div class="form-group col-md-12">
+                                    <input type="submit" value="Submit" v-if="editing==0" class="btn btn-tumblr" />
+                                    <button  class="btn btn-tumblr" v-on:click="saveEditing" v-if="editing==1">Save Editing</button>
+                                    <button  class="btn btn-default" v-on:click="cancelEding" v-if="editing==1">Cancel Editing</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
 
 
-        </div>
+
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Categories</div>
+                        <div class="panel-body">
+                          <div class="material-datatables">
+                            <table id="categoriestable" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" style="width:100%" >
+                                <thead>
+                                <tr>
+                                    <th>S.No</th>
+                                    <th>Category Name</th>
+                                    <th>Description</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr v-for="(category,index) in allCategories">
+                                    <td>{{index+1}}</td>
+                                    <td>{{category.name}}</td>
+                                    <td>{{category.description}}</td>
+                                    <td>
+                                        <div>
+                                            <ul>
+                                                <a class="btn btn-tumblr btn-xs" href="#" v-on:click="edit(index)"> <i class="material-icons">mode_edit</i> Edit</a> 
+                                                <a class="btn btn-danger btn-xs" href="#" v-on:click="deleteCategory(category.id,index)"><i class="material-icons">clear</i> Delete</a>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                          </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
 </template>
 
 <script>
@@ -221,4 +225,23 @@
           }
         }
     }
+
+    $(document).ready(function() {
+        $('#categoriestable').DataTable({
+            "pagingType": "full_numbers",
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ],
+            responsive: true,
+            language: {
+                search: "_INPUT_",
+                searchPlaceholder: "Search records",
+            }
+
+        });
+    });
 </script>
+
+
+

@@ -1,208 +1,224 @@
 <template>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="panel panel-default">
-                  <a href="#d" data-toggle="collapse">
-                    <div class="panel-heading">Create Product</div>
-                  </a>
-                    <div id="d" class="panel-body collapse" v-bind:class="{in:edit}">
-                        <form @submit="createProduct">
-                            <div class="row">
-                                <div class="col-md-12">
-                            <div class="form-group col-md-4">
-                                <label for="productName">Product Name</label>
-                                <input type="text" name="productName" v-validate="'required|regex:^[a-zA-Z]+$'" class="form-control" v-model="newProduct.name" placeholder="Product Name" required>
-                                <span class="text-danger" v-show="errors.has('productName')">
+    <div>
+    <div class="row">
+
+            <div class="card headcolor">
+                <div class="card-header">
+                        <h3 class="card-title pad-bot"><i class="material-icons">important_devices</i> <small>PRODUCT MANAGEMENT </small> </h3>
+                </div>
+            </div>
+
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                            <h2 class="panel-title">Add Product</h2>
+                        </div>
+                <div id="d" class="panel-body" v-bind:class="{in:edit}">
+                    <form @submit="createProduct">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group col-md-4">
+                                    <label for="productName">Product Name</label>
+                                    <input type="text" name="productName" v-validate="'required|regex:^[a-zA-Z ._]+$'" class="form-control" v-model="newProduct.name" placeholder="Product Name" required>
+                                    <span class="text-danger" v-show="errors.has('productName')">
                                   {{errors.first('productName')}}
                                 </span>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label for="productCategory">Product Category</label>
-                                <select class="form-control" required name="Category" v-model="newProduct.productCategory" v-validate="'required'" >
-                                    <option value="">Select Category</option>
-                                    <option v-for="category in categories" v-bind:value="category.id">{{category.name}}</option>
-                                </select>
-                                <span class="text-danger" v-show="errors.has('Category')">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="productCategory">Product Category</label>
+                                    <select class="form-control" required name="Category" v-model="newProduct.productCategory" v-validate="'required'" >
+                                        <option value="">Select Category</option>
+                                        <option v-for="category in categories" v-bind:value="category.id">{{category.name}}</option>
+                                    </select>
+                                    <span class="text-danger" v-show="errors.has('Category')">
                                   {{errors.first('Category')}}
                                 </span>
-                            </div>
-                            <div class="form-group col-md-4">
-                                <label for="releaseDate">Release Date</label>
-                                <input type="date" name="releaseDate" v-validate="'required'" class="form-control" placeholder="Release Date" v-model="newProduct.releaseDate" required>
-                                <span class="text-danger" v-show="errors.has('Release Date')">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="releaseDate">Release Date</label>
+                                    <input type="date" name="releaseDate" v-validate="'required'" class="form-control" placeholder="Release Date" v-model="newProduct.releaseDate" required>
+                                    <span class="text-danger" v-show="errors.has('Release Date')">
                                   {{errors.first('Release Date')}}
                                 </span>
-                            </div>
-                            <div class="form-group col-md-12">
-                                <button class="col-md-12 btn btn-default" @click="addColorForm">Add Product Color</button>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <button class="col-md-12 btn btn-default" @click="addColorForm">Add Product Color</button>
+                                </div>
                             </div>
                         </div>
-                        </div>
-                            <div v-for="(find, index) in newProduct.finds" class="well well-sm"> <!--Product Color Form-->
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group col-md-3">
-                                            <label for="colorName">Color Name</label>
-                                            <input type="text" v-validate="'required|regex:^[a-zA-Z]+$'" name="colorName" v-model="find.color" class="form-control" placeholder="Color Name" required>
-                                            <span class="text-danger" v-show="errors.has('colorName')">
+                        <div v-for="(find, index) in newProduct.finds" class="well well-sm"> <!--Product Color Form-->
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group col-md-3">
+                                        <label for="colorName">Color Name</label>
+                                        <input type="text" v-validate="'required|regex:^[a-zA-Z ._]+$'" name="colorName" v-model="find.color" class="form-control" placeholder="Color Name" required>
+                                        <span class="text-danger" v-show="errors.has('colorName')">
                                               {{errors.first('colorName')}}
                                             </span>
-                                        </div>
-                                        <div class="form-group col-md-2">
-                                            <label for="price">Price</label>
-                                            <input type="number" name="Price" v-validate="'required|regex:^[0-9]+$|min_value:1'" v-model="find.price" class="form-control" placeholder="Price" required>
-                                            <span class="text-danger" v-show="errors.has('Price')">
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label for="price">Price</label>
+                                        <input type="number" name="Price" v-validate="'required|regex:^[0-9]+$|min_value:1'" v-model="find.price" class="form-control" placeholder="Price" required>
+                                        <span class="text-danger" v-show="errors.has('Price')">
                                               {{errors.first('Price')}}
                                             </span>
-                                        </div>
-                                        <div class="form-group col-md-2">
-                                            <label for="discount">Discount</label>
-                                            <input type="number" name="Discount" v-validate="'required||regex:^[0-9]+$|min_value:1'" class="form-control" v-model="find.discount" placeholder="Discount" required>
-                                            <span class="text-danger" v-show="errors.has('Discount')">
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label for="discount">Discount(%)</label>
+                                        <input type="number" name="Discount" v-validate="'required||regex:^[0-9]+$|min_value:1'" class="form-control" v-model="find.discount" placeholder="Discount" required>
+                                        <span class="text-danger" v-show="errors.has('Discount')">
                                               {{errors.first('Discount')}}
                                             </span>
-                                        </div>
-                                        <div class="form-group col-md-3">
-                                            <label for="categoryImage">Images</label>
-                                            <input type="file" class="form-control" ref="fileupload" @change="imageChange(index)">
-                                        </div>
-                                        <div class="form-group col-md-2">
-                                            <label for="discount">Cancell </label>
-                                            <br />
-                                            <button class="btn btn-danger col-md-12" @click="removeColorForm(index)">Cancell</button>
-                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <span class="btn btn-round btn-file">
+                                            <span class="fileinput-new">Select image</span>
+                                                <input type="file" class="form-control" ref="fileupload" @change="imageChange(index)">
+                                            </span>
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <button class="btn btn-danger col-md-12" @click="removeColorForm(index)">Cancel</button>
                                     </div>
                                 </div>
-                                <div class="row" v-if="edit==true">
-                                    <div class="col-md-12">
-                                        <div v-for="(image, i) in find.product_images">
-                                          <img v-if="localImage==false" v-bind:src="'/ProductImages/'+image.image" class="col-md-1 img-thumbnail" height="auto" @click="deleteImage(index,i)" />
-                                          <img v-if="localImage==true" v-bind:src="image" class="col-md-1 img-thumbnail" height="auto" @click="deleteImage(index,i)" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row" v-if="edit==false">
-                                    <div class="col-md-12">
-                                        <div v-for="(image, i) in find.product_images">
-                                          <img v-bind:src="image" class="col-md-1 img-thumbnail" height="auto" @click="deleteImage(index,i)" />
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div> <!--Product Color Form-->
-                            <div class="form-group col-md-12">
-                                <button v-if="edit==false" type="submit" class="col-md-12 btn btn-default">Submit</button>
-                                <button v-if="edit==true" class="col-md-6 btn btn-default"  @click="saveEditing">Save</button>
-                                <button v-if="edit==true" class="col-md-6 btn btn-default"  @click="cancelEditing">Cancel Editing</button>
                             </div>
-                        </form>
+                            <div class="row" v-if="edit==true">
+                                <div class="col-md-12">
+                                    <div v-for="(image, i) in find.product_images">
+                                        <img v-if="localImage==false" v-bind:src="'/ProductImages/'+image.image" class="col-md-1 img-thumbnail" height="auto" @click="deleteImage(index,i)" />
+                                        <img v-if="localImage==true" v-bind:src="image" class="col-md-1 img-thumbnail" height="auto" @click="deleteImage(index,i)" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" v-if="edit==false">
+                                <div class="col-md-12">
+                                    <div v-for="(image, i) in find.product_images">
+                                        <img v-bind:src="image" class="col-md-1 img-thumbnail" height="auto" @click="deleteImage(index,i)" />
+                                    </div>
+                                </div>
+                            </div>
 
-                        <!-- <pre>{{ $data | json }}</pre> -->
-                    </div>
+                        </div> <!--Product Color Form-->
+                        <div class="form-group col-md-12">
+                            <button v-if="edit==false" type="submit" class="col-md-12 btn btn-default">Submit</button>
+                            <button v-if="edit==true" class="col-md-6 btn btn-default"  @click="saveEditing">Save</button>
+                            <button v-if="edit==true" class="col-md-6 btn btn-default"  @click="cancelEditing">Cancel Editing</button>
+                        </div>
+                    </form>
+
+                    <!-- <pre>{{ $data | json }}</pre> -->
                 </div>
-                <!-- end of panel -->
-                <div class="panel panel-default">
-                    <div class="panel-heading">Categories</div>
-                    <div class="panel-body">
-                      <table class="table table-bordered">
+            </div>
+            <!-- end of panel -->
+            <div class="panel panel-default">
+                <div class="panel-heading">Categories</div>
+                <div class="panel-body">
+                    <table id="cateprotable" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                         <thead>
-                          <tr>
+                        <tr>
                             <th>Product Name</th>
                             <th>Product Category</th>
                             <th>Release Date</th>
                             <th>Details</th>
                             <th>Action</th>
-                          </tr>
+                        </tr>
                         </thead>
                         <tbody>
-                          <tr v-for="(product, index) in allProducts">
+                        <tr v-for="(product, index) in allProducts">
                             <td>{{product.name}}</td>
                             <td>{{product.product_category.name}}</td>
                             <td>{{product.release_date}}</td>
                             <td>
-                              <button class="btn btn-default" v-on:click="showDetails(index)" data-toggle="modal" data-target="#myModal">Details</button>
+                                <button class="btn btn-github btn-xs" v-on:click="showDetails(index)" data-toggle="modal" data-target="#myModal">Details</button>
                             </td>
                             <td>
-                              <div class="dropdown">
-                                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Action
-                                <span class="caret"></span></button>
-                                  <ul class="dropdown-menu">
-                                    <li><a href="#" v-on:click="editProduct(index)">Edit</a></li>
-                                    <li><a href="#" v-on:click="deleteProduct(product.id,index)">Delete</a></li>
-                                </ul>
-                              </div>
+                                <div class="dropdown">
+                                    <button class="btn btn-info btn-xs dropdown-toggle" type="button" data-toggle="dropdown">Action
+                                        <span class="caret"></span></button>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#" v-on:click="editProduct(index)">Edit</a></li>
+                                        <li><a href="#" v-on:click="deleteProduct(product.id,index)">Delete</a></li>
+                                    </ul>
+                                </div>
                             </td>
-                          </tr>
+                        </tr>
                         </tbody>
-                      </table>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Model -->
+        <div class="modal fade " id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Product Details</h4>
                     </div>
-                  </div>
+                    <div class="modal-body">
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group col-md-4">
+                                    <label for="productName">Product Name</label>
+                                    <input type="text" readonly class="form-control" v-bind:value="details.productName">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="productCategory">Product Category</label>
+                                    <input type="text" readonly class="form-control" v-bind:value="details.productCategory">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="ReleaseDate">Release Date</label>
+                                    <input type="text" readonly class="form-control" v-bind:value="details.releaseDate">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div v-for="(find, index) in details.finds" class="well well-sm"> <!--Product Color Form-->
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group col-md-6">
+                                        <label for="colorName">Color Name</label>
+                                        <input type="text" v-bind:value="find.color" class="form-control" readonly>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="price">Price</label>
+                                        <input type="text" v-bind:value="find.price" class="form-control" readonly>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="discount">Discount(%)</label>
+                                        <input type="text" name="Discount" class="form-control" v-bind:value="find.discount+'%'" readonly>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div v-for="(image, index) in find.product_images">
+                                        <img v-bind:src="'./product_img/'+image.image" class="col-md-3 img-thumbnail" height="auto" />
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-github" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+
 
             </div>
         </div>
         <!-- Model -->
-        <div class="modal fade col-md-12" id="myModal" role="dialog">
-         <div class="modal-dialog">
 
-           <!-- Modal content-->
-           <div class="modal-content">
-             <div class="modal-header">
-               <button type="button" class="close" data-dismiss="modal">&times;</button>
-               <h4 class="modal-title">Product Details</h4>
-             </div>
-             <div class="modal-body">
+    </div>
 
-               <div class="row">
-                   <div class="col-md-12">
-                     <div class="form-group col-md-4">
-                         <label for="productName">Product Name</label>
-                         <input type="text" readonly class="form-control" v-bind:value="details.productName">
-                     </div>
-                     <div class="form-group col-md-4">
-                         <label for="productCategory">Product Category</label>
-                         <input type="text" readonly class="form-control" v-bind:value="details.productCategory">
-                     </div>
-                     <div class="form-group col-md-4">
-                         <label for="ReleaseDate">Release Date</label>
-                         <input type="text" readonly class="form-control" v-bind:value="details.releaseDate">
-                     </div>
-                   </div>
-              </div>
-
-              <div v-for="(find, index) in details.finds" class="well well-sm"> <!--Product Color Form-->
-                  <div class="row">
-                      <div class="col-md-12">
-                          <div class="form-group col-md-6">
-                              <label for="colorName">Color Name</label>
-                              <input type="text" v-bind:value="find.color" class="form-control" readonly>
-                          </div>
-                          <div class="form-group col-md-3">
-                              <label for="price">Price</label>
-                              <input type="text" v-bind:value="find.price" class="form-control" readonly>
-                          </div>
-                          <div class="form-group col-md-3">
-                              <label for="discount">Discount</label>
-                              <input type="text" name="Discount" class="form-control" v-bind:value="find.discount+'%'" readonly>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="row">
-                      <div class="col-md-12">
-                          <div v-for="(image, index) in find.product_images">
-                            <img v-bind:src="'/ProductImages/'+image.image" class="col-md-3 img-thumbnail" height="auto" />
-                          </div>
-                      </div>
-                  </div>
-
-              </div>
-
-             </div>
-           </div>
-
-         </div>
-        </div>
-        <!-- Model -->
     </div>
 </template>
 
@@ -375,6 +391,21 @@
 
         }
     }
+    $(document).ready(function() {
+        $('#cateprotable').DataTable({
+            "pagingType": "full_numbers",
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ],
+            responsive: true,
+            language: {
+                search: "_INPUT_",
+                searchPlaceholder: "Search records",
+            }
+
+        });
+    });
 </script>
 <style scoped>
 .middle {

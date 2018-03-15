@@ -13,6 +13,7 @@ use App\Currency;
 use App\PaymentType;
 use App\Designation;
 use App\ReceiveStatus;
+use App\WarehouseType;
 use Response;
 
 class GeneralController extends Controller
@@ -23,7 +24,7 @@ class GeneralController extends Controller
     }
     public function index()
     {
-      $permissions=array('city','region','department','staffType','designation','payment','currency','receivestatus');
+      $permissions=array('city','region','department','staffType','designation','payment','currency','receivestatus','warehouseType');
       //$permissions=array('');
       // if($this->checkPermission(3)){
       //   array_push($permissions,'city');
@@ -266,4 +267,39 @@ class GeneralController extends Controller
         $records=ReceiveStatus::create(['status'=>$name, 'created_by'=>$user_id]);
         return 201;
     }
+
+
+    //warehouseType Managemnet
+    public function warehouseType()
+    {
+        return warehouseType::all();
+    }
+
+    public function createWarehouseType(Request $request)
+    {
+        $warehouseType=$request->input('warehouseType');
+        try{
+          $createdWarehouseType=warehouseType::create(['type'=>$warehouseType]);
+        }catch(\Exception $e){
+          $return=array('return'=>1,'data'=>$e);
+          return $return;
+        }
+        $return=array('return'=>0,'data'=>$createdWarehouseType);
+        return $return;
+    }
+
+    public function editWarehouseType(Request $request)
+    {
+      $id=$request->input('id');
+      $warehouseType=$request->input('warehouseType');
+      try{
+        warehouseType::where('id',$id)->update(['type'=>$warehouseType]);
+      }catch(\Exception $e){
+        $return=array('return'=>1,'data'=>$e);
+        return $return;
+      }
+      $return=array('return'=>0);
+      return $return;
+    }
+    //warehouseType Managemnet
 }

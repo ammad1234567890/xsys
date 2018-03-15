@@ -10,8 +10,16 @@ class Order extends Model
 	protected $fillable = ['id','eta','total_cost','remaining_payment','created_by','updated_by'];
 
 	public function manufacture_order_products(){
-		return $this->hasMany('App\OrderProducts');
+		return $this->hasMany('App\OrderProducts','manufacture_order_id');
 	}
+
+  public function payment(){
+    return $this->hasMany('App\OrderPayment','manufacture_order_id');
+  }
+
+  public function order_status(){
+    return $this->hasMany('App\OrderStatus','manufacturing_order_id');
+  }
 
 	static $a;
     public static function updated($v){

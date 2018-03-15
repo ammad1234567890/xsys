@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Auth;
 use DB;
 use App\Retailer;
+use App\RetailerOrder;
+use App\RetailerOrderProduct;
 use Response;
 
 
@@ -189,5 +191,53 @@ class RetailerController extends Controller
         $records=Retailer::where('is_deleted',0)->get();
 
         return Response::json($records);
+    }
+
+    //Registered a route with the name of 'retailer/order/create'
+    public function create_new_order(Request $request){
+        $estimation_date= $request->input('estimation_date');
+        $duration= $request->input('retailer_credit_duration');
+        $ageing_duration=date('Y-m-d', strtotime($estimation_date. ' + '.$duration.' days'));
+        $retailer_id= $request->input('retailer_id');
+        $retailer_outlet_id= $request->input('retailer_outlet_id');
+        $sales_officer_id= $request->input('sales_officer_id');
+        $warehouse_id= $request->input('warehouse_id');
+        $products= $request->input('products');
+        $user=Auth::user()->id;
+
+
+        $order_created=RetailerOrder::create(['expected_delivery_date'=>$estimation_date,
+            'retailer_id'=>$retailer_id,
+            'outlet_id'=>$retailer_outlet_id,
+            'sales_officer_id'=>$sales_officer_id,
+            'total_cost'=>0,
+            'remaining_payment'=>0,
+            'retailer_order_status_id'=>1,
+            'warehouse_id'=>$warehouse_id,
+            'ageing_date'=>$ageing_duration,
+            'created_by'=>$user
+        ]);
+        $order_id= $order_created->id;
+        $total_order_price=0;
+        foreach($products as $product){
+            $products_arr=array(
+                'retailer_order_id'=>$order_id,
+                'product_color_id'=>$product['product_color_id'],
+                'product_qty'=>$product['quantity'],
+                'unit_price'=>$product['cost_per_set'],
+                'total_price'=>($product['quantity']*$product['cost_per_set']),
+                'created_by'=>$user
+            );
+            $total_order_price+=$product['quantity']*$product['cost_per_set'];
+            RetailerOrderProduct::create($products_arr);
+        }
+
+        RetailerOrder::where('id',$order_id)->update(['total_cost'=>$total_order_price,'remaining_payment'=>$total_order_price]);
+        return 201;
+    }
+
+    //Registered a route with the name of 'retailer/create_order'
+    public function create_order(){
+        return View('create_retailer_order');
     }
 }

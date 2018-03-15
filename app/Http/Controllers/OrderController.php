@@ -19,6 +19,7 @@ use App\Product;
 use App\ProductColor;
 use App\ProductImage;
 use App\OrderPayment;
+use App\OrderStatus;
 use Response;
 
 
@@ -106,8 +107,16 @@ class OrderController extends Controller
     }
 
     //Registered a route with the name of /order/get_orders
-    public function get_orders(){
+    public function get_transaction_closed_orders(){
         $records=Order::where('transaction_closed',0)->get();
+        return Response::json($records);
+    }
+
+    //Registered a route with the name of /order/get_orders
+    public function get_all_orders(){
+        $records=Order::with(['payment','payment.payment_type','payment.currency','payment.user','manufacture_order_products','manufacture_order_products.ProductColor','manufacture_order_products.ProductColor.product','manufacture_order_products.ProductColor.product.productCategory','user','order_status' => function ($q) {
+            $q->latest()->limit(1);
+        }])->where('is_deleted',0)->get();
         return Response::json($records);
     }
 
@@ -159,25 +168,30 @@ class OrderController extends Controller
             return $e;
         }
 
-        foreach($order_products as $products){
-            $product=array(
-                'receive_id'=>$receive_id,
-                'product_color_id'=>$products['id'],
-                'product_qty'=>$products['quantity'],
-                'created_by'=>$user
-            );
-            try{
-                ReceiveProducts::create($product);
-                $data=OrderProducts::Select('remaining_qty')->where('manufacture_order_id',$order_id)->where('product_color_id',$products['id'])->get();
-                $remaining_qty=$data[0]['remaining_qty'];
-                $final_qty=$data[0]['remaining_qty']-$products['quantity'];
-                OrderProducts::where('manufacture_order_id',$order_id)->where('product_color_id',$products['id'])->update(['remaining_qty'=>$final_qty]);
-            }
-            catch(\Exception $e){
-                DB::rollBack();
-                return $e;
-            }
+
+            foreach($order_products as $products){
+                $product=array(
+                    'receive_id'=>$receive_id,
+                    'product_color_id'=>$products['id'],
+                    'product_qty'=>$products['quantity'],
+                    'created_by'=>$user
+                );
+                try{
+                    ReceiveProducts::create($product);
+                    if($qa_check==1){
+                    $data=OrderProducts::Select('remaining_qty')->where('manufacture_order_id',$order_id)->where('product_color_id',$products['id'])->get();
+                    $remaining_qty=$data[0]['remaining_qty'];
+                    $final_qty=$data[0]['remaining_qty']-$products['quantity'];
+                    OrderProducts::where('manufacture_order_id',$order_id)->where('product_color_id',$products['id'])->update(['remaining_qty'=>$final_qty]);
+                    }
+                }
+                catch(\Exception $e){
+                    DB::rollBack();
+                    return $e;
+                }
+
         }
+
 
         return 201;
     }
@@ -201,7 +215,7 @@ class OrderController extends Controller
             'created_by'=>    $userId
         ]);
 
-        $records=Order::Select('remaining_payment')->get();
+        $records=Order::Select('remaining_payment')->where('id', $order_id)->get();
         $remaining_total_payment=$records[0]['remaining_payment'];
         $remaining_payment=$remaining_total_payment-$final_amount;
 
@@ -221,6 +235,54 @@ class OrderController extends Controller
         $records=Order::where('id', $id)->get();
         return Response::json($records);
     }
+
+    //Registered a route with the name of /order/all_orders
+    public function get_orders(){
+        return view('all_orders');
+    }
+
+
+    //Registered a route with the name of /order/change_order_status
+    public function change_order_status(Request $request){
+        $order_id= $request->input('id');
+        $status= $request->input('status');
+        $userId=Auth::user()->id;
+
+        try{
+            OrderStatus::create(['manufacturing_order_id'=>$order_id, 'status'=>$status, 'created_by'=>$userId]);
+        }
+        catch(\Exception $e){
+            return $e;
+        }
+
+        return 201;
+
+    }
+
+    //Registered a route with the name of /order/received_orders
+    public function received_orders(){
+        return View('receive_orders');
+    }
+
+    //Registered a route with the name of /order/received_order_details
+    public function received_order_details(){
+        $records=Receive::with('Staff','ReceiveStatus','ReceiveProducts','ReceiveProducts.ProductColor','ReceiveProducts.ProductColor.product','ReceiveProducts.ProductColor.product.productCategory')->get();
+        return Response::json($records);
+    }
+    //Registered a route with the name of /order/delete
+    public function delete_order(Request $request){
+       $order_id= $request->input('id');
+       try{
+           Order::where('id', $order_id)->update(['is_deleted'=>1]);
+           return 201;
+       }
+       catch(\Exception $e){
+           return $e;
+       }
+
+    }
+
+
 
 }
 

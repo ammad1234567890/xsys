@@ -18,6 +18,8 @@ class TblCurrency extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('iso');
+            $table->unsignedInteger('created_by')->index();
+            $table->unsignedInteger('updated_by')->index()->nullable();
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('updated_by')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();

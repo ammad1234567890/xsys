@@ -28,7 +28,7 @@ Vue.component('product-component', require('./components/ProductComponent.vue'))
 Vue.component('role-component', require('./components/RoleComponent.vue'));
 Vue.component('userrole-component', require('./components/UserRoleComponent.vue'));
 Vue.component('category-component', require('./components/categoryComponent.vue'));
-Vue.component('product-component', require('./components/productComponent.vue'));
+//Vue.component('product-component', require('./components/productComponent.vue'));
 Vue.component('order-component', require('./components/OrderComponent.vue'));
 Vue.component('receive-component', require('./components/ReceiveComponent.vue'));
 Vue.component('orderpayment-component', require('./components/OrderPaymentComponent.vue'));
@@ -41,6 +41,31 @@ Vue.component('staff-component', require('./components/staffComponent.vue'));
 Vue.component('payment-component', require('./components/PaymentTypeComponent.vue'));
 Vue.component('currency-component', require('./components/CurrencyComponent.vue'));
 Vue.component('receivestatus-component', require('./components/ReceiveStatusComponent.vue'));
+Vue.component('allorders-component', require('./components/allOrdersComponent.vue'));
+Vue.component('receiveorders-component', require('./components/ReceiveOrdersComponent.vue'));
+Vue.component('createretailerorders-component', require('./components/CreateRetailerOrderComponent.vue'));
+Vue.component('retailerorders-component', require('./components/RetailerOrderComponent.vue'));
+Vue.component('warehouse-component', require('./components/WarehouseComponent.vue'));
+Vue.component('warehouseissue-component', require('./components/WarehouseIssueComponent.vue'));
+Vue.component('warehousestaff-component', require('./components/warehouseStaffComponent.vue'));
+Vue.component('mainwarehousereceive-component',require('./components/mainWarehouseReceiveComponent.vue'));
+//Vue.component('mainwarehousereceive-component',require('./components/mainWarehouseReceiveComponent.vue'));
+Vue.component('warehousetype-component', require('./components/WarehouseTypeComponent.vue'));
+Vue.component('financeorderapproval-component', require('./components/OrderFinanceApprovalComponent.vue'));
+
+Vue.component('retailerbox-component', require('./components/RetailerboxComponent.vue'));
+Vue.component('manufactureorder-component', require('./components/ManufactureorderComponent.vue'));
+Vue.component('totalproduct-component', require('./components/TotalproductComponent.vue'));
+Vue.component('totalwarehouse-component', require('./components/TotalwarehouseComponent.vue'));
+Vue.component('activeproduct-component', require('./components/ActiveproductComponent.vue'));
+Vue.component('totalemployeesbox-component', require('./components/TotalemployeesboxComponent.vue'));
+Vue.component('salereport-component', require('./components/SalereportComponent.vue'));
+Vue.component('regionwisereport-component', require('./components/RegionwisesalereportComponent.vue'));
+Vue.component('productstats-component', require('./components/ProductstatsComponent.vue'));
+Vue.component('invoiceview-component', require('./components/InvoiceviewComponent.vue'));
+Vue.component('collection-component', require('./components/CollectionComponent.vue'));
+
+
 const app = new Vue({
     el: '#app'
 });

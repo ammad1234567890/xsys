@@ -1,0 +1,11 @@
+@extends('layouts.app')
+
+@section('content')
+<div class="content">
+    <div class="container-fluid">
+  		<invoiceview-component></invoiceview-component>
+  	</div>
+</div>
+
+
+@endsection

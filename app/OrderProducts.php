@@ -10,7 +10,7 @@ class OrderProducts extends Model
    protected $table="tbl_manufacturing_order_product";
 
    public function Order(){
-   		return $this->belongsTo('App\Order');
+   		return $this->belongsTo('App\Order','manufacture_order_id');
    }
 
    public function ProductColor(){

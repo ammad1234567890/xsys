@@ -1,10 +1,12 @@
 <template>
 
 <div class="row">
+    <div class="card headcolor">
+        <div class="card-header">
+                <h3 class="card-title pad-bot"><i class="material-icons">shopping_cart</i> <small>ORDER RECIEVING</small> </h3>
+        </div>
+    </div>
     <div class="col-md-12">
-
-        <h2 style="margin-top: 6px; font-variant: small-caps; font-weight:bold;">Order Recieving</h2>
-        <hr/>
         <div class="panel panel-info">
             <div class="panel-heading">Recieving new Order</div>
             <div class="alert alert-success"  v-if="message">

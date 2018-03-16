@@ -22,8 +22,8 @@ class TblRetailerCollection extends Migration
             $table->unsignedInteger('retailer_id')->index();
             $table->unsignedInteger('retailer_outlet_id')->index();
             $table->unsignedInteger('invoice_id')->index();
-            $table->decimal('outstanding_amount', 13, 2);
-            $table->string('cheque_number');
+            $table->decimal('amount', 13, 2);
+            $table->string('cheque_number')->nullable();
             $table->string('deposit_slip_number');
             $table->longText('remarks');
             $table->unsignedInteger('created_by')->index();
@@ -34,8 +34,8 @@ class TblRetailerCollection extends Migration
             $table->foreign('retailer_id')->references('id')->on('tbl_retailer')->onDelete('cascade');
             $table->foreign('retailer_outlet_id')->references('id')->on('tbl_retailer_outlet')->onDelete('cascade');
             $table->foreign('invoice_id')->references('id')->on('tbl_invoice')->onDelete('cascade');
-            $table->foreign('created_by')->references('id')->on('user')->onDelete('cascade');
-            $table->foreign('updated_by')->references('id')->on('user')->onDelete('cascade');
+            $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('updated_by')->references('id')->on('users')->onDelete('cascade')->nullable();
             $table->timestamps();
         });
     }

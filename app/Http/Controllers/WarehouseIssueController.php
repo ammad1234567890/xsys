@@ -8,7 +8,8 @@ use App\WarehouseIssue;
 use App\WarehouseIssueItem;
 use App\Invoice;
 use App\IMEI;
-
+use App\WarehouseStock;
+use App\Item;
 use DB;
 
 use Illuminate\Http\Request;
@@ -31,6 +32,7 @@ class WarehouseIssueController extends Controller
     $warehouse=WarehouseStaff::where( 'staff_id',$staffId )->first();
     $issueRequest=WarehouseIssue::where([['warehouse_id','=',$warehouse->id],['is_issued','=',False]])->get();
     return $issueRequest;
+    //return $warehouse;
   }
  
   public function getProducts($id)
@@ -51,20 +53,28 @@ class WarehouseIssueController extends Controller
     $warehouseIssue_id=$request->input('warehouseIssue_id');
     $userId=Auth::user()->id;
     foreach($imei as $i) {
+      
+     // try{ 
       $imeiRecord=IMEI::where('imei1',$i)->first();
       $itemId=$imeiRecord['item_id'];
-      try{ 
+      $item=Item::where('id',$itemId)->first();
+      $productColorId=$item['product_color_id'];
       DB::beginTransaction(); 
       if(WarehouseIssueItem::where('item_id',$itemId)->exists()){
         return 2;
       }else{
         WarehouseIssueItem::create(['warehouse_issue_id'=>$warehouseIssue_id,'item_id'=>$itemId,'created_by'=>$userId]);
         WarehouseIssue::where('id',$warehouseIssue_id)->update(['is_issued'=>True]);
+        $warehouseIssue=WarehouseIssue::where('id',$warehouseIssue_id)->first();
+        $warehouseStock=WarehouseStock::where([['product_color_id','=',$productColorId],['warehouse_id','=',$warehouseIssue['warehouse_id']]])->first();
+        $qty=$warehouseStock['product_qty']-1;
+        WarehouseStock::where([['product_color_id','=',$productColorId],['warehouse_id','=',$warehouseIssue['warehouse_id']]])->update(['product_qty'=>$qty]);
+
       }    
-      }catch(\Exception $e){
-        DB::rollback();
-        return 1;
-      }
+      // }catch(\Exception $e){
+      //   DB::rollback();
+      //   return 1;
+      // }
     }
       DB::commit();
       return 0;

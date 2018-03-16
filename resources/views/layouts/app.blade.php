@@ -132,6 +132,9 @@
                                 <li>
                                     <a href="{{ url('mainWarehouseReceive') }}">Warehouse Receive</a>
                                 </li>
+                                <li>
+                                    <a href="{{ url('warehouseIssue') }}">Warehouse Issue</a>
+                                </li>
                             </ul>
                         </div>
                     </li>

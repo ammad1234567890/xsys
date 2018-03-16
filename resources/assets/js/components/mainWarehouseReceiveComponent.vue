@@ -71,7 +71,7 @@
                                     <tr v-for="(imei, index) in newItems.imei">
                                         <td>{{index + 1}}</td>
                                         <td>{{imei}}</td>
-                                        <td><button class="btn btn-danger" @click="removeIMEI(index)">Remove</button></td>
+                                        <td><button class="btn btn-danger btn-sm" @click="removeIMEI(index)">Remove</button></td>
                                     </tr>
                                     </tbody>
                                 </table>

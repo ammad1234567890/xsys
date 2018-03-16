@@ -46,7 +46,7 @@
                                     <div class="col-md-6 col-sm-3">
                                         <div class="form-group">
                                             <div class="select">
-                                                <select class="form-control" required>
+                                                <select class="form-control" v-model="new_payment.bank_id" required>
                                                     <option value="">Bank Name</option>
                                                     <option v-for="(bank, index) in banks" v-bind:value="bank.id">{{bank.bank_name}}</option>
                                                 </select>
@@ -99,12 +99,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6 col-sm-3">
-                                        <div class="form-group label-floating">
-                                            <label class="control-label">Outstanding Amount</label>
-                                            <input type="text" class="form-control" v-model="new_payment.outstanding_amount" required>
-                                        </div>
-                                    </div>
+
 
                                     <div class="col-md-6 col-sm-3">
                                         <div class="form-group label-floating">
@@ -140,6 +135,7 @@
                 selected_invoice_index:'',
                 selected_payment_index:'',
                 new_payment:{
+                    bank_id:'',
                     invoice_id:'',
                     payment_id:'',
                     currency_id:'',
@@ -200,4 +196,10 @@
             },
             submit_payment:function(){
                 axios.post('../retailer/order/add_payment',this.new_payment).then((response)=> {
-                    alert(response.data
+                    alert(response.data);
+                });
+
+            }
+        }
+    }
+</script>

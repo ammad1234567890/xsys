@@ -143,6 +143,9 @@
                             </div>
 
                         </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-github" data-dismiss="modal">Close</button>
+                    </div>
                     </div>
                 </div>
             </div>
@@ -173,6 +176,9 @@
                             </div>
 
 
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-github" data-dismiss="modal">Close</button>
                         </div>
                     </div>
                 </div>

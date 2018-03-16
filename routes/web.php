@@ -160,7 +160,15 @@ Route::get('/allStaffType','GeneralController@staffType');
 Route::post('/createStaffType','GeneralController@createStaffType');
 Route::post('/editStaffType','GeneralController@editStaffType');
 //Staff type
-
+//Warehouse type
+Route::get('/allWarehouseType','GeneralController@warehouseType');//->middleware('accesscontrol:7');
+Route::post('/createWarehouseType','GeneralController@createWarehouseType');//->middleware('accesscontrol:7');
+Route::post('/editWarehouseType','GeneralController@editWarehouseType');//->middleware('accesscontrol:7');
+//Warehouse type
+//Designation
+Route::get('/allDesignations','GeneralController@designations')->middleware('accesscontrol:8');
+Route::post('/createDesignation','GeneralController@createDesignation')->middleware('accesscontrol:8');
+Route::post('/editDesignation','GeneralController@editDesignation')->middleware('accesscontrol:8');
 //Designation
 //middleware('accesscontrol:7')
 Route::get('/allDesignations','GeneralController@designations');

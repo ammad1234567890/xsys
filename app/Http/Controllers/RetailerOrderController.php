@@ -24,6 +24,7 @@ use App\RetailerOrder;
 use App\RetailerOrderProduct;
 use App\Invoice;
 use App\RetailerCollection;
+use App\Ledger;
 use Response;
 
 
@@ -121,22 +122,43 @@ class RetailerOrderController extends Controller
     }
     //Registered a route with the name of /retailer/order/add_payment
     public function add_order_payment(Request $request){
+        $bank_id= $request->input('bank_id');
         $invoice_id= $request->input('invoice_id');
         $payment_id= $request->input('payment_id');
         $selected_invoice_retailer_id= $request->input('selected_invoice_retailer_id');
+        $currency_id=$request->input('currency_id');
         $selected_invoice_retailer_outlet_id= $request->input('selected_invoice_retailer_outlet_id');
         $cheque_no= $request->input('cheque_no');
         $amount_in_rs= $request->input('amount_in_rs');
         $deposit_slip_no= $request->input('deposit_slip_no');
-        $outstanding_amount= $request->input('outstanding_amount');
+       $user=Auth::user()->id;
         $remarks= $request->input('remarks');
-        RetailerCollection::create(['bank_id'=>,
-            'currency_id'=>,
+
+        $OrderCollection=RetailerCollection::create(['bank_id'=>$bank_id,
+            'currency_id'=>$currency_id,
             'payment_type_id'=>$payment_id,
             'retailer_id'=>$selected_invoice_retailer_id,
             'retailer_outlet_id'=>$selected_invoice_retailer_outlet_id,
             'invoice_id'=>$invoice_id,
-            'outstanding_amount'=>]);
+            'cheque_number'=>$cheque_no,
+            'amount'=>$amount_in_rs,
+            'deposit_slip_number'=>$deposit_slip_no,
+            'remarks'=>$remarks,
+            'created_by'=>$user
+        ]);
+
+        $collection_id=$OrderCollection->id;
+
+        Ledger::create([
+            'invoice_id'=>$invoice_id,
+            'retailer_id'=>$selected_invoice_retailer_id,
+            'collection_id'=>$collection_id,
+            'TransDate'=>date('Y-m-d'),
+            'description'=>'Something',
+            'Collection'=>$amount_in_rs,
+            'Credit'=>$amount_in_rs
+        ]);
+
     }
 }
 

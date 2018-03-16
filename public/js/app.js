@@ -75794,7 +75794,7 @@ var render = function() {
                   _c(
                     "button",
                     {
-                      staticClass: "btn btn-default",
+                      staticClass: "btn btn-info",
                       on: { click: _vm.add_more_products }
                     },
                     [
@@ -75852,7 +75852,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-md-12" }, [
-        _c("button", { staticClass: "btn btn-primary pull-right" }, [
+        _c("button", { staticClass: "btn btn-tumblr pull-right" }, [
           _c("i", { staticClass: "fa fa-check" }),
           _vm._v(" Order Recieved")
         ])
@@ -75924,9 +75924,6 @@ module.exports = Component.exports
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-//
-//
-//
 //
 //
 //
@@ -76140,21 +76137,9 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row" }, [
+    _vm._m(0),
+    _vm._v(" "),
     _c("div", { staticClass: "col-md-12" }, [
-      _c(
-        "h2",
-        {
-          staticStyle: {
-            "margin-top": "6px",
-            "font-variant": "small-caps",
-            "font-weight": "bold"
-          }
-        },
-        [_vm._v("Order Payment")]
-      ),
-      _vm._v(" "),
-      _c("hr"),
-      _vm._v(" "),
       _c("div", { staticClass: "panel panel-info" }, [
         _c("div", { staticClass: "panel-heading" }, [
           _vm._v("Add Order Payment")
@@ -76503,7 +76488,7 @@ var render = function() {
                 _c("div", { staticClass: "clearfix" })
               ]),
               _vm._v(" "),
-              _vm._m(0)
+              _vm._m(1)
             ]
           )
         ])
@@ -76516,9 +76501,23 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card headcolor" }, [
+      _c("div", { staticClass: "card-header" }, [
+        _c("h3", { staticClass: "card-title pad-bot" }, [
+          _c("i", { staticClass: "material-icons" }, [_vm._v("store")]),
+          _vm._v(" "),
+          _c("small", [_vm._v("ORDER PAYMENT")])
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-md-12" }, [
-        _c("button", { staticClass: "btn btn-primary pull-right" }, [
+        _c("button", { staticClass: "btn btn-tumblr pull-right" }, [
           _c("i", { staticClass: "fa fa-check" }),
           _vm._v(" Add Payment")
         ])

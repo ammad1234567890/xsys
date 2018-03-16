@@ -98,7 +98,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <button class="btn btn-default" v-on:click="add_more_products"><i class="fa fa-plus"></i> Add More</button>
+                            <button class="btn btn-info" v-on:click="add_more_products"><i class="fa fa-plus"></i> Add More</button>
                         </div>
                     </div>
                     <br/>
@@ -141,7 +141,7 @@
 
 
                         <div class="col-md-12">
-                            <button class="btn btn-primary pull-right"><i class="fa fa-check"></i> Order Recieved</button>
+                            <button class="btn btn-tumblr pull-right"><i class="fa fa-check"></i> Order Recieved</button>
                         </div>
                     </div>
                 </form>

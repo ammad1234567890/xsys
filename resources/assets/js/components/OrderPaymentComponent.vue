@@ -1,10 +1,12 @@
 <template>
 
     <div class="row">
+        <div class="card headcolor">
+              <div class="card-header">
+                      <h3 class="card-title pad-bot"><i class="material-icons">store</i> <small>ORDER PAYMENT</small> </h3>
+              </div>
+          </div>
         <div class="col-md-12">
-
-            <h2 style="margin-top: 6px; font-variant: small-caps; font-weight:bold;">Order Payment</h2>
-            <hr/>
             <div class="panel panel-info">
                 <div class="panel-heading">Add Order Payment</div>
 
@@ -13,11 +15,6 @@
                         <strong>{{message}}</strong>
                     </div>
                     <form @submit.prevent="add_payment">
-
-
-
-
-
                         <div class="row">
                             <div class="col-md-6 form-group">
                                 <label for="select_order_no">Select Order No</label>
@@ -80,7 +77,7 @@
 
 
                             <div class="col-md-12">
-                                <button class="btn btn-primary pull-right"><i class="fa fa-check"></i> Add Payment</button>
+                                <button class="btn btn-tumblr pull-right"><i class="fa fa-check"></i> Add Payment</button>
                             </div>
                         </div>
                     </form>

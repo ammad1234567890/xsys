@@ -48,6 +48,7 @@ Vue.component('retailerorders-component', require('./components/RetailerOrderCom
 Vue.component('warehouse-component', require('./components/WarehouseComponent.vue'));
 Vue.component('warehouseissue-component', require('./components/WarehouseIssueComponent.vue'));
 Vue.component('warehousestaff-component', require('./components/warehouseStaffComponent.vue'));
+Vue.component('warehousestock-component', require('./components/warehouseStockComponent.vue'));
 Vue.component('mainwarehousereceive-component',require('./components/mainWarehouseReceiveComponent.vue'));
 //Vue.component('mainwarehousereceive-component',require('./components/mainWarehouseReceiveComponent.vue'));
 Vue.component('warehousetype-component', require('./components/WarehouseTypeComponent.vue'));
@@ -64,6 +65,8 @@ Vue.component('regionwisereport-component', require('./components/Regionwisesale
 Vue.component('productstats-component', require('./components/ProductstatsComponent.vue'));
 Vue.component('invoiceview-component', require('./components/InvoiceviewComponent.vue'));
 Vue.component('collection-component', require('./components/CollectionComponent.vue'));
+Vue.component('retailerledger-component', require('./components/RetailerLedgerComponent.vue'));
+Vue.component('bank-component', require('./components/BankComponent.vue'));
 
 
 const app = new Vue({

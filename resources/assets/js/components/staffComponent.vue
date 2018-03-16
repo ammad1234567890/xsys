@@ -18,7 +18,7 @@
                         </div>
                         <div class="form-group col-md-6">
                           <label for="CNIC">CNIC</label>
-                          <input type="text" v-validate="'required|regex:^[0-9 -]+$|digits:13'" v-model="newStaff.CNIC" v-mask="'99999-9999999-9'" class="form-control" name="cnic" placeholder="CNIC without - /" required>
+                          <input type="text" v-validate="'required|regex:^[0-9 -]+$'" v-model="newStaff.CNIC" v-mask="'99999-9999999-9'" class="form-control" name="cnic" placeholder="CNIC without - /" required>
                           <span class="text-danger" v-show="errors.has('cnic')">
                             {{errors.first('cnic')}}
                           </span>
@@ -32,7 +32,7 @@
                         </div>
                         <div class="form-group col-md-6">
                           <label for="phoneNumber">Phone Number</label>
-                          <input type="text" v-validate="'required|regex:^[0-9 -]+$|digits:11'" v-mask="'9999-9999999'" v-model="newStaff.phoneNumber" class="form-control" name="phoneNumber" placeholder="Phone Number" required>
+                          <input type="text" v-validate="'required|regex:^[0-9 -]+$'" v-mask="'9999-9999999'" v-model="newStaff.phoneNumber" class="form-control" name="phoneNumber" placeholder="Phone Number" required>
                           <span class="text-danger" v-show="errors.has('phoneNumber')">
                             {{errors.first('phoneNumber')}}
                           </span>

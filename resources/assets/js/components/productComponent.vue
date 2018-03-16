@@ -98,10 +98,10 @@
                             </div>
 
                         </div> <!--Product Color Form-->
-                        <div class="form-group col-md-12">
-                            <button v-if="edit==false" type="submit" class="col-md-12 btn btn-default">Submit</button>
-                            <button v-if="edit==true" class="col-md-6 btn btn-default"  @click="saveEditing">Save</button>
-                            <button v-if="edit==true" class="col-md-6 btn btn-default"  @click="cancelEditing">Cancel Editing</button>
+                        <div class="form-group row">
+                                <button v-if="edit==false" type="submit" class="col-md-12 btn btn-default">Submit</button>
+                                <button v-if="edit==true" class="btn btn-tumblr"  @click="saveEditing">Save</button>
+                                <button v-if="edit==true" class="btn btn-pinterest"  @click="cancelEditing">Cancel Editing</button>
                         </div>
                     </form>
 
@@ -392,7 +392,8 @@
         }
     }
     $(document).ready(function() {
-        $('#cateprotable').DataTable({
+        setTimeout(function(){
+            $('#cateprotable').DataTable({
             "pagingType": "full_numbers",
             "lengthMenu": [
                 [10, 25, 50, -1],
@@ -403,8 +404,8 @@
                 search: "_INPUT_",
                 searchPlaceholder: "Search records",
             }
-
-        });
+            });
+        },5000);
     });
 </script>
 <style scoped>

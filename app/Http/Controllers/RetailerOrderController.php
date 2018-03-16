@@ -131,8 +131,9 @@ class RetailerOrderController extends Controller
         $cheque_no= $request->input('cheque_no');
         $amount_in_rs= $request->input('amount_in_rs');
         $deposit_slip_no= $request->input('deposit_slip_no');
-       $user=Auth::user()->id;
+        $user=Auth::user()->id;
         $remarks= $request->input('remarks');
+        $total_invoice_amount= $request->input('invoice_actual_amount');
 
         $OrderCollection=RetailerCollection::create(['bank_id'=>$bank_id,
             'currency_id'=>$currency_id,
@@ -150,14 +151,16 @@ class RetailerOrderController extends Controller
         $collection_id=$OrderCollection->id;
 
         Ledger::create([
-            'invoice_id'=>$invoice_id,
+            'invoice_id'=>null,
             'retailer_id'=>$selected_invoice_retailer_id,
             'collection_id'=>$collection_id,
             'TransDate'=>date('Y-m-d'),
-            'description'=>'Something',
+            'description'=>' collection no: '.$collection_id,
             'Collection'=>$amount_in_rs,
-            'Credit'=>$amount_in_rs
+            'Credit'=>null
         ]);
+
+        return 201;
 
     }
 }

@@ -21,8 +21,8 @@
                             <th>Order By</th>
                             <th>Order At</th>
                             <th>Products</th>
-                            <th>Order Transaction</th>
-                            <th>Action</th>
+                            <th>Status</th>
+                            <th class="col-md-3">Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -43,7 +43,7 @@
                                         <li><a href="#" v-on:click="order_delete(index)">Delete</a></li>
                                         <li><a href="#" v-on:click="change_status_btn(index)">Change Status</a></li>
                                     </ul>
-                                    <button class="btn btn-tumblr btn-xs dropdown-toggle" type="button" v-on:click="view_order_details(index)">View Details</button>
+                                    <button class="btn btn-tumblr btn-xs" type="button" v-on:click="view_order_details(index)">View Details</button>
                                 </div>
                             </td>
                         </tr>

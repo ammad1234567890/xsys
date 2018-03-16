@@ -52,7 +52,7 @@
                                     <th>S.No</th>
                                     <th>Category Name</th>
                                     <th>Description</th>
-                                    <th>Action</th>
+                                    <th class="col-md-3">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -227,7 +227,8 @@
     }
 
     $(document).ready(function() {
-        $('#categoriestable').DataTable({
+       setTimeout(function(){
+            $('#categoriestable').DataTable({
             "pagingType": "full_numbers",
             "lengthMenu": [
                 [10, 25, 50, -1],
@@ -238,8 +239,8 @@
                 search: "_INPUT_",
                 searchPlaceholder: "Search records",
             }
-
-        });
+            });
+        },5000);
     });
 </script>
 

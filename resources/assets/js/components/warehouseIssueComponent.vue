@@ -1,5 +1,12 @@
 <template>
     <div >
+      <div class="row">
+          <div class="card headcolor">
+              <div class="card-header">
+                      <h3 class="card-title pad-bot"><i class="material-icons">store</i> <small>WAREHOUSE ISSUE </small> </h3>
+              </div>
+          </div>
+      </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
@@ -16,7 +23,7 @@
                                 <input type="text" v-model="imei" class="form-control">
                           </div>
                           <div class="col-md-12">
-                                <table class="table table-bordered">
+                                <table class="table table-striped table-bordered table-hover">
                                     <thead>
                                     <tr>
                                         <th>S.No</th>
@@ -28,13 +35,13 @@
                                     <tr v-for="(imei, index) in newIssueItems.imei">
                                         <td>{{index + 1}}</td>
                                         <td>{{imei}}</td>
-                                        <td><button class="btn btn-default" @click="removeIMEI(index)">Remove</button></td>
+                                        <td><button class="btn btn-danger" @click="removeIMEI(index)">Remove</button></td>
                                     </tr>
                                     </tbody>
                                 </table>
                             </div>
                             <div class="form-group col-md-12">
-                                <input type="submit" class="btn btn-default col-md-12" value="Submit">
+                                <input type="submit" class="btn btn-round btn-tumblr fixedbutton" value="Submit">
                             </div>
                          <!--  <div class="form-group col-md-6">
                             <label for="Name">Invoice ID</label>

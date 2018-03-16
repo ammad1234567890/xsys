@@ -236,6 +236,10 @@ Route::get('/warehouseIssueRequest','WarehouseIssueController@warehouseIssueRequ
 Route::get('/getProducts/{id}','WarehouseIssueController@getProducts');
 Route::post('/createIssue','WarehouseIssueController@createIssue');
 //Warehouse Issue
+//Warehouse Stock
+Route::get('/warehouseStock','WarehouseStockController@index');
+Route::get('/allStock','WarehouseStockController@allStock');
+//Warehouse Stock
 //Warehouse
 
 //Finance
@@ -246,3 +250,11 @@ Route::post('/retailer_order/edit_products','RetailerOrderController@edit_order_
 
 //BANK
 Route::get('/bank/get_all_banks','BankController@get_all_banks');
+
+
+//Finance
+Route::get('/ledger','RetailerLedgersController@index');
+Route::post('/ledgerData','RetailerLedgersController@get_all_ledger');
+Route::get('/bank','BankController@index');
+Route::get('/allBanks','BankController@banks');
+Route::post('/createBank','BankController@createBank');

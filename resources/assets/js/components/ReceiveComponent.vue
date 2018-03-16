@@ -35,17 +35,17 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-md-6 form-group">
+                        
+                        <div class="col-md-6">
                             <div class="row">
                                 <div class="col-md-3">
-                                    <label for="select_collected_by">QA Check</label>
-                                    <div class="checkboxFive">
-                                        <input type="checkbox" v-bind:value="new_recieving.qa_check" id="checkboxFiveInput" name="" @change="change_qa_check"/>
-                                        <label for="checkboxFiveInput">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" v-bind:value="new_recieving.qa_check" id="checkboxFiveInput" name="" @change="change_qa_check"> QA Check
                                         </label>
                                     </div>
                                 </div>
-                                <div class="col-md-9 form-group" v-if="new_recieving.qa_check==1">
+                                <div class="col-md-9" style="margin-top: 16px;" v-if="new_recieving.qa_check==1">
                                     <label for="select_collected_by">QA Description</label>
                                     <textarea class="form-control" v-model="new_recieving.qa_description">
                             </textarea>
@@ -53,7 +53,7 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="col-md-8">
+                            <div class="col-md-8"  style="margin-top: 13px;">
                                 <label for="select_collected_by">Recieved Location Status</label>
                                 <select class="form-control" v-model="new_recieving.recieve_status_id" required>
                                     <option value="">Select</option>

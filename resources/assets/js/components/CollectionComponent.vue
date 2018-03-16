@@ -10,6 +10,9 @@
                             </div>
                             <div class="card-content">
                                     <h4 class="card-title">Create Collection</h4>
+                                <div class="alert alert-success"  v-if="message">
+                                    <strong>{{message}}</strong>
+                                </div>
                                 <form @submit.prevent="submit_payment">
                                     <div class="col-md-6 col-sm-3">
                                         <div class="form-group">
@@ -24,10 +27,8 @@
                                     <div class="col-md-6 col-sm-3">
                                         <div class="form-group">
                                             <div class="select">
-                                                <select class="form-control">
-                                                    <option v-bind:value="new_payment.selected_invoice_retailer_id">{{new_payment.selected_invoice_retailer}}</option>
-                                                </select>
 
+                                                <input type="text" class="form-control" v-model="new_payment.selected_invoice_retailer" placeholder="Retailer Name" required/>
 
                                             </div>
                                         </div>
@@ -36,9 +37,8 @@
                                     <div class="col-md-6 col-sm-3">
                                         <div class="form-group">
                                             <div class="select">
-                                                <select class="form-control">
-                                                    <option v-bind:value="new_payment.selected_invoice_retailer_outlet_id">{{new_payment.selected_invoice_retailer_outlet}}</option>
-                                                </select>
+
+                                                <input type="text" class="form-control" v-model="new_payment.selected_invoice_retailer_outlet" placeholder="Retailer Outlet" required/>
                                             </div>
                                         </div>
                                     </div>
@@ -128,6 +128,7 @@
     export default {
         data() {
             return {
+                message:'',
                 invoices:[],
                 banks:[],
                 currencies:[],
@@ -137,6 +138,7 @@
                 new_payment:{
                     bank_id:'',
                     invoice_id:'',
+                    invoice_actual_amount:'',
                     payment_id:'',
                     currency_id:'',
                     selected_invoice_retailer_id:'',
@@ -187,7 +189,7 @@
                 this.new_payment.invoice_id= this.invoices[this.selected_invoice_index].id;
                 this.new_payment.selected_invoice_retailer=this.invoices[this.selected_invoice_index].order.retailer.name;
                 this.new_payment.selected_invoice_retailer_outlet=this.invoices[this.selected_invoice_index].order.retailer_outlet.name;
-
+                this.new_payment.invoice_actual_amount=this.invoices[this.selected_invoice_index].total_amount;
                 this.new_payment.selected_invoice_retailer_id=this.invoices[this.selected_invoice_index].order.retailer.id;
                 this.new_payment.selected_invoice_retailer_outlet_id=this.invoices[this.selected_invoice_index].order.retailer_outlet.id;
             },
@@ -196,7 +198,26 @@
             },
             submit_payment:function(){
                 axios.post('../retailer/order/add_payment',this.new_payment).then((response)=> {
-                    alert(response.data);
+                    if(response.data==201){
+                        this.message="Retailer Collection Submitted!";
+                            this.new_payment.bank_id='';
+                            this.new_payment.invoice_id='';
+                            this.new_payment.invoice_actual_amount='';
+                            this.new_payment.payment_id='';
+                            this.new_payment.currency_id='';
+                            this.new_payment.selected_invoice_retailer_id='';
+                            this.new_payment.selected_invoice_retailer_outlet_id='';
+                            this.new_payment.selected_invoice_retailer='';
+                            this.new_payment.selected_invoice_retailer_outlet='';
+                            this.new_payment.cheque_no='';
+                            this.new_payment.amount_in_rs='';
+                            this.new_payment.deposit_slip_no='';
+                            this.new_payment.outstanding_amount='';
+                            this.new_payment.remarks='';
+                        $("html, body").animate({
+                            scrollTop: 0
+                        }, 600);
+                    }
                 });
 
             }

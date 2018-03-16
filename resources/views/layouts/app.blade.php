@@ -67,7 +67,7 @@
                                     <a href="{{ url('product') }}">Product Management</a>
                                 </li>
                                 <li>
-                                    <a href="{{ url('mainWarehouseReceive') }}">Import IMEI</a>
+                                    <a href="{{ url('importIMEI') }}">Import IMEI</a>
                                 </li>
                             </ul>
                         </div>
@@ -181,13 +181,13 @@
                                     <a href="#">Create Invoice</a>
                                 </li>
                                 <li>
-                                    <a href="#">Collection</a>
+                                    <a href="{{url('/retailer_order/payment')}}">Collection</a>
                                 </li>
                                 <li>
-                                    <a href="#">Bank</a>
+                                    <a href="{{url('/bank')}}">Bank</a>
                                 </li>
                                 <li>
-                                    <a href="#">Ledger</a>
+                                    <a href="{{url('/ledger')}}">Ledger</a>
                                 </li>
                                 <li>
                                     <a href="{{ url('finance/orders_approval') }}">Orders Approval</a>
@@ -253,7 +253,7 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="#"> XCELL
+                        <a class="navbar-brand" href="#"> Xcell
                         </a>
 
                     </div>
@@ -378,7 +378,6 @@
 
   <!-- <script src="{{ asset('js/charts/flot-charts.js') }}"></script> -->
   <script src="{{ asset('js/charts/chartjs-charts.js') }}"></script>
-
 
 
 </body>

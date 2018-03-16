@@ -1,3 +1,7 @@
+.pre-top-margin{
+  margin-top: 10px;
+}
+
 .top-pad {
 	padding-top: 15px;
 }
@@ -12,9 +16,23 @@
     margin-left: 5px;
 }
 
+.labelmarginsearch{
+    margin-top: 8px;
+}
+
+.searchmargin{
+    margin-top: -5px;
+}
+
 .headcolor{
 	    margin-top: -14px;
 	background-color: #434a541f;
+}
+
+.fixedbutton {
+    position: fixed;
+    bottom: 156px;
+    right: 90px; 
 }
 
 

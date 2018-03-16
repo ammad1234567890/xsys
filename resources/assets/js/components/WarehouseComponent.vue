@@ -1,11 +1,18 @@
 <template>
     <div>
       <div>
+        <div class="row">
+            <div class="card headcolor">
+                <div class="card-header">
+                        <h3 class="card-title pad-bot"><i class="material-icons">store</i> <small>WAREHOUSE </small> </h3>
+                </div>
+            </div>
+        </div>
           <div class="row">
               <div class="col-md-12">
                   <div class="panel panel-default">
                     <a href="#d" data-toggle="collapse">
-                      <div class="panel-heading">Warehouse</div>
+                      <div class="panel-heading">Create Warehouse</div>
                       </a>
                       <div id="d" class="panel-body collapse" v-bind:class="{in:edit}">
                         <form @submit="createWarehouse">
@@ -92,9 +99,9 @@
                             </span>
                           </div>
                           <div class="form-group col-md-12">
-                            <input v-if="edit==false" type="submit" class="btn btn-default" value="Submit">
-                            <button v-if="edit==true" class="btn btn-default col-md-6" @click="saveEditing">Save Editing</button>
-                            <button v-if="edit==true" class="btn btn-default col-md-6" @click="cancelEding">Cancel Editing</button>
+                            <input v-if="edit==false" type="submit" class="btn btn-tumblr" value="Submit">
+                            <button v-if="edit==true" class="btn btn-tumblr" @click="saveEditing">Save Editing</button>
+                            <button v-if="edit==true" class="btn btn-pinterest" @click="cancelEding">Cancel Editing</button>
                           </div>
                         </form>
                       </div>
@@ -105,21 +112,21 @@
       <div class="row">
           <div class="col-md-12">
               <div class="panel panel-default">
-                  <div class="panel-heading">Warehouse</div>
+                  <div class="panel-heading">Warehouse List</div>
                   <div class="panel-body">
-                    <table class="table table-bordered">
+                    <table id="warehousetable" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                       <thead>
                         <tr>
                           <th>S.No</th>
                           <th>Name</th>
-                          <th>Warehouse Type</th>
-                          <th>Warehouse City</th>
-                          <th>Warehouse Locality</th>
+                          <th>Type</th>
+                          <th>City</th>
+                          <th>Locality</th>
                           <th>Latitude</th>
                           <th>Longitude</th>
                           <th>Address</th>
-                          <th>Warehouse Manager</th>
-                          <th>Warehouse Accountant</th>
+                          <th>Manager</th>
+                          <th>Accountant</th>
                           <th>Action</th>
                         </tr>
                       </thead>
@@ -137,7 +144,7 @@
                           <td>{{warehouse.accountant.name}}</td>
                           <td>
                               <div class="dropdown">
-                                <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Action
+                                <button class="btn btn-info btn-xs dropdown-toggle" type="button" data-toggle="dropdown">Action
                                 <span class="caret"></span></button>
                                   <ul class="dropdown-menu">
                                     <li><a href="#" v-on:click="editWarehouse(index)">Edit</a></li>
@@ -333,4 +340,21 @@ import vSelect from "vue-select"
         }
 
     }
+
+    $(document).ready(function() {
+        setTimeout(function(){
+            $('#warehousetable').DataTable({
+            "pagingType": "full_numbers",
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ],
+            responsive: true,
+            language: {
+                search: "_INPUT_",
+                searchPlaceholder: "Search records",
+            }
+            });
+        },5000);
+    });
 </script>

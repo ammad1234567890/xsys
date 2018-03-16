@@ -3,7 +3,7 @@
         <div class="row">
           <div class="card headcolor">
                 <div class="card-header">
-                        <h3 class="card-title pad-bot"><i class="material-icons">important_devices</i> <small>IMPORT IMEI</small> </h3>
+                        <h3 class="card-title pad-bot"><i class="material-icons">store</i> <small>Main Warehouse Receive</small> </h3>
                 </div>
             </div>
             <div class="col-md-12">
@@ -64,7 +64,7 @@
                                     <tr>
                                         <th>S.No</th>
                                         <th>IMEI</th>
-                                        <th>Remove</th>
+                                        <th>Action</th>
                                     </tr>
                                     </thead>
                                     <tbody>

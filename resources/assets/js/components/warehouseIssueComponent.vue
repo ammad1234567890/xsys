@@ -1,5 +1,5 @@
 <template>
-    <div >
+    <div>
       <div class="row">
           <div class="card headcolor">
               <div class="card-header">
@@ -7,7 +7,7 @@
               </div>
           </div>
       </div>
-        <div class="row">
+        <div v-if="!created" class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">Warehouse Issue</div>
@@ -43,20 +43,45 @@
                             <div class="form-group col-md-12">
                                 <input type="submit" class="btn btn-round btn-tumblr fixedbutton" value="Submit">
                             </div>
-                         <!--  <div class="form-group col-md-6">
-                            <label for="Name">Invoice ID</label>
-                              <!-- <v-select label="product_color.color" :filterable="false" :options="products"></v-select> -->
-                              <!-- <select class="form-control" >
-                                  <option></option>
-                                  <option v-for="p in products">{{p.product_color.color}}| {{ p.product_color.product.name}}</option>
-                              </select>
-                          </div> --> 
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+        <div v-if="created" class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Details</div>
+
+                    <div class="panel-body">
+                      <table class="table table-border">
+                        <thead>
+                          <tr>
+                            <th>S.No</th>
+                            <th>Item Id</th>
+                            <th>IMEI 1</th>
+                            <th>IMEI 2</th>
+                            <th>Product Name</th>
+                            <th>Product Color</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr v-for="(item,index) in createdData.warehouse_issue_item">
+                            <td>{{index + 1}}</td>
+                            <td>{{item.item_id}}</td>
+                            <td>{{item.item.imei[0].imei1}}</td>
+                            <td>{{item.item.imei[0].imei2}}</td>
+                            <td>{{item.item.product_color.product.name}}</td>
+                            <td>{{item.item.product_color.color}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+  </div>
 </template>
 
 <script>
@@ -70,6 +95,8 @@ import vSelect from "vue-select"
           warehouseissue:'',
           products:[],
           imei:'',
+          createdData:'',
+          created:false,
           newIssueItems:{
             warehouseIssue_id:'',
             invoice_id:'',
@@ -83,7 +110,7 @@ import vSelect from "vue-select"
         created() {
           axios.get('./warehouseIssueRequest').then(response=>{
             this.issueRequests=response.data;
-            console.log(response.data);
+            console.log("DATA"+response.data);
           })
         },
         watch:{
@@ -113,16 +140,21 @@ import vSelect from "vue-select"
             this.newIssueItems.imei.splice(index,1);
           },
           createIssue(e){
-            e.preventDefault();          
+            e.preventDefault();
             console.log(this.newIssueItems);
             axios.post('./createIssue',this.newIssueItems).then(response=>{
-              if(response.data==0){
+              if(response.data.replay==0){
+                this.created=true,
+                this.createdData=response.data.data,
+                console.log(response.data);
                 this.newIssueItems={
                   warehouseIssue_id:'',
                   invoice_id:'',
                   imei:[],
                 },
                 this.warehouseissue=''
+              }else if (response.data.replay==2) {
+                alert(response.data.data);
               }else{
                 console.log(response.data);
                 alert('Fail to insert');

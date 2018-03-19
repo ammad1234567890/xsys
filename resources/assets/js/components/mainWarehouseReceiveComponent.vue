@@ -9,7 +9,7 @@
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <a href="#d" data-toggle="collapse">
-                        <div class="panel-heading">Warehouse Receive</div>
+                        <div class="panel-heading">Warehouse Consignment Receive</div>
                     </a>
                     <div id="d" class="panel-body collapse" v-bind:class="{in:edit}">
                         <form @submit="createMainWarehouseReceive">
@@ -34,7 +34,7 @@
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <a href="#imei" data-toggle="collapse">
-                        <div class="panel-heading">Warehouse Receive</div>
+                        <div class="panel-heading">Warehouse Product Receive</div>
                     </a>
                     <div id="imei" class="panel-body collapse" v-bind:class="{in:received}">
                         <form @submit="createReceiveItems">
@@ -77,7 +77,7 @@
                                 </table>
                             </div>
                             <div class="form-group col-md-12">
-                                <input type="submit" class="btn btn-default col-md-12" value="Submit">
+                                <input type="submit" class="btn btn-tumblr col-md-12" value="Submit">
                             </div>
                         </form>
                     </div>

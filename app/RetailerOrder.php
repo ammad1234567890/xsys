@@ -33,4 +33,11 @@ class RetailerOrder extends Model
     public function updated_user(){
         return $this->belongsTo("App\User",'updated_by');
     }
+
+     public function payment_type(){
+        return PaymentType::all();
+    }
+        public function discount_type(){
+        return Discount_type::all();
+    }
 }

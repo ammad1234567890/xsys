@@ -42,6 +42,26 @@
     color: #ffffff;
 }
 
+.m-p-0{
+  margin: 0px ;
+  padding: 0px;
+}
+.size90{
+  width: 90%;
+}
+.width60px{
+  width: 60px;
+}
+.width70px{
+ width: 70px;
+}
+.bordernone{
+  border:none;
+}
+.taransparent-invoice{
+  background-color: #0000ff00;
+}
+  
 
 
 
@@ -531,3 +551,21 @@
     color: #FFFFFF;
     margin-left: 5px;
     margin-right: 5px; }
+
+    .m-p-0{
+        margin: 0px ;
+        padding: 0px;
+    }
+    .size90{
+        width: 90%;
+    }
+    .width60px{
+        width: 60px;
+    }
+        .width70px{
+        width: 70px;
+    }
+    .bordernone{
+        border:none;
+    }
+  

@@ -278,9 +278,9 @@
         }
     }
 
-
     $(document).ready(function() {
-        $('#order_table').DataTable({
+        setTimeout(function(){
+            $('#order_table').DataTable({
             "pagingType": "full_numbers",
             "lengthMenu": [
                 [10, 25, 50, -1],
@@ -291,7 +291,8 @@
                 search: "_INPUT_",
                 searchPlaceholder: "Search records",
             }
-
-        });
+            });
+        },3000);
     });
+
 </script>

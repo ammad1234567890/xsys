@@ -12,7 +12,7 @@
               <div class="col-md-12">
                   <div class="panel panel-default">
                     <a href="#d" data-toggle="collapse">
-                      <div class="panel-heading">Create Warehouse</div>
+                      <div class="panel-heading">Add New Warehouse</div>
                       </a>
                       <div id="d" class="panel-body collapse" v-bind:class="{in:edit}">
                         <form @submit="createWarehouse">

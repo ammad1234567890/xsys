@@ -133,7 +133,10 @@
                                     <a href="{{ url('mainWarehouseReceive') }}">Warehouse Receive</a>
                                 </li>
                                 <li>
-                                    <a href="{{ url('warehouseIssue') }}">Warehouse Issue</a>
+                                    <a href="{{ url('warehouseIssue') }}">Warehouse Supply</a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('warehouseStock') }}">Warehouse Stock Details</a>
                                 </li>
                             </ul>
                         </div>
@@ -175,11 +178,12 @@
                         <div class="collapse" id="finance" aria-expanded="false" style="height: 0px;">
                             <ul class="nav">
                                 <li>
-                                    <a href="#">Invoice detail</a>
+                                    <a href="{{ url('finance/orders_approval') }}">Orders Approval</a>
                                 </li>
                                 <li>
-                                    <a href="#">Create Invoice</a>
+                                    <a href="{{ url('/invoice/list/') }}">Invoice detail</a>
                                 </li>
+                                
                                 <li>
                                     <a href="{{url('/retailer_order/payment')}}">Collection</a>
                                 </li>
@@ -189,9 +193,7 @@
                                 <li>
                                     <a href="{{url('/ledger')}}">Ledger</a>
                                 </li>
-                                <li>
-                                    <a href="{{ url('finance/orders_approval') }}">Orders Approval</a>
-                                </li>
+                                
                             </ul>
                         </div>
                     </li>

@@ -3,7 +3,7 @@
     <div class="row">
         <div class="card headcolor">
               <div class="card-header">
-                      <h3 class="card-title pad-bot"><i class="material-icons">store</i> <small>ORDER PAYMENT</small> </h3>
+                      <h3 class="card-title pad-bot"><i class="material-icons">shopping_cart</i> <small>ORDER PAYMENT</small> </h3>
               </div>
           </div>
         <div class="col-md-12">

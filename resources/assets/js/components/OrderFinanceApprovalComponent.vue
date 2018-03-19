@@ -1,7 +1,11 @@
 <template>
     <div class="row">
+            <div class="card headcolor">
+                <div class="card-header">
+                      <h3 class="card-title pad-bot"><i class="material-icons">description</i> <small>RETAILER ORDERS FOR APPROVAL</small> </h3>
+                </div>
+            </div>
         <div class="col-md-12">
-            <h2>Retailer Orders For Approval</h2>
             <div class="panel panel-info">
                 <div class="panel-heading">Order Details</div>
 
@@ -9,7 +13,7 @@
                     <div class="alert alert-success"  v-if="message">
                         <strong>{{message}}</strong>
                     </div>
-                    <table id="outlet_table" class="table table-bordered">
+                    <table id="order_detail_table" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                         <thead>
                         <tr>
                             <th>Order No</th>
@@ -18,8 +22,8 @@
                             <th>Outlet</th>
                             <th>Account Clearance</th>
                             <th>Total Amount</th>
-                            <th>Created Order Date</th>
-                            <th>Action</th>
+                            <th>Created Date</th>
+                            <th class="text-center">Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -33,11 +37,17 @@
 
                             <td>{{order.total_cost}}</td>
                             <td>{{order.created_at}}</td>
-                            <td>
+                            <td class="col-md-3 text-center">
+                                <a class="btn btn-success btn-xs" v-bind:href="'../invoice/create/'+order.id" v-if="order.is_account_clearance==1">Generate Invoice</a>
                                 <div class="dropdown">
-                                    <button class="btn btn-primary" v-on:click="approve_order(index)">Approve</button>
-                                    <button class="btn btn-success" type="button" v-on:click="edit_order_modal(index)"><i class="fa fa-pencil"></i> </button>
-                                    <button class="btn btn-default dropdown-toggle" type="button" v-on:click="view_order_details(index)">View Details</button>
+                                    <button class="btn btn-info btn-xs dropdown-toggle" type="button" data-toggle="dropdown"  v-if="order.is_account_clearance==0">Action
+                                        <span class="caret"></span></button>
+
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#" v-on:click="edit_order_modal(index)">Edit</a></li>
+                                        <li><a href="#" v-on:click="approve_order(index)">Approve</a></li>
+                                    </ul> - 
+                                    <button class="btn btn-tumblr btn-xs" type="button" v-on:click="view_order_details(index)">View Details</button>
                                 </div>
                             </td>
                         </tr>
@@ -149,7 +159,8 @@
                                                     <button class="btn btn-danger" v-on:click="remove_product(index)">Remove</button>
                                                 </div>
                                             </div>
-                                        <button class="btn btn-primary" v-on:click="save_products()">Submit</button>
+                                        <button class="btn btn-tumblr" v-on:click="save_products()">Submit</button>
+                                        <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Close</button>
 
 
 
@@ -216,7 +227,7 @@
                 this.get_all_orders();
             },
             get_all_orders:function(){
-                axios.get('../retailer_order/get_all_non_clear_orders').then((response)=>{
+                axios.get('../retailer_order/get_orders').then((response)=>{
                     this.all_orders=response.data;
                 });
             },
@@ -329,6 +340,24 @@
             }
         }
     }
+
+
+    $(document).ready(function() {
+        setTimeout(function(){
+            $('#order_detail_table').DataTable({
+            "pagingType": "full_numbers",
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ],
+            responsive: false,
+            language: {
+                search: "_INPUT_",
+                searchPlaceholder: "Search records",
+            }
+            });
+        },3000);
+    });
 
 
 </script>

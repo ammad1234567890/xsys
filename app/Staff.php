@@ -38,5 +38,10 @@ class Staff extends Model
       return $this->belongsTo('App\User','created_by');
     }
 
+    public function warehouseStaff()
+    {
+      return $this->hasMany('App\warehouseStaff');
+    }
+
     protected $table="tbl_staff";
 }

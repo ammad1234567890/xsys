@@ -42,7 +42,7 @@
                                 </span>
                                 </div>
                                 <div class="form-group col-md-12">
-                                    <button class="col-md-12 btn btn-default" @click="addColorForm">Add Product Color</button>
+                                    <button class="col-md-12 btn btn-tumblr" @click="addColorForm">Add Product Color</button>
                                 </div>
                             </div>
                         </div>
@@ -99,7 +99,7 @@
 
                         </div> <!--Product Color Form-->
                         <div class="form-group row">
-                                <button v-if="edit==false" type="submit" class="col-md-12 btn btn-default">Submit</button>
+                                <button v-if="edit==false" type="submit" class="btn btn-tumblr">Submit</button>
                                 <button v-if="edit==true" class="btn btn-tumblr"  @click="saveEditing">Save</button>
                                 <button v-if="edit==true" class="btn btn-pinterest"  @click="cancelEditing">Cancel Editing</button>
                         </div>

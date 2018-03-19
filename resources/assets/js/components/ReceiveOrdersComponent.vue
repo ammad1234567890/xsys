@@ -13,7 +13,7 @@
                     <div class="alert alert-success"  v-if="message">
                         <strong>{{message}}</strong>
                     </div>
-                    <table id="outlet_table" class="table table-bordered">
+                    <table id="receive_orders_table" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                         <thead>
                         <tr>
                             <th>Order No</th>
@@ -35,7 +35,7 @@
                             <td v-if="receive.qa_description==null"> ---- </td>
                             <td v-else>{{receive.qa_description}}</td>
                             <td>{{receive.receive_status.status}}</td>
-                            <td><button class="btn btn-primary" v-on:click="show_products(index)">Products</button></td>
+                            <td><button class="btn btn-primary btn-xs" v-on:click="show_products(index)">View Detail</button></td>
                         </tr>
                         </tbody>
                     </table>
@@ -124,6 +124,23 @@
             }
         }
     }
+
+    $(document).ready(function() {
+        setTimeout(function(){
+            $('#receive_orders_table').DataTable({
+            "pagingType": "full_numbers",
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ],
+            responsive: false,
+            language: {
+                search: "_INPUT_",
+                searchPlaceholder: "Search records",
+            }
+            });
+        },3000);
+    });
 
 
 </script>

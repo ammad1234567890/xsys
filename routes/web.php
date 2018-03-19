@@ -15,8 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
 Auth::routes();
 
+Route::get('/testH','HomeController@test');
 Route::get('/home', 'HomeController@index')->name('home');
 
 //AccessControll
@@ -255,6 +257,12 @@ Route::get('/bank/get_all_banks','BankController@get_all_banks');
 //Finance
 Route::get('/ledger','RetailerLedgersController@index');
 Route::post('/ledgerData','RetailerLedgersController@get_all_ledger');
+Route::post('/RetailerTotalOutstanding','RetailerLedgersController@retailer_ledger_balance');
 Route::get('/bank','BankController@index');
 Route::get('/allBanks','BankController@banks');
 Route::post('/createBank','BankController@createBank');
+Route::get('/retailer_order/get_order/{id}','RetailerOrderController@get_all_order');
+Route::get('/invoice/create/{id}','RetailerInvoiceController@invoiceCreate');
+Route::post('/invoice/store/','RetailerInvoiceController@store');
+Route::get('/invoice/list/','RetailerInvoiceController@index');
+Route::get('/invoice/get_invoice/','RetailerInvoiceController@get_invoice');

@@ -2,10 +2,15 @@
   <div>
     <div>
         <div class="row">
+          <div class="card headcolor">
+            <div class="card-header">
+                    <h3 class="card-title pad-bot"><i class="material-icons">group</i> <small>STAFF</small> </h3>
+            </div>
+          </div>
             <div class="col-md-12">
                 <div class="panel panel-default">
                   <a href="#d" data-toggle="collapse">
-                    <div class="panel-heading">Create Staff</div>
+                    <div class="panel-heading">Add New Staff</div>
                   </a>
                     <div id="d" class="panel-body collapse" v-bind:class="{in:edit}">
                       <form v-on:submit="createStaff">
@@ -97,9 +102,9 @@
                           </span>
                         </div>
                         <div class="form-group col-md-12">
-                          <input v-if="edit==false" type="submit" value="Submit" class="btn btn-default col-md-4">
-                          <button v-if="edit" class="btn btn-default col-md-6" @click="saveEditing">Save Editing</button>
-                          <button v-if="edit" class="btn btn-default col-md-6" @click="cancelEding">Cancel Editing</button>
+                          <input v-if="edit==false" type="submit" value="Submit" class="btn btn-tumblr">
+                          <button v-if="edit" class="btn btn-tumblr" @click="saveEditing">Save Editing</button>
+                          <button v-if="edit" class="btn btn-pinterest" @click="cancelEding">Cancel Editing</button>
                         </div>
                       </form>
                     </div>
@@ -110,10 +115,10 @@
     <div class="row">
       <div class="col-md-12">
           <div class="panel panel-default">
-              <div class="panel-heading">Create Staff</div>
+              <div class="panel-heading">All Staff</div>
               <div class="panel-body">
                 <div class="table-responsive">
-                  <table class="table table-bordered">
+                  <table id="stafftable" class="table table-striped table-bordered table-hover table-no" cellspacing="0" width="100%" style="width:100%">
                     <thead>
                     <tr>
                       <th>S.No</th>
@@ -145,7 +150,7 @@
                       <td>{{staff.designation.designation}}</td>
                       <td>
                         <div class="dropdown">
-                          <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Action
+                          <button class="btn btn-primary btn-xs dropdown-toggle" type="button" data-toggle="dropdown">Action
                             <span class="caret"></span></button>
                           <ul class="dropdown-menu">
                             <li><a href="#" v-on:click="editStaff(index)">Edit</a></li>
@@ -319,4 +324,21 @@ import vSelect from "vue-select"
 
         }
     }
+
+    $(document).ready(function() {
+        setTimeout(function(){
+            $('#stafftable').DataTable({
+            "pagingType": "full_numbers",
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ],
+            responsive: false,
+            language: {
+                search: "_INPUT_",
+                searchPlaceholder: "Search records",
+            }
+            });
+        },3000);
+    });
 </script>

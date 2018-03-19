@@ -1,40 +1,55 @@
 <template>
-    <div class="col-md-4 panel panel-default">
-      <div class="panel-body">
-      <form @submit="createCity">
-        <div class="form-group">
-          <label for="City">City</label>
-          <input name="city" type="text" class="form-control" v-validate="'required|regex:^[a-zA-Z]+$'" v-model="cityData.city">
-          <span class="text-danger" v-show="errors.has('city')">
-            {{errors.first('city')}}
-          </span>
+    <div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h5>Create New City</h5>
+            </div>
+            <div class="panel-body">
+                <form @submit="createCity">
+                <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="City" >City</label>
+                        <input name="city" type="text" class="form-control" v-validate="'required|regex:^[a-zA-Z]+$'" v-model="cityData.city">
+                        <span class="text-danger" v-show="errors.has('city')">
+                          {{errors.first('city')}}
+                        </span>
+                      </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                          <input v-if="editing==false" type="submit" class="btn btn-tumblr" value="Create City">
+                          <button v-if="editing==true" @click="saveEditing" class="btn btn-tumblr">Save Editing</button>
+                          <button v-if="editing==false" @click="showCities" class="btn btn-default" data-toggle="collapse" data-target="#cities">Show Cities</button>
+                          <button v-if="editing==true" @click="cancelEditing" class="btn btn-pinterest">Cancel Editing</button>
+                    </div>
+                </div>
+            </form>
+            </div>
+
+            <div id="cities" class="collapse">
+                <div class="panel-heading">
+                    <h5>City List</h5>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                        <thead>
+                          <tr>
+                            <th>S.No</th>
+                            <th>Cities</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr v-for="(city,index) in allCities">
+                            <td>{{index +1 }}</td>
+                            <td>{{city.name}}</td>
+                            <td><button class="btn btn-info btn-sm" @click="edit(index,city.id)">Edit</button></td>
+                          </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-          <input v-if="editing==false" type="submit" class="btn btn-default col-md-6" value="Create City">
-          <button v-if="editing==true" @click="saveEditing" class="btn btn-default col-md-6">Save Editing</button>
-          <button v-if="editing==false" @click="showCities" class="btn btn-default col-md-6" data-toggle="collapse" data-target="#cities">Cities</button>
-          <button v-if="editing==true" @click="cancelEditing" class="btn btn-default col-md-6">Cancel Editing</button>
-        </div>
-      </form>
-      <div id="cities" class="collapse panel panel-default col-md-12">
-        <table class="table table-bordered col-md-12">
-            <thead>
-              <tr>
-                <th>S.No</th>
-                <th>Cities</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(city,index) in allCities">
-                <td>{{index +1 }}</td>
-                <td>{{city.name}}</td>
-                <td><button class="btn btn-default" @click="edit(index,city.id)">Edit</button></td>
-              </tr>
-            </tbody>
-        </table>
-      </div>
-    </div>
     </div>
 </template>
 

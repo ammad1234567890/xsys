@@ -8,7 +8,7 @@ class Invoice extends Model
 {
     //
     protected $table="tbl_invoice";
-    protected $fillable=['id','order_id','discount_type_id','invoice_type_id','discount_percent','discount_amount','description','created_by','updated_by'];
+    protected $fillable=['id','order_id','invoice_type_id','discount_percent','discount_amount','description','created_by','updated_by'];
 
     public function order()
     {

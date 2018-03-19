@@ -1,8 +1,11 @@
 <template>
     <div class="row">
+        <div class="card headcolor">
+            <div class="card-header">
+                  <h3 class="card-title pad-bot"><i class="material-icons">description</i><small>ALL RETAILER ORDERS</small></h3>
+            </div>
+        </div>
         <div class="col-md-12">
-            <h2 style="margin-top: 6px; font-variant: small-caps; font-weight:bold;">All Retailer Orders</h2>
-            <hr/>
             <div class="panel panel-info">
                 <div class="panel-heading">Order Details</div>
 
@@ -10,7 +13,7 @@
                     <div class="alert alert-success"  v-if="message">
                         <strong>{{message}}</strong>
                     </div>
-                    <table id="outlet_table" class="table table-bordered">
+                    <table id="retailer_order_table" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                         <thead>
                         <tr>
                             <th>Order No</th>
@@ -20,7 +23,7 @@
                             <th>Account Clearance</th>
                             <th>Total Amount</th>
                             <th>Created Order Date</th>
-                            <th>Action</th>
+                            <th class="col-md-3 text-center">Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -34,13 +37,13 @@
 
                             <td>{{order.total_cost}}</td>
                             <td>{{order.created_at}}</td>
-                            <td>
+                            <td class="text-center">
                                 <div class="dropdown">
 
-                                    <button class="btn btn-primary" type="button" v-on:click="view_order_details(index)">View Details</button>
+                                    <button class="btn btn-github btn-xs" type="button" v-on:click="view_order_details(index)">View Details</button> -
 
-                                    <button class="btn btn-success" type="button" v-if="order.is_account_clearance==1">Generate Invoice</button>
-                                    <button class="btn btn-danger" type="button" v-if="order.is_account_clearance==0" v-on:click="order_delete(index)"><i class="fa fa-trash-o"></i> </button>
+                                    <a class="btn btn-tumblr btn-xs" v-bind:href="'../invoice/create/'+order.id" v-if="order.is_account_clearance==1">Generate Invoice</a>
+                                    <button class="btn btn-danger btn-just-icon " type="button" v-if="order.is_account_clearance==0" v-on:click="order_delete(index)"><i class="fa fa-trash-o"></i> </button>
                                 </div>
                             </td>
                         </tr>
@@ -113,6 +116,9 @@
                                     </table>
                                 </div>
                             </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-github" data-dismiss="modal">Close</button>
                         </div>
                     </div>
                 </div>
@@ -241,8 +247,24 @@
 
             },
 
+
         }
     }
-
+$(document).ready(function() {
+        setTimeout(function(){
+            $('#retailer_order_table').DataTable({
+            "pagingType": "full_numbers",
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ],
+            responsive: false,
+            language: {
+                search: "_INPUT_",
+                searchPlaceholder: "Search records",
+            }
+            });
+        },3000);
+    });
 
 </script>

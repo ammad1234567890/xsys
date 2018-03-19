@@ -1,12 +1,17 @@
 <template>
 
+<div class="row">
 
+            <div class="card headcolor">
+                <div class="card-header">
+                      <h3 class="card-title pad-bot"><i class="material-icons">chrome_reader_mode</i> <small>LEDGER</small> </h3>
+                </div>
+            </div>
+    
     <div class="col-md-12 panel panel-default">
         <div class="panel panel-info">
             <div class="panel-heading"><h3 style="margin-top: 6px; font-variant: small-caps; font-weight:bold;">Ledger - Search</h3></div>
             <div class="panel-body">
-
-
                 <form @submit="searchLedger">
                     <div class="form-group col-md-4">
                         <label for="select Retailer">Retailer</label>
@@ -26,12 +31,14 @@
                         <input type="date" name="tdate" class="form-control" placeholder="To Date"   v-model="searchData.tdate" required>
 
                     </div>
-                    <input v-if="editing==false" type="submit" @click="searchLedger" class="btn btn-default" value="Search">
+                    <input v-if="editing==false" type="submit" @click="searchLedger" class="btn btn-tumblr" value="Search">
                 </form>
 
             </div>
         </div>
+    </div>
 
+    <div class="col-md-12 panel panel-default">
         <!-- RETAILER SHOW GRID -->
         <div class="panel panel-info" v-if="search_enabled">
             <div class="panel-heading"><h3 style="margin-top: 6px; font-variant: small-caps; font-weight:bold;">{{searchData.retailerName}} Ledger - Details</h3></div>
@@ -43,9 +50,9 @@
                         <th>SNO</th>
                         <th>Date</th>
                         <th>Description</th>
-                        <th>Credit</th>
                         <th>Collection</th>
                         <th>Outstanding</th>
+
                     </tr>
                     </thead>
                     <tbody>
@@ -54,9 +61,27 @@
                         <td>{{index +1}}</td>
                         <td>{{ledger.TransDate}}</td>
                         <td>{{ledger.description}}</td>
-                        <td>{{formatPrice(ledger.Credit)}}</td>
-                        <td>{{formatPrice(ledger.Collection)}}</td>
-                        <td>{{formatPrice(ledger.Outstanding)}}</td>
+                        <td>{{ledger.Collection}}</td>
+                        <td>{{ledger.Credit}}</td>
+
+                    </tr>
+                    <tr>
+                        <td>
+
+                        </td>
+                        <td>
+
+                        </td>
+                        <td>
+
+                        </td>
+                        <td>
+
+                        </td>
+                        <td style="font-weight: bold;">
+                            Total Outstanding: {{last_outstanding}}
+                        </td>
+
                     </tr>
                     </tbody>
                 </table>
@@ -64,6 +89,7 @@
         </div>
         <!-- View Details Modal END -->
     </div>
+</div>
 
     </template>
 
@@ -79,6 +105,7 @@
                 editing: false,
                 allRetailers: [],
                 ledgerData:[],
+                last_outstanding:'',
                 searchData:{
                     retailer_id: '',
                     fdate: '',
@@ -112,6 +139,9 @@
                 axios.post('./ledgerData',this.searchData).then(response=>{
                        this.ledgerData = response.data;
                 });
+
+                this.last_outstanding=this.ledgerData[this.ledgerData.length - 1].Outstanding;
+                //alert(this.last_outstanding);
                 this.search_enabled=1;
             },
             change_retailer(){

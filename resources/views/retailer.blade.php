@@ -3,7 +3,7 @@
 @section('content')
     <div class="content">
         <div class="container-fluid">
-    <retailer-component></retailer-component>
+    		<retailer-outlet-component></retailer-outlet-component>
         </div>
     </div>
 @endsection

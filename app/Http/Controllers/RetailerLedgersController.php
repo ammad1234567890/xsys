@@ -95,13 +95,6 @@ class RetailerLedgersController extends Controller
         $retailer_id = $request->input('retailer_id');
 
         return $ledgerData = DB::select('SELECT 
-                                          x.TransDate,
-                                          x.`retailer_id`,
-                                          x.`invoice_id`,
-                                          x.`collection_id`,
-                                          x.description,
-                                          x.Credit,
-                                          x.Collection,
                                         SUM(
                                             COALESCE(y.Credit, 0) - COALESCE(y.Collection, 0)
                                           ) AS Outstanding 
@@ -117,6 +110,8 @@ class RetailerLedgersController extends Controller
                                           x.invoice_id,
                                           x.collection_id,
                                           x.retailer_id 
+										  ORDER BY x.TransDate DESC
+										    LIMIT 1
                                           ');
 
 

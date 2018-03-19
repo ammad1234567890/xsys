@@ -67,6 +67,8 @@ Vue.component('invoiceview-component', require('./components/InvoiceviewComponen
 Vue.component('collection-component', require('./components/CollectionComponent.vue'));
 Vue.component('retailerledger-component', require('./components/RetailerLedgerComponent.vue'));
 Vue.component('bank-component', require('./components/BankComponent.vue'));
+Vue.component('retailerinvoice-component', require('./components/RetailerInvoiceComponent.vue'));
+Vue.component('retailerlist-component', require('./components/RetailerListComponent.vue'));
 
 
 const app = new Vue({

@@ -52,7 +52,7 @@
                                     <th>S.No</th>
                                     <th>Category Name</th>
                                     <th>Description</th>
-                                    <th class="col-md-3">Action</th>
+                                    <th class="col-md-3 text-center">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>

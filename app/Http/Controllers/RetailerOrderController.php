@@ -98,6 +98,23 @@ class RetailerOrderController extends Controller
         }
     }
 
+    public function get_all_order($id) {
+//        $user_staff_id = Auth::user()->staff_id;
+//        $staff_id = $warehousestaff = Warehouse_staff::where('staff_id', $user_staff_id)->first();
+        
+        $RetailerOrder = new RetailerOrder();
+        $records['payment_type'] = $RetailerOrder->payment_type();
+        $records['discount_type'] = $RetailerOrder->discount_type();
+        $records['get_all_order'] = RetailerOrder::with(
+                        'order_products', 'order_products.ProductColor', 'order_products.ProductColor.product', 'order_products.ProductColor.product.productCategory', 'retailer', 'retailer_outlet', 'user'
+                )->where(['id' => $id])->first();
+        if ($records['get_all_order']->is_approved == 0) {
+            return $records;
+        } else {
+            return "not approve";
+        }
+    }
+
     //Registered a route with the name of /retailer_order/delete
     public function delete_order(Request $request){
         $order_id= $request->input('id');

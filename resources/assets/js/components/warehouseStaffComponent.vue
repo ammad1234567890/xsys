@@ -133,6 +133,7 @@ import vSelect from "vue-select"
                     if(this.searchedWarehouse!=''){
                         axios.get('./warehouseSearchStaff/'+this.searchedWarehouse.id).then(response=>{
                           this.warehouseStaff=response.data;
+                          loadDatatable();
                           console.log(this.warehouseStaff);
                         })
                     }
@@ -204,20 +205,23 @@ import vSelect from "vue-select"
   }
 }
 
-$(document).ready(function() {
-        setTimeout(function(){
-            $('#staffsearch-table').DataTable({
-            "pagingType": "full_numbers",
-            "lengthMenu": [
-                [10, 25, 50, -1],
-                [10, 25, 50, "All"]
-            ],
-            responsive: true,
-            language: {
-                search: "_INPUT_",
-                searchPlaceholder: "Search records",
-            }
-            });
-        },5000);
+function loadDatatable(){
+  $("#staffsearch-table").dataTable().fnDestroy()
+  setTimeout(function(){
+  $('#staffsearch-table').DataTable({
+        "pagingType": "full_numbers",
+        "lengthMenu": [
+          [10, 25, 50, -1],
+          [10, 25, 50, "All"]
+        ],
+        responsive: true,
+        language: {
+          search: "_INPUT_",
+          searchPlaceholder: "Search records",
+        }
     });
+  },5000);
+}
+            
+
 </script>

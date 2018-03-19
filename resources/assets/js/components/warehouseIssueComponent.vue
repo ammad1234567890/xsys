@@ -3,14 +3,14 @@
       <div class="row">
           <div class="card headcolor">
               <div class="card-header">
-                      <h3 class="card-title pad-bot"><i class="material-icons">store</i> <small>WAREHOUSE ISSUE </small> </h3>
+                      <h3 class="card-title pad-bot"><i class="material-icons">store</i> <small>WAREHOUSE SUPPLY </small> </h3>
               </div>
           </div>
       </div>
         <div v-if="!created" class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Warehouse Issue</div>
+                    <div class="panel-heading">Warehouse Supply</div>
 
                     <div class="panel-body">
                         <form @submit="createIssue">

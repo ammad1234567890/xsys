@@ -2,9 +2,6 @@
 
         <div class="row">
             <div class="col-md-12">
-
-                <h2 style="margin-top: 6px; font-variant: small-caps; font-weight:bold;">Retailer Outlets</h2>
-                <hr/>
                 <div class="panel panel-info">
                     <div class="panel-heading">Create New Outlets</div>
 
@@ -13,78 +10,102 @@
                             <strong>{{message}}</strong>
                         </div>
                         <form @submit.prevent="add_outlet">
-
                             <div class="form-section">
-                                <h4 class="form-section-heading">BASIC DETAILS</h4>
-                                <br/>
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        <label>Select Retailer</label>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="row">
-                                            <div class="col-md-10">
-                                                <select class="textbox" name="retailer_id" v-model="outlet.retailer_id" @change="change_retailer(outlet.retailer_id)" required>
-                                                    <option value="">Select Retailer</option>
-                                                    <option v-for="retailer in retailersData" v-bind:value="retailer.id">{{retailer.name}}</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <a href="../retailer">
-                                                    <i class="fa fa-plus-circle" style="font-size: 27px;"></i>
-                                                </a>
-                                            </div>
+                                <h4 class="form-section-heading">RETAILER DETAILS</h4>
+
+
+                                    <div class="col-md-6 col-sm-3">
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Full Name</label>
+                                            <input type="text" class="form-control" v-model="retailer.fullname" autocomplete="off" required>
                                         </div>
-
+                                    </div>
+                                    <div class="col-md-6 col-sm-3">
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">CNIC No</label>
+                                            <input type="text" class="form-control" v-model="retailer.cnic" v-mask="'99999-9999999-9'" autocomplete="off" required>
+                                        </div>
                                     </div>
 
-                                    <div class="col-md-2">
-                                        <label>Outlet Name</label>
+
+
+                                    <div class="col-md-6 col-sm-3"  v-if="!retailer.uploadImage">
+                                        <div class="form-group label-floating">
+                                            <button class="btn btn-primary btn-xs" style="width:100%;">Select Image<input type="file" class="form-control" v-on:change="file_preview" ref="imageInput" name="image" autocomplete="off" required></button>
+                                        </div>
                                     </div>
-                                    <div class="col-md-4">
-                                        <input type="text" class="textbox" autocomplete="off" v-model="outlet.outlet_name" name="outlet_name" required/>
+                                    <div class="col-md-4" v-else>
+                                        <img :src="retailer.uploadImage" class="img img-responsive form-control" />
+                                        <button @click="removeRetailerImage" class="image_close_btn"><i class="fa fa-times"></i> </button>
+                                    </div>
+
+                                    <div class="col-md-6 col-sm-3">
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Mobile No</label>
+                                            <input type="text" class="form-control" v-model="retailer.phone_no" v-mask="'9999-9999999'" autocomplete="off" required>
+                                        </div>
+                                    </div>
+
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="form-section">
+                                <h4 class="form-section-heading">OUTLET DETAILS</h4>
+                                <div class="col-md-6 col-sm-3">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Outlet Name</label>
+                                        <input type="text" class="form-control" autocomplete="off" required>
                                     </div>
                                 </div>
 
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        <label>Outlet Phone No</label>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <input type="text" class="textbox" v-mask="'9999-9999999'" v-model="outlet.outlet_phone" autocomplete="off" name="outlet_phone" required/>
-                                    </div>
 
-
-                                    <div class="col-md-2">
-                                        <label>Business Person</label>
+                                <div class="col-md-6 col-sm-3">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Outlet Phone No</label>
+                                        <input type="text" class="form-control" v-mask="'9999-9999999'" v-model="outlet.outlet_phone" autocomplete="off" required>
                                     </div>
-                                    <div class="col-md-4">
-                                        <input type="text" class="textbox" autocomplete="off" v-model="outlet.bussiness_person_name" placeholder="Name of Person" name="person_name" required/>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="form-section">
+                                <h4 class="form-section-heading">BUSINESS PERSON DETAILS</h4>
+                                <div class="col-md-6 col-sm-3">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Full Name</label>
+                                        <input type="text" class="form-control" v-model="outlet.bussiness_person_name" autocomplete="off" name="person_name"  required>
                                     </div>
                                 </div>
 
 
-
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        <label>Bussiness Person</label>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <input type="text" class="textbox" v-mask="'99999-9999999-9'" v-model="outlet.bussiness_person_cnic" placeholder="CNIC of Person" autocomplete="off" name="person_cnic" minlength="15" maxlength="15" required/>
-                                    </div>
-
-                                    <div class="col-md-2">
-                                        <label>Bussiness Person</label>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <input type="text" class="textbox" v-mask="'9999-9999999'" v-model="outlet.bussiness_person_phone" placeholder="Mobile of Person" autocomplete="off" name="person_mobile" minlength="12" maxlength="12" required/>
+                                <div class="col-md-6 col-sm-3">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">CNIC</label>
+                                        <input type="text" class="form-control" v-mask="'99999-9999999-9'" v-model="outlet.bussiness_person_cnic" autocomplete="off" name="person_cnic" minlength="15" maxlength="15" required>
                                     </div>
                                 </div>
+
+
+                                <div class="col-md-6 col-sm-3">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Phone No</label>
+                                        <input type="text" class="form-control" v-mask="'9999-9999999'" v-model="outlet.bussiness_person_phone" autocomplete="off" required>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
                             </div>
                             <br/>
                             <div class="form-section">
                                 <h4 class="form-section-heading">LOCATION DETAILS</h4>
                                 <br/>
+                                <div class="col-md-6 col-sm-3">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Select City</label>
+                                        <input type="text" class="form-control" v-model="outlet.bussiness_person_name" autocomplete="off" name="person_name"  required>
+                                        <select class="form-control" name="city_id" v-model="outlet.city_id" @change="change_city(outlet.city_id)" required>
+                                            <option value="">Select City</option>
+                                            <option v-for="cities in citiesData"  v-bind:value="cities.id">{{cities.name}}</option>
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="row">
                                     <div class="col-md-2">
                                         <label>Select City</label>
@@ -510,6 +531,14 @@
                     city_name:'',
                     region_name:''
                 },
+                retailer:{
+                    id:'',
+                    fullname:'',
+                    cnic:'',
+                    phone_no:'',
+                    uploadImage:'',
+                    aging_amount:'',
+                },
                 city:{
                     id:'',
                     name:''
@@ -802,4 +831,9 @@
 
 
 </script>
+<style>
+    #form-section{
+        border:1px solid black;
+    }
+</style>
 

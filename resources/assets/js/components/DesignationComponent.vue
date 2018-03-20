@@ -86,9 +86,13 @@
           },
           saveEditing(e){
             e.preventDefault();
-            axios.post('./editDesignation',this.DesignationData).then(response=>{
+            //console.log(this.designationData);
+            axios.post('./editDesignation',this.designationData).then(response=>{
+              console.log(response.data);
                if(response.data.return == 0){
+
                  this.allDesignations[this.editIndex].designation=this.designationData.designation;
+
                  this.designationData={
                    designation:''
                  };

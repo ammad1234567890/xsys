@@ -7,8 +7,12 @@
               </div>
           </div>
         <div class="col-md-12">
-            <div class="panel panel-info">
-                <div class="panel-heading">Add Order Payment</div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">
+                        Add Order Payment
+                    </h2>
+                </div>
 
                 <div class="panel-body">
                     <div class="alert alert-success"  v-if="message">
@@ -59,7 +63,8 @@
                             <div class="col-md-6 form-group">
 
                                 <label for="product_quanity">Total Payment Cost (Rs)</label>
-                                <input type="text" name="remaining_payment" v-model="payment_data.total_payment" v-validate="{ max_value: remaining_payment }" class="form-control" placeholder="Total Payment" readonly>
+                                <vue-numeric class="form-control" name="remaining_payment" v-validate="{ max_value: remaining_payment }" currency="Rs" separator="," v-model="payment_data.total_payment" placeholder="Total Payment" readonly></vue-numeric>
+
 
                                 <span class="text-danger" v-show="errors.has('remaining_payment')">
                                   {{errors.first('remaining_payment')}}

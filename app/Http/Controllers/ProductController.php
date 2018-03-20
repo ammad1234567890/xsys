@@ -231,4 +231,10 @@ class ProductController extends Controller
       $productColor=ProductColor::where('product_id',$id)->where('is_deleted',0)->get();
       return $productColor;
     }
+
+    public function get_product_color_by_id($id)
+    {
+      $productColor=ProductColor::where('id',$id)->where('is_deleted',0)->get();
+      return $productColor;
+    }
 }

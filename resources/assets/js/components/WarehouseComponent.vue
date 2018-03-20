@@ -4,21 +4,23 @@
         <div class="row">
             <div class="card headcolor">
                 <div class="card-header">
-                        <h3 class="card-title pad-bot"><i class="material-icons">store</i> <small>WAREHOUSE </small> </h3>
+                        <h3 class="card-title pad-bot"><i class="material-icons">store</i> <small>WAREHOUSE MANAGEMENT </small> </h3>
                 </div>
             </div>
         </div>
           <div class="row">
               <div class="col-md-12">
                   <div class="panel panel-default">
-                    <a href="#d" data-toggle="collapse">
-                      <div class="panel-heading">Add New Warehouse</div>
+                    <a href="#d" data-toggle="collapse" style="color:#333333">
+                      <div class="panel-heading">
+                        <h2 class="panel-title">Add New Warehouse</h2>
+                      </div>
                       </a>
                       <div id="d" class="panel-body collapse" v-bind:class="{in:edit}">
                         <form @submit="createWarehouse">
                           <div class="form-group col-md-6">
                             <label for="name">Name</label>
-                            <input name="Name" type="text" class="form-control" v-validate="'required|regex:^[a-zA-Z ._]+$'" v-model="newWarehouse.name">
+                            <input name="Name" type="text" class="form-control" v-validate="'required|regex:^[a-zA-Z ._]+$'" v-model="newWarehouse.name" >
                             <span class="text-danger" v-show="errors.has('city')">
                               {{errors.first('city')}}
                             </span>
@@ -112,49 +114,53 @@
       <div class="row">
           <div class="col-md-12">
               <div class="panel panel-default">
-                  <div class="panel-heading">Warehouse List</div>
+                  <div class="panel-heading">
+                      <h2 class="panel-title">Warehouse List</h2>
+                  </div>
                   <div class="panel-body">
-                    <table id="warehousetable" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
-                      <thead>
-                        <tr>
-                          <th>S.No</th>
-                          <th>Name</th>
-                          <th>Type</th>
-                          <th>City</th>
-                          <th>Locality</th>
-                          <th>Latitude</th>
-                          <th>Longitude</th>
-                          <th>Address</th>
-                          <th>Manager</th>
-                          <th>Accountant</th>
-                          <th>Action</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr v-for="(warehouse,index) in allWarehouses">
-                          <td>{{index + 1}}</td>
-                          <td>{{warehouse.name}}</td>
-                          <td>{{warehouse.warehouse_type.type}}</td>
-                          <td>{{warehouse.city.name}}</td>
-                          <td>{{warehouse.region.name}}</td>
-                          <td>{{warehouse.latitude}}</td>
-                          <td>{{warehouse.longitude}}</td>
-                          <td>{{warehouse.address}}</td>
-                          <td>{{warehouse.manager.name}}</td>
-                          <td>{{warehouse.accountant.name}}</td>
-                          <td>
-                              <div class="dropdown">
-                                <button class="btn btn-info btn-xs dropdown-toggle" type="button" data-toggle="dropdown">Action
-                                <span class="caret"></span></button>
-                                  <ul class="dropdown-menu">
-                                    <li><a href="#" v-on:click="editWarehouse(index)">Edit</a></li>
-                                    <li><a href="#" v-on:click="deleteWarehouse(index,warehouse.id)">Delete</a></li>
-                                  </ul>
-                              </div>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
+                    <div class="table-responsive">
+                      <table id="warehousetable" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                        <thead>
+                          <tr>
+                            <th>S.No</th>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>City</th>
+                            <th>Locality</th>
+                            <th>Latitude</th>
+                            <th>Longitude</th>
+                            <th>Address</th>
+                            <th>Manager</th>
+                            <th>Accountant</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr v-for="(warehouse,index) in allWarehouses">
+                            <td>{{index + 1}}</td>
+                            <td>{{warehouse.name}}</td>
+                            <td>{{warehouse.warehouse_type.type}}</td>
+                            <td>{{warehouse.city.name}}</td>
+                            <td>{{warehouse.region.name}}</td>
+                            <td>{{warehouse.latitude}}</td>
+                            <td>{{warehouse.longitude}}</td>
+                            <td>{{warehouse.address}}</td>
+                            <td>{{warehouse.manager.name}}</td>
+                            <td>{{warehouse.accountant.name}}</td>
+                            <td>
+                                <div class="dropdown">
+                                  <button class="btn btn-info btn-xs dropdown-toggle" type="button" data-toggle="dropdown">Action
+                                  <span class="caret"></span></button>
+                                    <ul class="dropdown-menu">
+                                      <li><a href="#" v-on:click="editWarehouse(index)">Edit</a></li>
+                                      <li><a href="#" v-on:click="deleteWarehouse(index,warehouse.id)">Delete</a></li>
+                                    </ul>
+                                </div>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
               </div>
             </div>
@@ -326,13 +332,16 @@ import vSelect from "vue-select"
           }
           */
           deleteWarehouse(index,id){
-            axios.get('./deleteWarehouse/'+id).then(response=>{
-              if(response.data==0){
-                this.allWarehouses.splice(index,1);
-              }else{
-                alert('Fail to delete');
-              }
-            })
+            var result=confirm("Are you want to Delete Warehouse?");
+            if(result){
+              axios.get('./deleteWarehouse/'+id).then(response=>{
+                if(response.data==0){
+                  this.allWarehouses.splice(index,1);
+                }else{
+                  alert('Fail to delete');
+                }
+              })
+            }
           },
           getRegion(){
             console.log("Change");

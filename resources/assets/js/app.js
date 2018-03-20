@@ -8,13 +8,29 @@
 require('./bootstrap');
 window.Vue = require('vue');
 import VeeValidate from 'vee-validate';
+import DatePicker from 'vue2-datepicker';
 const VueInputMask = require('vue-inputmask').default
 import DatatableFactory from 'vuejs-datatable';
+import VueNumeric from 'vue-numeric';
+import VueCurrencyFilter from 'vue-currency-filter'
 
 import $ from 'jquery';
 import 'datatables.net';
 Vue.use(VueInputMask)
 Vue.use(DatatableFactory);
+Vue.use(DatePicker);
+Vue.use(VueNumeric);
+Vue.use(VueCurrencyFilter,
+    {
+        symbol : '$',
+        thousandsSeparator: ',',
+        fractionCount: 2,
+        fractionSeparator: '.',
+        symbolPosition: 'front',
+        symbolSpacing: true
+    });
+
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -73,4 +89,6 @@ Vue.component('retailerlist-component', require('./components/RetailerListCompon
 
 const app = new Vue({
     el: '#app'
+
+
 });

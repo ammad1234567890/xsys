@@ -8,12 +8,12 @@
                     </div>
                 </div>
                 <div class="card-content">
-                    <p class="category"><strong>Manufacture Order</strong></p>
+                    <p class="category"><strong>Manufacturer Orders</strong></p>
                     <h3 class="card-title">102</h3>
                 </div>
                 <div class="card-footer">
                     <div class="stats">
-                        <i class="material-icons">receipt</i> <a href="#">View detailed</a>
+                        <i class="material-icons">receipt</i> <a href="#">View details</a>
                     </div>
                 </div>
             </div>

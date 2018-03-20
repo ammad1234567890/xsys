@@ -95,14 +95,39 @@ class RetailerOutletController extends Controller
         else{
             $extension="png";
         }
-
         //SAVE IT TO retailer_images FOLDER
         $file_name=str_random().'.'.$extension;
         $path=public_path().'/deposit_check_img/'.$file_name;
         file_put_contents($path, $decoded);
 
 
-        $retailer_id= $request->input('retailer_id');
+        //GET THE RETAILER IMAGE
+        $exploded= explode(',', $request->input('uploadImage'));
+
+        $decoded= base64_decode($exploded[1]);
+
+        if(str_contains($exploded[0],'jpeg')){
+            $extension="jpg";
+        }
+        else{
+            $extension="png";
+        }
+
+        //SAVE IT TO retailer_images FOLDER
+        $retailer_file_name=str_random().'.'.$extension;
+        $path=public_path().'/retailers_img/'.$retailer_file_name;
+        file_put_contents($path, $decoded);
+
+        
+
+        
+
+        //GET ALL OTHER FIELDS
+        $fullname= $request->input('fullname');
+        $cnic= $request->input('cnic');
+        $phone_no= $request->input('phone_no');
+
+
         $city_id= $request->input('city_id');
         $region_id= $request->input('region_id');
         $outlet_name= $request->input('outlet_name');
@@ -120,10 +145,38 @@ class RetailerOutletController extends Controller
         //Getting the logged in user id
         $user=Auth::user()->id;
 
+        //query of getting users with the given phone number or cnic.
+        $check_exist=Retailer::where('phone_no','=',$phone_no)->orWhere('cnic',$cnic)->count();
+
+        //Check if the user is already exist or not.
+        if($check_exist>0){
+
+            //Use for any type of conflict.
+            return 406;
+        }
+        else{
+            //If not exist, consider it as a new retailer also push the details on database.
+            try{
+                DB::beginTransaction();
+                $retailer = Retailer::create(array('name' => $fullname,
+                    'cnic' => $cnic,
+                    'phone_no'=>$phone_no,
+                    'image'=>$retailer_file_name,
+                    'created_by'=>$user));
+                DB::commit();
+            }
+            catch(\Exception $exc){
+                DB::rollBack();
+                return $exc;
+            }
+        }
+
+        $last_retailer_id=$retailer->id;
+
         try{
             DB::beginTransaction();
             $outlet = RetailerOutlet::create(array(
-                'retailer_id' => $retailer_id,
+                'retailer_id' => $last_retailer_id,
                 'city_id' => $city_id,
                 'region_id'=>$region_id,
                 'name'=>$outlet_name,

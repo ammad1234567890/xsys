@@ -7,10 +7,13 @@
                     <h3 class="card-title pad-bot"><i class="material-icons">group</i> <small>STAFF</small> </h3>
             </div>
           </div>
+          <div >
             <div class="col-md-12">
                 <div class="panel panel-default">
-                  <a href="#d" data-toggle="collapse">
-                    <div class="panel-heading">Add New Staff</div>
+                  <a href="#d" data-toggle="collapse" style="color:#333333">
+                    <div class="panel-heading">
+                      <h2 class="panel-title">Add New Staff</h2>
+                    </div>
                   </a>
                     <div id="d" class="panel-body collapse" v-bind:class="{in:edit}">
                       <form v-on:submit="createStaff">
@@ -110,63 +113,66 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12">
-          <div class="panel panel-default">
-              <div class="panel-heading">All Staff</div>
-              <div class="panel-body">
-                <div class="table-responsive">
-                  <table id="stafftable" class="table table-striped table-bordered table-hover table-no" cellspacing="0" width="100%" style="width:100%">
-                    <thead>
-                    <tr>
-                      <th>S.No</th>
-                      <th>Name</th>
-                      <th>E-Mail</th>
-                      <th>CNIC</th>
-                      <th>Phone Number</th>
-                      <th>Address</th>
-                      <th>City</th>
-                      <th>Locality</th>
-                      <th>Deparment</th>
-                      <th>Staff Type</th>
-                      <th>Designation</th>
-                      <th>Action</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr v-for="(staff, index) in allStaff">
-                      <td>{{index +1}}</td>
-                      <td>{{staff.name}}</td>
-                      <td>{{staff.email}}</td>
-                      <td>{{staff.CNIC}}</td>
-                      <td>{{staff.phoneNumber}}</td>
-                      <td>{{staff.address}}</td>
-                      <td>{{staff.city.name}}</td>
-                      <td>{{staff.region.name}}</td>
-                      <td>{{staff.department.name}}</td>
-                      <td>{{staff.staff_type.type}}</td>
-                      <td>{{staff.designation.designation}}</td>
-                      <td>
-                        <div class="dropdown">
-                          <button class="btn btn-primary btn-xs dropdown-toggle" type="button" data-toggle="dropdown">Action
-                            <span class="caret"></span></button>
-                          <ul class="dropdown-menu">
-                            <li><a href="#" v-on:click="editStaff(index)">Edit</a></li>
-                            <li><a href="#" v-on:click="deleteStaff(index,staff.id)">Delete</a></li>
-                          </ul>
-                        </div>
-                      </td>
-                    </tr>
-                    </tbody>
-                  </table>
-                </div>
+          </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+              <div class="panel panel-default">
+                  <div class="panel-heading">
+                      <h2 class="panel-title">All Staff</h2>
+                  </div>
+                  <div class="panel-body">
+                    <div class="table-responsive">
+                      <table id="stafftable" class="table table-striped table-bordered table-hover table-no" cellspacing="0" width="100%" style="width:100%">
+                        <thead>
+                        <tr>
+                          <th>S.No</th>
+                          <th>Name</th>
+                          <th>E-Mail</th>
+                          <th>CNIC</th>
+                          <th>Phone Number</th>
+                          <th>Address</th>
+                          <th>City</th>
+                          <th>Locality</th>
+                          <th>Department</th>
+                          <th>Staff Type</th>
+                          <th>Designation</th>
+                          <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="(staff, index) in allStaff">
+                          <td>{{index +1}}</td>
+                          <td>{{staff.name}}</td>
+                          <td>{{staff.email}}</td>
+                          <td>{{staff.CNIC}}</td>
+                          <td>{{staff.phoneNumber}}</td>
+                          <td>{{staff.address}}</td>
+                          <td>{{staff.city.name}}</td>
+                          <td>{{staff.region.name}}</td>
+                          <td>{{staff.department.name}}</td>
+                          <td>{{staff.staff_type.type}}</td>
+                          <td>{{staff.designation.designation}}</td>
+                          <td>
+                            <div class="dropdown">
+                              <button class="btn btn-primary btn-xs dropdown-toggle" type="button" data-toggle="dropdown">Action
+                                <span class="caret"></span></button>
+                              <ul class="dropdown-menu">
+                                <li><a href="#" v-on:click="editStaff(index)">Edit</a></li>
+                                <li><a href="#" v-on:click="deleteStaff(index,staff.id)">Delete</a></li>
+                              </ul>
+                            </div>
+                          </td>
+                        </tr>
+                        </tbody>
+                      </table>
+                    </div>
 
-              </div>
-         </div>
+                  </div>
+             </div>
+        </div>
+      </div>
     </div>
-  </div>
   </div>
 </template>
 
@@ -328,7 +334,7 @@ import vSelect from "vue-select"
     $(document).ready(function() {
         setTimeout(function(){
             $('#stafftable').DataTable({
-            "pagingType": "full_numbers",
+            /*"pagingType": "full_numbers",
             "lengthMenu": [
                 [10, 25, 50, -1],
                 [10, 25, 50, "All"]
@@ -337,7 +343,18 @@ import vSelect from "vue-select"
             language: {
                 search: "_INPUT_",
                 searchPlaceholder: "Search records",
-            }
+            }*/
+
+            dom: 'Bfrtip',
+            language: {
+                search: "_INPUT_",
+                searchPlaceholder: "Search records",
+            },
+            stateSave: true,
+            buttons: [
+                'colvis',
+            ]
+
             });
         },3000);
     });

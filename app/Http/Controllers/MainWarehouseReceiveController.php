@@ -108,8 +108,15 @@ class MainWarehouseReceiveController extends Controller
             DB::rollBack();
             return $return;
           }
-
+        /*WarehouseStock
+        if(WarehouseStock::where([['warehouse_id',$warehouse_id],['product_color_id',$productColor['id']]])->exists()){
+            $warehouseStock=WarehouseStock::where([['warehouse_id',$warehouse_id],['product_color_id',$productColor['id']]])->first();
+            $warehouseStockQuantity=$warehouseStock['product_qty'];
+            WarehouseStock::where([['warehouse_id',$warehouse_id],['product_color_id',$productColor['id']]])->update('product_qty',$warehouseStockQuantity+$quantity);
+        }else{
+            WarehouseStock::create(['warehouse_id'=>$warehouse_id,'product_color_id'=>$productColor['id'],'product_qty'=>$quantity]);
         }
+        */
         WarehouseStock::create(['warehouse_id'=>$warehouse_id,'product_color_id'=>$productColor['id'],'product_qty'=>$quantity]);
      }catch(\Exception $e){
        $return=array('replay'=>1,'data'=>$e);

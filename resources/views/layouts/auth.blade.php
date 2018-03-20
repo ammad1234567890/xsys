@@ -37,7 +37,9 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="{{ url('/') }}">BLADE Admin</a>
+                <a class="navbar-brand" href="{{ url('/') }}">
+                    <img src="{{ asset('img/xsyslogo.png') }}" width="130px" alt="Xsys">
+                </a>
             </div>
         </div>
     </nav>

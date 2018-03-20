@@ -30,6 +30,7 @@ use App\RetailerInvoice_Products;
 use App\WarehouseStaff;
 use App\Staff;
 use App\WarehouseIssue;
+use App\Ledger;
 
 class RetailerInvoiceController extends Controller {
 
@@ -107,7 +108,10 @@ class RetailerInvoiceController extends Controller {
             'warehouse_id' => $warehouse_id->warehouse_id,
             'created_by' => Auth::user()->id
         ]);
-        DB::table('tbl_ledger')->insert(['invoice_id'=>$invoice_id,'transDate'=>date('Y-m-d'),'description'=>$invoice_id.$request->decs,'credit'=>$request->total_amount,'retailer_id'=>$request->retailer_id]);
+		   Ledger::create(['invoice_id' => $invoice_id, 'transDate' => date('Y-m-d'),
+            'description' => $invoice_id . $request->decs, 'credit' => $request->total_amount,
+            'retailer_id' => $request->retailer_id]);
+  //      DB::table('tbl_ledger')->insert(['invoice_id'=>$invoice_id,'transDate'=>date('Y-m-d'),'description'=>$invoice_id.$request->decs,'credit'=>$request->total_amount,'retailer_id'=>$request->retailer_id]);
         DB::commit();
 
         return 201;

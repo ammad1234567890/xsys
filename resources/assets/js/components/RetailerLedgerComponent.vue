@@ -8,8 +8,8 @@
                 </div>
             </div>
     
-    <div class="col-md-12 panel panel-default">
-        <div class="panel panel-info">
+    <div class="col-md-12">
+        <div class="panel panel-default">
             <div class="panel-heading"><h3 style="margin-top: 6px; font-variant: small-caps; font-weight:bold;">Ledger - Search</h3></div>
             <div class="panel-body">
                 <form @submit="searchLedger">
@@ -23,13 +23,13 @@
 
                     <div class="form-group col-md-3">
                         <label for="FromDate">From Date</label>
-                        <input type="date" name="fdate" class="form-control" placeholder="From Date"  v-model="searchData.fdate" required>
+                        <date-picker name="fdate" v-model="searchData.fdate" type="date" format="dd-MM-yyyy" placeholder="dd-mm-yyyy" lang="en" required></date-picker>
                     </div>
 
                     <div class="form-group col-md-3">
                         <label for="ToDate">To Date</label>
-                        <input type="date" name="tdate" class="form-control" placeholder="To Date"   v-model="searchData.tdate" required>
 
+                        <date-picker name="tdate" v-model="searchData.tdate" type="date" format="dd-MM-yyyy" placeholder="dd-mm-yyyy" lang="en" required></date-picker>
                     </div>
                     <input v-if="editing==false" type="submit" @click="searchLedger" class="btn btn-tumblr" value="Search">
                 </form>
@@ -59,10 +59,10 @@
 
                     <tr v-for="(ledger,index) in ledgerData">
                         <td>{{index +1}}</td>
-                        <td>{{ledger.TransDate}}</td>
+                        <td>{{ledger.TransDate | moment}}</td>
                         <td>{{ledger.description}}</td>
-                        <td>{{ledger.Collection}}</td>
-                        <td>{{ledger.Credit}}</td>
+                        <td>{{ledger.Collection | currency('')}}</td>
+                        <td>{{ledger.Credit | currency('')}}</td>
 
                     </tr>
                     <tr>
@@ -79,7 +79,7 @@
 
                         </td>
                         <td style="font-weight: bold;">
-                            Total Outstanding: {{last_outstanding}}
+                            Total Outstanding: {{last_outstanding | currency('')}}
                         </td>
 
                     </tr>
@@ -114,6 +114,19 @@
                     retailer_index:''
                 },
             }
+        },
+        filters: {
+            moment: function (date) {
+                return moment(date).format('DD-MM-YYYY');
+            },
+
+            getdate: function (date) {
+                return moment(date).format('DD');
+            },
+
+            getmonth: function (date) {
+                return moment(date).format('MM');
+            },
         },
         mounted() {
             console.log('Component mounted.')

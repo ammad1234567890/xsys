@@ -7,48 +7,52 @@
         </div>
         <div class="col-md-12">
             <div class="panel panel-info">
-                <div class="panel-heading">Order Details</div>
+                <div class="panel-heading">
+                    <h2 class="panel-title">Order Details</h2>
+                </div>
 
                 <div class="panel-body">
                     <div class="alert alert-success"  v-if="message">
                         <strong>{{message}}</strong>
                     </div>
-                    <table id="retailer_order_table" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
-                        <thead>
-                        <tr>
-                            <th>Order No</th>
-                            <th>Estimate Delivery</th>
-                            <th>Retailer</th>
-                            <th>Outlet</th>
-                            <th>Account Clearance</th>
-                            <th>Total Amount</th>
-                            <th>Created Order Date</th>
-                            <th class="col-md-3 text-center">Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr v-for="(order, index) in all_orders">
-                            <td>Order#{{order.id}}</td>
-                            <td>{{order.expected_delivery_date}}</td>
-                            <td>{{order.retailer.name}}</td>
-                            <td>{{order.retailer_outlet.name}}</td>
-                            <td v-if="order.is_account_clearance==1"><i class="fa fa-check" title="Cleared from Finance" style="text-align:center; display:block; font-size:25px; color:green;"></i> </td>
-                            <td v-else><i class="fa fa-times" style="text-align:center; display:block; font-size:25px; color:red;"></i></td>
+                    <div class="table-responsive">
+                        <table id="retailer_order_table" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                            <thead>
+                            <tr>
+                                <th>Order No</th>
+                                <th>Estimated Delivery</th>
+                                <th>Retailer</th>
+                                <th>Outlet</th>
+                                <th>Account Clearance</th>
+                                <th>Total Amount</th>
+                                <th>Created Order Date</th>
+                                <th class="col-md-3 text-center">Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="(order, index) in all_orders">
+                                <td>CR{{order.created_at | getdate}}{{order.created_at | getmonth}}00{{order.id}}</td>
+                                <td>{{order.expected_delivery_date | moment}}</td>
+                                <td>{{order.retailer.name}}</td>
+                                <td>{{order.retailer_outlet.name}}</td>
+                                <td v-if="order.is_account_clearance==1"><i class="fa fa-check" title="Cleared from Finance" style="text-align:center; display:block; font-size:25px; color:green;"></i> </td>
+                                <td v-else><i class="fa fa-times" style="text-align:center; display:block; font-size:25px; color:red;"></i></td>
 
-                            <td>{{order.total_cost}}</td>
-                            <td>{{order.created_at}}</td>
-                            <td class="text-center">
-                                <div class="dropdown">
+                                <td>{{order.total_cost | currency('Rs')}}</td>
+                                <td>{{order.created_at | moment}}</td>
+                                <td class="text-center">
+                                    <div class="dropdown">
 
-                                    <button class="btn btn-github btn-xs" type="button" v-on:click="view_order_details(index)">View Details</button> -
+                                        <button class="btn btn-github btn-xs" type="button" v-on:click="view_order_details(index)">View Details</button> -
 
-                                    <a class="btn btn-tumblr btn-xs" v-bind:href="'../invoice/create/'+order.id" v-if="order.is_account_clearance==1">Generate Invoice</a>
-                                    <button class="btn btn-danger btn-just-icon " type="button" v-if="order.is_account_clearance==0" v-on:click="order_delete(index)"><i class="fa fa-trash-o"></i> </button>
-                                </div>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+                                        <a class="btn btn-tumblr btn-xs" v-bind:href="'../invoice/create/'+order.id" v-if="order.is_account_clearance==1">Generate Invoice</a>
+                                        <button class="btn btn-danger btn-xs" type="button" v-if="order.is_account_clearance==0" v-on:click="order_delete(index)">Delete </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
@@ -66,15 +70,15 @@
                                     <h5> <span class="pull-right"></span></h5>
 
 
-                                    <h5><b>Order#{{view_order.orderno}}</b> <span class="pull-right"><b>Created at:</b> <i> {{view_order.created_at}}</i> </span></h5>
+                                    <h5><b>CR{{view_order.created_at | getdate}}{{view_order.created_at | getmonth}}00{{view_order.orderno}}</b> <span class="pull-right"><b>Created at:</b> <i> {{view_order.created_at | moment}}</i> </span></h5>
                                     <table width="100%" class="table table-hovered">
                                         <tr>
                                             <td>Total Order Cost</td>
-                                            <td>{{view_order.total_cost}} Rs</td>
+                                            <td>{{view_order.total_cost | currency('Rs')}} </td>
                                         </tr>
                                         <tr>
                                             <td>Remaining Order Cost</td>
-                                            <td>{{view_order.remaining_payment}} Rs</td>
+                                            <td>{{view_order.remaining_payment | currency('Rs')}} </td>
                                         </tr>
                                         <tr>
                                             <td>Order By</td>
@@ -110,7 +114,7 @@
                                             <td>{{products.product_color.product.name}}</td>
                                             <td>{{products.product_color.color}}</td>
                                             <td>{{products.product_qty}}</td>
-                                            <td>{{products.unit_price}}</td>
+                                            <td>{{products.unit_price | currency('Rs')}}</td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -169,6 +173,19 @@
         created:function(){
             this.init();
         },
+        filters: {
+            moment: function (date) {
+                return moment(date).format('DD-MM-YYYY');
+            },
+
+            getdate: function (date) {
+                return moment(date).format('DD');
+            },
+
+            getmonth: function (date) {
+                return moment(date).format('MM');
+            },
+        },
         methods:{
             init:function(){
                 this.get_all_orders();
@@ -181,19 +198,6 @@
             change_status_btn:function(index){
                 $('#change_status_modal').modal('show');
                 this.change_order_status.id=this.all_orders[index].id;
-            },
-            view_order_details:function(index){
-                $('#order_info_modal').modal('show');
-                this.view_order.orderno="Order# "+this.all_orders[index].id;
-                this.view_order.eta=this.all_orders[index].eta;
-                this.view_order.remaining_payment=this.all_orders[index].remaining_payment;
-                this.view_order.total_cost=this.all_orders[index].total_cost;
-                this.view_order.transaction_closed=this.all_orders[index].transaction_closed;
-                this.view_order.created_by=this.all_orders[index].user.name;
-                this.view_order.created_at=this.all_orders[index].created_at;
-                this.view_order.current_status=this.all_orders[index].order_status;
-                this.view_order.order_products=this.all_orders[index].manufacture_order_products;
-                this.view_order.order_payments=this.all_orders[index].payment;
             },
             add_order_status:function(e){
                 e.preventDefault();
@@ -233,8 +237,9 @@
                 this.view_order.total_cost=this.all_orders[index].total_cost;
                 this.view_order.is_account_clear=this.all_orders[index].is_account_clearance;
                 this.view_order.is_approved=this.all_orders[index].is_approved;
-
                 this.view_order.retailer_name=this.all_orders[index].retailer.name;
+                this.view_order.created_at=this.all_orders[index].created_at;
+
                 this.view_order.sales_officer_name=this.all_orders[index].retailer.name;
                 this.view_order.outlet_name=this.all_orders[index].retailer_outlet.name;
                 this.view_order.order_products=this.all_orders[index].order_products;
@@ -242,7 +247,7 @@
                 this.view_order.updated_by=this.all_orders[index].updated_user.name;
                 this.view_order.created_at=this.all_orders[index].created_at;
 
-
+                //alert(this.all_orders[index].created_at);
 
 
             },
@@ -251,9 +256,9 @@
         }
     }
 $(document).ready(function() {
-        setTimeout(function(){
-            $('#retailer_order_table').DataTable({
-            "pagingType": "full_numbers",
+    setTimeout(function () {
+        $('#retailer_order_table').DataTable({
+            /*"pagingType": "full_numbers",
             "lengthMenu": [
                 [10, 25, 50, -1],
                 [10, 25, 50, "All"]
@@ -263,8 +268,18 @@ $(document).ready(function() {
                 search: "_INPUT_",
                 searchPlaceholder: "Search records",
             }
-            });
-        },3000);
-    });
+            });*/
+            dom: 'Bfrtip',
+            language: {
+                search: "_INPUT_",
+                searchPlaceholder: "Search records",
+            },
+            stateSave: true,
+            buttons: [
+                'colvis',
+            ]
+        });
+    }, 2000);
+});
 
 </script>

@@ -19,7 +19,7 @@
                                             </div>                                          
                                             <div class="input-group {{ $errors->has('name') ? ' has-error' : '' }}">
                                                 <span class="input-group-addon">
-                                                    <i class="material-icons">face</i>
+                                                    <i class="material-icons">person</i>
                                                 </span>
                                                 <input type="text" class="form-control" placeholder="Full Name..." name="name" value="{{ old('name') }}" required autofocus>
 
@@ -78,7 +78,15 @@
                                             </div>
                                         </div>
                                         <div class="footer text-center">
-                                            <button type="submit" class="btn btn-primary btn-round">Create</button>
+                                            <button type="submit" class="btn btn-primary btn-round">Sign up</button>
+                                        </div>
+
+                                        <div class="text-center col-md-12">
+                                            <p> <small>Already Registered User? Click Here To
+                                                    <a href="{{ route('login') }}"> Login
+                                                    </a>
+                                                </small>
+                                            </p>
                                         </div>
                                     </form>
                                 </div>

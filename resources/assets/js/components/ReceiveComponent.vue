@@ -7,8 +7,10 @@
         </div>
     </div>
     <div class="col-md-12">
-        <div class="panel panel-info">
-            <div class="panel-heading">Recieving new Order</div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2 class="panel-title">Recieving New Order</h2>
+            </div>
             <div class="alert alert-success"  v-if="message">
                 <strong>{{message}}</strong>
             </div>
@@ -52,8 +54,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="col-md-8"  style="margin-top: 13px;">
+                        <div class="col-md-6" style="margin-top: 12px;">
                                 <label for="select_collected_by">Recieved Location Status</label>
                                 <select class="form-control" v-model="new_recieving.recieve_status_id" required>
                                     <option value="">Select</option>
@@ -61,20 +62,11 @@
                                         {{status.status}}
                                     </option>
                                 </select>
-                            </div>
-                            <div class="col-md-2">
-                                <label for="select_collected_by"></label>
-                                <a href="../general">
-                                    <i class="fa fa-plus-circle" style="font-size: 27px; margin-top: 37px;"></i>
-                                </a>
-                            </div>
-
                         </div>
                     </div>
 
                     <div class="row" v-for="(find, index) in new_recieving.order_products">
                         <div class="form-section" style="border-left:0px; border-right: 0px; border-bottom:0px; padding-left:0px; padding-right:0px;">
-                            <h4 class="form-section-heading" style="left: 18px;">Receiving Product</h4>
 
                             <div class="col-md-6 form-group">
                                 <label for="select_products">Select Order Products</label>
@@ -91,7 +83,7 @@
                                 </span>
                             </div>
                             <div class="col-md-12" v-if="index>0">
-                                <button class="btn btn-danger" v-on:click="removeProductForm(index)">Remove</button>
+                                <button class="btn btn-danger pull-right" v-on:click="removeProductForm(index)">Remove</button>
                             </div>
                             <div class="clearfix"></div>
                         </div>

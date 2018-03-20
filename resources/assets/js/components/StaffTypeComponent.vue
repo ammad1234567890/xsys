@@ -88,8 +88,9 @@
             e.preventDefault();
             axios.post('./editStaffType',this.staffTypeData).then(response=>{
                if(response.data.return == 0){
-                 this.allStaffType[this.editIndex].name=this.staffTypeData.staffType;
-                 this.staffTypeData={
+
+                 this.allStaffType[this.editIndex].type=this.staffTypeData.staffType;
+                       this.staffTypeData={
                    staffType:''
                  };
                  this.editing=false;

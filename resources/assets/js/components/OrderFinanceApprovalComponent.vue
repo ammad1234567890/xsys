@@ -28,15 +28,15 @@
                         </thead>
                         <tbody>
                         <tr v-for="(order, index) in all_orders">
-                            <td>Order#{{order.id}}</td>
-                            <td>{{order.expected_delivery_date}}</td>
+                            <td>CR{{order.created_at | getdate}}{{order.created_at | getmonth}}00{{order.id}}</td>
+                            <td>{{order.expected_delivery_date | moment}}</td>
                             <td>{{order.retailer.name}}</td>
                             <td>{{order.retailer_outlet.name}}</td>
                             <td v-if="order.is_account_clearance==1"><i class="fa fa-check" title="Cleared from Finance" style="text-align:center; display:block; font-size:25px; color:green;"></i> </td>
                             <td v-else><i class="fa fa-times" style="text-align:center; display:block; font-size:25px; color:red;"></i></td>
 
-                            <td>{{order.total_cost}}</td>
-                            <td>{{order.created_at}}</td>
+                            <td>{{order.total_cost | currency('Rs')}}</td>
+                            <td>{{order.created_at | moment}}</td>
                             <td class="col-md-3 text-center">
                                 <a class="btn btn-success btn-xs" v-bind:href="'../invoice/create/'+order.id" v-if="order.is_account_clearance==1">Generate Invoice</a>
                                 <div class="dropdown">
@@ -70,15 +70,11 @@
                                     <h5> <span class="pull-right"></span></h5>
 
 
-                                    <h5><b>Order#{{view_order.orderno}}</b> <span class="pull-right"><b>Created at:</b> <i> {{view_order.created_at}}</i> </span></h5>
+                                    <h5><b>CR{{view_order.created_at | getdate}}{{view_order.created_at | getmonth}}00{{view_order.orderno}}</b> <span class="pull-right"><b>Created at:</b> <i> {{view_order.created_at | moment}}</i> </span></h5>
                                     <table width="100%" class="table table-hovered">
                                         <tr>
                                             <td>Total Order Cost</td>
-                                            <td>{{view_order.total_cost}} Rs</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Remaining Order Cost</td>
-                                            <td>{{view_order.remaining_payment}} Rs</td>
+                                            <td>{{view_order.total_cost | currency('Rs')}}</td>
                                         </tr>
                                         <tr>
                                             <td>Order By</td>
@@ -110,7 +106,7 @@
                                             <td>{{products.product_color.product.name}}</td>
                                             <td>{{products.product_color.color}}</td>
                                             <td>{{products.product_qty}}</td>
-                                            <td>{{products.unit_price}}</td>
+                                            <td>{{products.unit_price  | currency('Rs')}}</td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -221,6 +217,19 @@
         },
         created:function(){
             this.init();
+        },
+        filters: {
+            moment: function (date) {
+                return moment(date).format('DD-MM-YYYY');
+            },
+
+            getdate: function (date) {
+                return moment(date).format('DD');
+            },
+
+            getmonth: function (date) {
+                return moment(date).format('MM');
+            },
         },
         methods:{
             init:function(){

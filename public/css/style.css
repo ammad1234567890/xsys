@@ -37,6 +37,8 @@
 
 
 
+
+
 .off-canvas-sidebar[data-background-color="gray"] .nav [data-toggle="collapse"] ~ div > ul > li.active a, .off-canvas-sidebar[data-background-color="gray"] .nav [data-toggle="collapse"] ~ div > ul > li:hover a, .sidebar[data-background-color="gray"] .nav [data-toggle="collapse"] ~ div > ul > li.active a, .sidebar[data-background-color="gray"] .nav [data-toggle="collapse"] ~ div > ul > li:hover a {
     background: #2196F3;
     color: #ffffff;
@@ -63,7 +65,10 @@
 }
   
 
-
+thead tr {
+      height: 56px;
+      font-variant: small-caps;
+}
 
 .panel {
   display: inline-block;
@@ -84,9 +89,20 @@
     margin-top: 15px; }
     .panel .map.map-big {
       height: 420px; }
+
   .panel .panel-title {
+    font-variant: small-caps;
     margin-top: 0;
     margin-bottom: 3px; }
+
+  .panel .panel-title h2{
+      font-size: 18px;
+  }
+
+  .panel .panel-heading .panel-title {
+    font-size: 18px;
+    font-weight: bolder;
+}
     .panel .panel-title:not(.panel-calendar .panel-title) {
       margin-top: 0;
       margin-bottom: 5px; }
@@ -265,7 +281,7 @@
   .panel .table {
     margin-bottom: 0; }
     .panel .table tr:first-child td {
-      border-top: none; }
+      /* border-top: none; */ }
   .panel .nav-pills,
   .panel .tab-content {
     margin-top: 20px; }

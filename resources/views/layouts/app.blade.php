@@ -21,6 +21,8 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons" />
 
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.1/css/buttons.dataTables.min.css">
+
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
     <!--     Custom css    -->
     <link href="{{ asset('css/style.css') }}" rel="stylesheet" />
@@ -35,7 +37,7 @@
         <div class="sidebar" data-background-color="gray">
             <div class="logo">
                 <a href="{{ url('home') }}" class="simple-text">
-                    <img src="{{ asset('img/logo.png') }}" width="130px" alt="BLADE logo">
+                    <img src="{{ asset('img/xsyslogo.png') }}" width="130px" alt="Xsys">
                 </a>
             </div>
             <div class="logo logo-mini">
@@ -75,7 +77,7 @@
                     <li>
                         <a data-toggle="collapse" href="#orders" class="collapsed" aria-expanded="false">
                             <i class="material-icons">receipt</i>
-                            <p>Manufacture Orders
+                            <p>Manufacturer Orders
                                 <b class="caret"></b>
                             </p>
                         </a>
@@ -153,9 +155,7 @@
                                 <li>
                                     <a href="{{ url('/retailer') }}">Retailer</a>
                                 </li>
-                                <li>
-                                    <a href="{{ url('/retailer/outlets') }}">Retailer Outlets</a>
-                                </li>
+                                
                                 <li>
                                     <a href="{{ url('retailer/create_order') }}">Create Retailer order</a>
                                 </li>
@@ -163,7 +163,7 @@
                                     <a href="{{ url('retailer_order/orders') }}">Order Detail</a>
                                 </li>
                                 <li>
-                                    <a href="{{ url('retailer_order/payment') }}">Order Payment</a>
+                                    <a href="{{ url('retailer_order/payment') }}">Payment Receiving</a>
                                 </li>
                             </ul>
                         </div>
@@ -332,7 +332,11 @@
 
 </div>
     <!-- Scripts -->
+    <script src="{{ asset('vendors/moment.min.js') }}"></script>
+
     <script src="{{ asset('js/app.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"></script>
+    <script src="{{ asset('js/custom.js') }}" type="text/javascript"></script>
     <!-- <script src="{{ asset('vendors/jquery-3.1.1.min.js') }}" type="text/javascript"></script>
          -->    <script src="{{ asset('vendors/jquery-ui.min.js') }}" type="text/javascript"></script>
    <!--  <script src="{{ asset('vendors/bootstrap.min.js') }}" type="text/javascript"></script> -->
@@ -342,7 +346,7 @@
         <!-- Forms Validations Plugin -->
     <script src="{{ asset('vendors/jquery.validate.min.js') }}"></script>
     <!--  Plugin for Date Time Picker and Full Calendar Plugin-->
-    <script src="{{ asset('vendors/moment.min.js') }}"></script>
+    
     <!--  Charts Plugin -->
     <script src="{{ asset('vendors/chartist.min.js') }}"></script>
     <script src="{{ asset('vendors/charts/chartjs/Chart.min.js') }}"></script>
@@ -363,6 +367,10 @@
     <script src="{{ asset('vendors/jquery.select-bootstrap.js') }}"></script>
     <!--  DataTables.net Plugin    -->
     <script src="{{ asset('vendors/jquery.datatables.js') }}"></script>
+
+    <script src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
+
+    <script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.colVis.min.js"></script>
     <!-- Sweet Alert 2 plugin -->
     <script src="{{ asset('vendors/sweetalert2.js') }}"></script>
     <!--    Plugin for Fileupload, full documentation here: http://www.jasny.net/bootstrap/javascript/#fileinput -->
@@ -372,7 +380,7 @@
     <!-- TagsInput Plugin -->
     <script src="{{ asset('vendors/jquery.tagsinput.js') }}"></script>
     <!-- Material Dashboard javascript methods -->
-
+<script src="{{ asset('js/demo.js') }}"></script>
     <script src="{{ asset('js/turbo.js') }}"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>

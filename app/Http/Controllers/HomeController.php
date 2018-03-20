@@ -31,7 +31,8 @@ class HomeController extends Controller
     public function test()
     {
         $userId=Auth::user()->id;
-        $user=User::where('id',$userId)->with('staff')->first();
+        //$user=User::where('id',$userId)->with('staff')->first();
+        
         return $user;
     }
 }

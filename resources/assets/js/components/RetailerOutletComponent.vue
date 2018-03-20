@@ -2,8 +2,10 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div class="panel panel-info">
-                    <div class="panel-heading">Create New Outlets</div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h2 class="panel-title">Create Retailer Account</h2>
+                    </div>
 
                     <div class="panel-body">
                         <div class="alert alert-success"  v-if="message">
@@ -11,49 +13,46 @@
                         </div>
                         <form @submit.prevent="add_outlet">
                             <div class="form-section">
-                                <h4 class="form-section-heading">RETAILER DETAILS</h4>
-
-
+                                <div>
+                                    <h4 class="form-section-heading" style="border-bottom:1px solid black; display: inline-block;">RETAILER DETAILS</h4>
+                                </div>
                                     <div class="col-md-6 col-sm-3">
                                         <div class="form-group label-floating">
                                             <label class="control-label">Full Name</label>
-                                            <input type="text" class="form-control" v-model="retailer.fullname" autocomplete="off" required>
+                                            <input type="text" class="form-control" v-model="outlet.fullname" autocomplete="off" required>
                                         </div>
                                     </div>
                                     <div class="col-md-6 col-sm-3">
                                         <div class="form-group label-floating">
                                             <label class="control-label">CNIC No</label>
-                                            <input type="text" class="form-control" v-model="retailer.cnic" v-mask="'99999-9999999-9'" autocomplete="off" required>
+                                            <input type="text" class="form-control" v-model="outlet.cnic" v-mask="'99999-9999999-9'" autocomplete="off" required>
                                         </div>
                                     </div>
-
-
-
-                                    <div class="col-md-6 col-sm-3"  v-if="!retailer.uploadImage">
+                                    <div class="col-md-6 col-sm-3"  v-if="!outlet.uploadImage">
                                         <div class="form-group label-floating">
-                                            <button class="btn btn-primary btn-xs" style="width:100%;">Select Image<input type="file" class="form-control" v-on:change="file_preview" ref="imageInput" name="image" autocomplete="off" required></button>
+                                            <button class="btn btn-primary btn-xs" style="width:100%;">Select Retailer Image<input type="file" class="form-control" v-on:change="retailer_image_file_preview" ref="imageInput" name="image" autocomplete="off" required></button>
                                         </div>
                                     </div>
                                     <div class="col-md-4" v-else>
-                                        <img :src="retailer.uploadImage" class="img img-responsive form-control" />
+                                        <img :src="outlet.uploadImage" class="img img-responsive form-control" />
                                         <button @click="removeRetailerImage" class="image_close_btn"><i class="fa fa-times"></i> </button>
                                     </div>
-
                                     <div class="col-md-6 col-sm-3">
                                         <div class="form-group label-floating">
                                             <label class="control-label">Mobile No</label>
-                                            <input type="text" class="form-control" v-model="retailer.phone_no" v-mask="'9999-9999999'" autocomplete="off" required>
+                                            <input type="text" class="form-control" v-model="outlet.phone_no" v-mask="'9999-9999999'" autocomplete="off" required>
                                         </div>
                                     </div>
-
                                 <div class="clearfix"></div>
                             </div>
                             <div class="form-section">
-                                <h4 class="form-section-heading">OUTLET DETAILS</h4>
+                                <div>
+                                    <h4 class="form-section-heading" style="border-bottom:1px solid black; display: inline-block;">OUTLET DETAILS</h4>
+                                </div>
                                 <div class="col-md-6 col-sm-3">
                                     <div class="form-group label-floating">
                                         <label class="control-label">Outlet Name</label>
-                                        <input type="text" class="form-control" autocomplete="off" required>
+                                        <input type="text" class="form-control" v-model="outlet.outlet_name" autocomplete="off" required>
                                     </div>
                                 </div>
 
@@ -67,7 +66,9 @@
                                 <div class="clearfix"></div>
                             </div>
                             <div class="form-section">
-                                <h4 class="form-section-heading">BUSINESS PERSON DETAILS</h4>
+                                <div>
+                                    <h4 class="form-section-heading" style="border-bottom:1px solid black; display: inline-block;">BUSINESS PERSON DETAILS</h4>
+                                </div>
                                 <div class="col-md-6 col-sm-3">
                                     <div class="form-group label-floating">
                                         <label class="control-label">Full Name</label>
@@ -92,147 +93,85 @@
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
-                            <br/>
                             <div class="form-section">
-                                <h4 class="form-section-heading">LOCATION DETAILS</h4>
-                                <br/>
+                                <div>
+                                    <h4 class="form-section-heading" style="border-bottom:1px solid black; display: inline-block;">LOCATION DETAILS</h4>
+                                </div>
+
                                 <div class="col-md-6 col-sm-3">
                                     <div class="form-group label-floating">
-                                        <label class="control-label">Select City</label>
-                                        <input type="text" class="form-control" v-model="outlet.bussiness_person_name" autocomplete="off" name="person_name"  required>
-                                        <select class="form-control" name="city_id" v-model="outlet.city_id" @change="change_city(outlet.city_id)" required>
+                                        <select class="form-control" name="city_id" v-model="outlet.city_id" required>
                                             <option value="">Select City</option>
                                             <option v-for="cities in citiesData"  v-bind:value="cities.id">{{cities.name}}</option>
                                         </select>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        <label>Select City</label>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="row">
-                                            <div v-if="add_city_mode==0">
-                                                <div class="col-md-10">
-                                                    <select class="textbox" name="city_id" v-model="outlet.city_id" @change="change_city(outlet.city_id)" required>
-                                                        <option value="">Select City</option>
-                                                        <option v-for="cities in citiesData"  v-bind:value="cities.id">{{cities.name}}</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <i class="fa fa-plus-circle" v-on:click="enable_city_mode" style="font-size: 27px;"></i>
-                                                </div>
-                                            </div>
-                                            <div v-else>
-                                                <div class="col-md-10">
-                                                    <input type="text" class="textbox" v-model="city.name" id="city_textbox" placeholder="Enter Name of the City" >
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <i class="fa fa-times-circle" v-on:click="disable_city_mode" style="font-size: 27px; position: absolute; right: 45px;"></i>
-                                                    <i class="fa fa-check-circle" v-on:click="add_city" style="font-size: 27px;"></i>
-                                                </div>
-                                            </div>
-
-
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-2">
-                                        <label>Select Locality</label>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="row">
-                                            <div v-if="add_region_mode==0">
-                                                <div class="col-md-10">
-                                                    <select class="textbox" name="city_id" v-model="outlet.region_id"  @change="change_region(outlet.region_id)" required>
-                                                        <option value="">Select Locality</option>
-                                                        <option v-for="region in regionsData"   v-bind:value="region.id">{{region.name}}</option>
-                                                    </select>
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <i class="fa fa-plus-circle" v-on:click="enable_region_mode" style="font-size: 27px;"></i>
-                                                </div>
-                                            </div>
-                                            <div v-else>
-                                                <div class="col-md-10">
-                                                    <input type="text" class="textbox" v-model="region.name" id="region_textbox" placeholder="Enter Name of the Locality">
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <i class="fa fa-times-circle" v-on:click="disable_region_mode" style="font-size: 27px; position: absolute; right: 45px;"></i>
-                                                    <i class="fa fa-check-circle" v-on:click="add_region" style="font-size: 27px;"></i>
-                                                </div>
-                                            </div>
-
-
-                                        </div>
+                                <div class="col-md-6 col-sm-3">
+                                    <div class="form-group label-floating">
+                                        <select class="form-control" name="region_id" v-model="outlet.region_id" required>
+                                            <option value="">Select Locality</option>
+                                            <option v-for="region in regionsData"   v-bind:value="region.id">{{region.name}}</option>
+                                        </select>
                                     </div>
                                 </div>
 
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        <label>Address</label>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <input type="text" class="textbox" autocomplete="off" v-model="outlet.address" name="outlet_address" required/>
-                                    </div>
-
-
-                                    <div class="col-md-2">
-                                        <label>Longitude</label>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <input type="text" class="textbox" autocomplete="off" v-model="outlet.longitude" placeholder="(Optional)" name="outlet_longitude"/>
+                                <div class="col-md-6 col-sm-3">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Address</label>
+                                        <input type="text" class="form-control" autocomplete="off" v-model="outlet.address" name="outlet_address" required/>
                                     </div>
                                 </div>
 
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        <label>Latitude</label>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <input type="text" class="textbox" autocomplete="off"  v-model="outlet.latitude" placeholder="(Optional)" name="outlet_latitude"/>
+                                <div class="col-md-6 col-sm-3">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Longitude(OPTIONAL)</label>
+                                        <input type="text" class="form-control" autocomplete="off" v-model="outlet.longitude" name="outlet_longitude"/>
                                     </div>
                                 </div>
+
+                                <div class="col-md-6 col-sm-3">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Latitude(OPTIONAL)</label>
+                                        <input type="text" class="form-control" autocomplete="off" v-model="outlet.latitude" name="outlet_latitude"/>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
                             </div>
-                            <br/>
                             <div class="form-section">
-                                <h4 class="form-section-heading">FINANCIAL DETAILS</h4>
-                                <br/>
-
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        <label>Secuity Amount</label>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <input type="number" class="textbox"  v-model="outlet.security_check_amount" autocomplete="off" name="security_check"/>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <label>Credit Duration</label>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <input type="number" class="textbox" v-model="outlet.credit_duration"  autocomplete="off" name="credit_duration"/>
-                                    </div>
-
-
+                                <div>
+                                    <h4 class="form-section-heading" style="border-bottom:1px solid black; display: inline-block;">FINANCIAL DETAILS</h4>
                                 </div>
 
+                                <div class="col-md-6 col-sm-3">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Secuity Amount</label>
+                                        <!-- <input type="text" class="form-control" autocomplete="off" v-model="outlet.security_check_amount" name="security_check" required/> -->
+                                        <vue-numeric currency="Rs" class="form-control" separator="," v-model="outlet.security_check_amount"></vue-numeric>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-3">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Credit Limit</label>
+                                        <!-- <input type="number" class="form-control" autocomplete="off" v-model="outlet.credit_limit" name="credit_limit" required/> -->
+                                        <vue-numeric currency="Rs" class="form-control" separator="," v-model="outlet.credit_limit"></vue-numeric>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-3">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Credit Duration</label>
+                                        <input type="number" class="form-control" autocomplete="off" v-model="outlet.credit_duration" name="credit_duration" required/>
+                                    </div>
+                                </div>
+
+
+
                                 <div class="row">
-                                    <div class="col-md-2">
-                                        <label>Credit Limit</label>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <input type="number" class="textbox" v-model="outlet.credit_limit"  autocomplete="off" name="credit_limit"/>
-                                    </div>
-
-
-
-                                    <div class="col-md-2">
-                                        <label>Attach Check Copy</label>
+                                    <div class="col-md-6 col-sm-3"  v-if="!outlet.copy_image">
+                                        <div class="form-group label-floating">
+                                            <button class="btn btn-primary btn-xs" style="width:100%;">Select Cheque Image<input type="file" class="form-control" v-on:change="file_preview" ref="imageInput" name="security_check_image" autocomplete="off" required></button>
+                                        </div>
                                     </div>
 
-                                    <div class="col-md-4" v-if="!outlet.copy_image">
-                                        <input type="file" class="textbox" v-on:change="file_preview" ref="imageInput" name="security_check_image" autocomplete="off" required/>
-                                    </div>
                                     <div class="col-md-4" v-else>
                                         <img :src="outlet.copy_image" class="img img-responsive" />
                                         <button @click="removeCopyImage" class="image_close_btn"><i class="fa fa-times"></i> </button>
@@ -242,7 +181,7 @@
                             <br/>
                             <div class="row">
                                 <div class="col-md-3 pull-right" v-if="edit_enable==0">
-                                    <button type="submit" class="btn buttondesign" :disabled="btndisabled">{{submit_btn_text}}</button>
+                                    <button type="submit" class="btn btn-success" :disabled="btndisabled">{{submit_btn_text}}</button>
                                 </div>
                                 <div class="col-md-5 pull-right" v-else>
                                     <div class="col-md-6">
@@ -267,7 +206,7 @@
                         <table id="outlet_table" class="table table-bordered">
                             <thead>
                             <tr>
-                                <th>Oulet Name</th>
+                                <th>Outlet Name</th>
                                 <th>Phone Number</th>
                                 <th>City</th>
                                 <th>Locality</th>
@@ -356,15 +295,15 @@
                                             <td>{{outlet_view.outlet_phone}}</td>
                                         </tr>
                                         <tr>
-                                            <td>Bussiness Person Name</td>
+                                            <td>Contact Person Name</td>
                                             <td>{{outlet_view.bussiness_person_name}}</td>
                                         </tr>
                                         <tr>
-                                            <td>Bussiness Person Phone</td>
+                                            <td>Contact Person Phone</td>
                                             <td>{{outlet_view.bussiness_person_phone}}</td>
                                         </tr>
                                         <tr>
-                                            <td>Bussiness Person CNIC</td>
+                                            <td>Contact Person CNIC</td>
                                             <td>{{outlet_view.bussiness_person_cnic}}</td>
                                         </tr>
                                     </table>
@@ -374,24 +313,28 @@
                                     <br/>
                                     <table class="table table-hovered">
                                         <tr>
-                                            <td>City</td>
-                                            <td>{{outlet_view.city_name}}</td>
+                                            <td>Address</td>
+                                            <td>{{outlet_view.address}}</td>
                                         </tr>
                                         <tr>
                                             <td>Region</td>
                                             <td>{{outlet_view.region_name}}</td>
                                         </tr>
                                         <tr>
+                                            <td>City</td>
+                                            <td>{{outlet_view.city_name}}</td>
+                                        </tr>
+
+
+                                        <tr>
                                             <td>Latitude</td>
-                                            <td>{{outlet_view.longitude}}</td>
+                                            <td v-if="outlet_view.latitude!=null">{{outlet_view.latitude}}</td>
+                                            <td v-else> --- </td>
                                         </tr>
                                         <tr>
                                             <td>Longitude</td>
-                                            <td>{{outlet_view.latitude}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Address</td>
-                                            <td>{{outlet_view.address}}</td>
+                                            <td v-if="outlet_view.longitude!=null">{{outlet_view.longitude}}</td>
+                                            <td v-else> --- </td>
                                         </tr>
                                     </table>
                                 </div>
@@ -401,27 +344,21 @@
                                     <table class="table table-hovered">
                                         <tr>
                                             <td>Security Check Amount</td>
-                                            <td>{{outlet_view.security_check_amount}}</td>
+                                            <td>{{outlet_view.security_check_amount | currency('Rs')}}</td>
+
                                         </tr>
                                         <tr>
                                             <td>Credit Limit</td>
-                                            <td>{{outlet_view.credit_limit}}</td>
+                                            <td>{{outlet_view.credit_limit | currency('Rs')}}</td>
                                         </tr>
                                         <tr>
                                             <td>Credit Duration</td>
                                             <td>{{outlet_view.credit_duration}}</td>
                                         </tr>
+
                                         <tr>
-                                            <td>Credit Remaining</td>
-                                            <td>{{outlet_view.latitude}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Aging Amount</td>
-                                            <td>{{outlet_view.address}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Security Check Image</td>
-                                            <td><a :href="'../deposit_check_img/'+outlet_view.copy_image" target="_blank">Link</a></td>
+                                            <td>Security Cheque Image</td>
+                                            <td><a :href="'./deposit_check_img/'+outlet_view.copy_image" target="_blank">Link</a></td>
                                         </tr>
                                     </table>
                                 </div>
@@ -481,10 +418,15 @@
                 btndisabled:false,
                 edit_enable:0,
                 editIndex:null,
-                submit_btn_text:'Create Outlet',
+                submit_btn_text:'Create Account',
                 message:'',
                 outlet:{
                     id:'',
+                    fullname:'',
+                    cnic:'',
+                    phone_no:'',
+                    uploadImage:'',
+
                     retailer_id:'',
                     outlet_name:'',
                     outlet_phone:'',
@@ -531,26 +473,11 @@
                     city_name:'',
                     region_name:''
                 },
-                retailer:{
-                    id:'',
-                    fullname:'',
-                    cnic:'',
-                    phone_no:'',
-                    uploadImage:'',
-                    aging_amount:'',
-                },
-                city:{
-                    id:'',
-                    name:''
-                },
-                region:{
-                    id:'',
-                    name:''
-                },
-                citiesData:[],
+
                 regionsData:[],
-                retailersData:[],
-                outletsData:[]
+                outletsData:[],
+                citiesData:[],
+
             }
         },
         mounted() {
@@ -562,14 +489,28 @@
         methods: {
             init: function(){
                 this.get_cities();
-                this.get_region();
-                this.get_retailers();
+                this.get_regions();
                 this.get_all_outlets();
-
             },
             removeCopyImage:function(e){
                 e.preventDefault();
                 this.outlet.copy_image="";
+            },
+            removeRetailerImage:function(e){
+                e.preventDefault();
+                this.outlet.uploadImage="";
+            },
+            retailer_image_file_preview(e){
+                console.log(e.target.files[0])
+                var fileReader = new FileReader();
+
+                fileReader.readAsDataURL(e.target.files[0])
+
+                fileReader.onload = (e) => {
+                    this.outlet.uploadImage= e.target.result
+                }
+
+                console.log(this.outlet);
             },
             file_preview(e){
                 console.log(e.target.files[0])
@@ -592,75 +533,10 @@
                 }
 
                 console.log(this.outlet);
-
-
-            },
-            change_retailer:function(retailer_id){
-                this.outlet.retailer_id=retailer_id;
-            },
-            change_city:function(city_id){
-                this.outlet.city_id=city_id;
-            },
-            change_region:function(region_id){
-                this.outlet.region_id=region_id;
-            },
-            enable_city_mode:function(){
-                this.add_city_mode=1;
-            },
-            disable_city_mode:function(){
-                this.add_city_mode=0;
-            },
-            enable_region_mode:function(){
-                this.add_region_mode=1;
-            },
-            disable_region_mode:function(){
-                this.add_region_mode=0;
-            },
-            add_city:function(){
-                if(this.city.name!=""){
-                    axios.post('../add_city',this.city).then(response=>{
-                        if(response.data==201){
-                            this.add_city_mode=0;
-                            this.city.name="";
-                            this.get_cities();
-                        }
-                    });
-                }
-                else{
-                    $('#city_textbox').css('border-color','red');
-                }
-            },
-            add_region:function () {
-                if(this.region.name!=""){
-                    axios.post('../add_region',this.region).then(response=>{
-                        if(response.data==201){
-                            this.add_region_mode=0;
-                            this.region.name="";
-                            this.get_region();
-                        }
-                    });
-                }
-                else{
-                    $('#region_textbox').css('border-color','red');
-                }
-            },
-            get_cities:function(){
-                axios.get('../get_cities').then(response=>{
-                    this.citiesData= response.data;
-                });
-            },
-            get_region:function(){
-                axios.get('../get_regions').then(response=>{
-                    this.regionsData= response.data;
-                });
-            },
-            get_retailers:function(){
-                axios.get('get_retailers').then(response=>{
-                    this.retailersData= response.data;
-                });
             },
             add_outlet:function(){
-                axios.post('../outlet/create_outlet',this.outlet).then(response=>{
+                axios.post('./outlet/create_outlet',this.outlet).then(response=>{
+                    alert(response.data);
                     if(response.data==201){
                         this.get_all_outlets();
                         this.outlet.id='';
@@ -682,8 +558,46 @@
                         this.outlet.credit_limit='';
                         this.outlet.credit_duration='';
 
-                        this.message="New Outlet has been created!";
-                        $(this).scrollTop(0);
+                        this.outlet.uploadImage='';
+                        this.outlet.fullname='';
+                        this.outlet.cnic='';
+                        this.outlet.phone_no='';
+                        this.message="New Retailer has been created!";
+                        $("html, body").animate({
+                            scrollTop: 0
+                        }, 600);
+                        demo.swal({title:this.message});
+                        demo.showSwal('success-message');
+
+                    }
+                    else if(response.data==406){
+                        this.get_all_outlets();
+                        this.message="Account has already exist!";
+                        this.edit_enable=0;
+                        this.submit_btn_text="Create Outlet";
+                        this.outlet.id='';
+                        this.outlet.retailer_id='';
+                        this.outlet.outlet_name='';
+                        this.outlet.outlet_phone='';
+                        this.outlet.bussiness_person_name='';
+                        this.outlet.bussiness_person_cnic='';
+                        this.outlet.bussiness_person_phone='';
+
+                        this.outlet.city_id='';
+                        this.outlet.region_id='';
+                        this.outlet.address='';
+                        this.outlet.longitude='';
+                        this.outlet.latitude='';
+
+                        this.outlet.security_check_amount='';
+                        this.outlet.copy_image='';
+                        this.outlet.credit_limit='';
+                        this.outlet.credit_duration='';
+                        $("html, body").animate({
+                            scrollTop: 0
+                        }, 600);
+                        demo.showSwal('success-message');
+                        demo.swal({title:this.message});
                     }
                     else{
                         alert(response.data);
@@ -691,7 +605,7 @@
                 });
             },
             get_all_outlets:function(){
-                axios.get('../outlet/get_all_outlets').then(response=>{
+                axios.get('./outlet/get_all_outlets').then(response=>{
                     this.outletsData=response.data;
                 });
             },
@@ -719,7 +633,7 @@
                     this.outlet_view.retailer_name=this.outletsData[index].retailer.name;
                     this.outlet_view.retailer_phone=this.outletsData[index].retailer.phone_no;
                     this.outlet_view.retailer_cnic=this.outletsData[index].retailer.cnic;
-                    this.outlet_view.retailer_image='../retailers_img/'+this.outletsData[index].retailer.image;
+                    this.outlet_view.retailer_image='./retailers_img/'+this.outletsData[index].retailer.image;
 
                     this.outlet_view.city_name=this.outletsData[index].city.name;
                     this.outlet_view.region_name=this.outletsData[index].region.name;
@@ -754,7 +668,7 @@
                 this.outlet.latitude=this.outletsData[index].latitude;
 
                 this.outlet.security_check_amount=this.outletsData[index].security_deposit_amount;
-                this.outlet.copy_image="../deposit_check_img/"+this.outletsData[index].security_deposit_image;
+                this.outlet.copy_image="./deposit_check_img/"+this.outletsData[index].security_deposit_image;
                 this.outlet.credit_limit=this.outletsData[index].credit_limit;
                 this.outlet.credit_duration=this.outletsData[index].credit_duration;
                 this.edit_enable=1;
@@ -808,11 +722,22 @@
                         this.outlet.credit_limit='';
                         this.outlet.credit_duration='';
                     }
+
                     else{
                         alert(response.data);
                         this.btndisabled=false;
                     }
 
+                });
+            },
+            get_cities:function(){
+                axios.get('./allCities').then(response=>{
+                    this.citiesData=response.data;
+                });
+            },
+            get_regions:function(){
+                axios.get('./allRegions').then(response=>{
+                    this.regionsData=response.data;
                 });
             }
         }

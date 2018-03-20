@@ -1,126 +1,137 @@
 <template>
-                
+        <div>
             <div class="content">
                 <div class="container-fluid">
+                        <div class="row">
+                            <div class="card headcolor">
+                                <div class="card-header">
+                                        <h3 class="card-title pad-bot"><i class="material-icons">dashboard</i> <small>RECEIVING </small> </h3>
+                                </div>
+                            </div>
+                        </div>
 
                     <div class="row">
-                        <div class="card" >
-                            <div class="card-header card-header-text card-header-icon">
-                                <i class="material-icons">monetization_on</i>
-                            </div>
-                            <div class="card-content">
-                                    <h4 class="card-title">Create Collection</h4>
-                                <div class="alert alert-success"  v-if="message">
-                                    <strong>{{message}}</strong>
+                        <div class="col-md-12">
+                            <div class="panel panel-default" >
+                                <div class="panel-heading">
+                                    <h2 class="panel-title">Receiving</h2>
                                 </div>
-                                <form @submit.prevent="submit_payment">
-                                    <div class="col-md-6 col-sm-3">
-                                        <div class="form-group">
-                                            <div class="select">
-                                                <select class="form-control" v-model="selected_invoice_index" @change="change_invoice()" required>
-                                                    <option value="">Select Invoice No</option>
-                                                    <option v-for="(invoice, index) in invoices" v-bind:value="index">Invoice#{{invoice.id}}</option>
-                                                </select>
+                                <div class="panel-body">
+                                    <div class="alert alert-success"  v-if="message">
+                                        <strong>{{message}}</strong>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <form @submit.prevent="submit_payment">
+                                            <div class="col-md-6 col-sm-3">
+                                                <div class="form-group">
+                                                    <div class="select">
+                                                        <select class="form-control" v-model="selected_invoice_index" @change="change_invoice()" required>
+                                                            <option value="">Select Invoice No</option>
+                                                            <option v-for="(invoice, index) in invoices" v-bind:value="index">Invoice#{{invoice.id}}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-sm-3">
-                                        <div class="form-group">
-                                            <div class="select">
+                                            <div class="col-md-6 col-sm-3">
+                                                <div class="form-group">
+                                                    <div class="select">
 
-                                                <input type="text" class="form-control" v-model="new_payment.selected_invoice_retailer" placeholder="Retailer Name" required/>
+                                                        <input type="text" class="form-control" v-model="new_payment.selected_invoice_retailer" placeholder="Retailer Name" required/>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 col-sm-3">
+                                                <div class="form-group">
+                                                    <div class="select">
+
+                                                        <input type="text" class="form-control" v-model="new_payment.selected_invoice_retailer_outlet" placeholder="Retailer Outlet" required/>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 col-sm-3">
+                                                <div class="form-group">
+                                                    <div class="select">
+                                                        <select class="form-control" v-model="new_payment.bank_id" required>
+                                                            <option value="">Bank Name</option>
+                                                            <option v-for="(bank, index) in banks" v-bind:value="bank.id">{{bank.bank_name}}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-md-6 col-sm-3">
+                                                <div class="form-group">
+                                                    <div class="select">
+                                                        <select class="form-control" v-model="new_payment.currency_id" required>
+                                                            <option value="">Select Currency</option>
+                                                            <option v-for="(currency, index) in currencies" v-bind:value="currency.id">{{currency.name}}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 col-sm-3">
+                                                <div class="form-group">
+                                                    <div class="select">
+                                                        <select class="form-control" v-model="selected_payment_index" @change="change_payment()" required>
+                                                            <option value="">Select Payment Type</option>
+                                                            <option v-for="(payment, index) in payments" v-bind:value="index">{{payment.type}}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        
+                                            <div class="col-md-6 col-sm-3" v-if="selected_payment_index==1">
+                                                <div class="form-group label-floating">
+                                                    <label class="control-label">Cheque no</label>
+                                                    <input type="text" class="form-control" v-model="new_payment.cheque_no" required>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 col-sm-3">
+                                                <div class="form-group label-floating">
+                                                    <label class="control-label">Amount in RS</label>
+                                                    <vue-numeric currency="Rs" class="form-control" separator="," v-model="new_payment.amount_in_rs"></vue-numeric>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-md-6 col-sm-3">
+                                                <div class="form-group label-floating">
+                                                    <label class="control-label">Deposit Slip Number</label>
+                                                    <input type="text" class="form-control" v-model="new_payment.deposit_slip_no" required>
+                                                </div>
+                                            </div>
+
+
+
+                                            <div class="col-md-6 col-sm-3">
+                                                <div class="form-group label-floating">
+                                                    <label class="control-label">Remarks</label>
+                                                    <textarea class="form-control" v-model="new_payment.remarks" required>
+
+                                                    </textarea>
+                                                </div>
+                                            </div>
+                                        
+                                            <div class="col-md-6">
+
+                                                    <button type="submit" class="btn btn-tumblr pull-right">Submit</button>
 
                                             </div>
-                                        </div>
+                                        </form>
                                     </div>
-
-                                    <div class="col-md-6 col-sm-3">
-                                        <div class="form-group">
-                                            <div class="select">
-
-                                                <input type="text" class="form-control" v-model="new_payment.selected_invoice_retailer_outlet" placeholder="Retailer Outlet" required/>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6 col-sm-3">
-                                        <div class="form-group">
-                                            <div class="select">
-                                                <select class="form-control" v-model="new_payment.bank_id" required>
-                                                    <option value="">Bank Name</option>
-                                                    <option v-for="(bank, index) in banks" v-bind:value="bank.id">{{bank.bank_name}}</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                    <div class="col-md-6 col-sm-3">
-                                        <div class="form-group">
-                                            <div class="select">
-                                                <select class="form-control" v-model="new_payment.currency_id" required>
-                                                    <option value="">Select Currency</option>
-                                                    <option v-for="(currency, index) in currencies" v-bind:value="currency.id">{{currency.name}}</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6 col-sm-3">
-                                        <div class="form-group">
-                                            <div class="select">
-                                                <select class="form-control" v-model="selected_payment_index" @change="change_payment()" required>
-                                                    <option value="">Select Payment Type</option>
-                                                    <option v-for="(payment, index) in payments" v-bind:value="index">{{payment.type}}</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="col-md-6 col-sm-3" v-if="selected_payment_index==1">
-                                        <div class="form-group label-floating">
-                                            <label class="control-label">Cheque no</label>
-                                            <input type="text" class="form-control" v-model="new_payment.cheque_no" required>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6 col-sm-3">
-                                        <div class="form-group label-floating">
-                                            <label class="control-label">Amount in RS</label>
-                                            <input type="text" class="form-control" v-model="new_payment.amount_in_rs" required>
-                                        </div>
-                                    </div>
-
-
-                                    <div class="col-md-6 col-sm-3">
-                                        <div class="form-group label-floating">
-                                            <label class="control-label">Deposit Slip Number</label>
-                                            <input type="text" class="form-control" v-model="new_payment.deposit_slip_no" required>
-                                        </div>
-                                    </div>
-
-
-
-                                    <div class="col-md-6 col-sm-3">
-                                        <div class="form-group label-floating">
-                                            <label class="control-label">Remarks</label>
-                                            <textarea class="form-control" v-model="new_payment.remarks" required>
-
-                                            </textarea>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="">
-                                        <div class="text-center pull-right">
-                                            <button type="submit" class="btn btn-rose btn-fill btn-wd">Submit</button>
-                                        </div>
-                                    </div>
-                                </form>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
 </template>
 

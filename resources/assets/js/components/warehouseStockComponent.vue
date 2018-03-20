@@ -8,10 +8,12 @@
             </div>
             <div class="col-md-12">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Stock Detail</div>
+                    <div class="panel-heading">
+                        <h2 class="panel-title">Stock Detail</h2>
+                    </div>
 
                     <div class="panel-body">
-                        <table id="warehousestocktable" class="table table-striped table-bordered table-hover">
+                        <table id="warehousestocktable" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                         	<thead>
                         		<tr>
                         			<th>S.No</th>

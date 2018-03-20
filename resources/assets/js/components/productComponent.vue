@@ -11,21 +11,21 @@
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                            <h2 class="panel-title">Add Product</h2>
+                            <h2 class="panel-title">Create Product</h2>
                         </div>
                 <div id="d" class="panel-body" v-bind:class="{in:edit}">
                     <form @submit="createProduct">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group col-md-4">
-                                    <label for="productName">Product Name</label>
+                                    <label for="productName">Title</label>
                                     <input type="text" name="productName" v-validate="'required|regex:^[a-zA-Z ._]+$'" class="form-control" v-model="newProduct.name" placeholder="Product Name" required>
                                     <span class="text-danger" v-show="errors.has('productName')">
                                   {{errors.first('productName')}}
                                 </span>
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label for="productCategory">Product Category</label>
+                                    <label for="productCategory">Category</label>
                                     <select class="form-control" required name="Category" v-model="newProduct.productCategory" v-validate="'required'" >
                                         <option value="">Select Category</option>
                                         <option v-for="category in categories" v-bind:value="category.id">{{category.name}}</option>
@@ -35,8 +35,10 @@
                                 </span>
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label for="releaseDate">Release Date</label>
-                                    <input type="date" name="releaseDate" v-validate="'required'" class="form-control" placeholder="Release Date" v-model="newProduct.releaseDate" required>
+                                    <label for="releaseDate">Estimated Release  Date</label>
+                                    <date-picker name="releaseDate" v-validate="'required'" style="width:100%;" v-model="newProduct.releaseDate" type="date" format="dd-MM-yyyy" placeholder="dd-mm-yyyy" lang="en" required></date-picker>
+                                    <!-- <input type="date"  name="releaseDate" v-validate="'required'" class=" form-control" placeholder="Release Date" v-model="newProduct.releaseDate" required > -->
+                                                                      
                                     <span class="text-danger" v-show="errors.has('Release Date')">
                                   {{errors.first('Release Date')}}
                                 </span>
@@ -50,8 +52,8 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group col-md-3">
-                                        <label for="colorName">Color Name</label>
-                                        <input type="text" v-validate="'required|regex:^[a-zA-Z ._]+$'" name="colorName" v-model="find.color" class="form-control" placeholder="Color Name" required>
+                                        <label for="colorName">Color</label>
+                                        <input type="text" v-validate="'required|regex:^[a-zA-Z ._]+$'" name="colorName" v-model="find.color" class="form-control" placeholder="Black, Golden.." required>
                                         <span class="text-danger" v-show="errors.has('colorName')">
                                               {{errors.first('colorName')}}
                                             </span>
@@ -84,7 +86,7 @@
                             <div class="row" v-if="edit==true">
                                 <div class="col-md-12">
                                     <div v-for="(image, i) in find.product_images">
-                                        <img v-if="localImage==false" v-bind:src="'/ProductImages/'+image.image" class="col-md-1 img-thumbnail" height="auto" @click="deleteImage(index,i)" />
+                                        <img v-if="localImage==false" v-bind:src="'/product_img/'+image.image" class="col-md-1 img-thumbnail" height="auto" @click="deleteImage(index,i)" />
                                         <img v-if="localImage==true" v-bind:src="image" class="col-md-1 img-thumbnail" height="auto" @click="deleteImage(index,i)" />
                                     </div>
                                 </div>
@@ -110,7 +112,9 @@
             </div>
             <!-- end of panel -->
             <div class="panel panel-default">
-                <div class="panel-heading">Categories</div>
+                <div class="panel-heading">
+                     <h2 class="panel-title">Products</h2>
+                </div>
                 <div class="panel-body">
                     <table id="cateprotable" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                         <thead>
@@ -126,7 +130,7 @@
                         <tr v-for="(product, index) in allProducts">
                             <td>{{product.name}}</td>
                             <td>{{product.product_category.name}}</td>
-                            <td>{{product.release_date}}</td>
+                            <td>{{product.release_date | moment}}</td>
                             <td>
                                 <button class="btn btn-github btn-xs" v-on:click="showDetails(index)" data-toggle="modal" data-target="#myModal">Details</button>
                             </td>
@@ -172,7 +176,7 @@
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label for="ReleaseDate">Release Date</label>
-                                    <input type="text" readonly class="form-control" v-bind:value="details.releaseDate">
+                                    <input type="text" readonly class="form-control" v-bind:value="details.releaseDate | moment">
                                 </div>
                             </div>
                         </div>
@@ -186,7 +190,7 @@
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label for="price">Price</label>
-                                        <input type="text" v-bind:value="find.price" class="form-control" readonly>
+                                        <vue-numeric currency="Rs" class="form-control" separator="," v-bind:value="find.price" readonly></vue-numeric>
                                     </div>
                                     <div class="form-group col-md-3">
                                         <label for="discount">Discount(%)</label>
@@ -222,8 +226,17 @@
     </div>
 </template>
 
+
 <script>
+
+
+
     export default {
+        filters: {
+          moment: function (date) {
+            return moment(date).format('DD-MM-YYYY');
+          }
+        },
         data(){
           return{
             categories:[],
@@ -232,6 +245,7 @@
             localImage:false,
             editIndex:'',
             path:'',
+            releaseDate:'',
             details:{
               productName:'',
               productCategory:'',
@@ -260,7 +274,11 @@
               this.allProducts=response.data.data;
               this.path=response.data.path;
               console.log(this.allProducts);
+
             });
+        },
+        watch:{
+            
         },
         methods:{
             imageChange(index){
@@ -390,8 +408,9 @@
             }
 
         }
-    }
+    }    
     $(document).ready(function() {
+
         setTimeout(function(){
             $('#cateprotable').DataTable({
             "pagingType": "full_numbers",
@@ -405,7 +424,7 @@
                 searchPlaceholder: "Search records",
             }
             });
-        },5000);
+        },5000); 
     });
 </script>
 <style scoped>
@@ -429,5 +448,4 @@
 .cont:hover .middle {
   opacity: 1;
 }
-
 </style>

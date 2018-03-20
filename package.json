@@ -22,9 +22,13 @@
         "bootstrap-select": "^1.12.4",
         "datatables.net": "^1.10.16",
         "datatables.net-dt": "^1.10.16",
+        "moment": "^2.21.0",
         "vee-validate": "^2.0.3",
+        "vue-currency-filter": "^2.1.0",
         "vue-inputmask": "^0.2.1",
+        "vue-numeric": "^2.3.0",
         "vue-select": "^2.4.0",
+        "vue2-datepicker": "^1.8.3",
         "vuejs-datatable": "^1.5.1"
     }
 }

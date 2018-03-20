@@ -13,7 +13,7 @@
                 </div>
                 <div class="card-footer">
                     <div class="stats">
-                        <i class="material-icons">store</i> <a href="#">View detailed</a>
+                        <i class="material-icons">store</i> <a href="#">View details</a>
                     </div>
                 </div>
             </div>

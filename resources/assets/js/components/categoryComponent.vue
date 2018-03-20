@@ -9,22 +9,28 @@
                         <div class="panel-body">
                             <form v-on:submit="CreateCategory">
                                 <div class="form-group col-md-6">
-                                    <label for="categoryName">Category Name</label>
-                                    <input type="text" v-validate="'required|regex:^[a-zA-Z ._]+$'" v-model="newCategory.name" class="form-control" name="categoryName" placeholder="Category Name" required>
+                                    <label for="categoryName">Title</label>
+                                    <input type="text" v-validate="'required|regex:^[a-zA-Z ._]+$'" v-model="newCategory.name" class="form-control" name="categoryName" required>
                                     <span class="text-danger" v-show="errors.has('categoryName')">
                               {{errors.first('categoryName')}}
                             </span>
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="categoryImage">Category image</label>
-                                    <span class="btn btn-round btn-file">
-                                            <span class="fileinput-new">Select image</span>
-                                    <input type="file" v-validate="'required|mimes:image/jpeg,image/png'" class="form-control" name="categoryImage" ref="fileupload" @change="imageChange">
-                                    </span>
-                                    <span class="text-danger" v-show="errors.has('categoryImage')">
-                              {{errors.first('categoryImage')}}
-                            </span>
+                                    <div class="col-md-3">
+                                        <span class="btn btn-round btn-file">
+                                            <span class="fileinput-new">Browse</span>
+                                            <input type="file" v-validate="'required|mimes:image/jpeg,image/png'" class="form-control" name="categoryImage" ref="fileupload" @change="imageChange">
+                                        </span>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <pre v-if="fileName==''" class="pre-top-margin">Select Image</pre>
+                                        <pre v-if="fileName!=''" class="pre-top-margin">{{fileName}}</pre>
+                                        <span class="text-danger" v-show="errors.has('categoryImage')">
+                                        {{errors.first('categoryImage')}}
+                                        </span>
+                                    </div>
                                 </div>
+
                                 <div class="form-group col-md-12">
                                     <label for="categoryName">Description</label>
                                     <textarea class="form-control" v-model="newCategory.description">
@@ -43,7 +49,9 @@
 
 
                     <div class="panel panel-default">
-                        <div class="panel-heading">Categories</div>
+                        <div class="panel-heading">
+                            <h2 class="panel-title">Categories</h2>
+                        </div>
                         <div class="panel-body">
                           <div class="material-datatables">
                             <table id="categoriestable" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" style="width:100%" >
@@ -86,6 +94,7 @@
         data(){
           return{
             editing:0,
+            fileName:'',
             editIndex:null,
             path:'',
             allCategories:[],
@@ -119,9 +128,10 @@
             var fileReader = new FileReader();
 
             fileReader.readAsDataURL(e.target.files[0])
-
+            this.fileName=e.target.files[0].name;
             fileReader.onload = (e) => {
               this.newCategory.image = e.target.result
+
             }
             console.log(this.newCategory);
           },
@@ -241,7 +251,10 @@
             }
             });
         },5000);
+
+       
     });
+
 </script>
 
 

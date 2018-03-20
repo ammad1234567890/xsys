@@ -186,7 +186,8 @@ class GeneralController extends Controller
         $return=array('return'=>1,'data'=>$e);
         return $return;
       }
-      $return=array('return'=>0);
+      $data=StaffType::where('id',$id)->first();
+      $return=array('return'=>0,'data'=>$data);
       return $return;
     }
     //StaffType Managemnet
@@ -209,19 +210,19 @@ class GeneralController extends Controller
         return $return;
     }
 
-    public function editDesignation(Request $request)
-    {
-      $id=$request->input('id');
-      $designation=$request->input('designation');
-      try{
-        Designation::where('id',$id)->update(['designation'=>$designation]);
-      }catch(\Exception $e){
-        $return=array('return'=>1,'data'=>$e);
-        return $return;
-      }
-      $return=array('return'=>0);
-      return $return;
-    }
+    // public function editDesignation(Request $request)
+    // {
+    //   $id=$request->input('id');
+    //   $designation=$request->input('designation');      
+    //   try{
+    //     Designation::where('id',$id)->update(['designation'=>$designation]);
+    //   }catch(\Exception $e){
+    //     $return=array('return'=>1,'data'=>$e);
+    //     return $return;
+    //   }
+    //   $return=array('return'=>0);
+    //   return $return;
+    //  }
     //Designation Managemnet
 
 

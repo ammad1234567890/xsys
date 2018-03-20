@@ -6,8 +6,10 @@
             </div>
         </div>
         <div class="col-md-12">
-            <div class="panel panel-info">
-                <div class="panel-heading">Receive Order Details</div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">Receive Order Details</h2>
+                </div>
 
                 <div class="panel-body">
                     <div class="alert alert-success"  v-if="message">
@@ -35,7 +37,7 @@
                             <td v-if="receive.qa_description==null"> ---- </td>
                             <td v-else>{{receive.qa_description}}</td>
                             <td>{{receive.receive_status.status}}</td>
-                            <td><button class="btn btn-primary btn-xs" v-on:click="show_products(index)">View Detail</button></td>
+                            <td><button class="btn btn-github btn-xs" v-on:click="show_products(index)">View Detail</button></td>
                         </tr>
                         </tbody>
                     </table>
@@ -76,6 +78,9 @@
                                 </div>
                             </div>
 
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-github" data-dismiss="modal" aria-label="Close">Close</button>
                         </div>
                     </div>
                 </div>

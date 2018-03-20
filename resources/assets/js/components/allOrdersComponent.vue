@@ -6,8 +6,10 @@
             </div>
         </div>
         <div class="col-md-12">
-            <div class="panel panel-info">
-                <div class="panel-heading">Order Details</div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">Order Details</h2>
+                </div>
 
                 <div class="panel-body">
                     <div class="alert alert-success"  v-if="message">
@@ -28,9 +30,9 @@
                         <tbody>
                         <tr v-for="(order, index) in all_orders">
                             <td>Order#{{order.id}}</td>
-                            <td>{{order.eta}}</td>
+                            <td>{{order.eta | moment}}</td>
                             <td>{{order.user.name}}</td>
-                            <td>{{order.created_at}}</td>
+                            <td>{{order.created_at | moment}}</td>
                             <td><span v-for="product in all_orders[index].manufacture_order_products"><i style="display:block;">{{product.product_color.product.name}}, {{product.product_color.color}}</i> </span></td>
                             <td  style="text-align:center; font-size: 20px;" v-if="order.transaction_closed==0"><i class="fa fa-times"></i></td>
                             <td  style="text-align:center; font-size: 20px; color: green;"  title="Payment Completed" v-else><i class="fa fa-check"></i></td>
@@ -43,7 +45,7 @@
                                         <li><a href="#" v-on:click="order_delete(index)">Delete</a></li>
                                         <li><a href="#" v-on:click="change_status_btn(index)">Change Status</a></li>
                                     </ul>
-                                    <button class="btn btn-tumblr btn-xs" type="button" v-on:click="view_order_details(index)">View Details</button>
+                                    <button class="btn btn-github btn-xs" type="button" v-on:click="view_order_details(index)">View Details</button>
                                 </div>
                             </td>
                         </tr>
@@ -64,15 +66,15 @@
 
                             <div class="row">
                                 <div class="col-md-12">
-                                    <h5><b>{{view_order.orderno}}</b> <span class="pull-right"><b>Order Date:</b> <i>{{view_order.created_at}}</i> </span></h5>
+                                    <h5><b>{{view_order.orderno}}</b> <span class="pull-right"><b>Order Date:</b> <i>{{view_order.created_at | moment}}</i> </span></h5>
                                     <table width="100%" class="table table-hovered">
                                         <tr>
                                             <td>Total Order Cost</td>
-                                            <td>{{view_order.total_cost}} Rs</td>
+                                            <td>{{view_order.total_cost | currency('Rs')}}</td>
                                         </tr>
                                         <tr>
                                             <td>Remaining Order Cost</td>
-                                            <td>{{view_order.remaining_payment}} Rs</td>
+                                            <td>{{view_order.remaining_payment | currency('Rs')}}</td>
                                         </tr>
                                         <tr>
                                             <td>Order By</td>
@@ -108,7 +110,7 @@
                                             <td>{{products.product_color.color}}</td>
                                             <td>{{products.quantity}}</td>
                                             <td>{{(products.quantity-products.remaining_qty)}}</td>
-                                            <td>{{products.unit_cost}}</td>
+                                            <td>{{products.unit_cost | currency('Rs')}}</td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -118,8 +120,9 @@
                                         <thead>
                                         <tr>
                                             <td>Type</td>
-                                            <td>Amount</td>
                                             <td>Currency</td>
+                                            <td>Amount</td>
+
                                             <td>XRT</td>
                                             <td>Total Amount</td>
                                             <td>Date</td>
@@ -129,12 +132,13 @@
                                         <tbody>
                                         <tr v-for="payment in view_order.order_payments">
                                             <td>{{payment.payment_type.type}}</td>
-                                            <td>{{payment.payment_amount}} {{payment.currency.iso}}</td>
                                             <td>{{payment.currency.name}}</td>
-                                            <td>{{payment.exchange_rate}}</td>
-                                            <td>{{payment.total_amount}} Rs</td>
+                                            <td>{{payment.payment_amount | currency(payment.currency.iso)}} </td>
 
-                                            <td>{{payment.created_at}}</td>
+                                            <td>{{payment.exchange_rate}}</td>
+                                            <td>{{payment.total_amount | currency('Rs')}}</td>
+
+                                            <td>{{payment.created_at | moment}}</td>
                                             <td>{{payment.user.name}}</td>
                                         </tr>
                                         </tbody>
@@ -219,6 +223,19 @@
         },
         created:function(){
             this.init();
+        },
+        filters: {
+            moment: function (date) {
+                return moment(date).format('DD-MM-YYYY');
+            },
+
+            getdate: function (date) {
+                return moment(date).format('DD');
+            },
+
+            getmonth: function (date) {
+                return moment(date).format('MM');
+            },
         },
         methods:{
             init:function(){

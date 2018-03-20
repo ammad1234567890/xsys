@@ -100,6 +100,7 @@ Route::post('/updateProduct','ProductController@update');
 Route::post('/get_product_colors','ProductController@get_colors_by_product');
 Route::get('/productSearch/{search}','ProductController@search');
 Route::get('/productColor/{id}','ProductController@productColor');
+Route::get('/getproductColor/{id}','ProductController@get_product_color_by_id');
 //PRODUCT
 
 //CATEGORY
@@ -147,6 +148,7 @@ Route::post('/editCity','GeneralController@editCity');
 Route::get('/allRegions','GeneralController@regions');
 Route::post('/createRegion','GeneralController@createRegion');
 Route::post('/editRegion','GeneralController@editRegion');
+Route::get('/regions/{search}','GeneralController@searchRegion');
 //Region
 
 //Department
@@ -168,9 +170,9 @@ Route::post('/createWarehouseType','GeneralController@createWarehouseType');//->
 Route::post('/editWarehouseType','GeneralController@editWarehouseType');//->middleware('accesscontrol:7');
 //Warehouse type
 //Designation
-Route::get('/allDesignations','GeneralController@designations')->middleware('accesscontrol:8');
-Route::post('/createDesignation','GeneralController@createDesignation')->middleware('accesscontrol:8');
-Route::post('/editDesignation','GeneralController@editDesignation')->middleware('accesscontrol:8');
+// Route::get('/allDesignations','GeneralController@designations')->middleware('accesscontrol:8');
+// Route::post('/createDesignation','GeneralController@createDesignation')->middleware('accesscontrol:8');
+// Route::post('/editDesignation','GeneralController@editDesignation')->middleware('accesscontrol:8');
 //Designation
 //middleware('accesscontrol:7')
 Route::get('/allDesignations','GeneralController@designations');

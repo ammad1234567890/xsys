@@ -3,29 +3,28 @@
     <div class="row">
         <div class="card headcolor">
             <div class="card-header">
-                    <h3 class="card-title pad-bot"><i class="material-icons">shopping_cart</i> <small>CREATE NEW ORDERS</small> </h3>
+                    <h3 class="card-title pad-bot"><i class="material-icons">shopping_cart</i> <small>CREATE NEW MANUFACTURER ORDER</small> </h3>
             </div>
         </div>
         <div class="col-md-12">
-            <div class="panel panel-info">
-                <div class="panel-heading">Create Order</div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">Create Manufacturer Order</h2>
+                </div>
                 <div class="alert alert-success"  v-if="message">
                     <strong>{{message}}</strong>
                 </div>
                 <div class="panel-body">
                     <form @submit.prevent="add_order">
                         <div class="col-md-12">
-                            <h4 class="form-section-heading">Estimated Date</h4>
 
-                            <div class="col-md-6 form-group">
-                                <label for="estimation_delivery">Estimate Delivery Date</label>
-                                <input name="estimation_delivery" type="date" class="form-control" v-model="new_order.estimation_date" required>
+                            <div class="col-md-12 form-group">
+                                <label for="estimation_delivery">Estimated Delivery Date</label>
+                                <date-picker  v-model="new_order.estimation_date" type="date" style="width: 100%;" format="dd-MM-yyyy" placeholder="dd-mm-yyyy" lang="en"></date-picker>
                             </div>
-                        </div>
 
-                        <div class="col-md-12" v-for="(find, index) in new_order.products">
-                            <div class="form-section" style="border-left:0px; border-right: 0px; border-bottom:0px; padding-left:0px; padding-right:0px;">
-                                <h4 class="form-section-heading">Product Details</h4>
+                            <div  v-for="(find, index) in new_order.products">
+
                                 <div class="col-md-6 form-group">
                                     <label for="select_product">Select Product</label>
                                     <select name="select_product" class="form-control" v-model="find.product_id" @change="change_product(index, find.product_id)" required>
@@ -33,25 +32,30 @@
                                         <option v-for="(product, index) in allProducts"  v-bind:value="product.id">{{product.name}}</option>
                                     </select>
                                 </div>
+
                                 <div class="col-md-6 form-group">
                                     <label for="select_product_color">Select Product Color</label>
-                                    <select class="form-control" v-model="new_order.products[index].product_color_id" required>
+                                    <select class="form-control" v-model="new_order.products[index].product_color_id"  @change="myfunc(index)" required>
                                         <option value="" selected>Select</option>
                                         <option v-for="(product_color, index) in new_order.products[index].product_color"  v-bind:value="product_color.id">{{product_color.color}}</option>
                                     </select>
                                 </div>
                                 <div class="col-md-6 form-group">
+                                    <label for="cost_per_set">Order Unit Price</label>
+                                    <input type="text" class="form-control" v-model="new_order.products[index].cost_per_set" placeholder="Cost" required readonly>
+                                </div>
+
+                                <div class="col-md-6 form-group">
                                     <label for="product_quanity">Quantity</label>
                                     <input type="text" class="form-control" v-model="new_order.products[index].quantity" placeholder="Quantity" required>
                                 </div>
-                                <div class="col-md-6 form-group">
-                                    <label for="cost_per_set">Order Unit Price</label>
-                                    <input type="text" class="form-control" v-model="new_order.products[index].cost_per_set" placeholder="Cost" required>
-                                </div>
+
+
 
                                 <div class="col-md-12" v-if="index>0">
-                                    <button class="btn btn-danger pull-right" v-on:click="removeProductForm(index)">Remove</button>
+                                    <button class="btn btn-pinterest pull-right" v-on:click="removeProductForm(index)">Remove</button>
                                 </div>
+
                                 <div class="clearfix"></div>
                             </div>
 
@@ -160,6 +164,13 @@
 
                 }
 
+            },
+            myfunc:function(index){
+                //alert(this.new_order.products[index].product_color_id);
+                //this.new_order.products[index].product_color_id=
+                axios.get('../getproductColor/'+this.new_order.products[index].product_color_id).then((response) => {
+                    this.new_order.products[index].cost_per_set=response.data[0].price;
+                });
             }
         }
     }

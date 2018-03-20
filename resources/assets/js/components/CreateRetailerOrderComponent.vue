@@ -2,20 +2,28 @@
 
 <div class="row">
     <div class="col-md-12">
-
-        <h2 style="margin-top: 6px; font-variant: small-caps; font-weight:bold;">Create New Order</h2>
-        <hr/>
-        <div class="panel panel-info">
-            <div class="panel-heading">Create Retailer Order</div>
+            <div class="card headcolor">
+                <div class="card-header">
+                        <h3 class="card-title pad-bot"><i class="material-icons">important_devices</i> <small>Create New Retailer Order</small> </h3>
+                </div>
+            </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2 class="panel-title">Create Retailer Order</h2>
+            </div>
             <div class="alert alert-success"  v-if="message">
                 <strong>{{message}}</strong>
             </div>
             <div class="panel-body">
                 <form @submit.prevent="add_order">
                     <div class="row">
+
                         <div class="col-md-6 form-group">
                             <label for="estimation_delivery">Expected Delivery Date</label>
-                            <input name="estimation_delivery" type="date" class="form-control" v-model="new_order.estimation_date" required>
+
+                                <date-picker  v-model="new_order.estimation_date" type="date" style="width: 100%;" format="dd-MM-yyyy" placeholder="dd-mm-yyyy" lang="en"></date-picker>
+
+
                         </div>
                     </div>
 
@@ -79,7 +87,7 @@
                             </div>
                             <div class="col-md-6 form-group">
                                 <label for="cost_per_set">Sales Unit Price</label>
-                                <input type="text" class="form-control" v-model="new_order.products[index].cost_per_set" placeholder="Cost" required>
+                                <input type="text" class="form-control" v-model="new_order.products[index].cost_per_set" placeholder="Cost" required readonly>
                             </div>
 
                             <div class="col-md-12" v-if="index>0">
@@ -92,11 +100,11 @@
 
                     <div class="row">
                         <div class="col-md-3">
-                            <button class="btn btn-default" v-on:click="add_more_products"><i class="fa fa-plus"></i> Add More Products</button>
+                            <button class="btn btn-primary" v-on:click="add_more_products"><i class="fa fa-plus"></i> Add More Products</button>
                         </div>
 
                         <div class="col-md-9">
-                            <button class="btn btn-primary pull-right"><i class="fa fa-check"></i> Create Order</button>
+                            <button class="btn btn-tumblr pull-right"><i class="fa fa-check"></i> Create Order</button>
                         </div>
                     </div>
                 </form>
@@ -113,6 +121,7 @@
 
     import Vue from 'vue';
     export default {
+
         data(){
             return{
                 allProducts:[],
@@ -144,7 +153,8 @@
             }
         },
         mounted() {
-            console.log('Component mounted.')
+            console.log('Component mounted.');
+
         },
         created:function(){
             this.init();
@@ -242,6 +252,10 @@
             },
             myfunc:function(index){
                 //alert(this.new_order.products[index].product_color_id);
+                //this.new_order.products[index].product_color_id=
+                axios.get('../getproductColor/'+this.new_order.products[index].product_color_id).then((response) => {
+                    this.new_order.products[index].cost_per_set=response.data[0].price;
+                });
             }
         }
     }

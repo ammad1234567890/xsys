@@ -8,8 +8,10 @@
             </div>
             <div class="col-md-12">
                 <div class="panel panel-default">
-                    <a href="#d" data-toggle="collapse">
-                        <div class="panel-heading">Warehouse Consignment Receive</div>
+                    <a href="#d" data-toggle="collapse" style="color:#333333">
+                        <div class="panel-heading">
+                            <h2 class="panel-title">Warehouse Consignment Receive</h2>
+                        </div>
                     </a>
                     <div id="d" class="panel-body collapse" v-bind:class="{in:edit}">
                         <form @submit="createMainWarehouseReceive">
@@ -33,8 +35,10 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
-                    <a href="#imei" data-toggle="collapse">
-                        <div class="panel-heading">Warehouse Product Receive</div>
+                    <a href="#imei" data-toggle="collapse" style="color:#333333">
+                        <div class="panel-heading">
+                            <h2 class="panel-title">Warehouse Product Receive</h2>
+                        </div>
                     </a>
                     <div id="imei" class="panel-body collapse" v-bind:class="{in:received}">
                         <form @submit="createReceiveItems">

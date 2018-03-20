@@ -10,7 +10,9 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Allocate Staff</div>
+                    <div class="panel-heading">
+                        <h2 class="panel-title">Allocate Staff </h2>
+                    </div>
                     <div class="panel-body">
                       <form @submit="createWarehouseStaff">
                         <div class="form-group col-md-6">
@@ -48,7 +50,9 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Warehouse Staff</div>
+                    <div class="panel-heading">
+                      <h2 class="panel-title">Warehouse Staff</h2>
+                    </div>
                     <div class="panel-body">
                       <div class="row">
                         <div class="form-group col-md-2">
@@ -62,42 +66,43 @@
                             <button class="btn btn-tumblr searchmargin" v-on:click="fetchStaff">Fetch Staff</button>
                         </div>
                       </div>
-
-                      <table id="staffsearch-table" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
-                        <thead>
-                          <tr>
-                            <th>S.No</th>
-                            <th>Name</th>
-                            <th>E-Mail</th>
-                            <th>CNIC</th>
-                            <th>Phone Number</th>
-                            <th>Address</th>
-                            <th>City</th>
-                            <th>Locality</th>
-                            <th>Deparment</th>
-                            <th>Staff Type</th>
-                            <th>Designation</th>
-                            <th>Action</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr v-for="(staff, index) in warehouseStaff">
-                            <td>{{index+1}}</td>
-                            <td>{{staff.staff.name}}</td>
-                            <td>{{staff.staff.email}}</td>
-                            <td>{{staff.staff.CNIC}}</td>
-                            <td>{{staff.staff.phoneNumber}}</td>
-                            <td>{{staff.staff.address}}</td>
-                            <td>{{staff.staff.city.name}}</td>
-                            <td>{{staff.staff.region.name}}</td>
-                            <td>{{staff.staff.department.name}}</td>
-                            <td>{{staff.staff.staff_type.type}}</td>
-                            <td>{{staff.staff.designation.designation}}</td>
-                            <td><button class="btn btn-danger btn-xs" v-on:click="removeStaff(index,staff.staff.id)">Remove</button>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
+                        <div class="table-responsive">
+                          <table id="staffsearch-table" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                            <thead>
+                              <tr>
+                                <th>S.No</th>
+                                <th>Name</th>
+                                <th>E-Mail</th>
+                                <th>Cnic</th>
+                                <th>Phone Number</th>
+                                <th>Address</th>
+                                <th>City</th>
+                                <th>Locality</th>
+                                <th>Deparment</th>
+                                <th>Staff Type</th>
+                                <th>Designation</th>
+                                <th>Action</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr v-for="(staff, index) in warehouseStaff">
+                                <td>{{index+1}}</td>
+                                <td>{{staff.staff.name}}</td>
+                                <td>{{staff.staff.email}}</td>
+                                <td>{{staff.staff.CNIC}}</td>
+                                <td>{{staff.staff.phoneNumber}}</td>
+                                <td>{{staff.staff.address}}</td>
+                                <td>{{staff.staff.city.name}}</td>
+                                <td>{{staff.staff.region.name}}</td>
+                                <td>{{staff.staff.department.name}}</td>
+                                <td>{{staff.staff.staff_type.type}}</td>
+                                <td>{{staff.staff.designation.designation}}</td>
+                                <td><button class="btn btn-danger btn-xs" v-on:click="removeStaff(index,staff.staff.id)">Remove</button>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
                     </div>
               </div>
             </div>
@@ -209,7 +214,7 @@ function loadDatatable(){
   $("#staffsearch-table").dataTable().fnDestroy()
   setTimeout(function(){
   $('#staffsearch-table').DataTable({
-        "pagingType": "full_numbers",
+        /*"pagingType": "full_numbers",
         "lengthMenu": [
           [10, 25, 50, -1],
           [10, 25, 50, "All"]
@@ -218,7 +223,17 @@ function loadDatatable(){
         language: {
           search: "_INPUT_",
           searchPlaceholder: "Search records",
-        }
+        }*/
+
+        dom: 'Bfrtip',
+            language: {
+                search: "_INPUT_",
+                searchPlaceholder: "Search records",
+            },
+            stateSave: true,
+            buttons: [
+                'colvis',
+            ]
     });
   },5000);
 }

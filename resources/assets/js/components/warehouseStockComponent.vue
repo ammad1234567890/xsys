@@ -13,7 +13,20 @@
                     </div>
 
                     <div class="panel-body">
-                        <table id="warehousestocktable" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                      <div class="row well">
+                        <form>
+                          <div class="form-group col-md-5">
+                            <label for="warehouse">Warehouse</label>
+                            <v-select label="name" v-model="searchedWarehouse" :options="allWarehouses"></v-select>
+                          </div>
+                          <div class="form-group col-md-5">
+                            <label for="Report Type">Report Type</label>
+                            <v-select label="reportType" v-model="selectedReportType" :options="reportTypes"></v-select>
+                          </div>
+                          <button class="btn btn-default col-md-1" @click="showReport">Show Report</button>
+                        </form>
+                      </div>
+                        <table v-if="showSummary==true" id="warehousestocktable" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                         	<thead>
                         		<tr>
                         			<th>S.No</th>
@@ -21,7 +34,7 @@
                         			<th>Product Name</th>
                         			<th>Product Color</th>
                         			<th>Quantity</th>
-                        		</tr>                        	
+                        		</tr>
                         	</thead>
                         	<tbody>
                         		<tr v-for="(stock,index) in allStock">
@@ -41,10 +54,20 @@
 </template>
 
 <script>
+import vSelect from "vue-select"
     export default {
+        components: {vSelect},
     	data(){
     		return{
-    			allStock:[]
+          showSummary:false,
+    			allStock:[],
+          allWarehouses:[],
+          searchedWarehouse:null,
+          reportTypes:[
+            {'reportType':'Summary'},
+            {'reportType':'Detail'}
+          ],
+          selectedReportType:''
     		}
     	},
         mounted() {
@@ -53,11 +76,29 @@
         created(){
         	axios.get('./allStock').then(response=>{
         		this.allStock=response.data;
-        	})
+        	}),
+          axios.get('./allWarehouse').then(response=>{
+            this.allWarehouses=response.data;
+          });
+
+        },
+        methods:{
+          showReport(e){
+            loadDatatable(false);
+            e.preventDefault();
+              this.showSummary=false;
+              console.log(this.searchedWarehouse);
+              if(this.selectedReportType.reportType=="Summary" && this.searchedWarehouse==null){
+                this.showSummary=true;
+                loadDatatable(true);
+              }
+          }
         }
     }
+    var showed=false;
+    function loadDatatable(show){
 
-    $(document).ready(function() {
+      if(show==true){
         setTimeout(function(){
             $('#warehousestocktable').DataTable({
             "pagingType": "full_numbers",
@@ -71,6 +112,12 @@
                 searchPlaceholder: "Search records",
             }
             });
+            showed=true;
         },3000);
-    });
+    }else{
+      if(showed==true){
+      $('#warehousestocktable').DataTable().fnDestroy();;
+      }
+    }
+  }
 </script>

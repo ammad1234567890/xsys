@@ -1,44 +1,59 @@
 <template>
-    <div class="col-md-4 panel panel-default">
-        <div class="panel-body">
-            <div class="alert alert-success"  v-if="message">
-                <strong>{{message}}</strong>
+<div>
+    <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2 class="panel-title">Create New Receive Status</h2>
             </div>
-            <form @submit="receiveStatusSubmit">
-                <div class="form-group">
-                    <label for="ReceiveStatusName">Receive Status</label>
-                    <input name="ReceiveStatusName" type="text" class="form-control" v-validate="'required|regex:^[a-zA-Z]+$'" v-model="receive_status.name">
-                    <span class="text-danger" v-show="errors.has('ReceiveStatusName')">
-            {{errors.first('ReceiveStatusName')}}
-          </span>
+            <div class="panel-body">
+                <div class="alert alert-success"  v-if="message">
+                    <strong>{{message}}</strong>
                 </div>
-                <div class="form-group">
-                    <input v-if="editing==false" type="submit" class="btn btn-default col-md-6" value="Create Status">
-                    <button v-if="editing==true" @click="saveEditing" class="btn btn-default col-md-6">Save Editing</button>
-                    <button v-if="editing==false" @click="showStaffType" class="btn btn-default col-md-6" data-toggle="collapse" data-target="#ReceiveStatus">Payment Methods</button>
-                    <button v-if="editing==true" @click="cancelEditing" class="btn btn-default col-md-6">Cancel Editing</button>
-                </div>
-            </form>
-            <div id="ReceiveStatus" class="collapse panel panel-default col-md-12">
-                <table class="table table-bordered col-md-12">
-                    <thead>
-                    <tr>
-                        <th>S.No</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr v-for="(receive_status,index) in all_receive_status">
-                        <td>{{index +1 }}</td>
-                        <td>{{receive_status.status}}</td>
-                        <td><button class="btn btn-default" @click="edit(index,receive_status.id)">Edit</button></td>
-                    </tr>
-                    </tbody>
-                </table>
+                <form @submit="receiveStatusSubmit">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="ReceiveStatusName">Receive Status</label>
+                            <input name="ReceiveStatusName" type="text" class="form-control" v-validate="'required|regex:^[a-zA-Z]+$'" v-model="receive_status.name">
+                            <span class="text-danger" v-show="errors.has('ReceiveStatusName')">
+                            {{errors.first('ReceiveStatusName')}}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <input v-if="editing==false" type="submit" class="btn btn-tumblr" value="Create Status">
+                            <button v-if="editing==true" @click="saveEditing" class="btn btn-tumblr">Save Editing</button>
+                            <button v-if="editing==false" @click="showStaffType" class="btn btn-github" data-toggle="collapse" data-target="#ReceiveStatus">Show Receive Status</button>
+                            <button v-if="editing==true" @click="cancelEditing" class="btn btn-pinterest">Cancel Editing</button>
+                        </div>
+                    </div>
+                </form>
             </div>
-        </div>
+
+            <div id="ReceiveStatus" class="collapse">
+                <div class="panel-heading">
+                    <h2 class="panel-title">Receive Status List</h2>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-bordered col-md-12">
+                        <thead>
+                        <tr>
+                            <th>S.No</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr v-for="(receive_status,index) in all_receive_status">
+                            <td>{{index +1 }}</td>
+                            <td>{{receive_status.status}}</td>
+                            <td><button class="btn btn-info btn-sm" @click="edit(index,receive_status.id)">Edit</button></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
     </div>
+</div>
 </template>
 
 <script>

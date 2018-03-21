@@ -2,7 +2,7 @@
     <div class="row">
         <div class="card headcolor">
             <div class="card-header">
-                    <h3 class="card-title pad-bot"><i class="material-icons">shopping_cart</i> <small>ALL ORDERS</small> </h3>
+                    <h3 class="card-title pad-bot"><i class="material-icons">shopping_cart</i> <small>ORDERS</small> </h3>
             </div>
         </div>
         <div class="col-md-12">
@@ -19,10 +19,10 @@
                         <thead>
                         <tr>
                             <th>Order No</th>
-                            <th>Estimate Delivery</th>
-                            <th>Order By</th>
-                            <th>Order At</th>
-                            <th>Products</th>
+                            <th>Model</th>
+                            <th>Ordered At</th>
+                            <th>Est. Delivery Date</th>
+                            <!-- <th>Order By</th> -->
                             <th>Status</th>
                             <th class="col-md-3">Action</th>
                         </tr>
@@ -30,10 +30,10 @@
                         <tbody>
                         <tr v-for="(order, index) in all_orders">
                             <td>Order#{{order.id}}</td>
-                            <td>{{order.eta | moment}}</td>
-                            <td>{{order.user.name}}</td>
-                            <td>{{order.created_at | moment}}</td>
                             <td><span v-for="product in all_orders[index].manufacture_order_products"><i style="display:block;">{{product.product_color.product.name}}, {{product.product_color.color}}</i> </span></td>
+                            <td>{{order.created_at | moment}}</td>
+                            <td>{{order.eta | moment}}</td>
+                            <!-- <td>{{order.user.name}}</td> -->
                             <td  style="text-align:center; font-size: 20px;" v-if="order.transaction_closed==0"><i class="fa fa-times"></i></td>
                             <td  style="text-align:center; font-size: 20px; color: green;"  title="Payment Completed" v-else><i class="fa fa-check"></i></td>
                             <td>
@@ -60,18 +60,18 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title">Order Details</h4>
+                            <h4 class="modal-title">Summary</h4>
                         </div>
                         <div class="modal-body">
 
                             <div class="row">
                                 <div class="col-md-12">
-                                    <h5><b>{{view_order.orderno}}</b> <span class="pull-right"><b>Order Date:</b> <i>{{view_order.created_at | moment}}</i> </span></h5>
+                                    <h5><b>{{view_order.orderno}}</b> <span class="pull-right"><b>Date:</b> <i>{{view_order.created_at | moment}}</i> </span></h5>
                                     <table width="100%" class="table table-hovered">
                                         <tr>
-                                            <td>Total Order Cost</td>
+                                            <td>Total Order Cost </td>
                                             <td>{{view_order.total_cost | currency('Rs')}}</td>
-                                        </tr>
+                                        </tr><!-- 
                                         <tr>
                                             <td>Remaining Order Cost</td>
                                             <td>{{view_order.remaining_payment | currency('Rs')}}</td>
@@ -79,9 +79,9 @@
                                         <tr>
                                             <td>Order By</td>
                                             <td>{{view_order.created_by}}</td>
-                                        </tr>
+                                        </tr> -->
                                         <tr>
-                                            <td>Current Status</td>
+                                            <td>Current Status </td>
 
                                             <td v-if="view_order.current_status!=''">
                                                 <span  v-for="last_status in view_order.current_status">{{last_status.status}}</span>
@@ -95,11 +95,11 @@
                                         <thead>
                                         <tr>
                                             <td>Category</td>
-                                            <td>Product</td>
-                                            <td>Colour</td>
+                                            <td>Model</td>
+                                            <td>Color</td>
                                             <td>Quantity</td>
-                                            <td>Received Quantity</td>
-                                            <td>Order Unit Price</td>
+                                            <td>Qty</td>
+                                            <td>Price</td>
 
                                         </tr>
                                         </thead>
@@ -119,27 +119,24 @@
                                     <table class="table table-bordered">
                                         <thead>
                                         <tr>
+                                            <td>Date</td>
                                             <td>Type</td>
                                             <td>Currency</td>
                                             <td>Amount</td>
-
                                             <td>XRT</td>
-                                            <td>Total Amount</td>
-                                            <td>Date</td>
-                                            <td>Payment By</td>
+                                            <td>Total Amount (PKR)</td>
+                                            <!-- <td>Payment By</td> -->
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <tr v-for="payment in view_order.order_payments">
+                                            <td>{{payment.created_at | moment}}</td>
                                             <td>{{payment.payment_type.type}}</td>
                                             <td>{{payment.currency.name}}</td>
                                             <td>{{payment.payment_amount | currency(payment.currency.iso)}} </td>
-
                                             <td>{{payment.exchange_rate}}</td>
                                             <td>{{payment.total_amount | currency('Rs')}}</td>
-
-                                            <td>{{payment.created_at | moment}}</td>
-                                            <td>{{payment.user.name}}</td>
+                                            <!-- <td>{{payment.user.name}}</td> -->
                                         </tr>
                                         </tbody>
                                     </table>
@@ -306,7 +303,7 @@
             responsive: true,
             language: {
                 search: "_INPUT_",
-                searchPlaceholder: "Search records",
+                searchPlaceholder: "Search here",
             }
             });
         },3000);

@@ -52,6 +52,7 @@ class RetailerOrderController extends Controller
         $records=RetailerOrder::with(
             ['order_products'=> function($q){ $q->where('is_deleted',0);},
             'order_products.ProductColor',
+            'sales_officer',
             'order_products.ProductColor.product',
             'order_products.ProductColor.product.productCategory',
             'retailer',
@@ -101,12 +102,18 @@ class RetailerOrderController extends Controller
     public function get_all_order($id) {
 //        $user_staff_id = Auth::user()->staff_id;
 //        $staff_id = $warehousestaff = Warehouse_staff::where('staff_id', $user_staff_id)->first();
-        
+      
         $RetailerOrder = new RetailerOrder();
         $records['payment_type'] = $RetailerOrder->payment_type();
         $records['discount_type'] = $RetailerOrder->discount_type();
-        $records['get_all_order'] = RetailerOrder::with(
-                        'order_products', 'order_products.ProductColor', 'order_products.ProductColor.product', 'order_products.ProductColor.product.productCategory', 'retailer', 'retailer_outlet', 'user'
+        $records['get_all_order'] = RetailerOrder::with([
+                        'order_products'=>function($q){ $q->where('is_delivered',0);}, 
+                'order_products.ProductColor',
+                'order_products.ProductColor.product', 
+                'order_products.ProductColor.product.productCategory', 
+                'retailer', 'retailer_outlet', 'user',
+                'retailer_outlet.city',
+                  'retailer_outlet.region']
                 )->where(['id' => $id])->first();
         if ($records['get_all_order']->is_approved == 0) {
             return $records;

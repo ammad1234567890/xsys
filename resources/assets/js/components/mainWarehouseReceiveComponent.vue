@@ -3,7 +3,7 @@
         <div class="row">
           <div class="card headcolor">
                 <div class="card-header">
-                        <h3 class="card-title pad-bot"><i class="material-icons">store</i> <small>Main Warehouse Receive</small> </h3>
+                        <h3 class="card-title pad-bot"><i class="material-icons">store</i> <small>Add Stock | Add New Stock</small> </h3>
                 </div>
             </div>
             <div class="col-md-12">
@@ -45,10 +45,13 @@
                             <div class="form-group col-md-6">
                                 <label for="product">Warehouse Receive ID</label>
                                 <v-select label="id" :filterable="false" v-model="newItems.main_receive" :options="mainWarehouseReceive" @search="searchProduct"></v-select>
+                             <!--   <input type="text" v-bind:value="newItems.main_receive.id" readonly class="form-control" /> -->
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="product">Receive Date</label>
-                                <v-select label="created_at" v-model="newItems.main_receive" :options="mainWarehouseReceive" @search="searchProduct"></v-select>
+                                <input type="text" v-bind:value="newItems.main_receive.created_at | moment" readonly class="form-control" />
+                                <!-- <p class="col-md-12">{{newItems.main_receive.created_at | moment}}</p> -->
+                                <!-- <v-select label="created_at" v-model="newItems.main_receive" :options="mainWarehouseReceive" @search="searchProduct"></v-select> -->
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="product">Select Product</label>
@@ -122,6 +125,11 @@ import vSelect from "vue-select"
            }
          }
        },
+       filters: {
+          moment: function (date) {
+            return moment(date).format('DD-MM-YYYY');
+          }
+        },
         mounted() {
             console.log('Component mounted.');
 
@@ -141,7 +149,7 @@ import vSelect from "vue-select"
             if(response.data.replay==0){
               this.mainWarehouseReceive.push(response.data.data);
             }
-            //console.log(response.data);
+            console.log(response.data);
           })
         },
         watch:{
@@ -197,7 +205,7 @@ import vSelect from "vue-select"
           createReceiveItems(e){
             e.preventDefault();
             axios.post('./createReceiveItems',this.newItems).then(response=>{
-              //console.log(this.newItems);
+              console.log(response.data);
               if(response.data.replay==0){
                 this.newItems={
                     productColor:'',

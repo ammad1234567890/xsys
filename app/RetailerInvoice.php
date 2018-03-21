@@ -19,4 +19,13 @@ class RetailerInvoice extends Model {
     {
       return $this->hasMany('App\RetailerInvoice','id');
     }
+     public function RetailerOrder()
+    {
+      return $this->belongsTo('App\RetailerOrder','order_id');
+    }
+       public function outlet()
+    {
+      return $this->belongsTo('App\RetailerOutlet','retailer_id');
+    }
+    
 }

@@ -47,39 +47,29 @@
                 <table id="outlet_table" class="table table-bordered">
                     <thead>
                     <tr>
-                        <th>SNO</th>
+                        <!--<th>SNO</th>-->
                         <th>Date</th>
-                        <th>Description</th>
-                        <th>Collection</th>
-                        <th>Outstanding</th>
+                        <th>Narration</th>
+                        <th>Debit</th>
+                        <th>Credit</th>
+                        <th>Balance</th>
 
                     </tr>
                     </thead>
                     <tbody>
 
                     <tr v-for="(ledger,index) in ledgerData">
-                        <td>{{index +1}}</td>
+                        <!--<td>{{index +1}}</td>-->
                         <td>{{ledger.TransDate | moment}}</td>
                         <td>{{ledger.description}}</td>
-                        <td>{{ledger.Collection | currency('')}}</td>
                         <td>{{ledger.Credit | currency('')}}</td>
-
+                        <td>{{ledger.Collection | currency('')}}</td>
+                        <td>{{ledger.Outstanding | currency('')}}</td>
                     </tr>
                     <tr>
-                        <td>
 
-                        </td>
-                        <td>
-
-                        </td>
-                        <td>
-
-                        </td>
-                        <td>
-
-                        </td>
-                        <td style="font-weight: bold;">
-                            Total Outstanding: {{last_outstanding | currency('')}}
+                        <td style="font-weight: bold;" colspan="5" align="right">
+                            Closing Balance: {{last_outstanding | currency('')}}
                         </td>
 
                     </tr>

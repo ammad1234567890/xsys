@@ -38,6 +38,17 @@ class RetailerOutletController extends Controller
         return view('retailer_outlets');
     }
 
+    public function make_number($order_id){
+        $order_zeros='';
+        for($i=0; $i<=strlen($order_id); $i++){
+            $order_zeros.=0;
+        }
+        $current_month=date('m');
+        $current_year=date('y');
+        $number=$current_month.$current_year.$order_zeros.$order_id;
+        return $number;
+    }
+
     //Registered a route with the name of '/add_city'
     public function add_city(Request $request){
         $name= $request->input('name');
@@ -164,6 +175,10 @@ class RetailerOutletController extends Controller
                     'image'=>$retailer_file_name,
                     'created_by'=>$user));
                 DB::commit();
+
+                $retailer_id=$retailer->id;
+                $retailer_number='DC'.$this->make_number($retailer_id);
+                Retailer::where('id', $retailer_id)->update(['retailer_no'=>$retailer_number]);
             }
             catch(\Exception $exc){
                 DB::rollBack();

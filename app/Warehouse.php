@@ -50,7 +50,7 @@ class Warehouse extends Model
 
     public function warehouseStaff()
     {
-      return $this->hasMany('App\WarehousrStaff');
+      return $this->hasMany('App\WarehouseStaff');
     }
 
     public function mainWarehouseReceiveItem()

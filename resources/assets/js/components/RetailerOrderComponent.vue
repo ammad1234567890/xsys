@@ -2,11 +2,11 @@
     <div class="row">
         <div class="card headcolor">
             <div class="card-header">
-                  <h3 class="card-title pad-bot"><i class="material-icons">description</i><small>ALL RETAILER ORDERS</small></h3>
+                  <h3 class="card-title pad-bot"><i class="material-icons">description</i><small>Supply Orders</small></h3>
             </div>
         </div>
         <div class="col-md-12">
-            <div class="panel panel-info">
+            <div class="panel panel-Default">
                 <div class="panel-heading">
                     <h2 class="panel-title">Order Details</h2>
                 </div>
@@ -19,27 +19,23 @@
                         <table id="retailer_order_table" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                             <thead>
                             <tr>
+                                <th>Date</th>
                                 <th>Order No</th>
-                                <th>Estimated Delivery</th>
-                                <th>Retailer</th>
                                 <th>Outlet</th>
-                                <th>Account Clearance</th>
+                                <th>City</th>
                                 <th>Total Amount</th>
-                                <th>Created Order Date</th>
                                 <th class="col-md-3 text-center">Action</th>
+                                <th>Account Clearance</th>
+
                             </tr>
                             </thead>
                             <tbody>
                             <tr v-for="(order, index) in all_orders">
-                                <td>CR{{order.created_at | getdate}}{{order.created_at | getmonth}}00{{order.id}}</td>
-                                <td>{{order.expected_delivery_date | moment}}</td>
-                                <td>{{order.retailer.name}}</td>
-                                <td>{{order.retailer_outlet.name}}</td>
-                                <td v-if="order.is_account_clearance==1"><i class="fa fa-check" title="Cleared from Finance" style="text-align:center; display:block; font-size:25px; color:green;"></i> </td>
-                                <td v-else><i class="fa fa-times" style="text-align:center; display:block; font-size:25px; color:red;"></i></td>
-
-                                <td>{{order.total_cost | currency('Rs')}}</td>
                                 <td>{{order.created_at | moment}}</td>
+                                <td>{{order.order_no}}</td>
+                                <td>{{order.retailer_outlet.name}}</td>
+                                <td>{{order.retailer_outlet.city_id}}</td>
+                                <td>{{order.total_cost | currency('Rs')}}</td>
                                 <td class="text-center">
                                     <div class="dropdown">
 
@@ -49,6 +45,9 @@
                                         <button class="btn btn-danger btn-xs" type="button" v-if="order.is_account_clearance==0" v-on:click="order_delete(index)">Delete </button>
                                     </div>
                                 </td>
+
+                                <td v-if="order.is_account_clearance==1"><i class="fa fa-check" title="Cleared from Finance" style="text-align:center; display:block; font-size:25px; color:green;"></i> </td>
+                                <td v-else><i class="fa fa-times" style="text-align:center; display:block; font-size:25px; color:red;"></i></td>
                             </tr>
                             </tbody>
                         </table>
@@ -70,19 +69,15 @@
                                     <h5> <span class="pull-right"></span></h5>
 
 
-                                    <h5><b>CR{{view_order.created_at | getdate}}{{view_order.created_at | getmonth}}00{{view_order.orderno}}</b> <span class="pull-right"><b>Created at:</b> <i> {{view_order.created_at | moment}}</i> </span></h5>
+                                    <h5><b>{{view_order.order_no}}</b> <span class="pull-right"><b>Created at:</b> <i> {{view_order.created_at | moment}}</i> </span></h5>
                                     <table width="100%" class="table table-hovered">
                                         <tr>
-                                            <td>Total Order Cost</td>
+                                            <td>Total Cost</td>
                                             <td>{{view_order.total_cost | currency('Rs')}} </td>
                                         </tr>
                                         <tr>
-                                            <td>Remaining Order Cost</td>
-                                            <td>{{view_order.remaining_payment | currency('Rs')}} </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Order By</td>
-                                            <td>{{view_order.created_by}}</td>
+                                            <td>Sales Officer/Manager</td>
+                                            <td>{{view_order.sales_officer_name}}</td>
                                         </tr>
                                         <tr>
                                             <td>Account Clearance</td>
@@ -102,10 +97,12 @@
                                         <thead>
                                         <tr>
                                             <td>Category</td>
-                                            <td>Product</td>
-                                            <td>Colour</td>
+                                            <td>Model</td>
+                                            <td>Color</td>
                                             <td>Quantity</td>
-                                            <td>Sales Unit Price</td>
+                                            <td>Unit Price</td>
+                                            <td>Discount</td>
+                                            <td>Total Price</td>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -115,6 +112,8 @@
                                             <td>{{products.product_color.color}}</td>
                                             <td>{{products.product_qty}}</td>
                                             <td>{{products.unit_price | currency('Rs')}}</td>
+                                            <td>{{products.product_color.discount}}%</td>
+                                            <td>{{products.product_qty*products.unit_price | currency('Rs')}}</td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -145,6 +144,7 @@
                 all_orders:[],
                 view_order:{
                     orderno:'',
+                    order_no:'',
                     eta:'',
                     remaining_payment:'',
                     total_cost:'',
@@ -239,13 +239,14 @@
                 this.view_order.is_approved=this.all_orders[index].is_approved;
                 this.view_order.retailer_name=this.all_orders[index].retailer.name;
                 this.view_order.created_at=this.all_orders[index].created_at;
-
-                this.view_order.sales_officer_name=this.all_orders[index].retailer.name;
+                this.view_order.order_no=this.all_orders[index].order_no;
+                this.view_order.sales_officer_name=this.all_orders[index].sales_officer.name;
                 this.view_order.outlet_name=this.all_orders[index].retailer_outlet.name;
                 this.view_order.order_products=this.all_orders[index].order_products;
                 this.view_order.created_by=this.all_orders[index].user.name;
                 this.view_order.updated_by=this.all_orders[index].updated_user.name;
                 this.view_order.created_at=this.all_orders[index].created_at;
+
 
                 //alert(this.all_orders[index].created_at);
 

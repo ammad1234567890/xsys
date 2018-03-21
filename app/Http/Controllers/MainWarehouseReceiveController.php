@@ -79,7 +79,6 @@ class MainWarehouseReceiveController extends Controller
      $quantity=$request->input('quantity');
      $warehouse_id=$request->input('warehouse_id');
      $userId=Auth::user()->id;
-
      try{
        DB::beginTransaction();
           //get receiveID
@@ -108,21 +107,25 @@ class MainWarehouseReceiveController extends Controller
             DB::rollBack();
             return $return;
           }
-        /*WarehouseStock
+        }
+        //WarehouseStock
         if(WarehouseStock::where([['warehouse_id',$warehouse_id],['product_color_id',$productColor['id']]])->exists()){
             $warehouseStock=WarehouseStock::where([['warehouse_id',$warehouse_id],['product_color_id',$productColor['id']]])->first();
             $warehouseStockQuantity=$warehouseStock['product_qty'];
-            WarehouseStock::where([['warehouse_id',$warehouse_id],['product_color_id',$productColor['id']]])->update('product_qty',$warehouseStockQuantity+$quantity);
+            $NewQuantity=$quantity+(int)$warehouseStockQuantity;
+            //return $productColor['id'];
+            WarehouseStock::where([['warehouse_id','=',$warehouse_id],['product_color_id','=',$productColor['id']]])->update(['product_qty'=>$NewQuantity]);
+            //WarehouseStock::where('id',$warehouseStock['id'])->update(['product_qty'=>$NewQuantity]);
         }else{
             WarehouseStock::create(['warehouse_id'=>$warehouse_id,'product_color_id'=>$productColor['id'],'product_qty'=>$quantity]);
         }
-        */
-        WarehouseStock::create(['warehouse_id'=>$warehouse_id,'product_color_id'=>$productColor['id'],'product_qty'=>$quantity]);
+        
+        //WarehouseStock::create(['warehouse_id'=>$warehouse_id,'product_color_id'=>$productColor['id'],'product_qty'=>$quantity]);
      }catch(\Exception $e){
        $return=array('replay'=>1,'data'=>$e);
        return $return;
       }
-      DB::commit();
+     DB::commit();
       $return=array('replay'=>0);
       return $return;
    }

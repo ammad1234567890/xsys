@@ -35,6 +35,17 @@ class RetailerController extends Controller
         return view('retailer');
     }
 
+    public function make_number($order_id){
+        $order_zeros='';
+        for($i=0; $i<=strlen($order_id); $i++){
+            $order_zeros.=0;
+        }
+        $current_month=date('m');
+        $current_year=date('y');
+        $number=$current_month.$current_year.$order_zeros.$order_id;
+        return $number;
+    }
+
     public function create_retailer(Request $request){
 
         //GET THE IMAGE
@@ -206,8 +217,10 @@ class RetailerController extends Controller
         $user=Auth::user()->id;
 
 
-        $order_created=RetailerOrder::create(['expected_delivery_date'=>$estimation_date,
+
+        $order_created=RetailerOrder::create([
             'retailer_id'=>$retailer_id,
+
             'outlet_id'=>$retailer_outlet_id,
             'sales_officer_id'=>$sales_officer_id,
             'total_cost'=>0,
@@ -218,6 +231,12 @@ class RetailerController extends Controller
             'created_by'=>$user
         ]);
         $order_id= $order_created->id;
+
+        $order_number='CR'.$this->make_number($order_id);
+
+
+
+        RetailerOrder::where('id',$order_id)->update(['order_no'=>$order_number]);
         $total_order_price=0;
         foreach($products as $product){
             $products_arr=array(
@@ -235,6 +254,8 @@ class RetailerController extends Controller
         RetailerOrder::where('id',$order_id)->update(['total_cost'=>$total_order_price,'remaining_payment'=>$total_order_price]);
         return 201;
     }
+
+
 
     //Registered a route with the name of 'retailer/create_order'
     public function create_order(){

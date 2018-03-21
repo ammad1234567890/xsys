@@ -77,23 +77,23 @@
                     <li>
                         <a data-toggle="collapse" href="#orders" class="collapsed" aria-expanded="false">
                             <i class="material-icons">receipt</i>
-                            <p>Manufacturer Orders
+                            <p>Purchase Orders
                                 <b class="caret"></b>
                             </p>
                         </a>
                         <div class="collapse" id="orders" aria-expanded="false" style="height: 0px;">
                             <ul class="nav">
                                 <li>
-                                    <a href="{{ url('order/all_orders') }}">Orders</a>
-                                </li>
-                                <li>
                                     <a href="{{ url('order/create') }}">Create Orders</a>
                                 </li>
                                 <li>
-                                    <a href="{{ url('order/receive') }}">Receive New Order</a>
+                                    <a href="{{ url('order/all_orders') }}">Orders</a>
                                 </li>
                                 <li>
-                                    <a href="{{ url('order/payment') }}">Orders Payment</a>
+                                    <a href="{{ url('order/receive') }}">New Shipment</a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('order/payment') }}">PO Payment</a>
                                 </li>
                                 <li>
                                     <a href="{{ url('order/received_orders') }}">Received Orders</a>
@@ -112,33 +112,6 @@
                             <ul class="nav">
                                 <li>
                                     <a href="{{ url('staff') }}">Staff Management</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li>
-                        <a data-toggle="collapse" href="#warehouse" class="collapsed" aria-expanded="false">
-                            <i class="material-icons">store</i>
-                            <p>Warehouse
-                                <b class="caret"></b>
-                            </p>
-                        </a>
-                        <div class="collapse" id="warehouse" aria-expanded="false" style="height: 0px;">
-                            <ul class="nav">
-                                <li>
-                                    <a href="{{ url('warehouse') }}">Warehouse Management</a>
-                                </li>
-                                <li>
-                                    <a href="{{ url('warehouseStaff') }}">Warehouse Staff</a>
-                                </li>
-                                <li>
-                                    <a href="{{ url('mainWarehouseReceive') }}">Warehouse Receive</a>
-                                </li>
-                                <li>
-                                    <a href="{{ url('warehouseIssue') }}">Warehouse Supply</a>
-                                </li>
-                                <li>
-                                    <a href="{{ url('warehouseStock') }}">Warehouse Stock Details</a>
                                 </li>
                             </ul>
                         </div>
@@ -185,7 +158,7 @@
                                 </li>
                                 
                                 <li>
-                                    <a href="{{url('/retailer_order/payment')}}">Collection</a>
+                                    <a href="{{url('/retailer_order/payment')}}">Receiving</a>
                                 </li>
                                 <li>
                                     <a href="{{url('/bank')}}">Bank</a>
@@ -194,6 +167,33 @@
                                     <a href="{{url('/ledger')}}">Ledger</a>
                                 </li>
                                 
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <a data-toggle="collapse" href="#warehouse" class="collapsed" aria-expanded="false">
+                            <i class="material-icons">store</i>
+                            <p>Warehouse
+                                <b class="caret"></b>
+                            </p>
+                        </a>
+                        <div class="collapse" id="warehouse" aria-expanded="false" style="height: 0px;">
+                            <ul class="nav">
+                                <li>
+                                    <a href="{{ url('warehouse') }}">Warehouse Management</a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('warehouseStaff') }}">Warehouse Staff</a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('mainWarehouseReceive') }}">Warehouse Receive</a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('warehouseIssue') }}">Warehouse Supply</a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('warehouseStock') }}">Warehouse Stock Details</a>
+                                </li>
                             </ul>
                         </div>
                     </li>

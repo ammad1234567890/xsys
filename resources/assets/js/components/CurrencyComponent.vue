@@ -1,68 +1,82 @@
 <template>
-    <div class="col-md-6 panel panel-default">
-      <div class="panel-body">
-        <div class="alert alert-success"  v-if="message">
-          <strong>{{message}}</strong>
-        </div>
-      <form @submit="createCurrency">
-        <div class="form-group">
-          <label for="Currency">Currency</label>
-          <input name="Currency" type="text" class="form-control" v-validate="'required|regex:^[a-zA-Z]+$'" v-model="currency_data.name">
-          <span class="text-danger" v-show="errors.has('Currency')">
-            {{errors.first('Currency')}}
-          </span>
-        </div>
-        <div class="form-group">
-          <div class="row">
-            <div class="col-md-6">
-              <label for="ISO">ISO</label>
-              <input name="ISO" type="text" class="form-control" v-validate="'required|regex:^[a-zA-Z]+$'" v-model="currency_data.iso">
-              <span class="text-danger" v-show="errors.has('ISO')">
-                {{errors.first('ISO')}}
-              </span>
+<div>
+    <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2 class="panel-title">Create New Currency</h2>
             </div>
-
-            <div class="col-md-6">
-              <label for="rate">Exhange Rate</label>
-              <input name="rate" type="text" class="form-control" v-validate="'required|regex:^[0-9]+$'" v-model="currency_data.exchange_rate">
-              <span class="text-danger" v-show="errors.has('rate')">
-                {{errors.first('rate')}}
-              </span>
+        <div class="panel-body">
+            <div class="alert alert-success"  v-if="message">
+              <strong>{{message}}</strong>
             </div>
-          </div>
+            <form @submit="createCurrency">
+                <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="Currency">Currency</label>
+                      <input name="Currency" type="text" class="form-control" v-validate="'required|regex:^[a-zA-Z]+$'" v-model="currency_data.name">
+                      <span class="text-danger" v-show="errors.has('Currency')">
+                        {{errors.first('Currency')}}
+                      </span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="ISO">ISO</label>
+                      <input name="ISO" type="text" class="form-control" v-validate="'required|regex:^[a-zA-Z]+$'" v-model="currency_data.iso">
+                      <span class="text-danger" v-show="errors.has('ISO')">
+                        {{errors.first('ISO')}}
+                      </span>
+                    </div>
+                </div>
 
+                <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="rate">Exhange Rate</label>
+                      <input name="rate" type="text" class="form-control" v-validate="'required|regex:^[0-9]+$'" v-model="currency_data.exchange_rate">
+                      <span class="text-danger" v-show="errors.has('rate')">
+                        {{errors.first('rate')}}
+                      </span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                      <input v-if="editing==false" type="submit" class="btn btn-tumblr" value="Add Currency">
+                      <button v-if="editing==true" @click="saveEditing" class="btn btn-tumblr">Save Editing</button>
+                      <button v-if="editing==false" @click="showCities" class="btn btn-github" data-toggle="collapse" data-target="#currencies">Show Currencies</button>
+                      <button v-if="editing==true" @click="cancelEditing" class="btn btn-pinterest">Cancel Editing</button>
+                    </div>
+                </div>                
+            </form>
         </div>
-        <div class="form-group">
-          <input v-if="editing==false" type="submit" class="btn btn-default col-md-6" value="Add Currency">
-          <button v-if="editing==true" @click="saveEditing" class="btn btn-default col-md-6">Save Editing</button>
-          <button v-if="editing==false" @click="showCities" class="btn btn-default col-md-6" data-toggle="collapse" data-target="#currencies">Currencies</button>
-          <button v-if="editing==true" @click="cancelEditing" class="btn btn-default col-md-6">Cancel Editing</button>
+
+        <div id="currencies" class="collapse">
+            <div class="panel-heading">
+                <h2 class="panel-title">Currency List</h2>
+            </div>
+            <div class="panel-body">
+                <table class="table table-bordered col-md-12">
+                    <thead>
+                      <tr>
+                        <th>S.No</th>
+                        <th>Currency</th>
+                        <th>ISO</th>
+                        <th>Exhange Rate</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="(currency,index) in allCurrency">
+                        <td>{{index +1 }}</td>
+                        <td>{{currency.name}}</td>
+                        <td>{{currency.iso}}</td>
+                        <td>{{currency.exchange_rate}}</td>
+                        <td><button class="btn btn-info btn-sm" @click="edit(index,currency.id)">Edit</button></td>
+                      </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-      </form>
-      <div id="currencies" class="collapse panel panel-default col-md-12">
-        <table class="table table-bordered col-md-12">
-            <thead>
-              <tr>
-                <th>S.No</th>
-                <th>Currency</th>
-                <th>ISO</th>
-                <th>Exhange Rate</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(currency,index) in allCurrency">
-                <td>{{index +1 }}</td>
-                <td>{{currency.name}}</td>
-                <td>{{currency.iso}}</td>
-                <td>{{currency.exchange_rate}}</td>
-                <td><button class="btn btn-default" @click="edit(index,currency.id)">Edit</button></td>
-              </tr>
-            </tbody>
-        </table>
-      </div>
     </div>
-    </div>
+</div>
 </template>
 
 <script>

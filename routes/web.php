@@ -216,6 +216,9 @@ Route::get('/allWarehouse','WarehouseController@allWarehouses');
 Route::post('/createWarehouse','WarehouseController@store');
 Route::post('/editWarehouse','WarehouseController@update');
 Route::get('/deleteWarehouse/{id}','WarehouseController@destroy');
+Route::get('/warehouse_by_manager','WarehouseController@get_warehouse_by_manager');
+Route::post('/warehouse_salesofficer','WarehouseController@warehouse_salesofficer');
+Route::post('/warehouse_products','WarehouseController@warehouse_products');
 //Warehouse Management
 //WarehouseStaff
 Route::get('/warehouseStaff','WarehouseStaffController@index');

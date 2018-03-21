@@ -8,7 +8,7 @@
     <!--<div class="col-md-4 panel panel-default">-->
         <div class="col-md-12 panel panel-default">
             <div class="panel-heading">
-                <h5>ADD NEW BANK</h5>
+                <h2 class="panel-title">Add New Bank</h2>
             </div>
             <div class="panel-body">
                 <form @submit="createBank">
@@ -56,7 +56,7 @@
 
         <div class="col-md-12 panel panel-default">
             <div class="panel-heading">
-                <h5>BANK DETAILS</h5>
+                <h2 class="panel-title">Bank Details</h2>
             </div>
             <div class="panel-body">
                  <table id="bank_detail_table" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" style="width:100%">

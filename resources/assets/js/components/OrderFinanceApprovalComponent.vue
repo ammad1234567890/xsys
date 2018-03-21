@@ -6,8 +6,10 @@
                 </div>
             </div>
         <div class="col-md-12">
-            <div class="panel panel-info">
-                <div class="panel-heading">Order Details</div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">Order Details</h2>
+                </div>
 
                 <div class="panel-body">
                     <div class="alert alert-success"  v-if="message">
@@ -17,13 +19,13 @@
                         <thead>
                         <tr>
                             <th>Order No</th>
-                            <th>Estimate Delivery</th>
+                            <th>Estimated Delivery</th>
                             <th>Retailer</th>
                             <th>Outlet</th>
                             <th>Account Clearance</th>
                             <th>Total Amount</th>
                             <th>Created Date</th>
-                            <th class="text-center">Action</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -37,8 +39,8 @@
 
                             <td>{{order.total_cost | currency('Rs')}}</td>
                             <td>{{order.created_at | moment}}</td>
-                            <td class="col-md-3 text-center">
-                                <a class="btn btn-success btn-xs" v-bind:href="'../invoice/create/'+order.id" v-if="order.is_account_clearance==1">Generate Invoice</a>
+                            <td>
+                                
                                 <div class="dropdown">
                                     <button class="btn btn-info btn-xs dropdown-toggle" type="button" data-toggle="dropdown"  v-if="order.is_account_clearance==0">Action
                                         <span class="caret"></span></button>
@@ -46,9 +48,10 @@
                                     <ul class="dropdown-menu">
                                         <li><a href="#" v-on:click="edit_order_modal(index)">Edit</a></li>
                                         <li><a href="#" v-on:click="approve_order(index)">Approve</a></li>
-                                    </ul> - 
-                                    <button class="btn btn-tumblr btn-xs" type="button" v-on:click="view_order_details(index)">View Details</button>
+                                    </ul>
+                                    <button class="btn btn-github btn-xs" type="button" v-on:click="view_order_details(index)">View Details</button>
                                 </div>
+                                <a class="btn btn-tumblr btn-xs" v-bind:href="'../invoice/create/'+order.id" v-if="order.is_account_clearance==1">Generate Invoice</a>
                             </td>
                         </tr>
                         </tbody>
@@ -112,6 +115,9 @@
                                     </table>
                                 </div>
                             </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-github" data-dismiss="modal" aria-label="Close">Close</button>
                         </div>
                     </div>
                 </div>

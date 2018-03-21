@@ -20,7 +20,7 @@
                             <v-select label="name" v-model="newStaff.warehouse" :options="warehouses" @search="search"></v-select>
                         </div>
                         <div class="form-group col-md-6" @click="setColum('id')">
-                          <label for="ID">Staff ID</label>
+                          <label for="ID">Emp ID</label>
                            <v-select label="id" :filterable="false" v-model="newStaff.staff" :options="searchedStaff" @search="searchStaff" ></v-select>
                         </div>
                         <div class="form-group col-md-6" @click="setColum('name')">
@@ -63,7 +63,7 @@
                         </div>
                           
                         <div class="form-group col-md-2">
-                            <button class="btn btn-tumblr searchmargin" v-on:click="fetchStaff">Fetch Staff</button>
+                            <button class="btn btn-tumblr searchmargin" v-on:click="fetchStaff">Show Staff</button>
                         </div>
                       </div>
                         <div class="table-responsive">

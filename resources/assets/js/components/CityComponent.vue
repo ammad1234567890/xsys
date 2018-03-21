@@ -2,33 +2,33 @@
     <div>
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h5>Create New City</h5>
+                <h2 class="panel-title">Create New City</h2>
             </div>
             <div class="panel-body">
                 <form @submit="createCity">
-                <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="City" >City</label>
-                        <input name="city" type="text" class="form-control" v-validate="'required|regex:^[a-zA-Z]+$'" v-model="cityData.city">
-                        <span class="text-danger" v-show="errors.has('city')">
-                          {{errors.first('city')}}
-                        </span>
-                      </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                          <input v-if="editing==false" type="submit" class="btn btn-tumblr" value="Create City">
-                          <button v-if="editing==true" @click="saveEditing" class="btn btn-tumblr">Save Editing</button>
-                          <button v-if="editing==false" @click="showCities" class="btn btn-default" data-toggle="collapse" data-target="#cities">Show Cities</button>
-                          <button v-if="editing==true" @click="cancelEditing" class="btn btn-pinterest">Cancel Editing</button>
+                    <div class="col-md-6">
+                          <div class="form-group">
+                            <label for="City" >City</label>
+                            <input name="city" type="text" class="form-control" v-validate="'required|regex:^[a-zA-Z]+$'" v-model="cityData.city">
+                            <span class="text-danger" v-show="errors.has('city')">
+                              {{errors.first('city')}}
+                            </span>
+                          </div>
                     </div>
-                </div>
-            </form>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                              <input v-if="editing==false" type="submit" class="btn btn-tumblr" value="Create City">
+                              <button v-if="editing==true" @click="saveEditing" class="btn btn-tumblr">Save Editing</button>
+                              <button v-if="editing==false" @click="showCities" class="btn btn-github" data-toggle="collapse" data-target="#cities">Show Cities</button>
+                              <button v-if="editing==true" @click="cancelEditing" class="btn btn-pinterest">Cancel Editing</button>
+                        </div>
+                    </div>
+                </form>
             </div>
 
             <div id="cities" class="collapse">
                 <div class="panel-heading">
-                    <h5>City List</h5>
+                    <h2 class="panel-title">City List</h2>
                 </div>
                 <div class="panel-body">
                     <table class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" style="width:100%">

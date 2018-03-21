@@ -3,14 +3,14 @@
     <div class="row">
         <div class="card headcolor">
               <div class="card-header">
-                      <h3 class="card-title pad-bot"><i class="material-icons">shopping_cart</i> <small>ORDER PAYMENT</small> </h3>
+                      <h3 class="card-title pad-bot"><i class="material-icons">shopping_cart</i> <small>PO PAYMENT</small> </h3>
               </div>
           </div>
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h2 class="panel-title">
-                        Add Order Payment
+                        Create Order Payment
                     </h2>
                 </div>
 
@@ -21,18 +21,13 @@
                     <form @submit.prevent="add_payment">
                         <div class="row">
                             <div class="col-md-6 form-group">
-                                <label for="select_order_no">Select Order No</label>
+                                <label for="select_order_no">Purchase Order</label>
                                 <select class="form-control" v-model="payment_data.order_id" @change="change_order()" required>
                                     <option value="">Select</option>
                                     <option v-for="order in all_orders" v-bind:value="order.id">
                                         ORDER# {{order.id}}
                                     </option>
                                 </select>
-                            </div>
-
-                            <div class="col-md-6 form-group">
-                                <label for="product_quanity">Amount</label>
-                                <input type="text" class="form-control" placeholder="Amount" v-model="payment_data.amount" @change="change_amount()" required>
                             </div>
 
                             <div class="col-md-6 form-group">
@@ -56,13 +51,18 @@
                             </div>
 
                             <div class="col-md-6 form-group">
+                                <label for="product_quanity">Amount (PKR)</label>
+                                <input type="text" class="form-control" placeholder="Amount" v-model="payment_data.amount" @change="change_amount()" required>
+                            </div>
+
+                            <div class="col-md-6 form-group">
                                 <label for="product_quanity">Exchange Rate</label>
                                 <input type="text" v-model="payment_data.exchange_rate" class="form-control" placeholder="Exchange Rate" readonly>
                             </div>
 
                             <div class="col-md-6 form-group">
 
-                                <label for="product_quanity">Total Payment Cost (Rs)</label>
+                                <label for="product_quanity">Total Cost (PKR)</label>
                                 <vue-numeric class="form-control" name="remaining_payment" v-validate="{ max_value: remaining_payment }" currency="Rs" separator="," v-model="payment_data.total_payment" placeholder="Total Payment" readonly></vue-numeric>
 
 

@@ -2,7 +2,7 @@
     <div class="row">
         <div class="card headcolor">
             <div class="card-header">
-                    <h3 class="card-title pad-bot"><i class="material-icons">shopping_cart</i> <small>ALL RECEIVED ORDERS</small> </h3>
+                    <h3 class="card-title pad-bot"><i class="material-icons">shopping_cart</i> <small>RECEIVED ORDERS</small> </h3>
             </div>
         </div>
         <div class="col-md-12">
@@ -19,8 +19,8 @@
                         <thead>
                         <tr>
                             <th>Order No</th>
-                            <th>Receive No</th>
-                            <th>Collected By</th>
+                            <th>Invoice  No</th>
+                            <th>Received By</th>
                             <th>QA Status</th>
                             <th>Description</th>
                             <th>Receive Status</th>
@@ -53,7 +53,7 @@
                             <h4 class="modal-title">Product Details</h4>
                         </div>
                         <div class="modal-body">
-                            <h4>Order# {{order_no}} <span style="font-size:14px; font-weight:bold;">Receive# {{receive_no}}</span></h4>
+                            <h4>Order# {{order_no}} <span style="font-size:14px; font-weight:bold;">Invoice# {{receive_no}}</span></h4>
 
                             <div class="row">
                                 <div class="col-md-12">
@@ -62,7 +62,7 @@
                                         <tr>
                                             <td>Category</td>
                                             <td>Product</td>
-                                            <td>Colour</td>
+                                            <td>Color</td>
                                             <td>Quantity</td>
                                         </tr>
                                         </thead>
@@ -141,7 +141,7 @@
             responsive: false,
             language: {
                 search: "_INPUT_",
-                searchPlaceholder: "Search records",
+                searchPlaceholder: "Search here",
             }
             });
         },3000);

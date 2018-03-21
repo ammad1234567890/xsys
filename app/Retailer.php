@@ -8,7 +8,7 @@ class Retailer extends Model
 {
     //
     protected $table="tbl_retailer";
-    protected $fillable=['name','cnic','phone_no','image','is_deleted','created_by','updated_by','created_at','updated_at'];
+    protected $fillable=['name','retailer_no','cnic','phone_no','image','is_deleted','created_by','updated_by','created_at','updated_at'];
 
     public function retailer_outlet()
     {

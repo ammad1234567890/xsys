@@ -1,6 +1,11 @@
 <template>
 
         <div class="row">
+            <div class="card headcolor">
+                <div class="card-header">
+                        <h3 class="card-title pad-bot"><i class="material-icons">description</i> <small>RETAILER </small> </h3>
+                </div>
+            </div>
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -17,29 +22,29 @@
                                     <h4 class="form-section-heading" style="border-bottom:1px solid black; display: inline-block;">RETAILER DETAILS</h4>
                                 </div>
                                     <div class="col-md-6 col-sm-3">
-                                        <div class="form-group label-floating">
-                                            <label class="control-label">Full Name</label>
+                                        <div class="form-group">
+                                            <label>Full Name</label>
                                             <input type="text" class="form-control" v-model="outlet.fullname" autocomplete="off" required>
                                         </div>
                                     </div>
                                     <div class="col-md-6 col-sm-3">
-                                        <div class="form-group label-floating">
-                                            <label class="control-label">CNIC No</label>
+                                        <div class="form-group">
+                                            <label>CNIC No</label>
                                             <input type="text" class="form-control" v-model="outlet.cnic" v-mask="'99999-9999999-9'" autocomplete="off" required>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 col-sm-3"  v-if="!outlet.uploadImage">
-                                        <div class="form-group label-floating">
+                                    <div class="col-md-6 col-sm-3"  v-if="!outlet.uploadImage" style="bottom: -26px;">
+                                        <div class="form-group">
                                             <button class="btn btn-primary btn-xs" style="width:100%;">Select Retailer Image<input type="file" class="form-control" v-on:change="retailer_image_file_preview" ref="imageInput" name="image" autocomplete="off" required></button>
                                         </div>
                                     </div>
-                                    <div class="col-md-4" v-else>
-                                        <img :src="outlet.uploadImage" class="img img-responsive form-control" />
-                                        <button @click="removeRetailerImage" class="image_close_btn"><i class="fa fa-times"></i> </button>
+                                    <div class="col-md-6" v-else>
+                                        <img :src="outlet.uploadImage" class="img img-responsive form-control" style="    width: 100px; height: 90px;" />
+                                        <button @click="removeRetailerImage" class="btn btn-pinterest btn-xs"  style="width: 100px;"><i class="fa fa-times"></i> </button>
                                     </div>
                                     <div class="col-md-6 col-sm-3">
-                                        <div class="form-group label-floating">
-                                            <label class="control-label">Mobile No</label>
+                                        <div class="form-group">
+                                            <label>Mobile No</label>
                                             <input type="text" class="form-control" v-model="outlet.phone_no" v-mask="'9999-9999999'" autocomplete="off" required>
                                         </div>
                                     </div>
@@ -50,16 +55,16 @@
                                     <h4 class="form-section-heading" style="border-bottom:1px solid black; display: inline-block;">OUTLET DETAILS</h4>
                                 </div>
                                 <div class="col-md-6 col-sm-3">
-                                    <div class="form-group label-floating">
-                                        <label class="control-label">Outlet Name</label>
+                                    <div class="form-group">
+                                        <label>Outlet Name</label>
                                         <input type="text" class="form-control" v-model="outlet.outlet_name" autocomplete="off" required>
                                     </div>
                                 </div>
 
 
                                 <div class="col-md-6 col-sm-3">
-                                    <div class="form-group label-floating">
-                                        <label class="control-label">Outlet Phone No</label>
+                                    <div class="form-group">
+                                        <label>Outlet Phone No</label>
                                         <input type="text" class="form-control" v-mask="'9999-9999999'" v-model="outlet.outlet_phone" autocomplete="off" required>
                                     </div>
                                 </div>
@@ -70,24 +75,24 @@
                                     <h4 class="form-section-heading" style="border-bottom:1px solid black; display: inline-block;">BUSINESS PERSON DETAILS</h4>
                                 </div>
                                 <div class="col-md-6 col-sm-3">
-                                    <div class="form-group label-floating">
-                                        <label class="control-label">Full Name</label>
+                                    <div class="form-group">
+                                        <label>Full Name</label>
                                         <input type="text" class="form-control" v-model="outlet.bussiness_person_name" autocomplete="off" name="person_name"  required>
                                     </div>
                                 </div>
 
 
                                 <div class="col-md-6 col-sm-3">
-                                    <div class="form-group label-floating">
-                                        <label class="control-label">CNIC</label>
+                                    <div class="form-group">
+                                        <label>CNIC</label>
                                         <input type="text" class="form-control" v-mask="'99999-9999999-9'" v-model="outlet.bussiness_person_cnic" autocomplete="off" name="person_cnic" minlength="15" maxlength="15" required>
                                     </div>
                                 </div>
 
 
                                 <div class="col-md-6 col-sm-3">
-                                    <div class="form-group label-floating">
-                                        <label class="control-label">Phone No</label>
+                                    <div class="form-group">
+                                        <label>Phone No</label>
                                         <input type="text" class="form-control" v-mask="'9999-9999999'" v-model="outlet.bussiness_person_phone" autocomplete="off" required>
                                     </div>
                                 </div>
@@ -99,7 +104,7 @@
                                 </div>
 
                                 <div class="col-md-6 col-sm-3">
-                                    <div class="form-group label-floating">
+                                    <div class="form-group">
                                         <select class="form-control" name="city_id" v-model="outlet.city_id" required>
                                             <option value="">Select City</option>
                                             <option v-for="cities in citiesData"  v-bind:value="cities.id">{{cities.name}}</option>
@@ -107,7 +112,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-sm-3">
-                                    <div class="form-group label-floating">
+                                    <div class="form-group">
                                         <select class="form-control" name="region_id" v-model="outlet.region_id" required>
                                             <option value="">Select Locality</option>
                                             <option v-for="region in regionsData"   v-bind:value="region.id">{{region.name}}</option>
@@ -116,22 +121,22 @@
                                 </div>
 
                                 <div class="col-md-6 col-sm-3">
-                                    <div class="form-group label-floating">
-                                        <label class="control-label">Address</label>
+                                    <div class="form-group">
+                                        <label>Address</label>
                                         <input type="text" class="form-control" autocomplete="off" v-model="outlet.address" name="outlet_address" required/>
                                     </div>
                                 </div>
 
                                 <div class="col-md-6 col-sm-3">
-                                    <div class="form-group label-floating">
-                                        <label class="control-label">Longitude(OPTIONAL)</label>
+                                    <div class="form-group">
+                                        <label>Longitude(OPTIONAL)</label>
                                         <input type="text" class="form-control" autocomplete="off" v-model="outlet.longitude" name="outlet_longitude"/>
                                     </div>
                                 </div>
 
                                 <div class="col-md-6 col-sm-3">
-                                    <div class="form-group label-floating">
-                                        <label class="control-label">Latitude(OPTIONAL)</label>
+                                    <div class="form-group">
+                                        <label>Latitude(OPTIONAL)</label>
                                         <input type="text" class="form-control" autocomplete="off" v-model="outlet.latitude" name="outlet_latitude"/>
                                     </div>
                                 </div>
@@ -143,22 +148,22 @@
                                 </div>
 
                                 <div class="col-md-6 col-sm-3">
-                                    <div class="form-group label-floating">
-                                        <label class="control-label">Secuity Amount</label>
+                                    <div class="form-group">
+                                        <label>Secuity Amount</label>
                                         <!-- <input type="text" class="form-control" autocomplete="off" v-model="outlet.security_check_amount" name="security_check" required/> -->
                                         <vue-numeric currency="Rs" class="form-control" separator="," v-model="outlet.security_check_amount"></vue-numeric>
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-sm-3">
-                                    <div class="form-group label-floating">
-                                        <label class="control-label">Credit Limit</label>
+                                    <div class="form-group">
+                                        <label>Credit Limit</label>
                                         <!-- <input type="number" class="form-control" autocomplete="off" v-model="outlet.credit_limit" name="credit_limit" required/> -->
                                         <vue-numeric currency="Rs" class="form-control" separator="," v-model="outlet.credit_limit"></vue-numeric>
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-sm-3">
-                                    <div class="form-group label-floating">
-                                        <label class="control-label">Credit Duration</label>
+                                    <div class="form-group">
+                                        <label>Credit Duration</label>
                                         <input type="number" class="form-control" autocomplete="off" v-model="outlet.credit_duration" name="credit_duration" required/>
                                     </div>
                                 </div>
@@ -166,29 +171,29 @@
 
 
                                 <div class="row">
-                                    <div class="col-md-6 col-sm-3"  v-if="!outlet.copy_image">
-                                        <div class="form-group label-floating">
+                                    <div class="col-md-6 col-sm-3"  v-if="!outlet.copy_image" style="bottom: -26px;">
+                                        <div class="form-group">
                                             <button class="btn btn-primary btn-xs" style="width:100%;">Select Cheque Image<input type="file" class="form-control" v-on:change="file_preview" ref="imageInput" name="security_check_image" autocomplete="off" required></button>
                                         </div>
                                     </div>
 
-                                    <div class="col-md-4" v-else>
-                                        <img :src="outlet.copy_image" class="img img-responsive" />
-                                        <button @click="removeCopyImage" class="image_close_btn"><i class="fa fa-times"></i> </button>
+                                    <div class="col-md-6" v-else>
+                                        <img :src="outlet.copy_image" class="img img-responsive" style="width: 100px; height: 90px;" />
+                                        <button @click="removeCopyImage" class="btn btn-pinterest btn-xs" style="width: 100px;"><i class="fa fa-times"></i> </button>
                                     </div>
                                 </div>
                             </div>
                             <br/>
                             <div class="row">
                                 <div class="col-md-3 pull-right" v-if="edit_enable==0">
-                                    <button type="submit" class="btn btn-success" :disabled="btndisabled">{{submit_btn_text}}</button>
+                                    <button type="submit" class="btn btn-tumblr" :disabled="btndisabled">{{submit_btn_text}}</button>
                                 </div>
                                 <div class="col-md-5 pull-right" v-else>
                                     <div class="col-md-6">
-                                        <button type="button" class="btn buttondesign" v-on:click="update_outlet"><i class="fa fa-check"></i> {{submit_btn_text}}</button>
+                                        <button type="button" class="btn btn-tumblr" v-on:click="update_outlet"><i class="fa fa-check"></i> {{submit_btn_text}}</button>
                                     </div>
                                     <div class="col-md-6">
-                                        <button type="button" v-on:click="close_edit_mode" class="btn btn-danger buttondesign"><i class="fa fa-times"></i> Close Editable Mode</button>
+                                        <button type="button" v-on:click="close_edit_mode" class="btn btn-pinterest buttondesign"><i class="fa fa-times"></i> Close Editable Mode</button>
                                     </div>
 
                                 </div>
@@ -199,27 +204,31 @@
 
 
                 <!-- RETAILER SHOW GRID -->
-                <div class="panel panel-info">
-                    <div class="panel-heading">Outlet - Details</div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h2 class="panel-title">Outlet - Details</h2>
+                    </div>
 
                     <div class="panel-body">
                         <table id="outlet_table" class="table table-bordered">
                             <thead>
                             <tr>
                                 <th>Outlet Name</th>
+								<th>Dealer Code</th>
                                 <th>Phone Number</th>
                                 <th>City</th>
                                 <th>Locality</th>
                                 <th>Address</th>
                                 <th>Retailer Name</th>
                                 <th>Bussiness Person</th>
-                                <th>Action</th>
+                                <th class="col-md-3">Action</th>
                             </tr>
                             </thead>
                             <tbody>
 
                             <tr v-for="(outlets,index) in outletsData">
                                 <td>{{outlets.name}}</td>
+								 <td>{{outlets.retailer.retailer_no}}</td>
                                 <td>{{outlets.phone_no}}</td>
                                 <td>{{outlets.city.name}}</td>
                                 <td>{{outlets.region.name}}</td>
@@ -228,16 +237,16 @@
                                 <td>{{outlets.business_person_name}}</td>
                                 <td>
                                     <div class="dropdown">
-                                        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Action
+                                        <button class="btn btn-primary btn-xs dropdown-toggle" type="button" data-toggle="dropdown">Action
                                             <span class="caret"></span></button>
                                         <ul class="dropdown-menu">
-                                            <li><button class="btn btn-primary form-control"  v-on:click="enable_edit_mode(index)">Edit</button></li>
+                                            <li><a href="#" v-on:click="enable_edit_mode(index)">Edit</a></li>
 
-                                            <li><button class="btn btn-danger form-control" style="margin-top: 5px;" v-on:click="delete_outlet(outlets.id)">Delete</button></li>
+                                            <li><a href="#" v-on:click="delete_outlet(outlets.id)">Delete</a></li>
 
                                         </ul>
                                         -
-                                        <button class="btn btn-default dropdown-toggle" type="button" v-on:click="view_outlet_details(index)">View Details</button>
+                                        <button class="btn btn-github btn-xs" type="button" v-on:click="view_outlet_details(index)">View Details</button>
                                     </div>
                                 </td>
                             </tr>
@@ -256,7 +265,7 @@
                             </div>
                             <div class="modal-body">
                                 <div class="form-section padding10px">
-                                    <h4 class="form-section-heading">RETAILER DETAILS</h4>
+                                    <h4 class="form-section-heading">Retailer</h4>
                                     <br/>
                                     <div class="row">
                                         <div class="col-md-2">
@@ -265,15 +274,15 @@
                                         <div class="col-md-10">
                                             <table class="table table-hovered">
                                                 <tr>
-                                                    <td>Retailer Name</td>
-                                                    <td>{{outlet_view.retailer_name}}</td>
+                                                    <td>Name</td>
+                                                    <td>{{outlet_view.retailer_name}} ({{outlet_view.retailer_no}})</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Retailer Phone</td>
+                                                    <td>Phone</td>
                                                     <td>{{outlet_view.retailer_phone}}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Retailer Cnic</td>
+                                                    <td>Cnic</td>
                                                     <td>{{outlet_view.retailer_cnic}}</td>
                                                 </tr>
 
@@ -282,16 +291,16 @@
                                     </div>
                                 </div>
                                 <div class="form-section padding10px">
-                                    <h4 class="form-section-heading">OUTLET DETAILS</h4>
+                                    <h4 class="form-section-heading">Outlet</h4>
                                     <br/>
 
                                     <table class="table table-hovered">
                                         <tr>
-                                            <td>Outlet Name</td>
+                                            <td>Name</td>
                                             <td>{{outlet_view.outlet_name}}</td>
                                         </tr>
                                         <tr>
-                                            <td>Outlet Phone</td>
+                                            <td>Phone</td>
                                             <td>{{outlet_view.outlet_phone}}</td>
                                         </tr>
                                         <tr>
@@ -309,7 +318,7 @@
                                     </table>
                                 </div>
                                 <div class="form-section padding10px">
-                                    <h4 class="form-section-heading">OUTLET LOCATION DETAILS</h4>
+                                    <h4 class="form-section-heading">Location</h4>
                                     <br/>
                                     <table class="table table-hovered">
                                         <tr>
@@ -317,7 +326,7 @@
                                             <td>{{outlet_view.address}}</td>
                                         </tr>
                                         <tr>
-                                            <td>Region</td>
+                                            <td>Locality</td>
                                             <td>{{outlet_view.region_name}}</td>
                                         </tr>
                                         <tr>
@@ -339,7 +348,7 @@
                                     </table>
                                 </div>
                                 <div class="form-section padding10px">
-                                    <h4 class="form-section-heading">OUTLET FINANCIAL DETAILS</h4>
+                                    <h4 class="form-section-heading">Financial Status</h4>
                                     <br/>
                                     <table class="table table-hovered">
                                         <tr>
@@ -362,6 +371,9 @@
                                         </tr>
                                     </table>
                                 </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-github" data-dismiss="modal" aria-label="Close">Close</button>
                             </div>
                         </div>
                     </div>
@@ -450,6 +462,7 @@
                     retailer_id:'',
                     outlet_name:'',
                     outlet_phone:'',
+					retailer_no:'',
                     bussiness_person_name:'',
                     bussiness_person_cnic:'',
                     bussiness_person_phone:'',
@@ -618,7 +631,7 @@
                     this.outlet_view.bussiness_person_name=this.outletsData[index].business_person_name;
                     this.outlet_view.bussiness_person_cnic=this.outletsData[index].business_person_cnic;
                     this.outlet_view.bussiness_person_phone=this.outletsData[index].mobile_no;
-
+					this.outlet_view.retailer_no=this.outletsData[index].retailer.retailer_no;
                     this.outlet_view.city_id=this.outletsData[index].city_id;;
                     this.outlet_view.region_id=this.outletsData[index].region_id;;
                     this.outlet_view.address=this.outletsData[index].address;
@@ -641,7 +654,7 @@
             //Function for Deactivating the Outlet, It Required only outlet_id.
             delete_outlet(outlet_id){
                 this.outlet.id=outlet_id;
-                axios.post('../outlet/delete_outlet',this.outlet).then(response=>{
+                axios.post('./outlet/delete_outlet',this.outlet).then(response=>{
                     if(response.data==201){
                         this.message="Outlet has been Deleted";
                         this.get_all_outlets();

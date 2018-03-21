@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Warehouse;
+use App\WarehouseStaff;
 use Auth;
+use Response;
 class WarehouseController extends Controller
 {
     /**
@@ -101,4 +103,32 @@ class WarehouseController extends Controller
         }
         return 0;
     }
+
+
+    //Route /warehouse_by_manager
+    public function get_warehouse_by_manager(){
+        $userId=Auth::user()->staff_id;
+
+        $allWarehouses=warehouseStaff::with('warehouse')->where('staff_id',$userId)->get();
+
+        return Response::json($allWarehouses);
+    }
+
+    //Route /warehouse_salesofficer
+    public function warehouse_salesofficer(Request $request){
+        $warehouse_id= $request->input('warehouse_id');
+
+        $allWarehouses=warehouseStaff::with(['staff'=>function($q){ $q->where('staff_type_id',5); }])->where('warehouse_id',$warehouse_id)->get();
+
+        return Response::json($allWarehouses);
+    }
+
+    //Route /warehouse_products
+    public function warehouse_products(Request $request)
+    {
+        $warehouse_id= $request->input('warehouse_id');
+        $records=warehouse::with('warehouseStock','warehouseStock.productColor','warehouseStock.productColor.product')->where('id',$warehouse_id)->get();
+        return Response::json($records);
+    }
+
 }

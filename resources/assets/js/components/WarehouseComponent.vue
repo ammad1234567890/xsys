@@ -4,7 +4,7 @@
         <div class="row">
             <div class="card headcolor">
                 <div class="card-header">
-                        <h3 class="card-title pad-bot"><i class="material-icons">store</i> <small>WAREHOUSE MANAGEMENT </small> </h3>
+                        <h3 class="card-title pad-bot"><i class="material-icons">store</i> <small>WAREHOUSE MANAGEMENT</small> </h3>
                 </div>
             </div>
         </div>
@@ -13,7 +13,7 @@
                   <div class="panel panel-default">
                     <a href="#d" data-toggle="collapse" style="color:#333333">
                       <div class="panel-heading">
-                        <h2 class="panel-title">Add New Warehouse</h2>
+                        <h2 class="panel-title">Add Warehouse</h2>
                       </div>
                       </a>
                       <div id="d" class="panel-body collapse" v-bind:class="{in:edit}">
@@ -26,7 +26,7 @@
                             </span>
                           </div>
                           <div class="form-group col-md-6">
-                            <label for="warehouseType">Warehouse Type</label>
+                            <label for="warehouseType">Type</label>
                             <select class="form-control" name="WarehouseType" v-validate="'required'" required v-model="newWarehouse.warehouse_type_id">
                               <option value="">Select Warehouse Type</option>
                               <option v-for="type in allWarehouseTypes" v-bind:value="type.id">{{type.type}}</option>
@@ -36,7 +36,7 @@
                             </span>
                           </div>
                           <div class="form-group col-md-6">
-                            <label for="City">Warehouse City</label>
+                            <label for="City">City</label>
                             <!-- <select class="form-control" name="city" required v-model="newWarehouse.city">
                               <option value="">Select City</option>
                               <option v-for="city in cities" v-bind:value="city.id">{{city.name}}</option>
@@ -47,7 +47,7 @@
                             </span>
                           </div>
                           <div class="form-group col-md-6">
-                            <label for="region">Warehouse Locality</label>
+                            <label for="region">Locality</label>
                             <!-- <select class="form-control" name="region" required v-model="newWarehouse.region">
                               <option value="">Select Region</option>
                               <option v-for="region in regions" v-bind:value="region.id">{{region.name}}</option>
@@ -58,28 +58,28 @@
                             </span>
                           </div>
                           <div class="form-group col-md-6">
-                            <label for="region">Warehouse Latitude</label>
+                            <label for="region">Latitude</label>
                             <input type="text" v-validate="'regex:^[0-9.]+$'" name="latitude" class="form-control" v-model="newWarehouse.latitude">
                             <span class="text-danger" v-show="errors.has('latitude')">
                               {{errors.first('latitude')}}
                             </span>
                           </div>
                           <div class="form-group col-md-6">
-                            <label for="region">Warehouse Longitude</label>
+                            <label for="region">Longitude</label>
                             <input type="text" name="longitude" v-validate="'regex:^[0-9.]+$'" class="form-control" v-model="newWarehouse.longitude">
                             <span class="text-danger" v-show="errors.has('longitude')">
                               {{errors.first('longitude')}}
                             </span>
                           </div>
                           <div class="form-group col-md-12">
-                            <label for="region">Warehouse Address</label>
+                            <label for="region">Address</label>
                             <input type="text" name="address" v-validate="'required'" class="form-control" v-model="newWarehouse.address">
                             <span class="text-danger" v-show="errors.has('address')">
                               {{errors.first('address')}}
                             </span>
                           </div>
                           <div class="form-group col-md-6">
-                            <label for="manager">Warehouse Manager</label>
+                            <label for="manager">Warehouse Incharge</label>
                             <!-- <select class="form-control" name="manager" required v-model="newWarehouse.warehouse_manager">
                               <option value="">Select Manager</option>
                               <option v-for="manager in managers" v-bind:value="manager.id">{{manager.name}}</option>
@@ -90,7 +90,7 @@
                             </span>
                           </div>
                           <div class="form-group col-md-6">
-                            <label for="accountant">Warehouse Accountant</label>
+                            <label for="accountant">Branch Accountant</label>
                             <!-- <select class="form-control" name="accountant" required v-model="newWarehouse.warehouse_accountant">
                               <option value="">Select Accountant</option>
                               <option v-for="accountant in accountants" v-bind:value="accountant.id">{{accountant.name}}</option>
@@ -115,7 +115,7 @@
           <div class="col-md-12">
               <div class="panel panel-default">
                   <div class="panel-heading">
-                      <h2 class="panel-title">Warehouse List</h2>
+                      <h2 class="panel-title">Warehouses</h2>
                   </div>
                   <div class="panel-body">
                     <div class="table-responsive">
@@ -130,7 +130,7 @@
                             <th>Latitude</th>
                             <th>Longitude</th>
                             <th>Address</th>
-                            <th>Manager</th>
+                            <th>Incharge</th>
                             <th>Accountant</th>
                             <th>Action</th>
                           </tr>

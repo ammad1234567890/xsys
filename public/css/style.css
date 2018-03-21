@@ -35,6 +35,16 @@
     right: 90px; 
 }
 
+.modal-title {
+    margin: 0;
+    line-height: 1.6;
+    font-variant: small-caps;
+}
+
+.itrans{
+  background-color: transparent;
+}
+
 
 
 

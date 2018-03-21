@@ -16,23 +16,21 @@
                     <div class="col-md-12">
                         <table class="table table-striped table-bordered table-hover">
                             <thead>
-                                <tr >
-                                    <th>Order No</th>
+                                <tr>
+                                    <th>S.No</th>
                                     <th>Date</th>
                                     <th>Invoice NO</th>
                                     <th>Total Amount</th>
-                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr v-for="(invoice, index) in all_invoice">
                                     <td>{{++index}}</td>
-                                    <td>{{invoice.created_at}}</td>
-                                    <td>{{invoice.id}}</td>
-                                    <td>{{invoice.total_amount}}</td>
-                                    <td>Approved</td>
-                                    <td><button class="btn btn-github btn-xs">Print</button></td>
+                                    <td>{{invoice.created_at  | date_time }}</td>
+                                    <td>KS{{invoice.id<10?'00'+invoice.id:invoice.id<=99?'0'+invoice.id:invoice.id}}</td>
+                                    <td>{{invoice.total_amount | currency('')}}</td>
+                                    <td><button class="btn btn-github btn-xs">Details</button><button class="btn btn-github btn-xs">Print</button></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -48,7 +46,8 @@
             return {
                 message: '',
                 all_invoice: [],
-
+                moment:'',
+                date_time:''
 
 
             }
@@ -60,6 +59,14 @@
             this.init();
 
         },
+        filters: {
+            moment: function (date) {
+                return moment(date).format('DD-MM-YYYY');
+            },
+            date_time: function (date) {
+                return moment(date).format('DD-MM-YYYY h:m a');
+            }
+        },
         methods: {
             init: function () {
                 this.get_all_invoice();
@@ -70,9 +77,7 @@
                     this.all_invoice = response.data;
                  //  console.log(this.all_invoice);
                 });
-            },
-
-
+            }
         }
     }
 </script>

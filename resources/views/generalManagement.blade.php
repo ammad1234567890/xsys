@@ -9,6 +9,7 @@
                           <h3 class="card-title pad-bot"><i class="material-icons">devices_other</i> <small>OTHERS</small> </h3>
                     </div>
                 </div>
+                <div class="col-md-12">
                     <div>
                         @if(in_array('city', $permissions))
                             <city-component></city-component>
@@ -54,6 +55,7 @@
                             <warehousetype-component></warehousetype-component>
                         @endif
                     </div>
+                </div>
             </div>
         </div>
     </div>

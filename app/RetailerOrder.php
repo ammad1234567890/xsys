@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class RetailerOrder extends Model
 {
-   protected $fillable=['id','retailer_id','sales_officer_id','outlet_id','order_date','expected_delivery_date','total_cost','remaining_payment','is_account_clearance','warehouse_id','is_deleted','retailer_order_status_id','created_by','updated_by'];
+   protected $fillable=['id','order_no','retailer_id','sales_officer_id','outlet_id','order_date','total_cost','remaining_payment','is_account_clearance','warehouse_id','is_deleted','retailer_order_status_id','created_by','updated_by'];
    protected $table="tbl_retailer_order";
 
     public function retailer()
@@ -32,6 +32,10 @@ class RetailerOrder extends Model
     }
     public function updated_user(){
         return $this->belongsTo("App\User",'updated_by');
+    }
+
+    public function sales_officer(){
+        return $this->belongsTo("App\Staff",'sales_officer_id');
     }
 
      public function payment_type(){

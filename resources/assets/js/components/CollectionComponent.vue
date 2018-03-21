@@ -34,20 +34,18 @@
                                             </div>
                                             <div class="col-md-6 col-sm-3">
                                                 <div class="form-group">
-                                                    <div class="select">
 
                                                         <input type="text" class="form-control" v-model="new_payment.selected_invoice_retailer" placeholder="Retailer Name" required/>
 
-                                                    </div>
+
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6 col-sm-3">
                                                 <div class="form-group">
-                                                    <div class="select">
 
                                                         <input type="text" class="form-control" v-model="new_payment.selected_invoice_retailer_outlet" placeholder="Retailer Outlet" required/>
-                                                    </div>
+ 
                                                 </div>
                                             </div>
 

@@ -58,7 +58,7 @@
                                 <thead>
                                 <tr>
                                     <th>S.No</th>
-                                    <th>Category Name</th>
+                                    <th>Title</th>
                                     <th>Description</th>
                                     <th class="col-md-3 text-center">Action</th>
                                 </tr>
@@ -247,7 +247,7 @@
             responsive: true,
             language: {
                 search: "_INPUT_",
-                searchPlaceholder: "Search records",
+                searchPlaceholder: "Search here",
             }
             });
         },5000);

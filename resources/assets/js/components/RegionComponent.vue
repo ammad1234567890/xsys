@@ -1,41 +1,55 @@
 <template>
-    <div class="col-md-4 panel panel-default">
+  <div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h2 class="panel-title">Create New Locality</h2>
+        </div>
       <div class="panel-body">
-      <form @submit="createRegion">
-        <div class="form-group">
-          <label for="Region">Locality</label>
-          <input name="region" type="text" class="form-control" v-validate="'required|regex:^[a-zA-Z]+$'" v-model="regionData.region">
-          <span class="text-danger" v-show="errors.has('region')">
-            {{errors.first('region')}}
-          </span>
-        </div>
-        <div class="form-group">
-          <input v-if="editing==false" type="submit" class="btn btn-default col-md-6" value="Create Locality">
-          <button v-if="editing==true" @click="saveEditing" class="btn btn-default col-md-6">Save Editing</button>
-          <button v-if="editing==false" @click="showRegions" class="btn btn-default col-md-6" data-toggle="collapse" data-target="#regions">Locality</button>
-          <button v-if="editing==true" @click="cancelEditing" class="btn btn-default col-md-6">Cancel Editing</button>
-        </div>
-      </form>
-      <div id="regions" class="collapse panel panel-default col-md-12">
-        <table class="table table-bordered col-md-12">
-            <thead>
-              <tr>
-                <th>S.No</th>
-                <th>Regions</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(region,index) in allRegions">
-                <td>{{index +1 }}</td>
-                <td>{{region.name}}</td>
-                <td><button class="btn btn-default" @click="edit(index,region.id)">Edit</button></td>
-              </tr>
-            </tbody>
-        </table>
+          <form @submit="createRegion">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="City" >Locality</label>
+                  <input name="region" type="text" class="form-control" v-validate="'required|regex:^[a-zA-Z]+$'" v-model="regionData.region">
+                  <span class="text-danger" v-show="errors.has('region')">
+                    {{errors.first('region')}}
+                  </span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                  <input v-if="editing==false" type="submit" class="btn btn-tumblr" value="Create Locality">
+                  <button v-if="editing==true" @click="saveEditing" class="btn btn-tumblr">Save Editing</button>
+                  <button v-if="editing==false" @click="showRegions" class="btn btn-github" data-toggle="collapse" data-target="#regions">Show Locality</button>
+                  <button v-if="editing==true" @click="cancelEditing" class="btn btn-pinterest">Cancel Editing</button>
+                </div>
+            </div>
+          </form>
       </div>
+        <div id="regions" class="collapse">
+            <div class="panel-heading">
+                <h2 class="panel-title">City List</h2>
+            </div>
+            <div class="panel-body">
+                <table class="table table-bordered col-md-12">
+                    <thead>
+                      <tr>
+                        <th>S.No</th>
+                        <th>Regions</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="(region,index) in allRegions">
+                        <td>{{index +1 }}</td>
+                        <td>{{region.name}}</td>
+                        <td><button class="btn btn-info btn-sm" @click="edit(index,region.id)">Edit</button></td>
+                      </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-    </div>
+</div>
 </template>
 
 <script>

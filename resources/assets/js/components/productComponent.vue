@@ -36,7 +36,7 @@
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label for="releaseDate">Estimated Release  Date</label>
-                                    <date-picker name="releaseDate" v-validate="'required'" style="width:100%;" v-model="newProduct.releaseDate" type="date" format="dd-MM-yyyy" placeholder="dd-mm-yyyy" lang="en" required></date-picker>
+                                    <date-picker name="releaseDate" v-validate="'required'" style="width:100%;" v-model="releaseDate" type="date" format="dd-MM-yyyy" placeholder="dd-mm-yyyy" lang="en" required></date-picker>
                                     <!-- <input type="date"  name="releaseDate" v-validate="'required'" class=" form-control" placeholder="Release Date" v-model="newProduct.releaseDate" required > -->
                                                                       
                                     <span class="text-danger" v-show="errors.has('Release Date')">
@@ -53,13 +53,13 @@
                                 <div class="col-md-12">
                                     <div class="form-group col-md-3">
                                         <label for="colorName">Color</label>
-                                        <input type="text" v-validate="'required|regex:^[a-zA-Z ._]+$'" name="colorName" v-model="find.color" class="form-control" placeholder="Black, Golden.." required>
+                                        <input type="text" v-validate="'required|regex:^[a-zA-Z ._]+$'" name="colorName" v-model="find.color" class="form-control" placeholder="Color" required>
                                         <span class="text-danger" v-show="errors.has('colorName')">
                                               {{errors.first('colorName')}}
                                             </span>
                                     </div>
                                     <div class="form-group col-md-2">
-                                        <label for="price">Price</label>
+                                        <label for="price">Price (Rs) </label>
                                         <input type="number" name="Price" v-validate="'required|regex:^[0-9]+$|min_value:1'" v-model="find.price" class="form-control" placeholder="Price" required>
                                         <span class="text-danger" v-show="errors.has('Price')">
                                               {{errors.first('Price')}}
@@ -74,7 +74,7 @@
                                     </div>
                                     <div class="form-group col-md-3">
                                         <span class="btn btn-round btn-file">
-                                            <span class="fileinput-new">Select image</span>
+                                            <span class="fileinput-new">Select image(s)</span>
                                                 <input type="file" class="form-control" ref="fileupload" @change="imageChange(index)">
                                             </span>
                                     </div>
@@ -86,7 +86,7 @@
                             <div class="row" v-if="edit==true">
                                 <div class="col-md-12">
                                     <div v-for="(image, i) in find.product_images">
-                                        <img v-if="localImage==false" v-bind:src="'/product_img/'+image.image" class="col-md-1 img-thumbnail" height="auto" @click="deleteImage(index,i)" />
+                                        <img v-if="localImage==false" v-bind:src="'./product_img/'+image.image" class="col-md-1 img-thumbnail" height="auto" @click="deleteImage(index,i)" />
                                         <img v-if="localImage==true" v-bind:src="image" class="col-md-1 img-thumbnail" height="auto" @click="deleteImage(index,i)" />
                                     </div>
                                 </div>
@@ -119,8 +119,8 @@
                     <table id="cateprotable" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                         <thead>
                         <tr>
-                            <th>Product Name</th>
-                            <th>Product Category</th>
+                            <th>Model</th>
+                            <th>Category</th>
                             <th>Release Date</th>
                             <th>Details</th>
                             <th>Action</th>
@@ -278,7 +278,10 @@
             });
         },
         watch:{
-            
+            releaseDate:function(){
+                this.newProduct.releaseDate=moment(this.releaseDate).format('YYYY-MM-DD');
+            console.log(this.newProduct.releaseDate);
+            },
         },
         methods:{
             imageChange(index){
@@ -421,7 +424,7 @@
             responsive: true,
             language: {
                 search: "_INPUT_",
-                searchPlaceholder: "Search records",
+                searchPlaceholder: "Search here",
             }
             });
         },5000); 

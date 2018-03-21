@@ -3,25 +3,33 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Assign Role</div>
+                    <div class="panel-heading">
+                      <h2 class="panel-title">Assign Role</h2>
+                    </div>
 
                     <div class="panel-body">
                         <form>
-                            <div class="form-group col-md-6">
-                                <label for="roleName">Users</label>
-                                <!-- <select v-model="newUserRole.user" class="form-control" name="" required>
-                                  <option v-for="user in Users"  v-bind:value="user.id">{{user.name}}</option>
-                                </select> -->
-                                <input type="text" name="user" v-model="newUserRole.user" class="form-control" placeholder="User Name" required>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="roleName">Users</label>
+                                    <!-- <select v-model="newUserRole.user" class="form-control" name="" required>
+                                      <option v-for="user in Users"  v-bind:value="user.id">{{user.name}}</option>
+                                    </select> -->
+                                    <input type="text" name="user" v-model="newUserRole.user" class="form-control" placeholder="User Name" required>
+                                </div>
                             </div>
-
-                            <div class="form-group col-md-6">
-                                <label for="permission">Role</label>
-                                <v-select multiple label="role" v-model="newUserRole.roles" :options="Roles" required></v-select>
+                            
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="permission">Role</label>
+                                    <v-select multiple label="role" v-model="newUserRole.roles" :options="Roles" required></v-select>
+                                </div>
                             </div>
-                            <div class="form-group col-md-12">
-                                <button  class="btn btn-default" v-on:click="saveEditing" v-if="editing==1">Save Editing</button>
-                                <button  class="btn btn-default" v-on:click="cancelEding" v-if="editing==1">Cancel Editing</button>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <button  class="btn btn-default" v-on:click="saveEditing" v-if="editing==1">Save Editing</button>
+                                    <button  class="btn btn-default" v-on:click="cancelEding" v-if="editing==1">Cancel Editing</button>
+                                </div>
                             </div>
                         </form>
                     </div>
@@ -32,7 +40,9 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Assigned Roles</div>
+                    <div class="panel-heading">
+                        <h2 class="panel-title">Assigned Roles</h2>
+                    </div>
                     <div class="panel-body">
                         <table class="table table-bordered">
                             <thead>
@@ -52,7 +62,7 @@
                                 </td>
                                 <td>
                                     <div class="dropdown">
-                                        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Action
+                                        <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown">Action
                                             <span class="caret"></span></button>
                                         <ul class="dropdown-menu">
                                             <li><a href="#" v-on:click="edit(index)">Edit</a></li>

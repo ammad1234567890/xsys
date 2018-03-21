@@ -1,44 +1,59 @@
 <template>
-    <div class="col-md-4 panel panel-default">
-      <div class="panel-body">
-        <div class="alert alert-success"  v-if="message">
-          <strong>{{message}}</strong>
+<div>
+    <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2 class="panel-title">Create New Payment Type</h2>
+            </div>
+        <div class="panel-body">
+            <div class="alert alert-success"  v-if="message">
+              <strong>{{message}}</strong>
+            </div>
+            
+              <form @submit="createPaymentType">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="PaymentType">Payment Type</label>
+                          <input name="PaymentType" type="text" class="form-control" v-validate="'required|regex:^[a-zA-Z]+$'" v-model="payment_data.type">
+                          <span class="text-danger" v-show="errors.has('PaymentType')">
+                            {{errors.first('PaymentType')}}
+                          </span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                          <input v-if="editing==false" type="submit" class="btn btn-tumblr" value="Create Payment Method">
+                          <button v-if="editing==true" @click="saveEditing" class="btn btn-tumblr">Save Editing</button>
+                          <button v-if="editing==false" @click="showStaffType" class="btn btn-github" data-toggle="collapse" data-target="#paymentType">Show Payment Methods</button>
+                          <button v-if="editing==true" @click="cancelEditing" class="btn btn-pinterest">Cancel Editing</button>
+                        </div>
+                    </div>
+              </form>
+        </div>              
+        <div id="paymentType" class="collapse">
+            <div class="panel-heading">
+                <h2 class="panel-title">Payment Type List</h2>
+            </div>
+            <div class="panel-body">
+                <table class="table table-bordered col-md-12">
+                    <thead>
+                      <tr>
+                        <th>S.No</th>
+                        <th>Payment Type</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="(payment_method,index) in all_payment_methods">
+                        <td>{{index +1 }}</td>
+                        <td>{{payment_method.type}}</td>
+                        <td><button class="btn btn-info btn-sm" @click="edit(index,payment_method.id)">Edit</button></td>
+                      </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-      <form @submit="createPaymentType">
-        <div class="form-group">
-          <label for="PaymentType">Payment Type</label>
-          <input name="PaymentType" type="text" class="form-control" v-validate="'required|regex:^[a-zA-Z]+$'" v-model="payment_data.type">
-          <span class="text-danger" v-show="errors.has('PaymentType')">
-            {{errors.first('PaymentType')}}
-          </span>
-        </div>
-        <div class="form-group">
-          <input v-if="editing==false" type="submit" class="btn btn-default col-md-6" value="Create Method">
-          <button v-if="editing==true" @click="saveEditing" class="btn btn-default col-md-6">Save Editing</button>
-          <button v-if="editing==false" @click="showStaffType" class="btn btn-default col-md-6" data-toggle="collapse" data-target="#paymentType">Payment Methods</button>
-          <button v-if="editing==true" @click="cancelEditing" class="btn btn-default col-md-6">Cancel Editing</button>
-        </div>
-      </form>
-      <div id="paymentType" class="collapse panel panel-default col-md-12">
-        <table class="table table-bordered col-md-12">
-            <thead>
-              <tr>
-                <th>S.No</th>
-                <th>Payment Type</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(payment_method,index) in all_payment_methods">
-                <td>{{index +1 }}</td>
-                <td>{{payment_method.type}}</td>
-                <td><button class="btn btn-default" @click="edit(index,payment_method.id)">Edit</button></td>
-              </tr>
-            </tbody>
-        </table>
-      </div>
     </div>
-    </div>
+</div>
 </template>
 
 <script>

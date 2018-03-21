@@ -3,13 +3,13 @@
 <div class="row">
     <div class="card headcolor">
         <div class="card-header">
-                <h3 class="card-title pad-bot"><i class="material-icons">shopping_cart</i> <small>ORDER RECIEVING</small> </h3>
+                <h3 class="card-title pad-bot"><i class="material-icons">shopping_cart</i> <small>NEW SHIPMENT</small> </h3>
         </div>
     </div>
     <div class="col-md-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h2 class="panel-title">Recieving New Order</h2>
+                <h2 class="panel-title">Purchase Order Details </h2>
             </div>
             <div class="alert alert-success"  v-if="message">
                 <strong>{{message}}</strong>
@@ -18,7 +18,7 @@
                 <form @submit.prevent="recieve_order_submit">
                     <div class="row">
                         <div class="col-md-6 form-group">
-                            <label for="select_order_no">Select Order No</label>
+                            <label for="select_order_no">Purchase Order</label>
                             <select class="form-control" v-model="new_recieving.order_id" @change="order_change" required>
                                 <option value="">Select</option>
                                 <option v-for="order in all_orders" v-bind:value="order.id">
@@ -27,12 +27,14 @@
                             </select>
                         </div>
 
-                        <div class="col-md-6 form-group">
-                            <label for="select_collected_by">Collected By</label>
-                            <select class="form-control" v-model="new_recieving.collected_id" required>
-                                <option value="">Select</option>
-                                <option v-for="staff in all_staff" v-bind:value="staff.id">{{staff.name}}</option>
-                            </select>
+                        <div class="col-md-6">
+                                <label for="select_collected_by">Transit Status</label>
+                                <select class="form-control" v-model="new_recieving.recieve_status_id" required>
+                                    <option value="">Select</option>
+                                    <option v-for="status in all_status" v-bind:value="status.id">
+                                        {{status.status}}
+                                    </option>
+                                </select>
                         </div>
                     </div>
 
@@ -54,14 +56,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6" style="margin-top: 12px;">
-                                <label for="select_collected_by">Recieved Location Status</label>
-                                <select class="form-control" v-model="new_recieving.recieve_status_id" required>
-                                    <option value="">Select</option>
-                                    <option v-for="status in all_status" v-bind:value="status.id">
-                                        {{status.status}}
-                                    </option>
-                                </select>
+                        <div class="col-md-6 form-group" style="margin-top: 12px;">
+                            <label for="select_collected_by">Received  By</label>
+                            <select class="form-control" v-model="new_recieving.collected_id" required>
+                                <option value="">Select</option>
+                                <option v-for="staff in all_staff" v-bind:value="staff.id">{{staff.name}}</option>
+                            </select>
                         </div>
                     </div>
 
@@ -69,7 +69,7 @@
                         <div class="form-section" style="border-left:0px; border-right: 0px; border-bottom:0px; padding-left:0px; padding-right:0px;">
 
                             <div class="col-md-6 form-group">
-                                <label for="select_products">Select Order Products</label>
+                                <label for="select_products">Model</label>
                                 <select class="form-control" v-model="selected_order_product_index[index].index_no" @change="change_product(index)" required>
                                     <option value="-1" selected="selected">Select</option>
                                     <option v-for="(products, index) in all_order_products"  v-bind:value="index">{{products.product_color.product.name}} ({{products.product_color.color}}) </option>
@@ -77,7 +77,7 @@
                             </div>
                             <div class="col-md-6 form-group">
                                 <label for="product_quanity">Quantity</label>
-                                <input type="number" class="form-control" name="product_qty" v-model="new_recieving.order_products[index].quantity" :placeholder="'Total Quantity '+new_recieving.order_products[index].max_qty" v-validate="{ max_value: new_recieving.order_products[index].max_qty }"  @change="qty_change(index)" required>
+                                <input type="number" class="form-control" name="product_qty" v-model="new_recieving.order_products[index].quantity" :placeholder="'Quantity '+new_recieving.order_products[index].max_qty" v-validate="{ max_value: new_recieving.order_products[index].max_qty }"  @change="qty_change(index)" required>
                                 <span class="text-danger" v-show="errors.has('product_qty')">
                                   {{errors.first('product_qty')}}
                                 </span>

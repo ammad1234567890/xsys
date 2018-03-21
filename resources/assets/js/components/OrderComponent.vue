@@ -3,13 +3,13 @@
     <div class="row">
         <div class="card headcolor">
             <div class="card-header">
-                    <h3 class="card-title pad-bot"><i class="material-icons">shopping_cart</i> <small>CREATE NEW MANUFACTURER ORDER</small> </h3>
+                    <h3 class="card-title pad-bot"><i class="material-icons">shopping_cart</i> <small>Purchase Order</small> </h3>
             </div>
         </div>
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h2 class="panel-title">Create Manufacturer Order</h2>
+                    <h2 class="panel-title">Create New Order</h2>
                 </div>
                 <div class="alert alert-success"  v-if="message">
                     <strong>{{message}}</strong>
@@ -26,7 +26,7 @@
                             <div  v-for="(find, index) in new_order.products">
 
                                 <div class="col-md-6 form-group">
-                                    <label for="select_product">Select Product</label>
+                                    <label for="select_product">Select Model</label>
                                     <select name="select_product" class="form-control" v-model="find.product_id" @change="change_product(index, find.product_id)" required>
                                         <option value="" selected>Select</option>
                                         <option v-for="(product, index) in allProducts"  v-bind:value="product.id">{{product.name}}</option>
@@ -34,14 +34,14 @@
                                 </div>
 
                                 <div class="col-md-6 form-group">
-                                    <label for="select_product_color">Select Product Color</label>
+                                    <label for="select_product_color">Color</label>
                                     <select class="form-control" v-model="new_order.products[index].product_color_id"  @change="myfunc(index)" required>
                                         <option value="" selected>Select</option>
                                         <option v-for="(product_color, index) in new_order.products[index].product_color"  v-bind:value="product_color.id">{{product_color.color}}</option>
                                     </select>
                                 </div>
                                 <div class="col-md-6 form-group">
-                                    <label for="cost_per_set">Order Unit Price</label>
+                                    <label for="cost_per_set">Unit Price</label>
                                     <input type="text" class="form-control" v-model="new_order.products[index].cost_per_set" placeholder="Cost" required readonly>
                                 </div>
 

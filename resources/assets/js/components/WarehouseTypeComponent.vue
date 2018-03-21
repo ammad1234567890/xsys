@@ -1,41 +1,57 @@
 <template>
-    <div class="col-md-4 panel panel-default">
-      <div class="panel-body">
-      <form @submit="createWarehouseType">
-        <div class="form-group">
-          <label for="WarehouseType">Warehouse Type</label>
-          <input name="warehouseType" type="text" class="form-control" v-validate="'required|regex:^[a-zA-Z ._-]+$'" v-model="warehouseTypeData.warehouseType">
-          <span class="text-danger" v-show="errors.has('warehouseType')">
-            {{errors.first('warehouseType')}}
-          </span>
+<div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h2 class="panel-title">Create New City</h2>
         </div>
-        <div class="form-group">
-          <input v-if="editing==false" type="submit" class="btn btn-default col-md-6" value="Create Warehouse Type">
-          <button v-if="editing==true" @click="saveEditing" class="btn btn-default col-md-6">Save Editing</button>
-          <button v-if="editing==false" @click="showWarehouseType" class="btn btn-default col-md-6" data-toggle="collapse" data-target="#warehouseType">Warehouse Type</button>
-          <button v-if="editing==true" @click="cancelEditing" class="btn btn-default col-md-6">Cancel Editing</button>
+
+        <div class="panel-body">
+            <form @submit="createWarehouseType">
+                <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="WarehouseType">Warehouse Type</label>
+                      <input name="warehouseType" type="text" class="form-control" v-validate="'required|regex:^[a-zA-Z ._-]+$'" v-model="warehouseTypeData.warehouseType">
+                      <span class="text-danger" v-show="errors.has('warehouseType')">
+                        {{errors.first('warehouseType')}}
+                      </span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                      <input v-if="editing==false" type="submit" class="btn btn-tumblr" value="Create Warehouse Type">
+                      <button v-if="editing==true" @click="saveEditing" class="btn btn-tumblr">Save Editing</button>
+                      <button v-if="editing==false" @click="showWarehouseType" class="btn btn-github" data-toggle="collapse" data-target="#warehouseType">Show Warehouse Type</button>
+                      <button v-if="editing==true" @click="cancelEditing" class="btn btn-pinterest">Cancel Editing</button>
+                    </div>
+                </div>
+            </form>
         </div>
-      </form>
-      <div id="warehouseType" class="collapse panel panel-default col-md-12">
-        <table class="table table-bordered col-md-12">
-            <thead>
-              <tr>
-                <th>S.No</th>
-                <th>Warehouse Type</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(warehouseType,index) in allWarehouseType">
-                <td>{{index +1 }}</td>
-                <td>{{warehouseType.type}}</td>
-                <td><button class="btn btn-default" @click="edit(index,warehouseType.id)">Edit</button></td>
-              </tr>
-            </tbody>
-        </table>
-      </div>
+
+        <div id="warehouseType" class="collapse">
+            <div class="panel-heading">
+                <h2 class="panel-title">Warehouse Type List</h2>
+            </div>
+            <div class="panel-body">
+                <table class="table table-bordered col-md-12">
+                    <thead>
+                      <tr>
+                        <th>S.No</th>
+                        <th>Warehouse Type</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="(warehouseType,index) in allWarehouseType">
+                        <td>{{index +1 }}</td>
+                        <td>{{warehouseType.type}}</td>
+                        <td><button class="btn btn-info btn-sm" @click="edit(index,warehouseType.id)">Edit</button></td>
+                      </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-    </div>
+</div>
 </template>
 
 <script>

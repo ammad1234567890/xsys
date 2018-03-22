@@ -1,37 +1,37 @@
 <template>
     <div>
         <div class="row">
-                <div class="card headcolor">
-                    <div class="card-header">
-                          <h3 class="card-title pad-bot"><i class="material-icons">description</i> <small>INVOICE LIST</small> </h3>
-                    </div>
+            <div class="card headcolor">
+                <div class="card-header">
+                    <h3 class="card-title pad-bot"><i class="material-icons">description</i> <small>INVOICE LIST</small> </h3>
                 </div>
+            </div>
         </div>
         <div class="row">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h5>Invoices</h5> 
+                    <h5>Invoices</h5>
                 </div>
                 <div class="panel-body">
                     <div class="col-md-12">
                         <table class="table table-striped table-bordered table-hover">
                             <thead>
-                                <tr>
-                                    <th>S.No</th>
-                                    <th>Date</th>
-                                    <th>Invoice NO</th>
-                                    <th>Total Amount</th>
-                                    <th>Action</th>
-                                </tr>
+                            <tr>
+                                <th>S.No</th>
+                                <th>Date</th>
+                                <th>Invoice NO</th>
+                                <th>Total Amount</th>
+                                <th>Action</th>
+                            </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="(invoice, index) in all_invoice">
-                                    <td>{{++index}}</td>
-                                    <td>{{invoice.created_at  | date_time }}</td>
-                                    <td>KS{{invoice.id<10?'00'+invoice.id:invoice.id<=99?'0'+invoice.id:invoice.id}}</td>
-                                    <td>{{invoice.total_amount | currency('')}}</td>
-                                    <td><button class="btn btn-github btn-xs">Details</button><button class="btn btn-github btn-xs">Print</button></td>
-                                </tr>
+                            <tr v-for="(invoice, index) in all_invoice">
+                                <td>{{s_no-index}}</td>
+                                <td>{{invoice.created_at  | date_time }}</td>
+                                <td>{{invoice.invoice_no}}</td>
+                                <td>{{invoice.total_amount | currency('')}}</td>
+                                <td><button class="btn btn-github btn-xs">Details</button><button class="btn btn-github btn-xs">Print</button></td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
@@ -47,7 +47,9 @@
                 message: '',
                 all_invoice: [],
                 moment:'',
-                date_time:''
+                date_time:'',
+                s_no:0,
+
 
 
             }
@@ -75,7 +77,8 @@
             get_all_invoice: function () {
                 axios.get('../invoice/get_invoice').then((response) => {
                     this.all_invoice = response.data;
-                 //  console.log(this.all_invoice);
+                    this.s_no=this.all_invoice.length;
+                    //  console.log(this.all_invoice);
                 });
             }
         }

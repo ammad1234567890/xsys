@@ -7,7 +7,7 @@
                         <div class="col-md-12">
                             <div class="col-md-12"><label><span class="h1">Xcell</span></label></div>
                             <br><br><br>
-                            <div class="col-md-6"><label><b>Order</b> :</label> <input type="text" :value="order_id_pattern" class="bordernone"/></div>
+                            <div class="col-md-6"><label><b>Order NO</b> :</label> <input type="text" :value="order_no" class="bordernone"/></div>
                             <div class="col-md-6"><label><b>Date</b> :</label> {{ current_date }}</div>
                             <div class="col-md-6"><label><b>Due Date</b> : {{ duedate }}</label></div>
                             <div class="col-md-12">
@@ -16,12 +16,13 @@
                             <div class="col-md-6"><label><b>Outlet Name</b> :</label>
                                 {{ outlet_name}}
                             </div>
-                            <div class="col-md-6"><label><b>Outlet Address</b> : {{ outlet_address}}</label>
-                            </div>
+
                             <div class="col-md-6"><label><b>Payment type</b> : </label>
                                 <select id="payment_type_id">
-                                    <option v-for="(type, index) in all_payment_type"  v-bind:value="type.id">{{type.type}}</option>
+                                    <option v-for="(type, index) in all_payment_type"  v-bind:value="type.id" :selected="type.id == 2">{{type.type}}</option>
                                 </select>
+                            </div>
+                            <div class="col-md-6"><label><b>Outlet Address</b> : {{ outlet_address}}</label>
                             </div>
                             <div class="col-md-6"><label><b>Previous Balance</b> : {{previous_balance>0?previous_balance:0 | currency('')}}</label></div>
                         </div>
@@ -33,7 +34,7 @@
                                 <table class="table table-bordered">
                                     <thead>
                                     <tr>
-                                        <th>Order No</th>
+                                        <th>S.No</th>
                                         <th>Model Name</th>
                                         <th>Colour</th>
                                         <th>Unit Cost</th>
@@ -48,12 +49,14 @@
                                     </thead>
                                     <tbody>
                                     <tr v-for="(order, index) in all_orders.order_products"  v-bind:id="'row'+index">
-                                        <td><input type="text" class="bordernone" v-bind:data-id="`order_id_`+index" :value="order.id" style="width: 20px;"/></td>
+                                        <td><input type="text" class="bordernone " :value="s_no+index" style="width: 20px;"/>
+                                            <input type="text" class="bordernone hidden" v-bind:data-id="`order_id_`+index" :value="order.id" style="width: 20px;"/>
+                                        </td>
                                         <td>{{order.product_color.product.name}}</td>
                                         <td><input type="text" class="width70px bordernone hide"
                                                    v-bind:data-id="`color`+index"
                                                    :value="order.product_color_id" />
-                                        {{order.product_color.color}}
+                                            {{order.product_color.color}}
                                         </td>
                                         <td>
                                             <input type="text" class="width60px bordernone" :value="order.unit_price"
@@ -66,16 +69,21 @@
                                             <input type="text" class="hidden" :value="order.remaining_qty==0?order.product_qty:order.remaining_qty" v-bind:data-id="`qty_db`+index"/>
                                         </td>
                                         <td><input type="text"  v-bind:data-id="`discount_amount`+order.id" :value="order.product_color.discount"
-                                                   v-on:keyup="discount($event.target.value,order.id)" class=" width60px bordernone" maxlength="5" readonly/></td>
+                                                   v-on:keyup="discount($event.target.value,order.id)" class=" width60px bordernone hidden" maxlength="5" readonly/>
+
+                                            <input type="text"   :value="order.product_color.discount+'%'"
+                                                    class=" width60px bordernone"  readonly/>
+
+                                        </td>
                                         <td>
                                             <input type="text" value="15" min="1" class="size90 bordernone"
-                                                   :value="order.unit_price*(order.remaining_qty==0?order.product_qty:order.remaining_qty)  | currency('')" readonly
+                                                   :value="order.unit_price*(order.remaining_qty==0?order.product_qty:order.remaining_qty)" readonly
                                                    v-bind:id="`amount`+order.id" v-bind:data-id="`amount`+index" >
                                         </td>
-                                       <td style="display:none;"><input type="text" class="size90" v-bind:data-id="`extra`+index" v-bind:id="`extra`+order.id" maxlength="3"/></td>
+                                        <td style="display:none;"><input type="text" class="size90" v-bind:data-id="`extra`+index" v-bind:id="`extra`+order.id" maxlength="3"/></td>
                                         <td>
-										<input type="text" v-bind:id="`finalprice`+order.id"
-                                                   :value="order.unit_price*(order.remaining_qty==0?order.product_qty:order.remaining_qty)-order.unit_price*(order.remaining_qty==0?order.product_qty:order.remaining_qty)/100*order.product_color.discount | currency('')"
+                                            <input type="text" v-bind:id="`finalprice`+order.id"
+                                                   :value="order.unit_price*(order.remaining_qty==0?order.product_qty:order.remaining_qty)-order.unit_price*(order.remaining_qty==0?order.product_qty:order.remaining_qty)/100*order.product_color.discount"
                                                    v-bind:data-id="`count`+index" readonly class="bordernone"/></td>
                                         <td><button type="button" class="btn btn-primary pull-right" v-on:click="remove(index)">X</button></td>
                                     </tr>
@@ -91,7 +99,7 @@
                                 <label><span class="h3">Sub Total : </span></label></div>
                             <div class="col-md-4">
                                 <span class="h3"> <input type="text" class="bordernone" id="subamount"
-                                                         :value="subamount | currency('')" readonly></span></div>
+                                                         :value="subamount" readonly></span></div>
                         </div>
                     </div>
                     <div class="row">
@@ -99,14 +107,14 @@
                             <div class="col-md-8">
                                 <label><span class="h3">Total : </span></label></div>
                             <div class="col-md-4">
-                                <span class="h3"> <input type="text" class="bordernone" id="finalamount"
-                                                         :value="totalamount | currency('')" readonly></span></div>
+                                <span class="h3"><input type="text" class="bordernone" id="finalamount"
+                                                         :value="totalamount" readonly></span></div>
                         </div>
                     </div>
                     <br><br>
                     <div class="row">
                         <div class="col-md-11 "><label>Remarks</label>
-                            <textarea class="form-control" id="decs">Invoice( Ks{{order_id}} )</textarea>
+                            <textarea class="form-control" id="decs"></textarea>
                         </div>
                     </div>
                     <div class="row">
@@ -157,6 +165,9 @@
                 remaining_qty:[],
                 order_id_pattern:'',
                 previous_balance:'',
+                currency_type:'Rs.',
+                order_no:'',
+                s_no:1,
 
 
 
@@ -175,25 +186,25 @@
 
             },
             get_all_orders: function () {
-              //  console.log(window.location.href.substr(45));
-               // console.log(window.location.href.substr(74));
-                    axios.get('../../retailer_order/get_order/' + window.location.href.substr(74)).then((response) => {
+                //  console.log(window.location.href.substr(45));
+                // console.log(window.location.href.substr(74));
+                axios.get('../../retailer_order/get_order/' + window.location.href.substr(74)).then((response) => {
 
                     this.all_payment_type=response.data.payment_type;
                     this.all_discount_type=response.data.discount_type;
                     this.all_orders = response.data.get_all_order;
-
                     this.order_id=this.all_orders.id;
                     this.retailer_name=this.all_orders.retailer.name;
                     this.outlet_name=this.all_orders.retailer_outlet.name;
                     this.outlet_address=this.all_orders.retailer_outlet.address;
                     this.retailer_id=this.all_orders.retailer_outlet.id;
-                   // this.order_id_pattern=this.all_orders.retailer_outlet.city.name.substr(0,1)+this.all_orders.retailer_outlet.region.name.substr(0,1);
-                    this.order_id_pattern+="CR"+moment().format('MYY');
-                    this.order_id_pattern+= this.order_id<10?'00':this.order_id<=99?'0':'';
-                    this.order_id_pattern+=this.order_id;
-                    this.current_date = moment().format('DD-MMM-YYYY h:m a');
-                    this.duedate = moment().add(this.all_orders.retailer_outlet.credit_duration, 'days').format('DD-MMM-YYYY');
+                    this.order_no=this.all_orders.order_no;
+                    this.order_id_pattern+=moment().format('YY');
+                    this.order_id_pattern+=this.all_orders.retailer_outlet.city.name.substr(0,1)+this.all_orders.retailer_outlet.region.name.substr(0,1);
+                  //  this.order_id_pattern+= this.order_id<10?'0000':this.order_id<=99?'000':this.order_id<=999?'00':this.order_id<=9999?'0':'';
+                    //this.order_id_pattern+=this.order_id;
+                    this.current_date = moment().format('DD-M-YYYY h:m a');
+                    this.duedate = moment().add(this.all_orders.retailer_outlet.credit_duration, 'days').format('DD-M-YYYY');
                     var pro_qty=0;
                     for (var i = 0; i < this.all_orders.order_products.length; i++) {
                         this.countrow++;
@@ -204,8 +215,9 @@
                         this.totalamount+= this.all_orders.order_products[i].unit_price*pro_qty - this.all_orders.order_products[i].unit_price*pro_qty/100*this.all_orders.order_products[i].product_color.discount;
                         //console.log( this.subamount);
                     }
-                        this.retailer_balance();
-                 // console.log(this.countrow);
+                    this.retailer_balance();
+
+                     console.log(this.order_id_pattern);
                 });
 
             },
@@ -224,8 +236,8 @@
                 $("[data-id='amount" + id+ "']").val(0);
                 this.totalamount_method();
                 $("#row" + id).hide();
-             //   this.countrow--;
-              //  console.log(this.countrow);
+                //   this.countrow--;
+                //  console.log(this.countrow);
             },
             type_discount: function (id, value) {
 
@@ -234,7 +246,7 @@
                 this.totalamount_method();
                 $("#extra" + id).val("");
             }, totalamount_method: function () {
-               // console.log(this.countrow);
+                // console.log(this.countrow);
                 var cont = null;
                 var contsub = null;
                 for (var i = 0; i < this.countrow; i++) {
@@ -242,9 +254,9 @@
                     cont += parseFloat($(attid).val());
                     var attidsub = "[data-id='amount" + i + "']";
                     contsub += parseFloat($(attidsub).val());
-                   // console.log(contsub);
+                    // console.log(contsub);
                 }
-				
+
                 $('#finalamount').val(cont);
                 $('#subamount').val(contsub);
             },
@@ -253,26 +265,26 @@
                 var discount_id=$("#discount_id" + orderid).val();
 
 
-                    if (discount_id == 2) {
-                        $("#finalprice" + orderid).val(price - discount > 0 ? price - discount : 0);
-                    }
-                    if (discount_id == 1) {
-                        //var a=125*100/200;
-                        var percent = price / 100 * discount;
-                        $("#finalprice" + orderid).val(price > percent ? price - percent : 0);
-                    }
+                if (discount_id == 2) {
+                    $("#finalprice" + orderid).val(price - discount > 0 ? price - discount : 0);
+                }
+                if (discount_id == 1) {
+                    //var a=125*100/200;
+                    var percent = price / 100 * discount;
+                    $("#finalprice" + orderid).val(price > percent ? price - percent : 0);
+                }
 
 
                 this.totalamount_method()
             },
             qty: function (id, qty, unit) {
                 $("#amount" + id).val(unit * qty);
-             var discount_amount=$("[data-id='discount_amount" + id+ "']").val();
+                var discount_amount=$("[data-id='discount_amount" + id+ "']").val();
                 $("#finalprice" + id).val(unit * qty - unit * qty /100 * discount_amount);
                 this.totalamount_method();
-              //  $("[data-id='discount_amount" + id+ "']").val("");
-               $("#discount_id" + id).val([]);
-              //  $("#extra" + id).val("");
+                //  $("[data-id='discount_amount" + id+ "']").val("");
+                $("#discount_id" + id).val([]);
+                //  $("#extra" + id).val("");
             },
             add_invoice: function (e) {
 
@@ -311,9 +323,10 @@
                     'invoice_type_id': '1', 'total_amount': this.finalamount, 'decs': this.decs,
                     'colorid':this.colorid,'unitcost':this.unitcost,'quantity':this.quantity,
                     'amount':this.amount,'product_id': this.product_id,'qty_db':this.qty_db,
-                    'productamount':this.productamount,'extra':'','retailer_id':this.retailer_id
+                    'productamount':this.productamount,'extra':'','retailer_id':this.retailer_id,
+                    'order_id_pattern':this.order_id_pattern
                 };
-              //  console.log(this.invoice);
+                //  console.log(this.invoice);
 
                 axios.post('../../invoice/store', this.invoice).then((response) => {
                     console.log(response.data);

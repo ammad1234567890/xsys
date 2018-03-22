@@ -71,8 +71,8 @@
                                     <td>
                                         <div>
                                             <ul>
-                                                <a class="btn btn-tumblr btn-xs" href="#" v-on:click="edit(index)"> <i class="material-icons">mode_edit</i> Edit</a> 
-                                                <a class="btn btn-danger btn-xs" href="#" v-on:click="deleteCategory(category.id,index)"><i class="material-icons">clear</i> Delete</a>
+                                                <a class="btn btn-tumblr btn-xs" href="#" v-on:click="edit(index)"> Edit</a> 
+                                                <a class="btn btn-danger btn-xs" href="#" v-on:click="deleteCategory(category.id,index)"> Delete</a>
                                             </ul>
                                         </div>
                                     </td>

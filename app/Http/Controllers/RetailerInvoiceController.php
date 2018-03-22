@@ -34,21 +34,15 @@ use App\Ledger;
 
 class RetailerInvoiceController extends Controller {
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index() {
-
         return view('retailerInvoiceList');
     }
 
     public function get_invoice() {
         return $invoice_list = RetailerInvoice::with(
                         'payment_type'
-               // ,'RetailerOrder'
-               // ,'RetailerOrder.outlet'
+                        // ,'RetailerOrder'
+                        // ,'RetailerOrder.outlet'
                 )->orderBy('id', 'desc')->get();
     }
 
@@ -57,23 +51,13 @@ class RetailerInvoiceController extends Controller {
         return view('retailerInvoice', compact('order_id'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create() {
         
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request) {
         $product[] = null;
+      //  return $this->make_number($invoice_id);
         // return $request;
         DB::beginTransaction();
         $staff_id = Auth::user()->staff_id;
@@ -88,7 +72,7 @@ class RetailerInvoiceController extends Controller {
                     'created_by' => Auth::user()->id,
         ]);
         $invoice_id = $invoice->id;
-
+        RetailerInvoice::where(['id' => $invoice_id])->update(['invoice_no' => $request->order_id_pattern.$this->make_number($invoice_id)]);
         for ($i = 0; $i < count($request->amount); $i++) {
             if ($request->productamount[$i] != 0) {
                 $product[$i]['invoice_id'] = $invoice_id;
@@ -101,8 +85,8 @@ class RetailerInvoiceController extends Controller {
                 $product[$i]['created_by'] = Auth::user()->id;
                 if ($request->qty_db[$i] <= $request->quantity[$i]) {
                     RetailerOrderProduct::where(['id' => $request->product_id[$i]])->update(['is_delivered' => 1, 'remaining_qty' => 0]);
-                    $count_status=RetailerOrderProduct::where(['id' => $request->product_id[$i],'is_delivered' => 0])->count();
-                    if($count_status==0){
+                    $count_status = RetailerOrderProduct::where(['id' => $request->product_id[$i], 'is_delivered' => 0])->count();
+                    if ($count_status == 0) {
                         RetailerOrder::where(['id' => $request->order_id])->update(['is_delivered' => 1]);
                     }
                 } else {
@@ -111,7 +95,6 @@ class RetailerInvoiceController extends Controller {
             }
         }
         RetailerInvoice_Products::insert($product);
-        //DB::table('tbl_invoice_products')->insert($product);
 
         WarehouseIssue::create([
             'invoice_id' => $invoice_id,
@@ -119,52 +102,43 @@ class RetailerInvoiceController extends Controller {
             'created_by' => Auth::user()->id
         ]);
         Ledger::create(['invoice_id' => $invoice_id, 'TransDate' => date('Y-m-d H:i:s'),
-            'description' => $request->decs, 'Credit' => $request->total_amount,
+            'description' => "invoice (".$request->order_id_pattern.$this->make_number($invoice_id).")", 'Credit' => $request->total_amount,
             'retailer_id' => $request->retailer_id]);
-        //      DB::table('tbl_ledger')->insert(['invoice_id'=>$invoice_id,'transDate'=>date('Y-m-d'),'description'=>$invoice_id.$request->decs,'credit'=>$request->total_amount,'retailer_id'=>$request->retailer_id]);
-        //     RetailerOrderProduct::whereIn('id',  $request->product_id)->update(['is_delivered' => 1]);
         DB::commit();
 
         return 201;
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\RetailerInvoice  $retailerInvoice
-     * @return \Illuminate\Http\Response
-     */
+    public function make_number($order_id) {
+        $order_zeros = "";
+        if ($order_id <= 9) {
+            $order_zeros = "00000";
+        } elseif ($order_id <= 99) {
+            $order_zeros = "0000";
+        } elseif ($order_id <= 1000) {
+            $order_zeros = "000";
+        }
+         elseif ($order_id <= 10000) {
+            $order_zeros = "00";
+        }
+         elseif ($order_id <= 100000) {
+            $order_zeros = "0";
+        }
+        return $order_zeros.$order_id;
+    }
+
     public function show(RetailerInvoice $retailerInvoice) {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\RetailerInvoice  $retailerInvoice
-     * @return \Illuminate\Http\Response
-     */
     public function edit(RetailerInvoice $retailerInvoice) {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\RetailerInvoice  $retailerInvoice
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, RetailerInvoice $retailerInvoice) {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\RetailerInvoice  $retailerInvoice
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(RetailerInvoice $retailerInvoice) {
         //
     }

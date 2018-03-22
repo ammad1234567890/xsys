@@ -43,7 +43,7 @@
                         <div class="col-md-6">
                             <div class="row">
                                 <div class="col-md-3">
-                                    <div class="checkbox">
+                                    <div class="checkbox" style="padding-left: 5px;">
                                         <label>
                                             <input type="checkbox" v-bind:value="new_recieving.qa_check" id="checkboxFiveInput" name="" @change="change_qa_check"> QA Check
                                         </label>
@@ -56,7 +56,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6 form-group" style="margin-top: 12px;">
+                        <div class="col-md-6 form-group" style="margin-top: 32px;">
                             <label for="select_collected_by">Received  By</label>
                             <select class="form-control" v-model="new_recieving.collected_id" required>
                                 <option value="">Select</option>

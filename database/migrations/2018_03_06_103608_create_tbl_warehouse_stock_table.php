@@ -19,6 +19,7 @@ class CreateTblWarehouseStockTable extends Migration
             $table->unsignedInteger('warehouse_id')->index();
             $table->unsignedInteger('product_color_id')->index();
             $table->unsignedInteger('product_qty');
+          //  $table->string('SKU')->index();
             $table->foreign('warehouse_id')->references('id')->on('tbl_warehouse')->onDelete('cascade');
             $table->foreign('product_color_id')->references('id')->on('tbl_product_color')->onDelete('cascade');
             $table->unsignedTinyInteger('is_deleted')->default(0);//0 = active | 1=deleted

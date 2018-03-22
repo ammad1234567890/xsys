@@ -87438,64 +87438,74 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    components: { vSelect: __WEBPACK_IMPORTED_MODULE_0_vue_select___default.a },
-    data: function data() {
-        return {
-            showSummary: false,
-            allStock: [],
-            allWarehouses: [],
-            searchedWarehouse: null,
-            reportTypes: [{ 'reportType': 'Summary' }, { 'reportType': 'Detail' }],
-            selectedReportType: ''
-        };
-    },
-    mounted: function mounted() {
-        console.log('Component mounted.');
-    },
-    created: function created() {
-        var _this = this;
+  components: { vSelect: __WEBPACK_IMPORTED_MODULE_0_vue_select___default.a },
+  data: function data() {
+    return {
+      showSummary: false,
+      allStock: [],
+      allWarehouses: [],
+      showDetails: [],
+      searchedWarehouse: null,
+      reportTypes: [{ 'reportType': 'Summary' }, { 'reportType': 'Detail' }],
+      selectedReportType: null
+    };
+  },
+  mounted: function mounted() {
+    console.log('Component mounted.');
+  },
+  created: function created() {
+    var _this = this;
 
-        axios.get('./allStock').then(function (response) {
-            _this.allStock = response.data;
-        }), axios.get('./allWarehouse').then(function (response) {
-            _this.allWarehouses = response.data;
+    axios.get('./allStock').then(function (response) {
+      _this.allStock = response.data;
+      _this.showDetails = _this.allStock;
+    }), axios.get('./allWarehouse').then(function (response) {
+      _this.allWarehouses = response.data;
+    });
+  },
+
+  methods: {
+    showReport: function showReport(e) {
+      //loadDatatable(false);
+      e.preventDefault();
+      this.showSummary = false;
+      //console.log(this.searchedWarehouse);
+      if (this.selectedReportType.reportType == "Summary" && this.searchedWarehouse == null) {
+        this.showSummary = true;
+        //  loadDatatable(true);
+      } else if (this.selectedReportType.reportType != null && this.searchedWarehouse != null) {
+        console.log(this.searchedWarehouse.id);
+        var s = this.searchedWarehouse.id;
+        var obj = this.allStock.find(function (obj) {
+          return obj.warehouse_id == s;
         });
-    },
-
-    methods: {
-        showReport: function showReport(e) {
-            loadDatatable(false);
-            e.preventDefault();
-            this.showSummary = false;
-            console.log(this.searchedWarehouse);
-            if (this.selectedReportType.reportType == "Summary" && this.searchedWarehouse == null) {
-                this.showSummary = true;
-                loadDatatable(true);
-            }
-        }
+        console.log(obj);
+        //  this.showDetails=result;
+      }
     }
+  }
 });
 var showed = false;
 function loadDatatable(show) {
 
-    if (show == true) {
-        setTimeout(function () {
-            $('#warehousestocktable').DataTable({
-                "pagingType": "full_numbers",
-                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-                responsive: false,
-                language: {
-                    search: "_INPUT_",
-                    searchPlaceholder: "Search records"
-                }
-            });
-            showed = true;
-        }, 3000);
-    } else {
-        if (showed == true) {
-            $('#warehousestocktable').DataTable().fnDestroy();;
+  if (show == true) {
+    setTimeout(function () {
+      $('#warehousestocktable').DataTable({
+        "pagingType": "full_numbers",
+        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+        responsive: false,
+        language: {
+          search: "_INPUT_",
+          searchPlaceholder: "Search records"
         }
+      });
+      showed = true;
+    }, 3000);
+  } else {
+    if (showed == true) {
+      $('#warehousestocktable').DataTable().fnDestroy();;
     }
+  }
 }
 
 /***/ }),
@@ -87590,7 +87600,7 @@ var render = function() {
                     _vm._v(" "),
                     _c(
                       "tbody",
-                      _vm._l(_vm.allStock, function(stock, index) {
+                      _vm._l(_vm.showDetails, function(stock, index) {
                         return _c("tr", [
                           _c("td", [_vm._v(_vm._s(index + 1))]),
                           _vm._v(" "),

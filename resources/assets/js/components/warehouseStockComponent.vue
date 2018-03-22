@@ -37,7 +37,7 @@
                         		</tr>
                         	</thead>
                         	<tbody>
-                        		<tr v-for="(stock,index) in allStock">
+                        		<tr v-for="(stock,index) in showDetails">
                         			<td>{{index + 1}}</td>
                         			<td>{{stock.warehouse.name}}</td>
                         			<td>{{stock.product_color.product.name}}</td>
@@ -62,12 +62,13 @@ import vSelect from "vue-select"
           showSummary:false,
     			allStock:[],
           allWarehouses:[],
+          showDetails:[],
           searchedWarehouse:null,
           reportTypes:[
             {'reportType':'Summary'},
             {'reportType':'Detail'}
           ],
-          selectedReportType:''
+          selectedReportType:null,
     		}
     	},
         mounted() {
@@ -76,6 +77,7 @@ import vSelect from "vue-select"
         created(){
         	axios.get('./allStock').then(response=>{
         		this.allStock=response.data;
+            this.showDetails=this.allStock;
         	}),
           axios.get('./allWarehouse').then(response=>{
             this.allWarehouses=response.data;
@@ -84,14 +86,21 @@ import vSelect from "vue-select"
         },
         methods:{
           showReport(e){
-            loadDatatable(false);
+            //loadDatatable(false);
             e.preventDefault();
               this.showSummary=false;
-              console.log(this.searchedWarehouse);
+              //console.log(this.searchedWarehouse);
               if(this.selectedReportType.reportType=="Summary" && this.searchedWarehouse==null){
                 this.showSummary=true;
-                loadDatatable(true);
-              }
+              //  loadDatatable(true);
+            }else if (this.selectedReportType.reportType!=null && this.searchedWarehouse!=null) {
+              console.log(this.searchedWarehouse.id);
+              var s=this.searchedWarehouse.id;
+                var obj = this.allStock.find(function (obj) { return obj.warehouse_id == s; });
+                console.log(obj);
+              //  this.showDetails=result;
+
+            }
           }
         }
     }

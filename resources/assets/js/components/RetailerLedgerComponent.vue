@@ -1,16 +1,10 @@
 <template>
 
-<div class="row">
-
-            <div class="card headcolor">
-                <div class="card-header">
-                      <h3 class="card-title pad-bot"><i class="material-icons">chrome_reader_mode</i> <small>LEDGER</small> </h3>
-                </div>
-            </div>
+<div class="row" style="margin-top: 24px;">
     
     <div class="col-md-12">
         <div class="panel panel-default">
-            <div class="panel-heading"><h3 style="margin-top: 6px; font-variant: small-caps; font-weight:bold;">Ledger - Search</h3></div>
+            <div class="panel-heading"><h5 style="margin-top: 6px; font-variant: small-caps;">Ledger - Search</h5></div>
             <div class="panel-body">
                 <form @submit="searchLedger">
                     <div class="form-group col-md-4">
@@ -31,52 +25,72 @@
 
                         <date-picker name="tdate" v-model="searchData.tdate" type="date" format="dd-MM-yyyy" placeholder="dd-mm-yyyy" lang="en" required></date-picker>
                     </div>
-                    <input v-if="editing==false" type="submit" @click="searchLedger" class="btn btn-tumblr" value="Search">
+                    <div class="form-group col-md-2" style="margin-top: 34px;">
+
+                        <input v-if="editing==false" type="submit" @click="searchLedger" class="btn btn-tumblr" value="Search">
+                    </div>
                 </form>
 
             </div>
         </div>
-    </div>
 
-    <div class="col-md-12 panel panel-default">
+        
         <!-- RETAILER SHOW GRID -->
-        <div class="panel panel-info" v-if="search_enabled">
-            <div class="panel-heading"><h3 style="margin-top: 6px; font-variant: small-caps; font-weight:bold;">{{searchData.retailerName}} Ledger - Details</h3></div>
+            <div class="panel panel-info" v-if="search_enabled">
+                <div class="panel-heading"><h5 style="margin-top: 6px; font-variant: small-caps; color: #000;">{{searchData.retailerName}} Ledger - Details<span class="pull-right">From-To: {{searchData.fdate | moment}} - {{searchData.tdate | moment}}</span></h5>
+                </div>
+                <div class="panel-body">
+                    <table id="ledger-table" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <!--<th>SNO</th>-->
+                                <th>Date</th>
+                                <th>Narration</th>
+                                <th>Debit</th>
+                                <th>Credit</th>
+                                <th>Balance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                    <!--    <tr>
 
-            <div class="panel-body">
-                <table id="outlet_table" class="table table-bordered">
-                    <thead>
-                    <tr>
-                        <!--<th>SNO</th>-->
-                        <th>Date</th>
-                        <th>Narration</th>
-                        <th>Debit</th>
-                        <th>Credit</th>
-                        <th>Balance</th>
+                            <td style="font-weight: bold;" colspan="5" align="right">
+                                Opening Balance: {{open_outstanding | currency('')}}
+                            </td>
 
-                    </tr>
-                    </thead>
-                    <tbody>
+                        </tr> -->
+                            <tr v-for="(ledger,index) in ledgerData">
+                                <!--<td>{{index +1}}</td>-->
+                                <td>{{ledger.TransDate | moment}}</td>
+                                <td>{{ledger.description}}</td>
+                                <td align="right">{{ledger.Credit | currency('')}}</td>
+                                <td align="right">{{ledger.Collection | currency('')}}</td>
+                                <td align="right">{{ledger.Outstanding | currency('')}}</td>
+                            </tr>
+    				<!-- 	 <tr>
+                            <td style="font-weight: bold;" colspan="5" align="right">                       
+                            </td>
+                        </tr> -->
+                     <!-- <tr>
+                            <td style="font-weight: bold;" colspan="5" align="right">
+                                Closing Balance: {{last_outstanding | currency('')}}
+                            </td>
 
-                    <tr v-for="(ledger,index) in ledgerData">
-                        <!--<td>{{index +1}}</td>-->
-                        <td>{{ledger.TransDate | moment}}</td>
-                        <td>{{ledger.description}}</td>
-                        <td>{{ledger.Credit | currency('')}}</td>
-                        <td>{{ledger.Collection | currency('')}}</td>
-                        <td>{{ledger.Outstanding | currency('')}}</td>
-                    </tr>
-                    <tr>
-
-                        <td style="font-weight: bold;" colspan="5" align="right">
-                            Closing Balance: {{last_outstanding | currency('')}}
-                        </td>
-
-                    </tr>
-                    </tbody>
-                </table>
+                        </tr>	--> 			
+                        </tbody>	
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <strong>Opening Balance: <span class="pull-right" style="margin-right: 10px;">{{open_outstanding | currency('')}}</span></strong>
+                                </td>
+                            </tr>			
+                    </table>
+    				
+                </div>
             </div>
-        </div>
         <!-- View Details Modal END -->
     </div>
 </div>
@@ -96,6 +110,7 @@
                 allRetailers: [],
                 ledgerData:[],
                 last_outstanding:'',
+                open_outstanding:'',
                 searchData:{
                     retailer_id: '',
                     fdate: '',
@@ -122,7 +137,7 @@
             console.log('Component mounted.')
         },
         created(){
-            axios.get('./retailer/get_retailers').then((response) => {
+            axios.get('./outlet/get_all_outlets').then((response) => {
                 this.allRetailers= response.data;
             });
 //            axios.get('./ledgerData').then((response) => {
@@ -144,16 +159,35 @@
                 });
 
                 this.last_outstanding=this.ledgerData[this.ledgerData.length - 1].Outstanding;
+                this.open_outstanding=this.ledgerData[0].Outstanding;
                 //alert(this.last_outstanding);
                 this.search_enabled=1;
+                mydatatable();
             },
             change_retailer(){
                 this.searchData.retailer_id=this.allRetailers[this.searchData.retailer_index].id;
-
             }
 
            },
 
      //   }
     }
+
+    function mydatatable(){
+        setTimeout(function(){
+            $('#ledger-table').DataTable({
+            "pagingType": "full_numbers",
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ],
+            responsive: true,
+            language: {
+                search: "_INPUT_",
+                searchPlaceholder: "Search here",
+            }
+            });
+        },3000); 
+    }
+
 </script>

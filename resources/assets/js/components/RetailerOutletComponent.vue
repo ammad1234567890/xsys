@@ -1,15 +1,11 @@
 <template>
 
         <div class="row">
-            <div class="card headcolor">
-                <div class="card-header">
-                        <h3 class="card-title pad-bot"><i class="material-icons">description</i> <small>RETAILER </small> </h3>
-                </div>
-            </div>
+
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h2 class="panel-title">Create Retailer Account</h2>
+                        <h2 class="panel-title">Create Account</h2>
                     </div>
 
                     <div class="panel-body">
@@ -19,7 +15,7 @@
                         <form @submit.prevent="add_outlet">
                             <div class="form-section">
                                 <div>
-                                    <h4 class="form-section-heading" style="border-bottom:1px solid black; display: inline-block;">RETAILER DETAILS</h4>
+                                    <h4 class="form-section-heading" style="border-bottom:1px solid black; display: inline-block;">PERSONAL INFO</h4>
                                 </div>
                                     <div class="col-md-6 col-sm-3">
                                         <div class="form-group">
@@ -33,30 +29,34 @@
                                             <input type="text" class="form-control" v-model="outlet.cnic" v-mask="'99999-9999999-9'" autocomplete="off" required>
                                         </div>
                                     </div>
+
+                                <div class="col-md-6 col-sm-3">
+                                    <div class="form-group">
+                                        <label>Phone No</label>
+                                        <input type="text" class="form-control" v-model="outlet.phone_no" v-mask="'9999-9999999'" autocomplete="off" required>
+                                    </div>
+                                </div>
                                     <div class="col-md-6 col-sm-3"  v-if="!outlet.uploadImage" style="bottom: -26px;">
                                         <div class="form-group">
                                             <button class="btn btn-primary btn-xs" style="width:100%;">Select Retailer Image<input type="file" class="form-control" v-on:change="retailer_image_file_preview" ref="imageInput" name="image" autocomplete="off" required></button>
                                         </div>
                                     </div>
+
                                     <div class="col-md-6" v-else>
                                         <img :src="outlet.uploadImage" class="img img-responsive form-control" style="    width: 100px; height: 90px;" />
                                         <button @click="removeRetailerImage" class="btn btn-pinterest btn-xs"  style="width: 100px;"><i class="fa fa-times"></i> </button>
                                     </div>
-                                    <div class="col-md-6 col-sm-3">
-                                        <div class="form-group">
-                                            <label>Mobile No</label>
-                                            <input type="text" class="form-control" v-model="outlet.phone_no" v-mask="'9999-9999999'" autocomplete="off" required>
-                                        </div>
-                                    </div>
+
                                 <div class="clearfix"></div>
                             </div>
                             <div class="form-section">
                                 <div>
-                                    <h4 class="form-section-heading" style="border-bottom:1px solid black; display: inline-block;">OUTLET DETAILS</h4>
+                                    <h4 class="form-section-heading" style="border-bottom:1px solid black; display: inline-block;">BUSINESS PROFILE</h4> <br/>
+                                    <h4 class="form-section-heading" style="border-bottom:1px solid black; display: inline-block; font-size:15px;">OUTLET</h4>
                                 </div>
                                 <div class="col-md-6 col-sm-3">
                                     <div class="form-group">
-                                        <label>Outlet Name</label>
+                                        <label>Name</label>
                                         <input type="text" class="form-control" v-model="outlet.outlet_name" autocomplete="off" required>
                                     </div>
                                 </div>
@@ -64,7 +64,7 @@
 
                                 <div class="col-md-6 col-sm-3">
                                     <div class="form-group">
-                                        <label>Outlet Phone No</label>
+                                        <label>Phone No</label>
                                         <input type="text" class="form-control" v-mask="'9999-9999999'" v-model="outlet.outlet_phone" autocomplete="off" required>
                                     </div>
                                 </div>
@@ -72,7 +72,7 @@
                             </div>
                             <div class="form-section">
                                 <div>
-                                    <h4 class="form-section-heading" style="border-bottom:1px solid black; display: inline-block;">BUSINESS PERSON DETAILS</h4>
+                                    <h4 class="form-section-heading" style="border-bottom:1px solid black; display: inline-block; font-size:15px;">CONTACT PERSON</h4>
                                 </div>
                                 <div class="col-md-6 col-sm-3">
                                     <div class="form-group">
@@ -100,7 +100,7 @@
                             </div>
                             <div class="form-section">
                                 <div>
-                                    <h4 class="form-section-heading" style="border-bottom:1px solid black; display: inline-block;">LOCATION DETAILS</h4>
+                                    <h4 class="form-section-heading" style="border-bottom:1px solid black; display: inline-block; font-size:15px;">LOCATION</h4>
                                 </div>
 
                                 <div class="col-md-6 col-sm-3">
@@ -144,7 +144,7 @@
                             </div>
                             <div class="form-section">
                                 <div>
-                                    <h4 class="form-section-heading" style="border-bottom:1px solid black; display: inline-block;">FINANCIAL DETAILS</h4>
+                                    <h4 class="form-section-heading" style="border-bottom:1px solid black; font-size:15px; display: inline-block;">CREDIT WORTHNESS</h4>
                                 </div>
 
                                 <div class="col-md-6 col-sm-3">
@@ -164,7 +164,8 @@
                                 <div class="col-md-6 col-sm-3">
                                     <div class="form-group">
                                         <label>Credit Duration</label>
-                                        <input type="number" class="form-control" autocomplete="off" v-model="outlet.credit_duration" name="credit_duration" required/>
+                                        <vue-numeric currency="Days" class="form-control" autocomplete="off" v-model="outlet.credit_duration" name="credit_duration" required></vue-numeric>
+                                       <!-- <input type="number" class="form-control" autocomplete="off" v-model="outlet.credit_duration" name="credit_duration" required/> -->
                                     </div>
                                 </div>
 
@@ -215,12 +216,13 @@
                             <tr>
                                 <th>Outlet Name</th>
 								<th>Dealer Code</th>
-                                <th>Phone Number</th>
+                                <th>Contact Person</th>
+                                <th>Contact No.</th>
                                 <th>City</th>
                                 <th>Locality</th>
                                 <th>Address</th>
-                                <th>Retailer Name</th>
-                                <th>Bussiness Person</th>
+
+
                                 <th class="col-md-3">Action</th>
                             </tr>
                             </thead>
@@ -229,12 +231,13 @@
                             <tr v-for="(outlets,index) in outletsData">
                                 <td>{{outlets.name}}</td>
 								 <td>{{outlets.retailer.retailer_no}}</td>
+                                <td>{{outlets.business_person_name}}</td>
                                 <td>{{outlets.phone_no}}</td>
                                 <td>{{outlets.city.name}}</td>
                                 <td>{{outlets.region.name}}</td>
                                 <td>{{outlets.address}}</td>
-                                <td>{{outlets.retailer.name}}</td>
-                                <td>{{outlets.business_person_name}}</td>
+
+
                                 <td>
                                     <div class="dropdown">
                                         <button class="btn btn-primary btn-xs dropdown-toggle" type="button" data-toggle="dropdown">Action
@@ -291,6 +294,7 @@
                                     </div>
                                 </div>
                                 <div class="form-section padding10px">
+                                    <h4 class="form-section-heading" style="font-weight: bold;">BUSINESS PROFILE</h4>
                                     <h4 class="form-section-heading">Outlet</h4>
                                     <br/>
 
@@ -303,19 +307,30 @@
                                             <td>Phone</td>
                                             <td>{{outlet_view.outlet_phone}}</td>
                                         </tr>
-                                        <tr>
-                                            <td>Contact Person Name</td>
-                                            <td>{{outlet_view.bussiness_person_name}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Contact Person Phone</td>
-                                            <td>{{outlet_view.bussiness_person_phone}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Contact Person CNIC</td>
-                                            <td>{{outlet_view.bussiness_person_cnic}}</td>
-                                        </tr>
                                     </table>
+                                </div>
+                                <div class="form-section padding10px">
+                                    <h4 class="form-section-heading">Contact Person</h4>
+                                    <br/>
+                                    <div class="row">
+                                        <div class="col-md-10">
+                                            <table class="table table-hovered">
+                                                    <tr>
+                                                        <td>Name</td>
+                                                        <td>{{outlet_view.bussiness_person_name}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Phone</td>
+                                                        <td>{{outlet_view.bussiness_person_phone}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>CNIC</td>
+                                                        <td>{{outlet_view.bussiness_person_cnic}}</td>
+                                                    </tr>
+
+                                            </table>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="form-section padding10px">
                                     <h4 class="form-section-heading">Location</h4>
@@ -352,7 +367,7 @@
                                     <br/>
                                     <table class="table table-hovered">
                                         <tr>
-                                            <td>Security Check Amount</td>
+                                            <td>Security Cheque Amount</td>
                                             <td>{{outlet_view.security_check_amount | currency('Rs')}}</td>
 
                                         </tr>
@@ -549,7 +564,7 @@
             },
             add_outlet:function(){
                 axios.post('./outlet/create_outlet',this.outlet).then(response=>{
-                    alert(response.data);
+                    //alert(response.data);
                     if(response.data==201){
                         this.get_all_outlets();
                         this.outlet.id='';

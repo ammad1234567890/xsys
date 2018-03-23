@@ -35,4 +35,9 @@ class HomeController extends Controller
         
         return $user;
     }
+
+    public function demo()
+    {
+        return view('demo');
+    }
 }

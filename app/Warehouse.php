@@ -57,5 +57,10 @@ class Warehouse extends Model
     {
       return $this->hasMany('App\MainWarehouseReceiveItem');
     }
+
+    public function warehouseStockItem()
+    {
+      return $this->hasMany('App\warehouseStockItem');
+    }
     protected $table='tbl_warehouse';
 }

@@ -29,7 +29,7 @@
                         </thead>
                         <tbody>
                         <tr v-for="(order, index) in all_orders">
-                            <td>Order#{{order.id}}</td>
+                            <td>{{order.manufacture_order_no}}</td>
                             <td><span v-for="product in all_orders[index].manufacture_order_products"><i style="display:block;">{{product.product_color.product.name}}, {{product.product_color.color}}</i> </span></td>
                             <td>{{order.created_at | moment}}</td>
                             <td>{{order.eta | moment}}</td>
@@ -66,7 +66,7 @@
 
                             <div class="row">
                                 <div class="col-md-12">
-                                    <h5><b>{{view_order.orderno}}</b> <span class="pull-right"><b>Date:</b> <i>{{view_order.created_at | moment}}</i> </span></h5>
+                                    <h5><b>{{view_order.order_no}}</b> <span class="pull-right"><b>Date:</b> <i>{{view_order.created_at | moment}}</i> </span></h5>
                                     <table width="100%" class="table table-hovered">
                                         <tr>
                                             <td>Total Order Cost </td>
@@ -199,6 +199,7 @@
                 all_orders:[],
                 view_order:{
                     orderno:'',
+                    order_no:'',
                     eta:'',
                     remaining_payment:'',
                     total_cost:'',
@@ -251,6 +252,7 @@
                 $('#order_info_modal').modal('show');
                 this.view_order.orderno="Order# "+this.all_orders[index].id;
                 this.view_order.eta=this.all_orders[index].eta;
+                this.view_order.order_no=this.all_orders[index].manufacture_order_no;
                 this.view_order.remaining_payment=this.all_orders[index].remaining_payment;
                 this.view_order.total_cost=this.all_orders[index].total_cost;
                 this.view_order.transaction_closed=this.all_orders[index].transaction_closed;

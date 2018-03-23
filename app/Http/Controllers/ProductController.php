@@ -48,6 +48,10 @@ class ProductController extends Controller
         //
     }
 
+    public function showProduct()
+    {
+      return view('showproduct');
+    }
     /**
      * Store a newly created resource in storage.
      *

@@ -20,13 +20,13 @@
 
                             <div class="col-md-12 form-group">
                                 <label for="estimation_delivery">Estimated Delivery Date</label>
-                                <date-picker  v-model="new_order.estimation_date" type="date" style="width: 100%;" format="dd-MM-yyyy" placeholder="dd-mm-yyyy" lang="en"></date-picker>
+                                <date-picker  v-model="estimation_date" type="date" style="width: 100%;" format="dd-MM-yyyy" placeholder="dd-mm-yyyy" lang="en"></date-picker>
                             </div>
 
                             <div  v-for="(find, index) in new_order.products">
 
                                 <div class="col-md-6 form-group">
-                                    <label for="select_product">Select Model</label>
+                                    <label for="select_product">Model</label>
                                     <select name="select_product" class="form-control" v-model="find.product_id" @change="change_product(index, find.product_id)" required>
                                         <option value="" selected>Select</option>
                                         <option v-for="(product, index) in allProducts"  v-bind:value="product.id">{{product.name}}</option>
@@ -41,8 +41,10 @@
                                     </select>
                                 </div>
                                 <div class="col-md-6 form-group">
-                                    <label for="cost_per_set">Unit Price</label>
-                                    <input type="text" class="form-control" v-model="new_order.products[index].cost_per_set" placeholder="Cost" required readonly>
+                                    <label for="cost_per_set">Unit Price(PKR)</label>
+                                    <vue-numeric class="form-control" v-model="new_order.products[index].cost_per_set" placeholder="Cost" readonly></vue-numeric>
+
+                                    <!-- <input type="text" class="form-control" v-model="new_order.products[index].cost_per_set" placeholder="Cost" required readonly> -->
                                 </div>
 
                                 <div class="col-md-6 form-group">
@@ -87,6 +89,7 @@
         data(){
             return{
                 allProducts:[],
+                estimation_date:'',
                 message:"",
                 new_order:{
                     id:'',
@@ -103,6 +106,12 @@
                 },
 
             }
+        },
+        watch:{
+            estimation_date:function(){
+                this.new_order.estimation_date=moment(this.estimation_date).format('YYYY-MM-DD');
+                console.log(this.new_order.estimation_date);
+            },
         },
         mounted() {
             console.log('Component mounted.')

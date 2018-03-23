@@ -19,7 +19,7 @@
                         <thead>
                         <tr>
                             <th>Order No</th>
-                            <th>Invoice  No</th>
+                            <th>Receive  No</th>
                             <th>Received By</th>
                             <th>QA Status</th>
                             <th>Description</th>
@@ -29,8 +29,8 @@
                         </thead>
                         <tbody>
                         <tr v-for="(receive, index) in all_receive_orders">
-                            <td>Order#{{receive.manufacturing_order_id}}</td>
-                            <td>Receive#{{receive.id}}</td>
+                            <td>{{receive.order.manufacture_order_no}}</td>
+                            <td>{{receive.receive_no}}</td>
                             <td>{{receive.staff.name}}</td>
                             <td  style="text-align:center; font-size: 20px;" title="QA Failed" v-if="receive.is_qa_pass==0"><i class="fa fa-times"></i></td>
                             <td  style="text-align:center; font-size: 20px; color: green;"  title="QA Passed" v-else><i class="fa fa-check"></i></td>
@@ -53,7 +53,7 @@
                             <h4 class="modal-title">Product Details</h4>
                         </div>
                         <div class="modal-body">
-                            <h4>Order# {{order_no}} <span style="font-size:14px; font-weight:bold;">Invoice# {{receive_no}}</span></h4>
+                            <h4>{{receive_number}}</span></h4>
 
                             <div class="row">
                                 <div class="col-md-12">
@@ -103,7 +103,8 @@
                 all_receive_orders:[],
                 products:[],
                 order_no:'',
-                receive_no:''
+                receive_no:'',
+                receive_number:''
             }
         },
         mounted() {
@@ -126,6 +127,7 @@
                 this.products=this.all_receive_orders[index].receive_products;
                 this.order_no=this.all_receive_orders[index].manufacturing_order_id;
                 this.receive_no=this.all_receive_orders[index].id;
+                this.receive_number=this.all_receive_orders[index].receive_no;
             }
         }
     }

@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="content">
+
         <div class="container-fluid">
             <div class="row">
                 <div class="card headcolor">
                     <div class="card-header">
-                          <h3 class="card-title pad-bot"><i class="material-icons">devices_other</i> <small>OTHERS</small> </h3>
+                          <h3 class="card-title pad-bot"><i class="material-icons">devices_other</i> <small>MISCELLANEOUS</small> </h3>
                     </div>
                 </div>
                 <div class="col-md-12">
@@ -58,7 +58,7 @@
                 </div>
             </div>
         </div>
-    </div>
+
 
 
 @endsection

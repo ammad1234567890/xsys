@@ -23,6 +23,7 @@ use App\OrderStatus;
 use App\RetailerOrder;
 use App\RetailerOrderProduct;
 use App\Invoice;
+use App\RetailerInvoice;
 use App\RetailerCollection;
 use App\Ledger;
 use Response;
@@ -57,6 +58,7 @@ class RetailerOrderController extends Controller
             'order_products.ProductColor.product.productCategory',
             'retailer',
             'retailer_outlet',
+            'retailer_outlet.city',
             'user','updated_user']
         )->where('is_deleted',0)->get();
 
@@ -141,7 +143,7 @@ class RetailerOrderController extends Controller
 
     //Registered a route with the name of /retailer/get_invoices
     public function get_all_invoices(){
-        $records= Invoice::with('order','order.retailer','order.retailer_outlet')->get();
+        $records= RetailerInvoice::with('RetailerOrder.retailer','RetailerOrder.retailer_outlet')->get();
         return Response::json($records);
     }
     //Registered a route with the name of /retailer/order/add_payment
@@ -172,14 +174,22 @@ class RetailerOrderController extends Controller
             'created_by'=>$user
         ]);
 
+        $payment_type_format='';
+        if($payment_id==4){
+            $payment_type_format='Cheque#'.$cheque_no;
+        }
+        else if($payment_id==1){
+            $payment_type_format='Cash';
+        }
+
         $collection_id=$OrderCollection->id;
 
         Ledger::create([
             'invoice_id'=>null,
-            'retailer_id'=>$selected_invoice_retailer_id,
+            'retailer_id'=>$selected_invoice_retailer_outlet_id,
             'collection_id'=>$collection_id,
-            'TransDate'=>date('Y-m-d'),
-            'description'=>' collection no: '.$collection_id,
+            'TransDate'=>date('Y-m-d H:i:s'),
+            'description'=>' Collection (DS#'.$deposit_slip_no.' '.$payment_type_format.')',
             'Collection'=>$amount_in_rs,
             'Credit'=>null
         ]);

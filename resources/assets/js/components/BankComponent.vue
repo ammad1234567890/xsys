@@ -166,7 +166,7 @@
             responsive: false,
             language: {
                 search: "_INPUT_",
-                searchPlaceholder: "Search records",
+                searchPlaceholder: "Search Here",
             }
             });
         },3000);

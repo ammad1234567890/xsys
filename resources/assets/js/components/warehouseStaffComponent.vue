@@ -1,13 +1,6 @@
 <template>
       <div>    
-        <div class="row">
-            <div class="card headcolor">
-                <div class="card-header">
-                        <h3 class="card-title pad-bot"><i class="material-icons">store</i> <small>WAREHOUSE STAFF</small> </h3>
-                </div>
-            </div>
-        </div>
-        <div class="row">
+        <div class="row" style="margin-top: 24px;">
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -15,39 +8,72 @@
                     </div>
                     <div class="panel-body">
                       <form @submit="createWarehouseStaff">
-                        <div class="form-group col-md-6">
-                          <label for="warehouse">Warehouse</label>
-                            <v-select label="name" v-model="newStaff.warehouse" :options="warehouses" @search="search"></v-select>
+                        <div class="row">
+                          <div class="col-md-2">
+                            <label for="warehouse">Warehouse</label>
+                          </div>
+                          <div class="col-md-3">
+                              <v-select label="name" v-model="newStaff.warehouse" :options="warehouses" @search="search"></v-select>
+                          </div>
+                          <div class="col-md-1"></div>
+
+
+                          <div class="col-md-2" @click="setColum('id')">
+                            <label for="ID">Emp ID</label>
+                          </div>
+                          <div class="col-md-3">
+                             <v-select label="id" :filterable="false" v-model="newStaff.staff" :options="searchedStaff" @search="searchStaff" ></v-select>
+                          </div>
+                          <div class="col-md-1"></div>
                         </div>
-                        <div class="form-group col-md-6" @click="setColum('id')">
-                          <label for="ID">Emp ID</label>
-                           <v-select label="id" :filterable="false" v-model="newStaff.staff" :options="searchedStaff" @search="searchStaff" ></v-select>
+
+                        <div class="row">
+                          <div class="col-md-2" @click="setColum('name')">
+                            <label for="Name">Name</label>
+                          </div>
+                          <div class="col-md-3">
+                              <v-select label="name" v-model="newStaff.staff" :options="searchedStaff" @search="searchStaff" ></v-select>
+                          </div>
+                          <div class="col-md-1"></div>
+
+                          <div class="col-md-2" @click="setColum('phoneNumber')">
+                            <label for="phoneNumber">Phone Number</label>
+                          </div>
+                          <div class="col-md-3">
+                              <v-select label="phoneNumber" v-model="newStaff.staff" :options="searchedStaff" @search="searchStaff"></v-select>
+                          </div>
+                          <div class="col-md-1"></div>
                         </div>
-                        <div class="form-group col-md-6" @click="setColum('name')">
-                          <label for="Name">Name</label>
-                            <v-select label="name" v-model="newStaff.staff" :options="searchedStaff" @search="searchStaff" ></v-select>
-                        </div>
-                        <div class="form-group col-md-6" @click="setColum('phoneNumber')">
-                          <label for="phoneNumber">Phone Number</label>
-                            <v-select label="phoneNumber" v-model="newStaff.staff" :options="searchedStaff" @search="searchStaff"></v-select>
-                        </div>
-                        <div class="form-group col-md-6" @click="setColum('email')">
-                          <label for="email">Email</label>
-                            <v-select label="email" v-model="newStaff.staff" :options="searchedStaff" @search="searchStaff"></v-select>
-                        </div>
-                        <div class="form-group col-md-6" @click="setColum('CNIC')">
-                          <label for="CNIC">CNIC</label>
+
+                        <div class="row">
+                          <div class="col-md-2" @click="setColum('email')">
+                            <label for="email">Email</label>
+                          </div>
+                          <div class="col-md-3">
+                              <v-select label="email" v-model="newStaff.staff" :options="searchedStaff" @search="searchStaff"></v-select>
+                          </div>
+                          <div class="col-md-1"></div>
+
+                          <div class="col-md-2" @click="setColum('CNIC')">
+                            <label for="CNIC">CNIC</label>
+                          </div>
+                          <div class="col-md-3">
                             <v-select label="CNIC" v-model="newStaff.staff" :options="searchedStaff" @search="searchStaff"></v-select>
+                          </div>
+                          <div class="col-md-1"></div>
                         </div>
-                        <div class="form-group col-md-6">
-                          <button type="Submit" class="btn btn-tumblr">Submit</button>
+
+                        <div class="row">
+                          <div class="col-md-12">
+                            <button type="Submit" class="btn btn-default">Submit</button>
+                          </div>
                         </div>
                       </form>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row">
+        <!-- <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -106,7 +132,7 @@
                     </div>
               </div>
             </div>
-          </div>
+          </div> -->
 </div>
 </template>
 

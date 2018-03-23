@@ -6,15 +6,15 @@
                     <i class="material-icons">view_list</i>
                 </div>
                 <div class="card-content">
-                    <h4 class="card-title">Product Stock Stats</h4>
+                    <h4 class="card-title">Stock Stats</h4>
                     <div class="table-responsive">
                         <table class="table table-hover table-bordered">
                             <thead class="text-primary ">
                                 <tr>
                                     <th>S.no</th>
-                                    <th>Product Name</th>
-                                    <th>Product Color</th>
-                                    <th>Product Quantity</th>
+                                    <th>Model</th>
+                                    <th>Color</th>
+                                    <th>Quantity</th>
                                 </tr>
                             </thead>
                             <tbody>

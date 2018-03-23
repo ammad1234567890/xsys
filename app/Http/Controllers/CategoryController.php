@@ -75,6 +75,11 @@ class CategoryController extends Controller
         //
     }
 
+    public function showCategory()
+    {
+      return view('showCategory');
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

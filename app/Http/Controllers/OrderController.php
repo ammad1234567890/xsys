@@ -27,6 +27,17 @@ use Response;
 class OrderController extends Controller
 {
 
+    public function make_number($order_id){
+        $order_zeros='';
+        for($i=0; $i<=strlen($order_id); $i++){
+            $order_zeros.=0;
+        }
+        $current_month=date('m');
+        $current_year=date('y');
+        $number=$current_month.$current_year.$order_zeros.$order_id;
+        return $number;
+    }
+
 
 	//Registered a route with the name of /order/create
 	public function create_order(){
@@ -66,6 +77,10 @@ class OrderController extends Controller
             }
         
         $order_id= $insert_order->id;
+
+        $manu_order_no='PO'.$this->make_number($order_id);
+
+        Order::where('id',$order_id)->update(['manufacture_order_no'=>$manu_order_no]);
 
 
         //Add Products
@@ -151,6 +166,9 @@ class OrderController extends Controller
                 'receive_status_id'=>$recieve_status,
                 'created_by'=>$user]);
             $receive_id= $recieved_insert->id;
+            $receive_no='RR'.$this->make_number($receive_id);
+
+            Receive::where('id', $receive_id)->update(['receive_no'=>$receive_no]);
             DB::commit();
         }
         catch(\Exception $e){
@@ -266,7 +284,7 @@ class OrderController extends Controller
 
     //Registered a route with the name of /order/received_order_details
     public function received_order_details(){
-        $records=Receive::with('Staff','ReceiveStatus','ReceiveProducts','ReceiveProducts.ProductColor','ReceiveProducts.ProductColor.product','ReceiveProducts.ProductColor.product.productCategory')->get();
+        $records=Receive::with('Order','Staff','ReceiveStatus','ReceiveProducts','ReceiveProducts.ProductColor','ReceiveProducts.ProductColor.product','ReceiveProducts.ProductColor.product.productCategory')->get();
         return Response::json($records);
     }
     //Registered a route with the name of /order/delete

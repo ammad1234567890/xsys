@@ -16,6 +16,10 @@ class Receive extends Model
    public function ReceiveStatus(){
    		return $this->belongsTo('App\ReceiveStatus','receive_status_id');
    }
+
+   public function Order(){
+      return $this->belongsTo('App\Order','manufacturing_order_id');
+   }
    
    public function ReceiveProducts(){
    		return $this->hasMany('App\ReceiveProducts','receive_id');

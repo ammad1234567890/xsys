@@ -24,7 +24,7 @@ class RetailerOutlet extends Model
     }
     public function retailer_order()
     {
-      return $this->hasMany('App\Retailer_order','outlet_id');
+      return $this->hasMany('App\RetailerOrder','outlet_id');
     }
 
     static $a;

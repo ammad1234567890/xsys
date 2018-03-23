@@ -3,36 +3,46 @@
         <div class="row">
             <div class="card headcolor">
                 <div class="card-header">
-                      <h3 class="card-title pad-bot"><i class="material-icons">store</i> <small>WAREHOUSE STOCK </small> </h3>
+                      <h3 class="card-title pad-bot"><i class="material-icons">store</i> <small>STOCK REPORT</small> </h3>
                 </div>
             </div>
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <h2 class="panel-title">Stock Detail</h2>
+                        <h2 class="panel-title">Stock Details</h2>
                     </div>
 
                     <div class="panel-body">
-                      <div class="row well">
+                      <div>
                         <form>
-                          <div class="form-group col-md-5">
-                            <label for="warehouse">Warehouse</label>
-                            <v-select label="name" v-model="searchedWarehouse" :options="allWarehouses"></v-select>
-                          </div>
-                          <div class="form-group col-md-5">
-                            <label for="Report Type">Report Type</label>
-                            <v-select label="reportType" v-model="selectedReportType" :options="reportTypes"></v-select>
-                          </div>
-                          <button class="btn btn-default col-md-1" @click="showReport">Show Report</button>
+                            <div class="col-md-5">
+                              <div class="form-group">
+                                <label for="warehouse">Warehouse</label>
+                                <v-select label="name" v-model="searchedWarehouse" :options="allWarehouses"></v-select>
+                              </div>
+                            </div>
+                            <div class="col-md-5">
+                              <div class="form-group">
+                                <label for="Report Type">Report Type</label>
+                                <v-select label="reportType" v-model="selectedReportType" :options="reportTypes"></v-select>
+                              </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <button class="btn btn-tumblr" @click="showReport" style="    bottom: -8px;">Show Report</button>
+                                </div>
+                            </div>
                         </form>
                       </div>
+                    </div>
+                    <div class="panel-body">
                         <table v-if="showSummary==true" id="warehousestocktable" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                         	<thead>
                         		<tr>
                         			<th>S.No</th>
                         			<th>Warehouse</th>
-                        			<th>Product Name</th>
-                        			<th>Product Color</th>
+                        			<th>Model</th>
+                        			<th>Color</th>
                         			<th>Quantity</th>
                         		</tr>
                         	</thead>
@@ -45,6 +55,25 @@
                         			<td>{{stock.product_qty}}</td>
                         		</tr>
                         	</tbody>
+                        </table> <table v-if="showFull==true"  class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                          <thead>
+                            <tr>
+                              <th>S.No</th>
+                              <th>imei1 </th>
+                              <th>imei2</th>
+                              <th>Model</th>
+                              <th>Color</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr v-for="(data,index) in detailRepot">
+                              <td>{{index + 1}}</td>
+                              <td>{{data.item.imei[0].imei1}}</td>
+                              <td>{{data.item.imei[0].imei2}}</td>
+                              <td>{{data.item.product_color.product.name}}</td>
+                              <td>{{data.item.product_color.color}}</td>
+                            </tr>
+                          </tbody>
                         </table>
                     </div>
                 </div>
@@ -60,9 +89,11 @@ import vSelect from "vue-select"
     	data(){
     		return{
           showSummary:false,
+          showFull:false,
     			allStock:[],
           allWarehouses:[],
           showDetails:[],
+          detailRepot:[],
           searchedWarehouse:null,
           reportTypes:[
             {'reportType':'Summary'},
@@ -80,6 +111,7 @@ import vSelect from "vue-select"
             this.showDetails=this.allStock;
         	}),
           axios.get('./allWarehouse').then(response=>{
+            console.log(response.data);
             this.allWarehouses=response.data;
           });
 
@@ -89,17 +121,25 @@ import vSelect from "vue-select"
             //loadDatatable(false);
             e.preventDefault();
               this.showSummary=false;
+              this.showFull=false;
               //console.log(this.searchedWarehouse);
               if(this.selectedReportType.reportType=="Summary" && this.searchedWarehouse==null){
+                this.showDetails=this.allStock;
                 this.showSummary=true;
-              //  loadDatatable(true);
-            }else if (this.selectedReportType.reportType!=null && this.searchedWarehouse!=null) {
-              console.log(this.searchedWarehouse.id);
-              var s=this.searchedWarehouse.id;
-                var obj = this.allStock.find(function (obj) { return obj.warehouse_id == s; });
-                console.log(obj);
+                loadDatatable(true);
+            }else if (this.selectedReportType.reportType=="Summary" && this.searchedWarehouse!=null) {
+             axios.get('./warehouseStockSearch/'+this.searchedWarehouse.id).then(response=>{
+              this.showDetails=response.data;
+              this.showSummary=true;
+             })
               //  this.showDetails=result;
 
+            }else if(this.selectedReportType.reportType=="Detail" && this.searchedWarehouse!=null){
+              axios.get('./searchStockDetails/'+this.searchedWarehouse.id).then(response=>{
+                this.detailRepot=response.data;
+                this.showFull=true;
+                 console.log(response.data);
+              }) 
             }
           }
         }
@@ -108,7 +148,7 @@ import vSelect from "vue-select"
     function loadDatatable(show){
 
       if(show==true){
-        setTimeout(function(){
+            console.log()
             $('#warehousestocktable').DataTable({
             "pagingType": "full_numbers",
             "lengthMenu": [
@@ -122,7 +162,7 @@ import vSelect from "vue-select"
             }
             });
             showed=true;
-        },3000);
+
     }else{
       if(showed==true){
       $('#warehousestocktable').DataTable().fnDestroy();;

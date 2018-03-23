@@ -25,7 +25,7 @@
                                 <select class="form-control" v-model="payment_data.order_id" @change="change_order()" required>
                                     <option value="">Select</option>
                                     <option v-for="order in all_orders" v-bind:value="order.id">
-                                        ORDER# {{order.id}}
+                                        {{order.manufacture_order_no}}
                                     </option>
                                 </select>
                             </div>
@@ -41,6 +41,11 @@
                             </div>
 
                             <div class="col-md-6 form-group">
+                                <label for="product_quanity">Amount</label>
+                                <input type="text" class="form-control" placeholder="Amount" v-model="payment_data.amount" @change="change_amount()" required>
+                            </div>
+
+                            <div class="col-md-6 form-group">
                                 <label for="select_products">Select Currency</label>
                                 <select class="form-control" v-model="selected_currency_index" @change="change_currency()" required>
                                     <option value="">Select</option>
@@ -50,10 +55,7 @@
                                 </select>
                             </div>
 
-                            <div class="col-md-6 form-group">
-                                <label for="product_quanity">Amount (PKR)</label>
-                                <input type="text" class="form-control" placeholder="Amount" v-model="payment_data.amount" @change="change_amount()" required>
-                            </div>
+
 
                             <div class="col-md-6 form-group">
                                 <label for="product_quanity">Exchange Rate</label>

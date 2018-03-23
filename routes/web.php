@@ -20,7 +20,7 @@ Auth::routes();
 
 Route::get('/testH','HomeController@test');
 Route::get('/home', 'HomeController@index')->name('home');
-
+Route::get('/example','HomeController@demo');
 //AccessControll
 Route::get('/access','AccessControllController@index');//->middleware('accesscontrol:2');//return view for creating role
 Route::get('/permissions','AccessControllController@permission');//->middleware('accesscontrol:2'); //return all permissions
@@ -93,6 +93,7 @@ Route::get('/get_regions','RetailerOutletController@get_regions');
 //PRODUCT
 Route::get('/product','ProductController@index'); //return products view
 Route::get('/allProducts','ProductController@products');
+Route::get('/showproduct','ProductController@showProduct');
 //Route::get('/test','ProductController@test')->middleware('accesscontrol:1');
 Route::post('/createProduct','ProductController@store');
 Route::get('/deleteProduct/{id}','ProductController@destroy');
@@ -105,6 +106,7 @@ Route::get('/getproductColor/{id}','ProductController@get_product_color_by_id');
 
 //CATEGORY
 Route::get('/category','CategoryController@create');
+Route::get('/showCategory','CategoryController@showCategory');
 Route::get('/categories','CategoryController@index');
 Route::post('/editCategory','CategoryController@update');
 Route::get('/path','CategoryController@path');
@@ -212,6 +214,7 @@ Route::post('/importExcel', 'IMEIController@importExcel');
 //Warehouse
 //Warehouse Management
 Route::get('/warehouse','WarehouseController@index');
+Route::get('/createNewWarehouse','WarehouseController@create');
 Route::get('/allWarehouse','WarehouseController@allWarehouses');
 Route::post('/createWarehouse','WarehouseController@store');
 Route::post('/editWarehouse','WarehouseController@update');
@@ -222,6 +225,7 @@ Route::post('/warehouse_products','WarehouseController@warehouse_products');
 //Warehouse Management
 //WarehouseStaff
 Route::get('/warehouseStaff','WarehouseStaffController@index');
+Route::get('/warehouseStaffView','WarehouseStaffController@viewStaff');
 Route::get('/searchStaff/{colum}/{search}','WarehouseStaffController@search');
 Route::post('/createWarehouseStaff','WarehouseStaffController@store');
 Route::get('/warehouseSearchStaff/{id}','WarehouseStaffController@searchStaff');
@@ -246,6 +250,8 @@ Route::post('/createIssue','WarehouseIssueController@createIssue');
 //Warehouse Stock
 Route::get('/warehouseStock','WarehouseStockController@index');
 Route::get('/allStock','WarehouseStockController@allStock');
+Route::get('/warehouseStockSearch/{id}','WarehouseStockController@warehouseStockSearch');
+Route::get('/searchStockDetails/{id}','WarehouseStockController@searchStockDetails');
 //Warehouse Stock
 //Warehouse
 
@@ -271,3 +277,4 @@ Route::get('/invoice/create/{id}','RetailerInvoiceController@invoiceCreate');
 Route::post('/invoice/store/','RetailerInvoiceController@store');
 Route::get('/invoice/list/','RetailerInvoiceController@index');
 Route::get('/invoice/get_invoice/','RetailerInvoiceController@get_invoice');
+Route::post('/get_invoice_by_retailer','RetailerInvoiceController@get_invoice_by_retailer');

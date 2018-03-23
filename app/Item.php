@@ -25,6 +25,11 @@ class Item extends Model
       return $this->hasMany('App\mainWarehouseReceiveItem');
     }
 
+    public function warehouseStockItem()
+    {
+      return $this->hasMany('App\warehouseStockItem');
+    }
+
     public function receiveBy()
     {
       return $this->belongsTo('App\Receive');

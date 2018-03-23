@@ -8,7 +8,7 @@
                 </div>
             </div>
         </div>
-          <div class="row">
+          <div v-if="edit" class="row">
               <div class="col-md-12">
                   <div class="panel panel-default">
                     <a href="#d" data-toggle="collapse" style="color:#333333">
@@ -16,7 +16,7 @@
                         <h2 class="panel-title">Add Warehouse</h2>
                       </div>
                       </a>
-                      <div id="d" class="panel-body collapse" v-bind:class="{in:edit}">
+                      <div  class="panel-body">
                         <form @submit="createWarehouse">
                           <div class="form-group col-md-6">
                             <label for="name">Name</label>
@@ -176,6 +176,7 @@ import vSelect from "vue-select"
           return{
             //allStaff:[],
             managers:[],
+            //startEdit:false,
             editIndex:'',
             edit:false,
             accountants:[],

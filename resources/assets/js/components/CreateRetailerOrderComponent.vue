@@ -4,9 +4,10 @@
     <div class="col-md-12">
             <div class="card headcolor">
                 <div class="card-header">
-                        <h3 class="card-title pad-bot"><i class="material-icons">important_devices</i> <small>Create Supply Order</small> </h3>
+                    <h4 class="heading-inline"> Create New Supply Order </h4>
                 </div>
             </div>
+        <hr/>
         <div class="panel panel-default" v-if="is_retailer_select==0">
             <div class="panel-heading">
                 <h2 class="panel-title">Select Retailer for Order</h2>
@@ -19,7 +20,7 @@
                 <div class="alert alert-success"  v-if="message">
                     <strong>{{message}}</strong>
                 </div>
-                    <table id="outlet_table" class="table table-bordered">
+                    <!-- <table id="example" class="table display table-bordered " width="100%" cellspacing="0">
                         <thead>
                         <tr>
                             <th>City</th>
@@ -30,139 +31,196 @@
                             <th class="col-md-3">Action</th>
                         </tr>
                         </thead>
+                        
                         <tbody>
-
+                    
                         <tr v-for="(outlets,index) in outletsData">
-
+                    
                             <td>{{outlets.city.name}}</td>
                             <td>{{outlets.region.name}}</td>
                             <td>{{outlets.address}}</td>
                             <td>{{outlets.name}}</td>
                             <td>{{outlets.retailer.retailer_no}}</td>
-                            <td><button class="btn btn-primary" v-on:click="create_order_enabled(outlets.retailer.id, outlets.id, outlets.name, outlets.city.name,outlets.region.name, outlets.address, outlets.retailer.retailer_no)">Create Order</button> </td>
+                            <td><button class="btn btn-primary btn-sm" v-on:click="create_order_enabled(outlets.retailer.id, outlets.id, outlets.name, outlets.city.name,outlets.region.name, outlets.address, outlets.retailer.retailer_no)">Create Order</button> </td>
                         </tr>
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>City</th>
+                                <th>Locality</th>
+                                <th>Address</th>
+                                <th>Outlet Name</th>
+                                <th>Dealer ID</th>
+                            </tr>
+                        </tfoot>
+                    </table> -->
+                    <table id="example" class="display table-bordered" style="width:100%">
+                        <thead>
+                           <tr>
+                             <th>City</th>
+                            <th>Locality</th>
+                            <th>Address</th>
+                            <th>Outlet Name</th>
+                            <th>Dealer ID</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        
+                        <tbody>
+                            <tr v-for="(outlets,index) in outletsData">
+                                <td>{{outlets.city.name}}</td>
+                                <td>{{outlets.region.name}}</td>
+                                <td>{{outlets.address}}</td>
+                                <td>{{outlets.name}}</td>
+                                <td>{{outlets.retailer.retailer_no}}</td>
+                                <td><button class="btn btn-primary btn-sm" v-on:click="create_order_enabled(outlets.retailer.id, outlets.id, outlets.name, outlets.city.name,outlets.region.name, outlets.address, outlets.retailer.retailer_no)"><i class="fa fa-edit"></i> </button> </td>
+                            </tr>
+            
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>City</th>
+                                <th>Locality</th>
+                                <th>Address</th>
+                                <th>Outlet Name</th>
+                                <th>Dealer ID</th>
+                                <th></th>
+                            </tr>
+                        </tfoot>
                     </table>
-                </div>
+            </div>
         </div>
-
-
-
-        <div class="panel panel-default" v-if="is_retailer_select==1">
+        <div class="panel panel-info"  v-if="is_retailer_select==1">
             <div class="panel-heading">
-                <h2 class="panel-title">Create Supply Order</h2>
+
+
+            <div class="col-md-5 paddingmarginzero ">
+                Create Supply Order
             </div>
 
-            <div class="panel-body" >
-                <form @submit.prevent="add_order">
-                    <div class="row">
-                        <div class="form-section" style="border-left:0px; border-right: 0px; border-bottom:0px; padding-left:0px; padding-right:0px;">
-                            <h4 class="form-section-heading" style="margin-left: 9px; border-bottom: 1px solid;">Order Details</h4>
-                            <!--<div class="col-md-6 form-group">
-                                <label for="select_product">Retailer</label>
-                                <select name="select_product" class="form-control" v-model="new_order.retailer_id" @change="change_retailer()" required>
-                                    <option value="" selected>Select Retailer</option>
-                                    <option v-for="(retailer, index) in allRetailers" v-bind:value="retailer.id">{{retailer.name}}</option>
-                                </select>
-                            </div> -->
-                            <!--<div class="col-md-6 form-group">
-                                <label for="select_product">Outlet</label>
-                                <select name="select_product" class="form-control" v-model="selected_outlet_index" @change="change_outlet()" required>
-                                    <option value="-1" selected>Retailer Outlets</option>
-                                    <option v-for="(outlets, index) in retailer_outlets" v-bind:value="index">{{outlets.name}}</option>
-                                </select>
-                            </div> -->
-                            <div class="col-md-6 form-group">
-                                <label for="select_product">City</label>
-                                <input type="text" v-model="new_order.city" class="form-control" readonly/>
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label for="select_product">Locality</label>
-                                <input type="text" v-model="new_order.locality" class="form-control" readonly/>
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label for="select_product">Address</label>
-                                <input type="text" v-model="new_order.address" class="form-control" readonly/>
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label for="select_product">Dealer ID</label>
-                                <input type="text" v-model="new_order.dealer_id" class="form-control" readonly/>
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label for="select_product">Outlet</label>
-                                <input type="text" v-model="new_order.retailer_outlet_name" class="form-control" readonly/>
-                            </div>
+            <div class="col-md-6  text-right">
 
+            </div>
 
+            <div class="clearfix"></div>
+        </div>
+            <div class="panel-body">
 
-                            <div class="col-md-6 form-group">
-                                <label for="select_product_color">Select Warehouse</label>
-                                <select name="select_product" class="form-control" v-model="new_order.warehouse_id" @change="get_warehouse_sales_officers()" required>
-                                    <option value="" selected>Select Warehouse</option>
-                                    <option v-for="warehouse in warehouses" v-bind:value="warehouse.warehouse.id">{{warehouse.warehouse.name}}</option>
-                                </select>
-                            </div>
+                <div class="row">
+                    <div class="col-md-2"><label>City</label></div>
+                    <div class="col-md-3"><input type="text" v-model="new_order.city" class="textbox" readonly></div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-2"><label>Locality </label></div>
+                    <div class="col-md-3"><input type="text" v-model="new_order.locality"class="textbox" readonly></div>
+                    <div class="col-md-1"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2"><label>Address</label></div>
+                    <div class="col-md-3"><input type="text" class="textbox" v-model="new_order.address" readonly></div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-2"><label>Dealer ID</label></div>
+                    <div class="col-md-3"><input type="text" class="textbox" v-model="new_order.dealer_id" readonly></div>
+                    <div class="col-md-1"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2"><label>Outlet</label></div>
+                    <div class="col-md-3"><input type="text" class="textbox" v-model="new_order.retailer_outlet_name" readonly></div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-2"><label>Warehouses</label></div>
+                    <div class="col-md-3">
 
-                            <div class="col-md-6 form-group">
-                                <label for="select_product_color">Sales Officer</label>
-                                <select name="select_product" class="form-control" v-model="new_order.sales_officer_id" required>
-                                    <option value="" selected>Sales Officers</option>
-                                    <option v-for="(officer, index) in sales_officers" v-if="officer.staff!=null" v-bind:value="officer.staff.id">{{officer.staff.name}}</option>
-                                </select>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
+                            <select name="select_product" class="textbox_dropdown" v-model="new_order.warehouse_id" @change="get_warehouse_sales_officers()" required>
+                                <option value="" selected>Select Warehouse</option>
+                                <option v-for="warehouse in warehouses" v-bind:value="warehouse.warehouse.id">{{warehouse.warehouse.name}}</option>
+                            </select>
+
                     </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2"><label>Sales Officer</label></div>
+                    <div class="col-md-3">
+                        <select name="select_product" class="textbox_dropdown" v-model="new_order.sales_officer_id" required>
+                            <option value="" selected>Sales Officers</option>
+                            <option v-for="(officer, index) in sales_officers" v-if="officer.staff!=null" v-bind:value="officer.staff.id">{{officer.staff.name}}</option>
+                        </select>
 
-                    <div class="row" v-for="(find, index) in new_order.products">
-                        <div class="form-section" style="border-left:0px; border-right: 0px; border-bottom:0px; padding-left:0px; padding-right:0px;">
-                            <h4 class="form-section-heading" style="margin-left: 9px; border-bottom: 1px solid;">Order Products</h4>
-                            <div class="col-md-6 form-group">
-                                <label for="select_product">Product</label>
-                                <select name="select_product" class="form-control" v-model="find.product_id" @change="change_product(index, find.product_id)" required>
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-3"><label> </label></div>
+                    <div class="col-md-2"></div>
+                </div>
+                <div class="row" v-for="(find, index) in new_order.products">
+                    <hr/>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-2"><label>Products</label></div>
+                            <div class="col-md-3">
+                                <select name="select_product" class="textbox_dropdown" v-model="find.product_id" @change="change_product(index, find.product_id)" required>
                                     <option value="" selected>Select</option>
                                     <option v-for="(product, index) in allProducts.warehouse_stock" v-if="product.product_qty!=0" v-bind:value="product.product_color.product.id">{{product.product_color.product.name}}</option>
                                 </select>
                             </div>
-                            <div class="col-md-6 form-group">
-                                <label for="select_product_color">Color</label>
-                                <select class="form-control" v-model="new_order.products[index].product_color_id" @change="myfunc(index)" required>
+                            <div class="col-md-1"></div>
+                            <div class="col-md-2"><label>Colors</label></div>
+                            <div class="col-md-3">
+                                <select class="textbox_dropdown" v-model="new_order.products[index].product_color_id" @change="myfunc(index)" required>
                                     <option value="" selected>Select</option>
                                     <option v-for="(product_color, index) in new_order.products[index].product_color"  v-bind:value="product_color.id">{{product_color.color}}</option>
                                 </select>
                             </div>
-                            <div class="col-md-6 form-group">
-                                <label for="product_quanity">Quantity</label>
-                                <input type="text" class="form-control" v-model="new_order.products[index].quantity" placeholder="Quantity" required>
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label for="cost_per_set">Unit Price</label>
-                                <input type="text" class="form-control" v-model="new_order.products[index].cost_per_set" placeholder="Cost" required readonly>
-                            </div>
+                            <div class="col-md-1"></div>
+                        </div>
 
+                        <div class="row">
+                            <div class="col-md-2"><label>Quantity</label></div>
+                            <div class="col-md-3">
+
+                                <input type="text" class="textbox" v-model="new_order.products[index].quantity"/>
+                            </div>
+                            <div class="col-md-1"></div>
+                            <div class="col-md-2"><label>Price</label></div>
+                            <div class="col-md-3">
+                                <input type="text" class="textbox" v-model="new_order.products[index].cost_per_set"/>
+                            </div>
+                            <div class="col-md-1"></div>
+                        </div>
+                        <div class="row">
                             <div class="col-md-12" v-if="index>0">
                                 <button class="btn btn-danger" v-on:click="removeProductForm(index)">Remove</button>
                             </div>
-                            <div class="clearfix"></div>
                         </div>
-
                     </div>
+                </div>
+                <br/>
+                <div class="row">
 
-                    <div class="row">
                         <div class="col-md-3">
                             <button class="btn btn-primary" v-on:click="add_more_products"><i class="fa fa-plus"></i> Add More Products</button>
                         </div>
 
-                        <div class="col-md-9">
-
-                            <button class="btn btn-tumblr pull-right"><i class="fa fa-check"></i> Create Order</button>
-                            <button class="btn btn-success pull-right" v-on:click="hide_order_form()">Select Other Retailer</button>
+                        <div class="col-md-8">
+                            <div class="row">
+                                <div class="col-md-3 pull-right">
+                                    <button class="btn btn-primary pull-right" v-on:click="add_order()"><i class="fa fa-check"></i> Create Order</button>
+                                </div>
+                                <div class="col-md-3 pull-right">
+                                    <button class="btn btn-success" v-on:click="hide_order_form()">Select Other Retailer</button>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </form>
+                    <div class="col-md-1"></div>
+
+
+                </div>
+
+
 
             </div>
+
         </div>
+
+
+
 
 
     </div>
@@ -340,7 +398,7 @@
                 axios.get('../getproductColor/'+this.new_order.products[index].product_color_id).then((response) => {
                     this.new_order.products[index].cost_per_set=response.data[0].price;
                 });
-                this.new_order.products[index].quantity=this.allProducts.warehouse_stock[index].product_qty;
+                //this.new_order.products[index].quantity=this.allProducts.warehouse_stock[index].product_qty;
 
             },
             get_all_outlets:function(){
@@ -356,14 +414,83 @@
                 this.new_order.locality=$locality;
                 this.new_order.address=$address;
                 this.new_order.dealer_id=$dealer_id;
+                $('#example').css('display','none');
                 this.is_retailer_select=1;
+
 
             },
             hide_order_form:function(){
                 this.is_retailer_select=0;
+
             }
         }
     }
+/*
+    $(document).ready(function() {
+        
+    
+    // Setup - add a text input to each footer cell
+    $('#retailer_table tfoot th').each( function () {
+        var title = $(this).text();
+        $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+    } );
 
 
+    // DataTable
+    var table = $('#retailer_table').DataTable();
+
+    // Apply the search
+    table.columns().every( function () {
+        var that = this;
+ 
+        $( 'input', this.footer() ).on( 'keyup change', function () {
+            if ( that.search() !== this.value ) {
+                that
+                    .search( this.value )
+                    .draw();
+            }
+        } );
+    } );
+} );*/
+
+$(document).ready(function() {
+    // Setup - add a text input to each footer cell
+   setTimeout(function(){ mydatatable(); }, 3000);
+} );
+
+function mydatatable(){
+     $('#example tfoot th').each( function () {
+        var title = $(this).text();
+        $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+    } );
+ 
+    // DataTable
+    var table = $('#example').DataTable();
+ 
+    // Apply the search
+    table.columns().every( function () {
+        var that = this;
+ 
+        $( 'input', this.footer() ).on( 'keyup change', function () {
+            if ( that.search() !== this.value ) {
+                that
+                    .search( this.value )
+                    .draw();
+            }
+        } );
+    } );
+}
 </script>
+
+<style>
+ tfoot {
+    display: table-header-group;
+}
+   tfoot input {
+        width: 100%;
+        padding: 3px;
+        box-sizing: border-box;
+
+    }
+
+</style>

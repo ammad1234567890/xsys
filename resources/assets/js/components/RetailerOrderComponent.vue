@@ -2,13 +2,13 @@
     <div class="row">
         <div class="card headcolor">
             <div class="card-header">
-                  <h3 class="card-title pad-bot"><i class="material-icons">description</i><small>Supply Orders</small></h3>
+                  <h3 class="card-title pad-bot"><i class="material-icons">description</i><small>SUPPLY ORDERS</small></h3>
             </div>
         </div>
         <div class="col-md-12">
             <div class="panel panel-Default">
                 <div class="panel-heading">
-                    <h2 class="panel-title">Order Details</h2>
+                    <h2 class="panel-title">Summary</h2>
                 </div>
 
                 <div class="panel-body">
@@ -16,7 +16,7 @@
                         <strong>{{message}}</strong>
                     </div>
                     <div class="table-responsive">
-                        <table id="retailer_order_table" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                        <table id="example" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                             <thead>
                             <tr>
                                 <th>Date</th>
@@ -34,7 +34,7 @@
                                 <td>{{order.created_at | moment}}</td>
                                 <td>{{order.order_no}}</td>
                                 <td>{{order.retailer_outlet.name}}</td>
-                                <td>{{order.retailer_outlet.city_id}}</td>
+                                <td>{{order.retailer_outlet.city.name}}</td>
                                 <td>{{order.total_cost | currency('Rs')}}</td>
                                 <td class="text-center">
                                     <div class="dropdown">
@@ -50,6 +50,17 @@
                                 <td v-else><i class="fa fa-times" style="text-align:center; display:block; font-size:25px; color:red;"></i></td>
                             </tr>
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Order No</th>
+                                    <th>Outlet</th>
+                                    <th>City</th>
+                                    <th>Total Amount</th>
+                                    <th></th>
+                                    <th>Account Clearance</th>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
                 </div>
@@ -61,7 +72,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title">Order Details</h4>
+                            <h4 class="modal-title">Summary</h4>
                         </div>
                         <div class="modal-body">
                             <div class="row">
@@ -100,9 +111,9 @@
                                             <td>Model</td>
                                             <td>Color</td>
                                             <td>Quantity</td>
-                                            <td>Unit Price</td>
+                                            <td>Unit Price(PKR)</td>
                                             <td>Discount</td>
-                                            <td>Total Price</td>
+                                            <td>Net Price(PKR)</td>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -111,9 +122,9 @@
                                             <td>{{products.product_color.product.name}}</td>
                                             <td>{{products.product_color.color}}</td>
                                             <td>{{products.product_qty}}</td>
-                                            <td>{{products.unit_price | currency('Rs')}}</td>
+                                            <td>{{products.unit_price | currency('')}}</td>
                                             <td>{{products.product_color.discount}}%</td>
-                                            <td>{{products.product_qty*products.unit_price | currency('Rs')}}</td>
+                                            <td>{{(products.product_qty*products.unit_price)-((products.product_qty*products.unit_price)/100)*(products.product_color.discount)}}</td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -256,10 +267,10 @@
 
         }
     }
-$(document).ready(function() {
+/*$(document).ready(function() {
     setTimeout(function () {
         $('#retailer_order_table').DataTable({
-            /*"pagingType": "full_numbers",
+            "pagingType": "full_numbers",
             "lengthMenu": [
                 [10, 25, 50, -1],
                 [10, 25, 50, "All"]
@@ -269,18 +280,49 @@ $(document).ready(function() {
                 search: "_INPUT_",
                 searchPlaceholder: "Search records",
             }
-            });*/
-            dom: 'Bfrtip',
-            language: {
-                search: "_INPUT_",
-                searchPlaceholder: "Search records",
-            },
-            stateSave: true,
-            buttons: [
-                'colvis',
-            ]
+
         });
     }, 2000);
-});
+});*/
 
+$(document).ready(function() {
+    // Setup - add a text input to each footer cell
+   setTimeout(function(){ mydatatable(); }, 3000);
+} );
+
+function mydatatable(){
+     $('#example tfoot th').each( function () {
+        var title = $(this).text();
+        $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+    } );
+ 
+    // DataTable
+    var table = $('#example').DataTable();
+ 
+    // Apply the search
+    table.columns().every( function () {
+        var that = this;
+ 
+        $( 'input', this.footer() ).on( 'keyup change', function () {
+            if ( that.search() !== this.value ) {
+                that
+                    .search( this.value )
+                    .draw();
+            }
+        } );
+    } );
+}
 </script>
+
+<style>
+ tfoot {
+    display: table-header-group;
+}
+   tfoot input {
+        width: 100%;
+        padding: 3px;
+        box-sizing: border-box;
+
+    }
+
+</style>

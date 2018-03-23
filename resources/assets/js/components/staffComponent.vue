@@ -368,9 +368,10 @@ import vSelect from "vue-select"
             }*/
 
             dom: 'Bfrtip',
+            responsive: false,
             language: {
                 search: "_INPUT_",
-                searchPlaceholder: "Search records",
+                searchPlaceholder: "Search here",
             },
             stateSave: true,
             buttons: [

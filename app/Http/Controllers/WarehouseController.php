@@ -54,7 +54,10 @@ class WarehouseController extends Controller
       return $return;
     }
 
-
+    public function create()
+    {
+      return view('createWarehouse');
+    }
 
     /**
      * Update the specified resource in storage.

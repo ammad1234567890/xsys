@@ -48,6 +48,11 @@ class WarehouseStaffController extends Controller
       return $warehouseStaff;
     }
 
+    public function viewStaff()
+    {
+      return view('warehousestaffview');
+    }
+
     public function remove($id)
     {
       try{

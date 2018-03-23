@@ -39,10 +39,9 @@ class RetailerInvoiceController extends Controller {
     }
 
     public function get_invoice() {
-        return $invoice_list = RetailerInvoice::with(
+              return $invoice_list = RetailerInvoice::with(
                         'payment_type'
-                        // ,'RetailerOrder'
-                        // ,'RetailerOrder.outlet'
+                        , 'RetailerOrder'
                 )->orderBy('id', 'desc')->get();
     }
 
@@ -141,6 +140,23 @@ class RetailerInvoiceController extends Controller {
 
     public function destroy(RetailerInvoice $retailerInvoice) {
         //
+    }
+
+    //        /get_invoice_by_retailer
+
+    public function get_invoice_by_retailer(Request $request){
+        $outlet_id= $request->input('selected_invoice_retailer_outlet_id');
+        //$records= RetailerOutlet::with('retailer_order','retailer_order.invoices')->where('id',$outlet_id)->get();
+        $records=RetailerInvoice::with('RetailerOrder.retailer','RetailerOrder.retailer_outlet')->whereHas('RetailerOrder.retailer_outlet',function($q) use ($outlet_id)
+                {
+
+                    $q->where('id', $outlet_id);
+                })->get();
+       
+        
+        return Response::json($records);
+        
+        
     }
 
 }

@@ -8,24 +8,27 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Xcell') }}</title>
+    <title>Xsys</title>
 
     <!-- Styles -->
     <!-- Bootstrap core CSS     -->
-    <!-- <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" /> -->
+
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     
     <!--  Material Dashboard CSS    -->
-    <link href="{{ asset('css/turbo.css') }}" rel="stylesheet" />
-    <!--     Fonts and icons     -->
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons" />
+   <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,700italic,400,600,700">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,300,700">
+  <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css')}}">
+  <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css')}}">
 
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.1/css/buttons.dataTables.min.css">
+  <!-- App CSS -->
+  <link rel="stylesheet" href="{{ asset('css/target-admin.css')}}">
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
-    <!--     Custom css    -->
-    <link href="{{ asset('css/style.css') }}" rel="stylesheet" />
+  <!-- Datatable -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
+
+  <link href="{{ asset('css/style.css')}}" rel="stylesheet" />
+
 
 
 
@@ -33,361 +36,734 @@
 </head>
 <body>
     <div id="app">
-    <div class="wrapper">
-        <div class="sidebar" data-background-color="gray">
-            <div class="logo">
-                <a href="{{ url('home') }}" class="simple-text">
-                    <img src="{{ asset('img/xsyslogo.png') }}" width="130px" alt="Xsys">
-                </a>
-            </div>
-            <div class="logo logo-mini">
-                <a href="{{ url('home') }}" class="simple-text">
-                    <img src="{{ asset('img/collapse-logo.png') }}" width="25px" alt="B">
-                </a>
-            </div>
-            <div class="sidebar-wrapper">
-                <ul class="nav">
-                    <li>
-                        <a href="{{ url('home') }}">
-                            <i class="material-icons">dashboard</i>
-                            <p>Dashboard</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a data-toggle="collapse" href="#catalogue" class="collapsed" aria-expanded="false">
-                            <i class="material-icons">dvr</i>
-                            <p>Catalogue
-                                <b class="caret"></b>
-                            </p>
-                        </a>
-                        <div class="collapse" id="catalogue" aria-expanded="false" style="height: 0px;">
-                            <ul class="nav">
-                                <li>
-                                    <a href="{{ url('category') }}">Category Management</a>
-                                </li>
-                                <li>
-                                    <a href="{{ url('product') }}">Product Management</a>
-                                </li>
-                                <li>
-                                    <a href="{{ url('importIMEI') }}">Import IMEI</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li>
-                        <a data-toggle="collapse" href="#orders" class="collapsed" aria-expanded="false">
-                            <i class="material-icons">receipt</i>
-                            <p>Purchase Orders
-                                <b class="caret"></b>
-                            </p>
-                        </a>
-                        <div class="collapse" id="orders" aria-expanded="false" style="height: 0px;">
-                            <ul class="nav">
-                                <li>
-                                    <a href="{{ url('order/create') }}">Create Orders</a>
-                                </li>
-                                <li>
-                                    <a href="{{ url('order/all_orders') }}">Orders</a>
-                                </li>
-                                <li>
-                                    <a href="{{ url('order/receive') }}">New Shipment</a>
-                                </li>
-                                <li>
-                                    <a href="{{ url('order/payment') }}">PO Payment</a>
-                                </li>
-                                <li>
-                                    <a href="{{ url('order/received_orders') }}">Received Orders</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li>
-                        <a data-toggle="collapse" href="#staff" class="collapsed" aria-expanded="false">
-                            <i class="material-icons">assignment_ind</i>
-                            <p>Staff
-                                <b class="caret"></b>
-                            </p>
-                        </a>
-                        <div class="collapse" id="staff" aria-expanded="false" style="height: 0px;">
-                            <ul class="nav">
-                                <li>
-                                    <a href="{{ url('staff') }}">Staff Management</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li>
-                        <a data-toggle="collapse" href="#retailerorder" class="collapsed" aria-expanded="false">
-                            <i class="material-icons">description</i>
-                            <p>Retailer Orders
-                                <b class="caret"></b>
-                            </p>
-                        </a>
-                        <div class="collapse" id="retailerorder" aria-expanded="false" style="height: 0px;">
-                            <ul class="nav">
-                                <li>
-                                    <a href="{{ url('/retailer') }}">Retailer</a>
-                                </li>
-                                
-                                <li>
-                                    <a href="{{ url('retailer/create_order') }}">Create Retailer order</a>
-                                </li>
-                                <li>
-                                    <a href="{{ url('retailer_order/orders') }}">Order Detail</a>
-                                </li>
-                                <li>
-                                    <a href="{{ url('retailer_order/payment') }}">Payment Receiving</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li>
-                        <a data-toggle="collapse" href="#finance" class="collapsed" aria-expanded="false">
-                            <i class="material-icons">account_balance</i>
-                            <p>Finance
-                                <b class="caret"></b>
-                            </p>
-                        </a>
-                        <div class="collapse" id="finance" aria-expanded="false" style="height: 0px;">
-                            <ul class="nav">
-                                <li>
-                                    <a href="{{ url('finance/orders_approval') }}">Orders Approval</a>
-                                </li>
-                                <li>
-                                    <a href="{{ url('/invoice/list/') }}">Invoice detail</a>
-                                </li>
-                                
-                                <li>
-                                    <a href="{{url('/retailer_order/payment')}}">Receiving</a>
-                                </li>
-                                <li>
-                                    <a href="{{url('/bank')}}">Bank</a>
-                                </li>
-                                <li>
-                                    <a href="{{url('/ledger')}}">Ledger</a>
-                                </li>
-                                
-                            </ul>
-                        </div>
-                    </li>
-                    <li>
-                        <a data-toggle="collapse" href="#warehouse" class="collapsed" aria-expanded="false">
-                            <i class="material-icons">store</i>
-                            <p>Warehouse
-                                <b class="caret"></b>
-                            </p>
-                        </a>
-                        <div class="collapse" id="warehouse" aria-expanded="false" style="height: 0px;">
-                            <ul class="nav">
-                                <li>
-                                    <a href="{{ url('warehouse') }}">Warehouse Management</a>
-                                </li>
-                                <li>
-                                    <a href="{{ url('warehouseStaff') }}">Warehouse Staff</a>
-                                </li>
-                                <li>
-                                    <a href="{{ url('mainWarehouseReceive') }}">Warehouse Receive</a>
-                                </li>
-                                <li>
-                                    <a href="{{ url('warehouseIssue') }}">Warehouse Supply</a>
-                                </li>
-                                <li>
-                                    <a href="{{ url('warehouseStock') }}">Warehouse Stock Details</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li>
-                        <a data-toggle="collapse" href="#reports" class="collapsed" aria-expanded="false">
-                            <i class="material-icons">multiline_chart</i>
-                            <p>Reports
-                                <b class="caret"></b>
-                            </p>
-                        </a>
-                        <div class="collapse" id="reports" aria-expanded="false" style="height: 0px;">
-                            <ul class="nav">
-                                <li>
-                                    <a href="#">Finance Report</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li>
-                        <a data-toggle="collapse" href="#accesscontrol" class="collapsed" aria-expanded="false">
-                            <i class="material-icons">lock</i>
-                            <p>Access Control
-                                <b class="caret"></b>
-                            </p>
-                        </a>
-                        <div class="collapse" id="accesscontrol" aria-expanded="false" style="height: 0px;">
-                            <ul class="nav">
-                                <li>
-                                    <a href="{{ url('access') }}">Access</a>
-                                </li>
-                                <li>
-                                    <a href="{{ url('userrole') }}">User Role</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="{{ url('general') }}">
-                            <i class="material-icons">rounded_corner</i>
-                            <p>Others</p>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="main-panel">
-            <nav class="navbar navbar-default navbar-absolute" data-topbar-color="default">
-                <div class="container-fluid">
-                    <div class="navbar-minimize">
-                        <button id="minimizeSidebar" class="btn btn-round btn-white btn-fill btn-just-icon">
-                            <i class="material-icons visible-on-sidebar-regular f-26">keyboard_arrow_left</i>
-                            <i class="material-icons visible-on-sidebar-mini f-26">keyboard_arrow_right</i>
-                        </button>
-                    </div>
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <a class="navbar-brand" href="#"> Xcell
-                        </a>
+    <!--  -->
+        <div class="navbar ">
 
-                    </div>
-                    <div class="collapse navbar-collapse">
-                        <ul class="nav navbar-nav navbar-right">
+            <div class="container paddingmarginzero fullwidth">
 
-                            @guest
-                                <li><a href="{{ route('login') }}"><i class="material-icons">fingerprint</i> Login</a></li>
-                                <li><a href="{{ route('register') }}"><i class="material-icons">person_add</i> Register</a></li>
-                            @else
+                <div class="navbar-header">
 
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <i class="material-icons">notifications</i>
-                                    <span class="notification">5</span>
-                                    <p class="hidden-lg hidden-md">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+                    <!--      <a class="navbar-brand navbar-brand-image" href="index.html">
+                            <img src="img/logo.png" alt="Site Logo">
+                          </a>-->
+
+                </div> <!-- /.navbar-header -->
+
+                <div class="navbar-collapse collapse">
+
+
+
+                    <ul class="nav navbar-nav noticebar navbar-left">
+                        <li class="smalltxt">
+                            <a href="javascript:;">File</a>
+                        </li>
+                        <li class="smalltxt">
+                            <a href="javascript:;">About</a>
+                        </li>
+                        <li class="smalltxt">
+                            <a href="javascript:;">Setup</a>
+                        </li>
+                        <li class="smalltxt">
+                            <a href="javascript:;">Roles</a>
+                        </li>
+                        <li class="smalltxt">
+                            <a href="javascript:;">Status</a>
+                        </li>
+                        <li class="smalltxt">
+                            <a href="javascript:;">Help</a>
+                        </li>
+
+
+                    </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    <ul class="nav navbar-nav navbar-right">
+
+
+
+                        <li class="dropdown navbar-profile">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:;">
+                                <img src="{{ asset('img/avatars/avatar-1-xs.jpg')}}" class="navbar-profile-avatar" alt="">
+                                <span class="navbar-profile-label">rod@rod.me &nbsp;</span>
+                                <i class="fa fa-caret-down"></i>
+                            </a>
+
+                            <ul class="dropdown-menu" role="menu">
+
+                                <li>
+                                    <a href="page-profile.html">
+                                        <i class="fa fa-user"></i>
+                                        &nbsp;&nbsp;My Profile
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="page-pricing.html">
+                                        <i class="fa fa-dollar"></i>
+                                        &nbsp;&nbsp;Plans &amp; Billing
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="page-settings.html">
+                                        <i class="fa fa-cogs"></i>
+                                        &nbsp;&nbsp;Settings
+                                    </a>
+                                </li>
+
+                                <li class="divider"></li>
+
+                                <li>
+                                    <a href="login.html">
+                                        <i class="fa fa-sign-out"></i>
+                                        &nbsp;&nbsp;Logout
+                                    </a>
+                                </li>
+
+                            </ul>
+
+                        </li>
+
+                    </ul>
+
+
+
+                    <ul class="nav navbar-nav noticebar navbar-right  " style=" padding-right:50px;">
+
+
+
+                        <li class="dropdown">
+                            <a href="page-notifications.html" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-bell"></i>
+                                <span class="navbar-visible-collapsed">&nbsp;Notifications&nbsp;</span>
+                                <span class="badge">3</span>
+                            </a>
+
+                            <ul class="dropdown-menu noticebar-menu" role="menu">
+                                <li class="nav-header">
+                                    <div class="pull-left">
                                         Notifications
-                                        <b class="caret"></b>
-                                    </p>
+                                    </div>
+
+                                    <div class="pull-right">
+                                        <a href="javascript:;">Mark as Read</a>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <a href="page-notifications.html" class="noticebar-item">
+                <span class="noticebar-item-image">
+                  <i class="fa fa-cloud-upload text-success"></i>
+                </span>
+                                        <span class="noticebar-item-body">
+                  <strong class="noticebar-item-title">Templates Synced</strong>
+                  <span class="noticebar-item-text">20 Templates have been synced to the Mashon Demo instance.</span>
+                  <span class="noticebar-item-time"><i class="fa fa-clock-o"></i> 12 minutes ago</span>
+                </span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="page-notifications.html" class="noticebar-item">
+                <span class="noticebar-item-image">
+                  <i class="fa fa-ban text-danger"></i>
+                </span>
+                                        <span class="noticebar-item-body">
+                  <strong class="noticebar-item-title">Sync Error</strong>
+                  <span class="noticebar-item-text">5 Designs have been failed to be synced to the Mashon Demo instance.</span>
+                  <span class="noticebar-item-time"><i class="fa fa-clock-o"></i> 20 minutes ago</span>
+                </span>
+                                    </a>
+                                </li>
+
+                                <li class="noticebar-menu-view-all">
+                                    <a href="page-notifications.html">View All Notifications</a>
+                                </li>
+                            </ul>
+                        </li>
+
+
+                        <li class="dropdown">
+                            <a href="page-notifications.html" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-envelope"></i>
+                                <span class="navbar-visible-collapsed">&nbsp;Messages&nbsp;</span>
+                            </a>
+
+                            <ul class="dropdown-menu noticebar-menu" role="menu">
+                                <li class="nav-header">
+                                    <div class="pull-left">
+                                        Messages
+                                    </div>
+
+                                    <div class="pull-right">
+                                        <a href="javascript:;">New Message</a>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <a href="page-notifications.html" class="noticebar-item">
+                <span class="noticebar-item-image">
+                  <!--<img src="img/avatars/avatar-1-md.jpg" style="width: 50px" alt="">-->
+                </span>
+
+                                        <span class="noticebar-item-body">
+                  <strong class="noticebar-item-title">New Message</strong>
+                  <span class="noticebar-item-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit...</span>
+                  <span class="noticebar-item-time"><i class="fa fa-clock-o"></i> 20 minutes ago</span>
+                </span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="page-notifications.html" class="noticebar-item">
+                <span class="noticebar-item-image">
+                 <!-- <img src="img/avatars/avatar-2-md.jpg" style="width: 50px" alt="">-->
+                </span>
+
+                                        <span class="noticebar-item-body">
+                  <strong class="noticebar-item-title">New Message</strong>
+                  <span class="noticebar-item-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit...</span>
+                  <span class="noticebar-item-time"><i class="fa fa-clock-o"></i> 5 hours ago</span>
+                </span>
+                                    </a>
+                                </li>
+
+                                <li class="noticebar-menu-view-all">
+                                    <a href="page-notifications.html">View All Messages</a>
+                                </li>
+                            </ul>
+                        </li>
+
+
+                        <li class="dropdown">
+                            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-exclamation-triangle"></i>
+                                <span class="navbar-visible-collapsed">&nbsp;Alerts&nbsp;</span>
+                            </a>
+
+                            <ul class="dropdown-menu noticebar-menu noticebar-hoverable" role="menu">
+                                <li class="nav-header">
+                                    <div class="pull-left">
+                                        Alerts
+                                    </div>
+                                </li>
+
+                                <li class="noticebar-empty">
+                                    <h4 class="noticebar-empty-title">No alerts here.</h4>
+                                    <p class="noticebar-empty-text">Check out what other makers are doing on Explore!</p>
+                                </li>
+                            </ul>
+                        </li>
+
+
+                    </ul>
+
+
+
+                </div> <!--/.navbar-collapse -->
+
+            </div> <!-- /.container -->
+
+        </div> <!-- /.navbar -->
+        <div class="mainbar">
+
+            <div class="container fullwidth">
+
+                <button type="button" class="btn mainbar-toggle" data-toggle="collapse" data-target=".mainbar-collapse">
+                    <i class="fa fa-bars"></i>
+                </button>
+
+                <div class="col-md-5 paddingmarginzero logo"  >
+                    <a href="index.html"><img src="{{ asset('img/logo.png')}}" /></a>
+                </div>
+                <div class="col-md-7">
+                    <div class="mainbar-collapse collapse">
+
+                        <ul class="nav navbar-nav mainbar-nav navbar-right">
+
+                            <li class="active">
+                                <a href="index.html">
+                                    <i class="fa fa-dashboard"></i>
+                                    Dashboard
                                 </a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a href="#">Mike John responded to your email</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">You have 5 new tasks</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">You're now friend with Andrew</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Another Notification</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Another One</a>
-                                    </li>
-                                </ul>
                             </li>
 
-
-                            
-
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <i class="material-icons">person</i> {{ Auth::user()->name }}
+                            <li class="dropdown ">
+                                <a href="#about" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">
+                                    <i class="fa fa-desktop"></i>
+                                    Inventory
+                                    <span class="caret"></span>
                                 </a>
+
                                 <ul class="dropdown-menu">
-                                    <li>
-                                        <a href="#"><i class="material-icons">settings</i> Settings</a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ route('logout') }}"
-                                            onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();"><i class="material-icons">exit_to_app</i>
-                                            Logout
+                                    <li><a href="ui-buttons.html"><i class="fa fa-user nav-icon"></i> Menu</a></li>
+                                    <li><a href="ui-tabs.html"><i class="fa fa-bars nav-icon"></i> Menu</a></li>
+                                    <li><a href="ui-notifications.html"><i class="fa fa-asterisk nav-icon"></i> Menu</a></li>
+                                    <li><a href="ui-sliders.html"><i class="fa fa-tasks nav-icon"></i> Menu</a></li>
+                                    <li><a href="ui-typography.html"><i class="fa fa-font nav-icon"></i> Menu</a></li>
+                                    <li><a href="ui-portlets.html"><i class="fa fa-list-alt nav-icon"></i> Menu</a></li>
+
+
+                                    <li class="dropdown-submenu">
+                                        <a tabindex="-1" href="#">
+                                            <i class="fa fa-bar-chart-o"></i>
+                                            &nbsp;&nbsp;Sub Menu
                                         </a>
-        
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                            {{ csrf_field() }}
-                                        </form>
+
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="ui-chart-flot.html">
+                                                    <i class="fa fa-bar-chart-o"></i>
+                                                    &nbsp;&nbsp;Menu
+                                                </a>
+                                            </li>
+
+                                            <li>
+                                                <a href="ui-chart-morris.html">
+                                                    <i class="fa fa-bar-chart-o"></i>
+                                                    &nbsp;&nbsp;Menu
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+
+                                </ul>
+                            </li>
+
+                            <li class="dropdown ">
+                                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">
+                                    <i class="fa fa-align-left"></i>
+                                    Approval
+                                    <span class="caret"></span>
+                                </a>
+
+                                <ul class="dropdown-menu">
+                                    <li class="dropdown-header">Menu</li>
+
+                                    <li>
+                                        <a href="ui-form-regular.html">
+                                            <i class="fa fa-location-arrow nav-icon"></i>
+                                            Menu
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="ui-form-extended.html">
+                                            <i class="fa fa-bolt nav-icon"></i>
+                                            Menu
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="ui-form-validation.html">
+                                            <i class="fa fa-check nav-icon"></i>
+                                            Menu
+                                        </a>
+                                    </li>
+
+                                    <li class="divider"></li>
+
+                                    <li class="dropdown-header">Menu</li>
+
+                                    <li>
+                                        <a href="ui-table-basic.html">
+                                            <i class="fa fa-table"></i>
+                                            &nbsp;&nbsp;Menu
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="ui-table-advanced.html">
+                                            <i class="fa fa-table"></i>
+                                            &nbsp;&nbsp;Menu
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="ui-table-responsive.html">
+                                            <i class="fa fa-table"></i>
+                                            &nbsp;&nbsp;Menu
+                                        </a>
                                     </li>
                                 </ul>
-                            @endguest
                             </li>
-                            <li class="separator hidden-lg hidden-md"></li>
+
+                            <li class="dropdown ">
+                                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">
+                                    <i class="fa fa-files-o"></i>
+                                    Update
+                                    <span class="caret"></span>
+                                </a>
+
+                                <ul class="dropdown-menu">
+                                    <li><a href="page-profile.html"><i class="fa fa-user nav-icon"></i> Menu</a></li>
+                                    <li><a href="page-invoice.html"><i class="fa fa-money nav-icon"></i> Menu</a></li>
+                                    <li><a href="page-pricing.html"><i class="fa fa-dollar nav-icon"></i> Pricing Plans</a></li>
+                                    <li><a href="page-support.html"><i class="fa fa-question nav-icon"></i> Menu</a></li>
+                                    <li><a href="page-gallery.html"><i class="fa fa-picture-o nav-icon"></i> Menu</a></li>
+                                    <li><a href="page-settings.html"><i class="fa fa-cogs nav-icon"></i> Menu</a></li>
+                                    <li><a href="page-calendar.html"><i class="fa fa-calendar nav-icon"></i> Menu</a></li>
+                                </ul>
+                            </li>
+
+                            <li >
+                                <a href="#contact" >
+                                    <i class="fa fa-external-link"></i>
+                                    Reports
+                                </a>
+
+
+                            </li>
+
                         </ul>
+
+                    </div> <!-- /.navbar-collapse -->
+                </div>
+            </div> <!-- /.container -->
+
+        </div> <!-- /.mainbar -->
+        <div class="container fullwidth">
+
+            <div class="content">
+
+                <div class="row">
+                    <div class=" col-md-2 " >
+                        <div class="verticalmenu text-center">
+                            <h3 class="h2box ">Modules</h3>
+
+
+
+
+                            <div class="menutab active">
+                                <a href="{{ url('home') }}">
+                                    <div class="menuitem cursorpointer" >
+                                        <img src="{{ asset('img/ic_dashboard.png')}}" alt="dashboard" /><br />
+                                        Dashboard
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="menutab active">
+                                <div class="menuitem cursorpointer" role="button" data-toggle="collapse" href="#collapseExample2" aria-expanded="false" aria-controls="collapseExample">
+                                    <img src="{{ asset('img/ic_practicesetup.png')}}" alt="dashboard" /><br />
+                                    Catalogue
+                                </div>
+                                <ul class="collapse " id="collapseExample2">
+                                    <a href="{{ url('category') }}">
+                                        <li> Category Management</li>
+                                    </a>
+                                    <a href="{{ url('product') }}">
+                                        <li> Product Management</li>
+                                    </a>
+                                    <a href="{{ url('importIMEI') }}">
+                                        <li> Import IMEI</li>
+                                    </a>
+                                </ul>
+                            </div>
+
+
+                            <div class="menutab active">
+                                <div class="menuitem cursorpointer" role="button" data-toggle="collapse" href="#collapseExample3" aria-expanded="false" aria-controls="collapseExample">
+                                    <img src="{{ asset('img/ic_practicesetup.png')}}" alt="dashboard" /><br />
+                                    Purchase Orders
+                                </div>
+                                <ul class="collapse " id="collapseExample3">
+                                    <a href="{{ url('order/create') }}">
+                                        <li> Create Order</li>
+                                    </a>
+                                    <a href="{{ url('order/all_orders') }}">
+                                        <li> Orders</li>
+                                    </a>
+                                    <a href="{{ url('order/receive') }}">
+                                        <li> New Shipment</li>
+                                    </a>
+                                    <a href="{{ url('order/payment') }}">
+                                        <li> PO Payment</li>
+                                    </a>
+                                    <a href="{{ url('order/received_orders') }}">
+                                        <li> Received Orders</li>
+                                    </a>
+                                </ul>
+                            </div>
+                            <div class="menutab active">
+                                <div class="menuitem cursorpointer" role="button" data-toggle="collapse" href="#collapseExample4" aria-expanded="false" aria-controls="collapseExample">
+                                    <img src="{{ asset('img/ic_practicesetup.png')}}" alt="dashboard" /><br />
+                                    Staff
+                                </div>
+                                <ul class="collapse " id="collapseExample4">
+                                    <a href="{{ url('staff') }}">
+                                        <li>Staff Management </li>
+                                    </a>
+
+                                </ul>
+                            </div>
+                            <div class="menutab active">
+                                <div class="menuitem cursorpointer" role="button" data-toggle="collapse" href="#collapseExample5" aria-expanded="false" aria-controls="collapseExample">
+                                    <img src="{{ asset('img/ic_practicesetup.png')}}" alt="dashboard" /><br />
+                                    Outlets
+                                </div>
+                                <ul class="collapse " id="collapseExample5">
+                                    <a href="{{ url('/retailer') }}">
+                                        <li>Dealer </li>
+                                    </a>
+                                    <a href="{{ url('retailer/create_order') }}">
+                                        <li>Create Supply Order </li>
+                                    </a>
+
+                                    <a href="{{ url('retailer_order/orders') }}">
+                                        <li>Supply Orders </li>
+                                    </a>
+
+
+                                </ul>
+                            </div>
+
+                            <div class="menutab active">
+                                <div class="menuitem cursorpointer" role="button" data-toggle="collapse" href="#collapseExample6" aria-expanded="false" aria-controls="collapseExample">
+                                    <img src="{{ asset('img/ic_practicesetup.png')}}" alt="dashboard" /><br />
+                                    Finance
+                                </div>
+                                <ul class="collapse " id="collapseExample6">
+                                    <a href="{{ url('finance/orders_approval') }}">
+                                        <li>Orders Approval </li>
+                                    </a>
+                                    <a href="{{ url('/invoice/list/') }}">
+                                        <li>Invoice History </li>
+                                    </a>
+
+                                    <a href="{{ url('warehouseStock') }}">
+                                        <li>Stock Report </li>
+                                    </a>
+
+                                    <a href="{{url('/retailer_order/payment')}}">
+                                        <li>Receive Payment </li>
+                                    </a>
+
+                                    <a href="{{url('/bank')}}">
+                                        <li>Registered Banks </li>
+                                    </a>
+
+                                    <a href="{{url('/ledger')}}">
+                                        <li>Ledger </li>
+                                    </a>
+
+                                </ul>
+                            </div>
+
+                            <div class="menutab active">
+                                <div class="menuitem cursorpointer" role="button" data-toggle="collapse" href="#collapseExample7" aria-expanded="false" aria-controls="collapseExample">
+                                    <img src="{{ asset('img/ic_practicesetup.png')}}" alt="dashboard" /><br />
+                                    Warehouse
+                                </div>
+                                <ul class="collapse " id="collapseExample7">
+                                    <a href="{{ url('createNewWarehouse') }}">
+                                        <li>Create Warehouse </li>
+                                    </a>
+                                    <a href="{{ url('warehouse') }}">
+                                        <li>Warehouse </li>
+                                    </a>
+                                    <a href="{{ url('warehouseStaff') }}">
+                                        <li>Allocate Staff </li>
+                                    </a>
+                                    <a href="{{ url('warehouseStaffView') }}">
+                                        <li>Warehouse Staff </li>
+                                    </a>
+
+                                    <a href="{{ url('mainWarehouseReceive') }}">
+                                        <li>Warehouse Receive</li>
+                                    </a>
+
+                                    <a href="{{ url('warehouseIssue') }}">
+                                        <li>Sales Invoice </li>
+                                    </a>
+                                </ul>
+                            </div>
+                            <div class="menutab active">
+                                <div class="menuitem cursorpointer" role="button" data-toggle="collapse" href="#collapseExample8" aria-expanded="false" aria-controls="collapseExample">
+                                    <img src="{{ asset('img/ic_practicesetup.png')}}" alt="dashboard" /><br />
+                                    Report
+                                </div>
+                                <ul class="collapse " id="collapseExample8">
+                                    <a href="#">
+                                        <li>Finance Report </li>
+                                    </a>
+
+                                </ul>
+                            </div>
+                            <div class="menutab active">
+                                <div class="menuitem cursorpointer" role="button" data-toggle="collapse" href="#collapseExample9" aria-expanded="false" aria-controls="collapseExample">
+                                    <img src="{{ asset('img/ic_practicesetup.png')}}" alt="dashboard" /><br />
+                                    Access Control
+                                </div>
+                                <ul class="collapse " id="collapseExample9">
+                                    <a href="{{ url('access') }}">
+                                        <li>Access </li>
+                                    </a>
+                                    <a href="{{ url('userrole') }}">
+                                        <li>User Role</li>
+                                    </a>
+
+
+                                </ul>
+                            </div>
+                            <div class="menutab active">
+                                <a href="{{ url('general') }}">
+                                    <div class="menuitem cursorpointer" >
+                                        <img src="{{ asset('img/ic_practicesetup.png')}}" alt="dashboard" /><br />
+                                        Miscellaneous
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-10 " style=" background:#fff;">
+                        <div class="content-container ">
+                            @yield('content')
+                        </div>
                     </div>
                 </div>
-            </nav>
-             @yield('content')
-
+            </div>
         </div>
+
+
+
+
+
     </div>
 
-</div>
+
     <!-- Scripts -->
-    <script src="{{ asset('vendors/moment.min.js') }}"></script>
+    <footer class="footer">
 
+        <div class="container">
+
+            <div class="row">
+
+                <div class="col-sm-3">
+
+                    <h4>About us</h4>
+
+                    <br>
+
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+
+                    <hr>
+
+                    <p>&copy; 2018 Blade.</p>
+
+                </div> <!-- /.col -->
+
+                <div class="col-sm-3">
+
+                    <h4>Support</h4>
+
+                    <br>
+
+                    <ul class="icons-list">
+                        <li>
+                            <i class="fa fa-angle-double-right icon-li"></i>
+                            <a href="javascript:;">Frequently Asked Questions</a>
+                        </li>
+                        <li>
+                            <i class="fa fa-angle-double-right icon-li"></i>
+                            <a href="javascript:;">Ask a Question</a>
+                        </li>
+                        <li>
+                            <i class="fa fa-angle-double-right icon-li"></i>
+                            <a href="javascript:;">Video Tutorial</a>
+                        <li>
+                            <i class="fa fa-angle-double-right icon-li"></i>
+                            <a href="javascript:;">Feedback</a>
+                        </li>
+                    </ul>
+
+                </div> <!-- /.col -->
+
+                <div class="col-sm-3">
+
+                    <h4>Legal</h4>
+
+                    <br>
+
+                    <ul class="icons-list">
+                        <li>
+                            <i class="fa fa-angle-double-right icon-li"></i>
+                            <a href="javascript:;">License</a>
+                        </li>
+                        <li>
+                            <i class="fa fa-angle-double-right icon-li"></i>
+                            <a href="javascript:;">Terms of Use</a>
+                        </li>
+                        <li>
+                            <i class="fa fa-angle-double-right icon-li"></i>
+                            <a href="javascript:;">Privacy Policy</a>
+                        </li>
+                        <li>
+                            <i class="fa fa-angle-double-right icon-li"></i>
+                            <a href="javascript:;">Security</a>
+                        </li>
+                    </ul>
+
+                </div> <!-- /.col -->
+
+                <div class="col-sm-3">
+
+                    <h4>Site Map</h4>
+
+                    <br>
+
+                    <ul class="icons-list">
+                        <li>
+                            <i class="fa fa-angle-double-right icon-li"></i>
+                            <a href="javascript:;">Inventory</a>
+                        </li>
+                        <li>
+                            <i class="fa fa-angle-double-right icon-li"></i>
+                            <a href="javascript:;">Inventory</a>
+                        </li>
+                        <li>
+                            <i class="fa fa-angle-double-right icon-li"></i>
+                            <a href="javascript:;">Inventory</a>
+                        </li>
+                        <li>
+                            <i class="fa fa-angle-double-right icon-li"></i>
+                            <a href="javascript:;">Inventory</a>
+                        </li>
+                    </ul>
+
+                </div> <!-- /.col -->
+
+            </div> <!-- /.row -->
+
+        </div> <!-- /.container -->
+
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js"></script>
     <script src="{{ asset('js/app.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"></script>
-    <script src="{{ asset('js/custom.js') }}" type="text/javascript"></script>
-    <!-- <script src="{{ asset('vendors/jquery-3.1.1.min.js') }}" type="text/javascript"></script>
-         -->    <script src="{{ asset('vendors/jquery-ui.min.js') }}" type="text/javascript"></script>
-   <!--  <script src="{{ asset('vendors/bootstrap.min.js') }}" type="text/javascript"></script> -->
-    <script src="{{ asset('vendors/material.min.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('vendors/perfect-scrollbar.jquery.min.js') }}" type="text/javascript"></script>
-
-        <!-- Forms Validations Plugin -->
-    <script src="{{ asset('vendors/jquery.validate.min.js') }}"></script>
-    <!--  Plugin for Date Time Picker and Full Calendar Plugin-->
-    
-    <!--  Charts Plugin -->
-    <script src="{{ asset('vendors/chartist.min.js') }}"></script>
-    <script src="{{ asset('vendors/charts/chartjs/Chart.min.js') }}"></script>
-
-    <!--  Plugin for the Wizard -->
-    <script src="{{ asset('vendors/jquery.bootstrap-wizard.js') }}"></script>
-    <!--  Notifications Plugin    -->
-    <script src="{{ asset('vendors/bootstrap-notify.js') }}"></script>
-    <!-- DateTimePicker Plugin -->
-    <script src="{{ asset('vendors/bootstrap-datetimepicker.js') }}"></script>
-    <!-- Vector Map plugin -->
-    <script src="{{ asset('vendors/jquery-jvectormap.js') }}"></script>
-    <!-- Sliders Plugin -->
-    <script src="{{ asset('vendors/nouislider.min.js') }}"></script>
-    <!--  Google Maps Plugin    -->
-    <!-- <script src="https://maps.googleapis.com/maps/api/js"></script> -->
-    <!-- Select Plugin -->
-    <script src="{{ asset('vendors/jquery.select-bootstrap.js') }}"></script>
-    <!--  DataTables.net Plugin    -->
-    <script src="{{ asset('vendors/jquery.datatables.js') }}"></script>
-
-    <script src="https://cdn.datatables.net/buttons/1.5.1/js/dataTables.buttons.min.js"></script>
-
-    <script src="https://cdn.datatables.net/buttons/1.5.1/js/buttons.colVis.min.js"></script>
-    <!-- Sweet Alert 2 plugin -->
-    <script src="{{ asset('vendors/sweetalert2.js') }}"></script>
-    <!--    Plugin for Fileupload, full documentation here: http://www.jasny.net/bootstrap/javascript/#fileinput -->
-    <script src="{{ asset('vendors/jasny-bootstrap.min.js') }}"></script>
-    <!--  Full Calendar Plugin    -->
-    <script src="{{ asset('vendors/fullcalendar.min.js') }}"></script>
-    <!-- TagsInput Plugin -->
-    <script src="{{ asset('vendors/jquery.tagsinput.js') }}"></script>
-    <!-- Material Dashboard javascript methods -->
-<script src="{{ asset('js/demo.js') }}"></script>
-    <script src="{{ asset('js/turbo.js') }}"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+  <script src="{{ asset('js/prettify.js') }}"></script>
+  <script src="{{ asset('js/accounting.js') }}"></script>
+    <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 
 
-  <!-- <script src="{{ asset('js/charts/flot-charts.js') }}"></script> -->
-  <script src="{{ asset('js/charts/chartjs-charts.js') }}"></script>
+
+
 
 
 </body>

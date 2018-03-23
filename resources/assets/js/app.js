@@ -41,9 +41,11 @@ Vue.component('retailer-component', require('./components/RetailerComponent.vue'
 Vue.component('retailer-outlet-component', require('./components/RetailerOutletComponent.vue'));
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
 Vue.component('product-component', require('./components/ProductComponent.vue'));
+Vue.component('showproduct-component', require('./components/showProductComponent.vue'));
 Vue.component('role-component', require('./components/RoleComponent.vue'));
 Vue.component('userrole-component', require('./components/UserRoleComponent.vue'));
 Vue.component('category-component', require('./components/categoryComponent.vue'));
+Vue.component('showcategory-component', require('./components/showCategoryComponent.vue'));
 //Vue.component('product-component', require('./components/productComponent.vue'));
 Vue.component('order-component', require('./components/OrderComponent.vue'));
 Vue.component('receive-component', require('./components/ReceiveComponent.vue'));
@@ -62,11 +64,13 @@ Vue.component('receiveorders-component', require('./components/ReceiveOrdersComp
 Vue.component('createretailerorders-component', require('./components/CreateRetailerOrderComponent.vue'));
 Vue.component('retailerorders-component', require('./components/RetailerOrderComponent.vue'));
 Vue.component('warehouse-component', require('./components/WarehouseComponent.vue'));
+Vue.component('createwarehouse-component', require('./components/createWarehouseComponent.vue'));
 Vue.component('warehouseissue-component', require('./components/WarehouseIssueComponent.vue'));
 Vue.component('warehousestaff-component', require('./components/warehouseStaffComponent.vue'));
+Vue.component('warehousestaffview-component', require('./components/warehouseStaffViewComponent.vue'));
 Vue.component('warehousestock-component', require('./components/warehouseStockComponent.vue'));
 Vue.component('mainwarehousereceive-component',require('./components/mainWarehouseReceiveComponent.vue'));
-//Vue.component('mainwarehousereceive-component',require('./components/mainWarehouseReceiveComponent.vue'));
+Vue.component('mainwarehousereceive-component',require('./components/mainWarehouseReceiveComponent.vue'));
 Vue.component('warehousetype-component', require('./components/WarehouseTypeComponent.vue'));
 Vue.component('financeorderapproval-component', require('./components/OrderFinanceApprovalComponent.vue'));
 
@@ -92,3 +96,4 @@ const app = new Vue({
 
 
 });
+

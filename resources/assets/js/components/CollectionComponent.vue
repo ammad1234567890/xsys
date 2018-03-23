@@ -5,7 +5,7 @@
                         <div class="row">
                             <div class="card headcolor">
                                 <div class="card-header">
-                                        <h3 class="card-title pad-bot"><i class="material-icons">dashboard</i> <small>RECEIVING </small> </h3>
+                                        <h3 class="card-title pad-bot"><i class="material-icons">dashboard</i> <small>COLLECTION </small> </h3>
                                 </div>
                             </div>
                         </div>
@@ -14,7 +14,10 @@
                         <div class="col-md-12">
                             <div class="panel panel-default" >
                                 <div class="panel-heading">
-                                    <h2 class="panel-title">Receiving</h2>
+                                    <h2 class="panel-title">Collection</h2>
+                                </div>
+                                <div class="col-md-12" style="    font-size: 19px; font-weight:bold; text-align: right; margin-top: 20px; margin-left: -31px;" v-if="new_payment.total_outstanding!=''">
+                                    Total Outstanding Amount: {{new_payment.total_outstanding | currency('')}}
                                 </div>
                                 <div class="panel-body">
                                     <div class="alert alert-success"  v-if="message">
@@ -23,32 +26,11 @@
                                     <div class="col-md-12">
                                         <form @submit.prevent="submit_payment">
                                             <div class="col-md-6 col-sm-3">
-                                                <div class="form-group">
-                                                    <div class="select">
-                                                        <select class="form-control" v-model="selected_invoice_index" @change="change_invoice()" required>
-                                                            <option value="">Select Invoice No</option>
-                                                            <option v-for="(invoice, index) in invoices" v-bind:value="index">Invoice#{{invoice.id}}</option>
-                                                        </select>
-                                                    </div>
+                                                <div class="form-group label-floating">
+                                                    <label class="control-label">Deposit Slip Number</label>
+                                                    <input type="text" class="form-control" v-model="new_payment.deposit_slip_no" required>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6 col-sm-3">
-                                                <div class="form-group">
-
-                                                        <input type="text" class="form-control" v-model="new_payment.selected_invoice_retailer" placeholder="Retailer Name" required/>
-
-
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6 col-sm-3">
-                                                <div class="form-group">
-
-                                                        <input type="text" class="form-control" v-model="new_payment.selected_invoice_retailer_outlet" placeholder="Retailer Outlet" required/>
- 
-                                                </div>
-                                            </div>
-
                                             <div class="col-md-6 col-sm-3">
                                                 <div class="form-group">
                                                     <div class="select">
@@ -59,6 +41,40 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="col-md-4 col-sm-3">
+                                                <div class="form-group">
+
+                                                    <!--<input type="text" class="form-control" v-model="new_payment.selected_invoice_retailer_outlet" placeholder="Retailer Outlet" required readonly/> -->
+
+                                                    <select class="form-control" v-model="new_payment.selected_invoice_retailer_outlet_id" @change="get_invoices_by_outlet()" required>
+                                                        <option value="">Retailer Outlets</option>
+                                                        <option v-for="(outlet, index) in outletsData" v-bind:value="outlet.id">{{outlet.name}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 col-sm-3">
+                                                <div class="form-group">
+
+                                                    <input type="text" class="form-control" v-model="new_payment.selected_invoice_retailer" placeholder="Retailer Name" required readonly/>
+
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 col-sm-3">
+                                                <div class="form-group">
+                                                    <div class="select">
+                                                        <select class="form-control" v-model="selected_invoice_index" @change="change_invoice()" required>
+                                                            <option value="">Select Invoice No</option>
+                                                            <option v-for="(invoice, index) in invoices" v-bind:value="index">{{invoice.invoice_no}}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+
+
 
 
                                             <div class="col-md-6 col-sm-3">
@@ -83,14 +99,14 @@
                                                 </div>
                                             </div>
                                         
-                                            <div class="col-md-6 col-sm-3" v-if="selected_payment_index==1">
+                                            <div class="col-md-6 col-sm-3" v-if="selected_payment_index==2">
                                                 <div class="form-group label-floating">
                                                     <label class="control-label">Cheque no</label>
                                                     <input type="text" class="form-control" v-model="new_payment.cheque_no" required>
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-6 col-sm-3">
+                                            <div class="col-md-6 col-sm-3" style="bottom: -16px;">
                                                 <div class="form-group label-floating">
                                                     <label class="control-label">Amount in RS</label>
                                                     <vue-numeric currency="Rs" class="form-control" separator="," v-model="new_payment.amount_in_rs"></vue-numeric>
@@ -98,12 +114,7 @@
                                             </div>
 
 
-                                            <div class="col-md-6 col-sm-3">
-                                                <div class="form-group label-floating">
-                                                    <label class="control-label">Deposit Slip Number</label>
-                                                    <input type="text" class="form-control" v-model="new_payment.deposit_slip_no" required>
-                                                </div>
-                                            </div>
+
 
 
 
@@ -116,7 +127,7 @@
                                                 </div>
                                             </div>
                                         
-                                            <div class="col-md-6">
+                                            <div class="col-md-12">
 
                                                     <button type="submit" class="btn btn-tumblr pull-right">Submit</button>
 
@@ -139,6 +150,7 @@
             return {
                 message:'',
                 invoices:[],
+                outletsData:[],
                 banks:[],
                 currencies:[],
                 payments:[],
@@ -159,6 +171,8 @@
                     deposit_slip_no:'',
                     outstanding_amount:'',
                     remarks:'',
+                    total_outstanding:'',
+                    retailer_id:''
                 }
             }
         },
@@ -170,6 +184,7 @@
             this.get_all_banks();
             this.get_all_currencies();
             this.get_all_payment();
+            this.get_all_outlets();
         },
         methods:{
             get_all_invoices:function(){
@@ -195,12 +210,24 @@
                 });
             },
             change_invoice:function(){
+                //alert(this.selected_invoice_index);
+
                 this.new_payment.invoice_id= this.invoices[this.selected_invoice_index].id;
-                this.new_payment.selected_invoice_retailer=this.invoices[this.selected_invoice_index].order.retailer.name;
-                this.new_payment.selected_invoice_retailer_outlet=this.invoices[this.selected_invoice_index].order.retailer_outlet.name;
+                this.new_payment.selected_invoice_retailer=this.invoices[this.selected_invoice_index].retailer_order.retailer.name;
+                this.new_payment.selected_invoice_retailer_outlet=this.invoices[this.selected_invoice_index].retailer_order.retailer_outlet.name;
                 this.new_payment.invoice_actual_amount=this.invoices[this.selected_invoice_index].total_amount;
-                this.new_payment.selected_invoice_retailer_id=this.invoices[this.selected_invoice_index].order.retailer.id;
-                this.new_payment.selected_invoice_retailer_outlet_id=this.invoices[this.selected_invoice_index].order.retailer_outlet.id;
+
+                this.new_payment.retailer_id=this.invoices[this.selected_invoice_index].retailer_order.retailer_outlet.id;
+                this.new_payment.selected_invoice_retailer_id=this.invoices[this.selected_invoice_index].retailer_order.retailer.id;
+                this.new_payment.selected_invoice_retailer_outlet_id=this.invoices[this.selected_invoice_index].retailer_order.retailer_outlet.id;
+                axios.post('../RetailerTotalOutstanding',this.new_payment).then((response)=>{
+                    this.new_payment.total_outstanding=response.data[0]['Outstanding'];
+                });
+            },
+            get_all_outlets:function(){
+                axios.get('../outlet/get_all_outlets').then(response=>{
+                    this.outletsData=response.data;
+                });
             },
             change_payment:function(){
                 this.new_payment.payment_id=this.payments[this.selected_payment_index].id;
@@ -221,12 +248,20 @@
                             this.new_payment.cheque_no='';
                             this.new_payment.amount_in_rs='';
                             this.new_payment.deposit_slip_no='';
-                            this.new_payment.outstanding_amount='';
+                            this.new_payment.total_outstanding='';
                             this.new_payment.remarks='';
                         $("html, body").animate({
                             scrollTop: 0
                         }, 600);
                     }
+                });
+
+            },
+            get_invoices_by_outlet:function(){
+                axios.post('../get_invoice_by_retailer',this.new_payment).then((response)=>{
+                    this.invoices=response.data;
+                    this.new_payment.selected_invoice_retailer=response.data[0].retailer_order.retailer.name;
+                    this.new_payment.selected_invoice_retailer_id=response.data[0].retailer_order.retailer.id;
                 });
 
             }

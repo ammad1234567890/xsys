@@ -8,8 +8,8 @@
                     </div>
                 </div>
                 <div class="card-content">
-                    <p class="category"><strong>Total Employees</strong></p>
-                    <h3 class="card-title">+355</h3>
+                    <p class="category"><strong>Employees</strong></p>
+                    <h3 class="card-title">355</h3>
                 </div>
                 <div class="card-footer">
                     <div class="stats">

@@ -8,7 +8,7 @@
                     </div>
                 </div>
                 <div class="card-content">
-                    <p class="category"><strong>Active Product</strong></p>
+                    <p class="category"><strong>Activated Devices</strong></p>
                     <h3 class="card-title">1605</h3>
                 </div>
                 <div class="card-footer">

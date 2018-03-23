@@ -78,7 +78,9 @@ class MainWarehouseReceiveController extends Controller
      $imei=$request->input('imei');
      $quantity=$request->input('quantity');
      $warehouse_id=$request->input('warehouse_id');
-     $userId=Auth::user()->id;
+     $userId=Auth::user()->id;    
+     $alocatedIMEI=array();
+     $notInDB=array();
      try{
        DB::beginTransaction();
           //get receiveID
@@ -98,14 +100,18 @@ class MainWarehouseReceiveController extends Controller
                   //Main warehouse receive item
                   $mainWarehouseReceiveItem=MainWarehouseReceiveItem::create(['item_id'=>$item->id,'warehouse_id'=>$warehouse_id]);
                 }else{
-                  $return=array('replay'=>2,'data'=>$i." IMEI is alocated to another Item");
-                  DB::rollBack();
-                  return $return;
+                  array_push($alocatedIMEI,$i);
+                  $quantity=$quantity-1;
+                  // $return=array('replay'=>2,'data'=>$i." IMEI is alocated to another Item");
+                  // DB::rollBack();
+                  // return $return;
                 }
           }else{
-            $return=array('replay'=>2,'data'=>$i." IMEI is not found in Database");
-            DB::rollBack();
-            return $return;
+            array_push($notInDB,$i);
+            $quantity=$quantity-1;
+            // $return=array('replay'=>2,'data'=>$i." IMEI is not found in Database");
+            // DB::rollBack();
+            // return $return;
           }
         }
         //WarehouseStock
@@ -123,10 +129,11 @@ class MainWarehouseReceiveController extends Controller
         //WarehouseStock::create(['warehouse_id'=>$warehouse_id,'product_color_id'=>$productColor['id'],'product_qty'=>$quantity]);
      }catch(\Exception $e){
        $return=array('replay'=>1,'data'=>$e);
+       DB::rollBack();
        return $return;
       }
-     DB::commit();
-      $return=array('replay'=>0);
+      DB::commit();
+      $return=array('replay'=>0,'alocated'=>$alocatedIMEI,'notInDB'=>$notInDB);
       return $return;
    }
 }

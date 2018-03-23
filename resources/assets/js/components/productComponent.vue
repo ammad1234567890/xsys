@@ -111,7 +111,7 @@
                 </div>
             </div>
             <!-- end of panel -->
-            <div class="panel panel-default">
+            <!-- <div class="panel panel-default">
                 <div class="panel-heading">
                      <h2 class="panel-title">Products</h2>
                 </div>
@@ -121,7 +121,7 @@
                         <tr>
                             <th>Model</th>
                             <th>Category</th>
-                            <th>Release Date</th>
+                            <th>Est.Release Date</th>
                             <th>Details</th>
                             <th>Action</th>
                         </tr>
@@ -148,7 +148,7 @@
                         </tbody>
                     </table>
                 </div>
-            </div>
+            </div> -->
 
         </div>
 
@@ -345,6 +345,8 @@
                        const input = this.$refs.fileupload;
                        input.type = 'text';
                        input.type = 'file';
+                       alert("Product Created Successfully");
+                       window.location.reload();
                     }else{
                       alert('Fail to Create Product');
                       console.log(response.data.replay);

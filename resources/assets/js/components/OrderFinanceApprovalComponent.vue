@@ -18,27 +18,30 @@
                     <table id="order_detail_table" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                         <thead>
                         <tr>
+                            <th>Date</th>
                             <th>Order No</th>
-                            <th>Estimated Delivery</th>
-                            <th>Retailer</th>
                             <th>Outlet</th>
+                            <!-- <th>Estimated Delivery</th> -->
+                            <!-- <th>Retailer</th> -->
+                            <!-- <th>Account Clearance</th> -->
+                            <th>Price(pkr)</th>
                             <th>Account Clearance</th>
-                            <th>Total Amount</th>
-                            <th>Created Date</th>
                             <th>Action</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr v-for="(order, index) in all_orders">
-                            <td>CR{{order.created_at | getdate}}{{order.created_at | getmonth}}00{{order.id}}</td>
-                            <td>{{order.expected_delivery_date | moment}}</td>
-                            <td>{{order.retailer.name}}</td>
-                            <td>{{order.retailer_outlet.name}}</td>
-                            <td v-if="order.is_account_clearance==1"><i class="fa fa-check" title="Cleared from Finance" style="text-align:center; display:block; font-size:25px; color:green;"></i> </td>
-                            <td v-else><i class="fa fa-times" style="text-align:center; display:block; font-size:25px; color:red;"></i></td>
-
-                            <td>{{order.total_cost | currency('Rs')}}</td>
                             <td>{{order.created_at | moment}}</td>
+                            <td>CR{{order.created_at | getdate}}{{order.created_at | getmonth}}00{{order.id}}</td>
+                            <td>{{order.retailer_outlet.name}}</td>
+                            <!-- <td>{{order.expected_delivery_date | moment}}</td> -->
+                            <!-- <td>{{order.retailer.name}}</td> -->
+
+
+                            <td>{{order.total_cost | currency('')}}</td>
+                            <td v-if="order.is_account_clearance==1"><i class="fa fa-check" title="Cleared from Finance" style="text-align:center; display:block; font-size:25px; color:green;"></i> </td>
+                            
+                            <td v-else><i class="fa fa-times" style="text-align:center; display:block; font-size:25px; color:red;"></i></td>
                             <td>
                                 
                                 <div class="dropdown">
@@ -52,7 +55,9 @@
                                     <button class="btn btn-github btn-xs" type="button" v-on:click="view_order_details(index)">View Details</button>
                                 </div>
                                 <a class="btn btn-tumblr btn-xs" v-bind:href="'../invoice/create/'+order.id" v-if="order.is_account_clearance==1">Generate Invoice</a>
+                               <!-- <a class="btn btn-tumblr btn-xs">Invoice Received</a> -->
                             </td>
+                            
                         </tr>
                         </tbody>
                     </table>
@@ -368,7 +373,7 @@
             responsive: false,
             language: {
                 search: "_INPUT_",
-                searchPlaceholder: "Search records",
+                searchPlaceholder: "Search here",
             }
             });
         },3000);

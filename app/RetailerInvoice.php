@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 class RetailerInvoice extends Model {
 
     protected $table = "tbl_invoice";
-    protected $fillable = ['id', 'order_id', 'discount_type_id', 'invoice_type_id', 'payment_type_id', 'total_amount', 'description', 'created_by', 'updated_by'];
+    protected $fillable = ['id','invoice_no' ,'order_id', 'discount_type_id', 'invoice_type_id', 'payment_type_id', 'total_amount', 'description', 'created_by', 'updated_by'];
     protected $primaryKey = 'id';
     
  public function payment_type()

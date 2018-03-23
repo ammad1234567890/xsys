@@ -3,7 +3,7 @@
       <div class="row">
           <div class="card headcolor">
               <div class="card-header">
-                      <h3 class="card-title pad-bot"><i class="material-icons">store</i> <small>WAREHOUSE SUPPLY </small> </h3>
+                      <h3 class="card-title pad-bot"><i class="material-icons">store</i> <small>SALE INVOICE </small> </h3>
               </div>
           </div>
       </div>
@@ -11,20 +11,30 @@
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading"> 
-                        <h2 class="panel-title">Warehouse Supply</h2>
+                        <h2 class="panel-title">Sale Invoice</h2>
                     </div>
 
                     <div class="panel-body">
                         <form @submit="createIssue">
-                          <div class="form-group col-md-12">
-                            <label for="Name">Invoice ID</label>
-                              <v-select label="invoice_id" :filterable="false" v-model="warehouseissue" :options="issueRequests"></v-select>
+                          <div class="row">
+                              <div class="col-md-2">
+                                <label for="Name">Invoice ID</label>
+                              </div>
+                              <div class="col-md-3">
+                                  <v-select label="invoice_id" :filterable="false" v-model="warehouseissue" :options="issueRequests"></v-select>
+                              </div>
+                              <div class="col-md-1"></div>
+
+                              <div class="col-md-2">
+                                    <label for="">IMEI</label>
+                              </div>
+                              <div class="col-md-3">
+                                    <input type="text" v-model="imei" class="textbox">
+                              </div>
+                              <div class="col-md-1"></div>
                           </div>
-                          <div class="form-group col-md-12">
-                                <label for="">IMEI</label>
-                                <input type="text" v-model="imei" class="form-control">
-                          </div>
-                          <div class="col-md-12">
+
+                          <div class="col-md-12" style="margin-top: 20px;">
                                 <table class="table table-striped table-bordered table-hover">
                                     <thead>
                                     <tr>

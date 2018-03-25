@@ -1,15 +1,8 @@
 <template>
     <div>
     <div class="row">
-
-            <div class="card headcolor">
-                <div class="card-header">
-                        <h3 class="card-title pad-bot"><i class="material-icons">important_devices</i> <small>PRODUCT MANAGEMENT </small> </h3>
-                </div>
-            </div>
-
         <div class="col-md-12">
-            <div v-if="edit" class="panel panel-default">
+            <div v-if="edit" class="panel panel-info">
                 <div class="panel-heading">
                             <h2 class="panel-title">Create Product</h2>
                         </div>
@@ -44,7 +37,7 @@
                                 </span>
                                 </div>
                                 <div class="form-group col-md-12">
-                                    <button class="col-md-12 btn btn-tumblr" @click="addColorForm">Add Product Color</button>
+                                    <button class="btn btn-tumblr" @click="addColorForm">Add Product Color</button>
                                 </div>
                             </div>
                         </div>
@@ -72,13 +65,13 @@
                                               {{errors.first('Discount')}}
                                             </span>
                                     </div>
-                                    <div class="form-group col-md-3">
+                                    <div class="form-group col-md-3" style="margin-top: 8px;">
                                         <span class="btn btn-round btn-file">
                                             <span class="fileinput-new">Select image(s)</span>
                                                 <input type="file" class="form-control" ref="fileupload" @change="imageChange(index)">
                                             </span>
                                     </div>
-                                    <div class="form-group col-md-2">
+                                    <div class="form-group col-md-2" style="margin-top: 35px;">
                                         <button class="btn btn-danger col-md-12" @click="removeColorForm(index)">Cancel</button>
                                     </div>
                                 </div>
@@ -100,7 +93,7 @@
                             </div>
 
                         </div> <!--Product Color Form-->
-                        <div class="form-group row">
+                        <div class="form-group row" style="    margin-left: 0px;">
                                 <button v-if="edit==false" type="submit" class="btn btn-tumblr">Submit</button>
                                 <button v-if="edit==true" class="btn btn-tumblr"  @click="saveEditing">Save</button>
                                 <button v-if="edit==true" class="btn btn-pinterest"  @click="cancelEditing">Cancel Editing</button>
@@ -111,18 +104,17 @@
                 </div>
             </div>
             <!-- end of panel -->
-            <div class="panel panel-default">
+            <div class="panel panel-info">
                 <div class="panel-heading">
                      <h2 class="panel-title">Products</h2>
                 </div>
                 <div class="panel-body">
-                    <table id="cateprotable" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                    <table id="pro" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                         <thead>
                         <tr>
                             <th>Model</th>
                             <th>Category</th>
                             <th>Est.Release Date</th>
-                            <th>Details</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -132,9 +124,11 @@
                             <td>{{product.product_category.name}}</td>
                             <td>{{product.release_date | moment}}</td>
                             <td>
-                                <button class="btn btn-github btn-xs" v-on:click="showDetails(index)" data-toggle="modal" data-target="#myModal">Details</button>
+                                <button class="btn btn-success btn-xs" v-on:click="showDetails(index)" data-toggle="modal" data-target="#myModal" title="View Detail"><i class="fa fa-eye"></i></button>
+                                <button class="btn btn-primary btn-xs" v-on:click="editProduct(index)"><i class="fa fa-edit" title="Edit"></i></button>
+
                             </td>
-                            <td>
+                            <!-- <td>
                                 <div class="dropdown">
                                     <button class="btn btn-info btn-xs dropdown-toggle" type="button" data-toggle="dropdown">Action
                                         <span class="caret"></span></button>
@@ -143,7 +137,7 @@
                                         <li><a href="#" v-on:click="deleteProduct(product.id,index)">Delete</a></li>
                                     </ul>
                                 </div>
-                            </td>
+                            </td> -->
                         </tr>
                         </tbody>
                     </table>
@@ -417,7 +411,7 @@
     $(document).ready(function() {
 
         setTimeout(function(){
-            $('#cateprotable').DataTable({
+            $('#pro').DataTable({
             "pagingType": "full_numbers",
             "lengthMenu": [
                 [10, 25, 50, -1],

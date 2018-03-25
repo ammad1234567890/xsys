@@ -1,13 +1,8 @@
 <template>
     <div>
         <div class="row">
-            <div class="card headcolor">
-                <div class="card-header">
-                      <h3 class="card-title pad-bot"><i class="material-icons">store</i> <small>STOCK REPORT</small> </h3>
-                </div>
-            </div>
             <div class="col-md-12">
-                <div class="panel panel-default">
+                <div class="panel panel-info">
                     <div class="panel-heading">
                         <h2 class="panel-title">Stock Details</h2>
                     </div>
@@ -28,7 +23,7 @@
                               </div>
                             </div>
                             <div class="col-md-2">
-                                <div class="form-group">
+                                <div class="form-group" style="    margin-top: 36px;">
                                     <button class="btn btn-tumblr" @click="showReport" style="    bottom: -8px;">Show Report</button>
                                 </div>
                             </div>
@@ -118,7 +113,7 @@ import vSelect from "vue-select"
         },
         methods:{
           showReport(e){
-            //loadDatatable(false);
+           // loadDatatable(false);
             e.preventDefault();
               this.showSummary=false;
               this.showFull=false;
@@ -128,6 +123,7 @@ import vSelect from "vue-select"
                 this.showSummary=true;
                 loadDatatable(true);
             }else if (this.selectedReportType.reportType=="Summary" && this.searchedWarehouse!=null) {
+             loadDatatable(false);
              axios.get('./warehouseStockSearch/'+this.searchedWarehouse.id).then(response=>{
               this.showDetails=response.data;
               this.showSummary=true;
@@ -146,10 +142,10 @@ import vSelect from "vue-select"
     }
     var showed=false;
     function loadDatatable(show){
-
+      var table;
       if(show==true){
             console.log()
-            $('#warehousestocktable').DataTable({
+            table=$('#warehousestocktable').DataTable({
             "pagingType": "full_numbers",
             "lengthMenu": [
                 [10, 25, 50, -1],
@@ -165,7 +161,9 @@ import vSelect from "vue-select"
 
     }else{
       if(showed==true){
-      $('#warehousestocktable').DataTable().fnDestroy();;
+      //$('#warehousestocktable').DataTable().fnDestroy();
+      table.destroy();  
+
       }
     }
   }

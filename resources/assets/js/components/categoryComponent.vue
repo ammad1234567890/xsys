@@ -1,46 +1,55 @@
 <template>
             <div class="row">
                 <div class="col-md-12">
-                    <div class="panel panel-default">
+                    <div class="panel panel-info">
                         <div class="panel-heading">
                             <h2 class="panel-title">Create Category</h2>
                         </div>
 
                         <div class="panel-body">
                             <form v-on:submit="CreateCategory">
-                                <div class="form-group col-md-6">
-                                    <label for="categoryName">Title</label>
-                                    <input type="text" v-validate="'required|regex:^[a-zA-Z ._]+$'" v-model="newCategory.name" class="form-control" name="categoryName" required>
-                                    <span class="text-danger" v-show="errors.has('categoryName')">
-                              {{errors.first('categoryName')}}
-                            </span>
-                                </div>
-                                <div class="form-group col-md-6">
-                                    <div class="col-md-3">
-                                        <span class="btn btn-round btn-file">
-                                            <span class="fileinput-new">Browse</span>
-                                            <input type="file" v-validate="'required|mimes:image/jpeg,image/png'" class="form-control" name="categoryImage" ref="fileupload" @change="imageChange">
-                                        </span>
-                                    </div>
-                                    <div class="col-md-8">
+                              <div class="row">
+                                  <div class="col-md-2">
+                                      <label for="categoryName">Title</label>
+                                  </div>
+                                  <div class="col-md-3">
+                                      <input type="text" v-validate="'required|regex:^[a-zA-Z ._]+$'" v-model="newCategory.name" class="textbox" name="categoryName" required>
+                                      <span class="text-danger" v-show="errors.has('categoryName')">
+                                        {{errors.first('categoryName')}}
+                                      </span>
+                                  </div>
+                                  <div class="col-md-1"></div>
+
+                                  <div class="col-md-2">
+                                      <label >Browse</label>
+                                  </div>
+                                  <div class="col-md-3">
+                                      <input type="file" v-validate="'required|mimes:image/jpeg,image/png'" class="textbox" name="categoryImage" ref="fileupload" @change="imageChange">
+                                  </div>
+                                  <div class="col-md-1"></div>
+                              </div>   
+                                    <!-- <div class="col-md-7">
                                         <pre v-if="fileName==''" class="pre-top-margin">Select Image</pre>
                                         <pre v-if="fileName!=''" class="pre-top-margin">{{fileName}}</pre>
                                         <span class="text-danger" v-show="errors.has('categoryImage')">
                                         {{errors.first('categoryImage')}}
                                         </span>
                                     </div>
-                                </div>
+                                                                    </div> -->
 
-                                <div class="form-group col-md-12">
+                                <div class="row">
+                                  <div class="col-md-2">
                                     <label for="categoryName">Description</label>
-                                    <textarea class="form-control" v-model="newCategory.description">
-
-                            </textarea>
-                                </div>
-                                <div class="form-group col-md-12">
-                                    <input type="submit" value="Submit" v-if="editing==0" class="btn btn-tumblr" />
-                                    <button  class="btn btn-tumblr" v-on:click="saveEditing" v-if="editing==1">Save Editing</button>
-                                    <button  class="btn btn-default" v-on:click="cancelEding" v-if="editing==1">Cancel Editing</button>
+                                  </div>
+                                  <div class="col-md-3">
+                                    <textarea class="textbox" v-model="newCategory.description">
+                                    </textarea>
+                                  </div>
+                                  <div class="col-md-6">
+                                      <input type="submit" value="Submit" v-if="editing==0" class="btn btn-tumblr pull-right" />
+                                      <button  class="btn btn-tumblr pull-right" v-on:click="saveEditing" v-if="editing==1">Save Editing</button>
+                                      <button  class="btn btn-default pull-right" v-on:click="cancelEding" v-if="editing==1">Cancel Editing</button>
+                                  </div>
                                 </div>
                             </form>
                         </div>

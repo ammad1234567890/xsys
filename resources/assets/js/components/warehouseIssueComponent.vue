@@ -9,7 +9,7 @@
       </div>
         <div v-if="!created" class="row">
             <div class="col-md-12">
-                <div class="panel panel-default">
+                <div class="panel panel-info">
                     <div class="panel-heading"> 
                         <h2 class="panel-title">Sale Invoice</h2>
                     </div>
@@ -62,7 +62,7 @@
         </div>
         <div v-if="created" class="row">
             <div class="col-md-12">
-                <div class="panel panel-default">
+                <div class="panel panel-info">
                     <div class="panel-heading">Details</div>
 
                     <div class="panel-body">

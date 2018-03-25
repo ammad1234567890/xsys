@@ -1,46 +1,56 @@
 <template>
             <div class="row">
                 <div class="col-md-12">
-                    <div v-if="editing==1" class="panel panel-default">
+                    <div v-if="editing==1" class="panel panel-info">
                         <div class="panel-heading">
                             <h2 class="panel-title">Create Category</h2>
                         </div>
 
                         <div class="panel-body">
-                            <form v-on:submit="CreateCategory">
-                                <div class="form-group col-md-6">
+                          <form v-on:submit="CreateCategory">
+                            <div class="row">
+                                <div class="col-md-2">
                                     <label for="categoryName">Title</label>
-                                    <input type="text" v-validate="'required|regex:^[a-zA-Z ._]+$'" v-model="newCategory.name" class="form-control" name="categoryName" required>
-                                    <span class="text-danger" v-show="errors.has('categoryName')">
-                              {{errors.first('categoryName')}}
-                            </span>
                                 </div>
-                                <div class="form-group col-md-6">
-                                    <div class="col-md-3">
-                                        <span class="btn btn-round btn-file">
-                                            <span class="fileinput-new">Browse</span>
-                                            <input type="file" v-validate="'required|mimes:image/jpeg,image/png'" class="form-control" name="categoryImage" ref="fileupload" @change="imageChange">
-                                        </span>
-                                    </div>
-                                    <div class="col-md-8">
+                                <div class="col-md-3">
+                                    <input type="text" v-validate="'required|regex:^[a-zA-Z ._]+$'" v-model="newCategory.name" class="textbox" name="categoryName" required>
+                                    <span class="text-danger" v-show="errors.has('categoryName')">
+                                    {{errors.first('categoryName')}}
+                                    </span>
+                                </div>
+                                <div class="col-md-1"></div>
+
+                                <div class="col-md-2">
+                                      <label >Browse</label>
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="file" v-validate="'required|mimes:image/jpeg,image/png'" class="textbox" name="categoryImage" ref="fileupload" @change="imageChange">
+                                </div>
+                                <div class="col-md-1"></div>
+                              </div>
+                                    <!-- <div class="col-md-8">
                                         <pre v-if="fileName==''" class="pre-top-margin">Select Image</pre>
                                         <pre v-if="fileName!=''" class="pre-top-margin">{{fileName}}</pre>
                                         <span class="text-danger" v-show="errors.has('categoryImage')">
                                         {{errors.first('categoryImage')}}
                                         </span>
+                                    </div> -->
+                                
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label for="categoryName">Description</label>
                                     </div>
-                                </div>
+                                    <div class="col-md-3">
+                                        <textarea class="textbox" v-model="newCategory.description">
+                                        </textarea>
+                                    </div>
+                                    <div class="col-md-1"></div>
 
-                                <div class="form-group col-md-12">
-                                    <label for="categoryName">Description</label>
-                                    <textarea class="form-control" v-model="newCategory.description">
-
-                            </textarea>
-                                </div>
-                                <div class="form-group col-md-12">
-                                    <input type="submit" value="Submit" v-if="editing==0" class="btn btn-tumblr" />
-                                    <button  class="btn btn-tumblr" v-on:click="saveEditing" v-if="editing==1">Save Editing</button>
-                                    <button  class="btn btn-default" v-on:click="cancelEding" v-if="editing==1">Cancel Editing</button>
+                                  <div class="col-md-6">
+                                      <input type="submit" value="Submit" v-if="editing==0" class="btn btn-default pull-right" />
+                                      <button  class="btn btn-primary" v-on:click="saveEditing" v-if="editing==1" style="margin-left: 130px;">Save Editing</button>
+                                      <button  class="btn btn-danger pull-right" v-on:click="cancelEding" v-if="editing==1" style="    margin-right: 84px;">Cancel Editing</button>
+                                  </div>
                                 </div>
                             </form>
                         </div>
@@ -48,19 +58,19 @@
 
 
 
-                    <div class="panel panel-default">
+                    <div class="panel panel-info">
                         <div class="panel-heading">
                             <h2 class="panel-title">Categories</h2>
                         </div>
                         <div class="panel-body">
                           <div class="material-datatables">
-                            <table id="categoriestable" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" style="width:100%" >
+                            <table id="cat" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" style="width:100%" >
                                 <thead>
                                 <tr>
                                     <th>S.No</th>
                                     <th>Title</th>
                                     <th>Description</th>
-                                    <th class="col-md-3 text-center">Action</th>
+                                    <th class="col-md-1 text-center">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -68,12 +78,10 @@
                                     <td>{{index+1}}</td>
                                     <td>{{category.name}}</td>
                                     <td>{{category.description}}</td>
-                                    <td>
+                                    <td class="text-center">
                                         <div>
-                                            <ul>
-                                                <a class="btn btn-tumblr btn-xs" href="#" v-on:click="edit(index)"> Edit</a> 
-                                                <a class="btn btn-danger btn-xs" href="#" v-on:click="deleteCategory(category.id,index)"> Delete</a>
-                                            </ul>
+                                                <a class="btn btn-info btn-xs" href="#" v-on:click="edit(index)" title="Edit"> <i class="fa fa-edit"></i></a> 
+                                                <!-- <a class="btn btn-danger btn-xs" href="#" v-on:click="deleteCategory(category.id,index)"><i class="fa fa-times"></i></a> -->
                                         </div>
                                     </td>
                                 </tr>
@@ -108,12 +116,14 @@
           }
         },
         mounted() {
-            console.log('Component mounted.')
+            console.log('Component mounted.');
+            //loadDataTable();
         },
         created(){
             axios.get('../public/categories').then(response=>{
                 this.allCategories=response.data;
                 console.log(this.allCategories);
+                loadDataTable();
             });
             axios.get('../public/path').then(response=>{
               this.path=response.data;
@@ -238,9 +248,27 @@
         }
     }
 
-    $(document).ready(function() {
-       setTimeout(function(){
-            $('#categoriestable').DataTable({
+    // $(document).ready(function() {
+    //    setTimeout(function(){
+    //         $('#categoriestable').DataTable({
+    //         "pagingType": "full_numbers",
+    //         "lengthMenu": [
+    //             [10, 25, 50, -1],
+    //             [10, 25, 50, "All"]
+    //         ],
+    //         responsive: true,
+    //         language: {
+    //             search: "_INPUT_",
+    //             searchPlaceholder: "Search here",
+    //         }
+    //         });
+    //     },3000);
+
+       
+    // });
+    function loadDataTable(){
+      setTimeout(function(){
+            $('#cat').DataTable({
             "pagingType": "full_numbers",
             "lengthMenu": [
                 [10, 25, 50, -1],
@@ -252,11 +280,8 @@
                 searchPlaceholder: "Search here",
             }
             });
-        },5000);
-
-       
-    });
-
+        },3000);
+        }
 </script>
 
 

@@ -2,14 +2,8 @@
     <div>
     <div class="row">
 
-            <div class="card headcolor">
-                <div class="card-header">
-                        <h3 class="card-title pad-bot"><i class="material-icons">important_devices</i> <small>PRODUCT MANAGEMENT </small> </h3>
-                </div>
-            </div>
-
         <div class="col-md-12">
-            <div class="panel panel-default">
+            <div class="panel panel-info">
                 <div class="panel-heading">
                             <h2 class="panel-title">Create Product</h2>
                         </div>
@@ -44,7 +38,7 @@
                                 </span>
                                 </div>
                                 <div class="form-group col-md-12">
-                                    <button class="col-md-12 btn btn-tumblr" @click="addColorForm">Add Product Color</button>
+                                    <button class="btn btn-tumblr" @click="addColorForm">Add Product Color</button>
                                 </div>
                             </div>
                         </div>
@@ -72,13 +66,13 @@
                                               {{errors.first('Discount')}}
                                             </span>
                                     </div>
-                                    <div class="form-group col-md-3">
+                                    <div class="form-group col-md-3" style="margin-top: 8px;">
                                         <span class="btn btn-round btn-file">
                                             <span class="fileinput-new">Select image(s)</span>
                                                 <input type="file" class="form-control" ref="fileupload" @change="imageChange(index)">
                                             </span>
                                     </div>
-                                    <div class="form-group col-md-2">
+                                    <div class="form-group col-md-2" style="margin-top: 35px;">
                                         <button class="btn btn-danger col-md-12" @click="removeColorForm(index)">Cancel</button>
                                     </div>
                                 </div>
@@ -101,9 +95,11 @@
 
                         </div> <!--Product Color Form-->
                         <div class="form-group row">
-                                <button v-if="edit==false" type="submit" class="btn btn-tumblr">Submit</button>
+                            <div style="    margin-left: 30px;">
+                                <button v-if="edit==false" type="submit" class="btn btn-default">Submit</button>
                                 <button v-if="edit==true" class="btn btn-tumblr"  @click="saveEditing">Save</button>
                                 <button v-if="edit==true" class="btn btn-pinterest"  @click="cancelEditing">Cancel Editing</button>
+                            </div>
                         </div>
                     </form>
 

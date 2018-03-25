@@ -6,7 +6,7 @@
                 </div>
             </div>
     <!--<div class="col-md-4 panel panel-default">-->
-        <div class="col-md-12 panel panel-default">
+        <div class="col-md-12 panel panel-info">
             <div class="panel-heading">
                 <h2 class="panel-title">Add New Bank</h2>
             </div>
@@ -54,7 +54,7 @@
         </div>
 
 
-        <div class="col-md-12 panel panel-default">
+        <div class="col-md-12 panel panel-info">
             <div class="panel-heading">
                 <h2 class="panel-title">Bank Details</h2>
             </div>

@@ -16,20 +16,30 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     
     <!--  Material Dashboard CSS    -->
-   <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,700italic,400,600,700">
-  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,300,700">
-  <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css')}}">
-  <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,700italic,400,600,700">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Oswald:400,300,700">
+    <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css')}}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css')}}">
 
   <!-- App CSS -->
   <link rel="stylesheet" href="{{ asset('css/target-admin.css')}}">
-
-  <!-- Datatable -->
+    <link rel="shortcut icon" href="{{asset('img/icon.ico')}}"/>
+    <!-- Datatable -->
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
 
   <link href="{{ asset('css/style.css')}}" rel="stylesheet" />
 
-
+    <style>
+        .modal-backdrop{
+            display:none;
+        }
+        .modal-content{
+            margin-top:76px;
+        }
+        .modal-header .close{
+            margin-top:-9px;
+        }
+    </style>
 
 
 
@@ -100,6 +110,9 @@
 
                         <li class="dropdown navbar-profile">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="javascript:;">
+                                <span style="    color: #fff;
+    font-size: 14px;
+    margin-right: 15px;">Welcome: {{ Auth::user()->name }}</span>
                                 <img src="{{ asset('img/avatars/avatar-1-xs.jpg')}}" class="navbar-profile-avatar" alt="">
                                 <span class="navbar-profile-label">rod@rod.me &nbsp;</span>
                                 <i class="fa fa-caret-down"></i>
@@ -131,10 +144,19 @@
                                 <li class="divider"></li>
 
                                 <li>
-                                    <a href="login.html">
-                                        <i class="fa fa-sign-out"></i>
-                                        &nbsp;&nbsp;Logout
-                                    </a>
+
+                                        <a href="{{ route('logout') }}"
+                                           onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                            <i class="fa fa-sign-out"></i>
+                                            &nbsp;&nbsp;Logout
+                                        </a>
+
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                            {{ csrf_field() }}
+                                        </form>
+
+
                                 </li>
 
                             </ul>
@@ -290,145 +312,158 @@
                     <i class="fa fa-bars"></i>
                 </button>
 
-                <div class="col-md-5 paddingmarginzero logo"  >
-                    <a href="index.html"><img src="{{ asset('img/logo.png')}}" /></a>
+                <div class="col-md-4 paddingmarginzero logo"  >
+                    <a href="{{url('/home')}}"><img src="{{ asset('img/xsyslogo.png')}}" width="160px" style="margin-top:-9px;"/></a>
                 </div>
-                <div class="col-md-7">
+                <div class="col-md-8">
                     <div class="mainbar-collapse collapse">
 
                         <ul class="nav navbar-nav mainbar-nav navbar-right">
 
                             <li class="active">
-                                <a href="index.html">
-                                    <i class="fa fa-dashboard"></i>
+                                <a href="{{url('/home')}}">
+                                    <img src="{{ asset('img/dashb-white.png')}}" alt="dashboard" width="35px" />
+                                    <br/>
                                     Dashboard
                                 </a>
                             </li>
-
-                            <li class="dropdown ">
-                                <a href="#about" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">
-                                    <i class="fa fa-desktop"></i>
-                                    Inventory
-                                    <span class="caret"></span>
-                                </a>
-
-                                <ul class="dropdown-menu">
-                                    <li><a href="ui-buttons.html"><i class="fa fa-user nav-icon"></i> Menu</a></li>
-                                    <li><a href="ui-tabs.html"><i class="fa fa-bars nav-icon"></i> Menu</a></li>
-                                    <li><a href="ui-notifications.html"><i class="fa fa-asterisk nav-icon"></i> Menu</a></li>
-                                    <li><a href="ui-sliders.html"><i class="fa fa-tasks nav-icon"></i> Menu</a></li>
-                                    <li><a href="ui-typography.html"><i class="fa fa-font nav-icon"></i> Menu</a></li>
-                                    <li><a href="ui-portlets.html"><i class="fa fa-list-alt nav-icon"></i> Menu</a></li>
-
-
-                                    <li class="dropdown-submenu">
-                                        <a tabindex="-1" href="#">
-                                            <i class="fa fa-bar-chart-o"></i>
-                                            &nbsp;&nbsp;Sub Menu
-                                        </a>
-
-                                        <ul class="dropdown-menu">
-                                            <li>
-                                                <a href="ui-chart-flot.html">
-                                                    <i class="fa fa-bar-chart-o"></i>
-                                                    &nbsp;&nbsp;Menu
-                                                </a>
-                                            </li>
-
-                                            <li>
-                                                <a href="ui-chart-morris.html">
-                                                    <i class="fa fa-bar-chart-o"></i>
-                                                    &nbsp;&nbsp;Menu
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </li>
-
-                                </ul>
-                            </li>
-
                             <li class="dropdown ">
                                 <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">
-                                    <i class="fa fa-align-left"></i>
-                                    Approval
+                                    <img src="{{ asset('img/e-learning-white.png')}}" alt="dashboard" width="35px" />
+                                    <br/>
+                                    Catalogue
                                     <span class="caret"></span>
+
                                 </a>
-
                                 <ul class="dropdown-menu">
-                                    <li class="dropdown-header">Menu</li>
-
                                     <li>
-                                        <a href="ui-form-regular.html">
-                                            <i class="fa fa-location-arrow nav-icon"></i>
-                                            Menu
+                                        <a href="{{ url('category') }}">
+                                             Create Category
                                         </a>
                                     </li>
 
                                     <li>
-                                        <a href="ui-form-extended.html">
-                                            <i class="fa fa-bolt nav-icon"></i>
-                                            Menu
+                                        <a href="{{ url('showCategory') }}">
+                                            Category List
                                         </a>
                                     </li>
 
                                     <li>
-                                        <a href="ui-form-validation.html">
-                                            <i class="fa fa-check nav-icon"></i>
-                                            Menu
+                                        <a href="{{ url('product') }}">
+                                             Create Product
                                         </a>
                                     </li>
-
-                                    <li class="divider"></li>
-
-                                    <li class="dropdown-header">Menu</li>
-
                                     <li>
-                                        <a href="ui-table-basic.html">
-                                            <i class="fa fa-table"></i>
-                                            &nbsp;&nbsp;Menu
+                                        <a href="{{ url('showproduct') }}">
+                                             Products List
                                         </a>
                                     </li>
 
                                     <li>
-                                        <a href="ui-table-advanced.html">
-                                            <i class="fa fa-table"></i>
-                                            &nbsp;&nbsp;Menu
-                                        </a>
-                                    </li>
-
-                                    <li>
-                                        <a href="ui-table-responsive.html">
-                                            <i class="fa fa-table"></i>
-                                            &nbsp;&nbsp;Menu
+                                        <a href="{{ url('importIMEI') }}">
+                                            Import IMEI
                                         </a>
                                     </li>
                                 </ul>
-                            </li>
 
+                            </li>
                             <li class="dropdown ">
                                 <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">
-                                    <i class="fa fa-files-o"></i>
-                                    Update
+                                    <img src="{{ asset('img/four-blocks-cube-white.png')}}" alt="dashboard" width="35px" />
+                                    <br/>
+                                    Purchase Orders
                                     <span class="caret"></span>
+
                                 </a>
-
                                 <ul class="dropdown-menu">
-                                    <li><a href="page-profile.html"><i class="fa fa-user nav-icon"></i> Menu</a></li>
-                                    <li><a href="page-invoice.html"><i class="fa fa-money nav-icon"></i> Menu</a></li>
-                                    <li><a href="page-pricing.html"><i class="fa fa-dollar nav-icon"></i> Pricing Plans</a></li>
-                                    <li><a href="page-support.html"><i class="fa fa-question nav-icon"></i> Menu</a></li>
-                                    <li><a href="page-gallery.html"><i class="fa fa-picture-o nav-icon"></i> Menu</a></li>
-                                    <li><a href="page-settings.html"><i class="fa fa-cogs nav-icon"></i> Menu</a></li>
-                                    <li><a href="page-calendar.html"><i class="fa fa-calendar nav-icon"></i> Menu</a></li>
+                                    <li><a href="{{ url('order/create') }}">Create Order</a></li>
+                                    <li><a href="{{ url('order/all_orders') }}">Orders Detail</a></li>
+                                    <li><a href="{{ url('order/receive') }}">New Shipment</a></li>
+                                    <li><a href="{{ url('order/payment') }}">PO Payment</a></li>
+                                    <li><a href="{{ url('order/received_orders') }}">Received Orders</a></li>
                                 </ul>
-                            </li>
 
-                            <li >
-                                <a href="#contact" >
-                                    <i class="fa fa-external-link"></i>
+                            </li>
+                            <li class="dropdown ">
+                                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">
+                                    <img src="{{ asset('img/hotel-staff-white.png')}}" alt="dashboard" width="35px" />
+                                    <br/>
+                                    Staff
+                                    <span class="caret"></span>
+
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{ url('/staff') }}">Create Staff</a></li>
+                                </ul>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{ url('/viewStaff') }}">Staff List</a></li>
+                                </ul>
+
+                            </li>
+                            <li class="dropdown ">
+                                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">
+                                    <img src="{{ asset('img/store-white.png')}}" alt="dashboard" width="35px" />
+                                    <br/>
+                                    Outlets
+                                    <span class="caret"></span>
+
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{url('/retailer')}}">Create Dealer Account</a></li>
+                                    <li><a href="{{url('/retailer_list')}}">Dealers List</a></li>
+                                    <li><a href="{{url('/retailer/create_order')}}">Create Supply Order</a></li>
+                                    <li><a href="{{url('/retailer_order/orders')}}">Supply Order Detail</a></li>
+                                </ul>
+
+                            </li>
+                            <li class="dropdown ">
+                                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">
+                                    <img src="{{ asset('img/bars-white.png')}}" alt="dashboard" width="35px" />
+                                    <br/>
+                                    Finance
+                                    <span class="caret"></span>
+
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{url('finance/orders_approval')}}">Orders Approval</a></li>
+                                    <li><a href="{{ url('/invoice/list/') }}">Invoice History</a></li>
+                                    <li><a href="{{ url('warehouseStock') }}">Stock Report</a></li>
+                                    <li><a href="{{url('/retailer_order/payment')}}">Receive Payment</a></li>
+                                    <li><a href="{{url('/bank')}}">Registered Banks</a></li>
+                                    <li><a href="{{url('/ledger')}}">Ledger</a></li>
+                                </ul>
+
+                            </li>
+                            <li class="dropdown ">
+                                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">
+                                    <img src="{{ asset('img/factory-stock-house-white.png')}}" alt="dashboard" width="35px" />
+                                    <br/>
+                                    Warehouse
+                                    <span class="caret"></span>
+
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{ url('createNewWarehouse') }}">Create Warehouse</a></li>
+                                    <li><a href="{{ url('warehouse') }}">Warehouse List</a></li>
+                                    <li><a href="{{ url('warehouseStaff') }}">Allocate Staff</a></li>
+                                    <li><a href="{{ url('warehouseStaffView') }}">Warehouse Staff</a></li>
+                                    <li><a href="{{ url('mainWarehouseReceive') }}">Warehouse Receive</a></li>
+                                    <li><a href="{{ url('warehouseIssue') }}">Sales Invoice</a></li>
+                                </ul>
+
+                            </li>
+                            <li class="dropdown ">
+                                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">
+                                    <img src="{{ asset('img/newspaper-white.png')}}" alt="dashboard" width="35px" />
+                                    <br/>
                                     Reports
-                                </a>
+                                    <span class="caret"></span>
 
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Finance Report</a></li>
+
+                                </ul>
 
                             </li>
 
@@ -444,43 +479,43 @@
             <div class="content">
 
                 <div class="row">
-                    <div class=" col-md-2 " >
+                    <div class=" col-md-2 " style="border-right: 1px solid #dadada;">
                         <div class="verticalmenu text-center">
                             <h3 class="h2box ">Modules</h3>
-
-
-
-
                             <div class="menutab active">
                                 <a href="{{ url('home') }}">
                                     <div class="menuitem cursorpointer" >
-                                        <img src="{{ asset('img/ic_dashboard.png')}}" alt="dashboard" /><br />
+                                        <img src="{{ asset('img/dashb.png')}}" alt="dashboard" width="40px" /><br />
                                         Dashboard
                                     </div>
                                 </a>
                             </div>
                             <div class="menutab active">
                                 <div class="menuitem cursorpointer" role="button" data-toggle="collapse" href="#collapseExample2" aria-expanded="false" aria-controls="collapseExample">
-                                    <img src="{{ asset('img/ic_practicesetup.png')}}" alt="dashboard" /><br />
+                                    <img src="{{ asset('img/e-learning.png')}}" alt="dashboard" style="width:40px;"/><br />
                                     Catalogue
                                 </div>
                                 <ul class="collapse " id="collapseExample2">
                                     <a href="{{ url('category') }}">
-                                        <li> Category Management</li>
+                                        <li> Create Category</li>
+                                    </a>
+                                    <a href="{{ url('showCategory') }}">
+                                        <li> Category List</li>
                                     </a>
                                     <a href="{{ url('product') }}">
-                                        <li> Product Management</li>
+                                        <li> Create Product</li>
+                                    </a>
+                                    <a href="{{ url('showproduct') }}">
+                                        <li> Products List </li>
                                     </a>
                                     <a href="{{ url('importIMEI') }}">
                                         <li> Import IMEI</li>
                                     </a>
                                 </ul>
                             </div>
-
-
                             <div class="menutab active">
                                 <div class="menuitem cursorpointer" role="button" data-toggle="collapse" href="#collapseExample3" aria-expanded="false" aria-controls="collapseExample">
-                                    <img src="{{ asset('img/ic_practicesetup.png')}}" alt="dashboard" /><br />
+                                    <img src="{{ asset('img/four-blocks-cube.png')}}" alt="dashboard" style="width:40px;"/><br />
                                     Purchase Orders
                                 </div>
                                 <ul class="collapse " id="collapseExample3">
@@ -488,7 +523,7 @@
                                         <li> Create Order</li>
                                     </a>
                                     <a href="{{ url('order/all_orders') }}">
-                                        <li> Orders</li>
+                                        <li> Orders List</li>
                                     </a>
                                     <a href="{{ url('order/receive') }}">
                                         <li> New Shipment</li>
@@ -503,24 +538,30 @@
                             </div>
                             <div class="menutab active">
                                 <div class="menuitem cursorpointer" role="button" data-toggle="collapse" href="#collapseExample4" aria-expanded="false" aria-controls="collapseExample">
-                                    <img src="{{ asset('img/ic_practicesetup.png')}}" alt="dashboard" /><br />
+                                    <img src="{{ asset('img/hotel-staff.png')}}" alt="dashboard" width="40px" /><br />
                                     Staff
                                 </div>
                                 <ul class="collapse " id="collapseExample4">
                                     <a href="{{ url('staff') }}">
-                                        <li>Staff Management </li>
+                                        <li>Create Staff</li>
+                                    </a>
+                                    <a href="{{ url('viewStaff') }}">
+                                        <li>Staff List</li>
                                     </a>
 
                                 </ul>
                             </div>
                             <div class="menutab active">
                                 <div class="menuitem cursorpointer" role="button" data-toggle="collapse" href="#collapseExample5" aria-expanded="false" aria-controls="collapseExample">
-                                    <img src="{{ asset('img/ic_practicesetup.png')}}" alt="dashboard" /><br />
+                                    <img src="{{ asset('img/store.png')}}" alt="dashboard" width="40px"/><br />
                                     Outlets
                                 </div>
                                 <ul class="collapse " id="collapseExample5">
                                     <a href="{{ url('/retailer') }}">
-                                        <li>Dealer </li>
+                                        <li>Create Dealer Account</li>
+                                    </a>
+                                    <a href="{{ url('/retailer_list') }}">
+                                        <li>Dealers List </li>
                                     </a>
                                     <a href="{{ url('retailer/create_order') }}">
                                         <li>Create Supply Order </li>
@@ -533,10 +574,38 @@
 
                                 </ul>
                             </div>
+                            
+                            <div class="menutab active">
+                                <div class="menuitem cursorpointer" role="button" data-toggle="collapse" href="#collapseExample7" aria-expanded="false" aria-controls="collapseExample">
+                                    <img src="{{ asset('img/factory-stock-house.png')}}" alt="dashboard" width="40px"/><br />
+                                    Warehouse
+                                </div>
+                                <ul class="collapse " id="collapseExample7">
+                                    <a href="{{ url('createNewWarehouse') }}">
+                                        <li>Create Warehouse </li>
+                                    </a>
+                                    <a href="{{ url('warehouse') }}">
+                                        <li>Warehouse List</li>
+                                    </a>
+                                    <a href="{{ url('warehouseStaff') }}">
+                                        <li>Allocate Staff </li>
+                                    </a>
+                                    <a href="{{ url('warehouseStaffView') }}">
+                                        <li>Warehouse Staff </li>
+                                    </a>
 
+                                    <a href="{{ url('mainWarehouseReceive') }}">
+                                        <li>Warehouse Receive</li>
+                                    </a>
+
+                                    <a href="{{ url('warehouseIssue') }}">
+                                        <li>Sales Invoice </li>
+                                    </a>
+                                </ul>
+                            </div>
                             <div class="menutab active">
                                 <div class="menuitem cursorpointer" role="button" data-toggle="collapse" href="#collapseExample6" aria-expanded="false" aria-controls="collapseExample">
-                                    <img src="{{ asset('img/ic_practicesetup.png')}}" alt="dashboard" /><br />
+                                    <img src="{{ asset('img/bars.png')}}" alt="dashboard" width="40px"/><br />
                                     Finance
                                 </div>
                                 <ul class="collapse " id="collapseExample6">
@@ -565,38 +634,9 @@
 
                                 </ul>
                             </div>
-
-                            <div class="menutab active">
-                                <div class="menuitem cursorpointer" role="button" data-toggle="collapse" href="#collapseExample7" aria-expanded="false" aria-controls="collapseExample">
-                                    <img src="{{ asset('img/ic_practicesetup.png')}}" alt="dashboard" /><br />
-                                    Warehouse
-                                </div>
-                                <ul class="collapse " id="collapseExample7">
-                                    <a href="{{ url('createNewWarehouse') }}">
-                                        <li>Create Warehouse </li>
-                                    </a>
-                                    <a href="{{ url('warehouse') }}">
-                                        <li>Warehouse </li>
-                                    </a>
-                                    <a href="{{ url('warehouseStaff') }}">
-                                        <li>Allocate Staff </li>
-                                    </a>
-                                    <a href="{{ url('warehouseStaffView') }}">
-                                        <li>Warehouse Staff </li>
-                                    </a>
-
-                                    <a href="{{ url('mainWarehouseReceive') }}">
-                                        <li>Warehouse Receive</li>
-                                    </a>
-
-                                    <a href="{{ url('warehouseIssue') }}">
-                                        <li>Sales Invoice </li>
-                                    </a>
-                                </ul>
-                            </div>
                             <div class="menutab active">
                                 <div class="menuitem cursorpointer" role="button" data-toggle="collapse" href="#collapseExample8" aria-expanded="false" aria-controls="collapseExample">
-                                    <img src="{{ asset('img/ic_practicesetup.png')}}" alt="dashboard" /><br />
+                                    <img src="{{ asset('img/newspaper.png')}}" alt="dashboard" width="40px" /><br />
                                     Report
                                 </div>
                                 <ul class="collapse " id="collapseExample8">
@@ -608,7 +648,7 @@
                             </div>
                             <div class="menutab active">
                                 <div class="menuitem cursorpointer" role="button" data-toggle="collapse" href="#collapseExample9" aria-expanded="false" aria-controls="collapseExample">
-                                    <img src="{{ asset('img/ic_practicesetup.png')}}" alt="dashboard" /><br />
+                                    <img src="{{ asset('img/key.png')}}" alt="dashboard" width="40px"/><br />
                                     Access Control
                                 </div>
                                 <ul class="collapse " id="collapseExample9">
@@ -625,7 +665,7 @@
                             <div class="menutab active">
                                 <a href="{{ url('general') }}">
                                     <div class="menuitem cursorpointer" >
-                                        <img src="{{ asset('img/ic_practicesetup.png')}}" alt="dashboard" /><br />
+                                        <img src="{{ asset('img/eye.png')}}" alt="dashboard" width="40px"/><br />
                                         Miscellaneous
                                     </div>
                                 </a>

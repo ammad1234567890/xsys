@@ -3,7 +3,7 @@
         <div class="row" style="margin-top: 24px;">
 
             <div class="col-md-12">
-                <div class="panel panel-default">
+                <div class="panel panel-info">
                         <div class="panel-heading">
                             <h2 class="panel-title">Warehouse Consignment Receive</h2>
                         </div>
@@ -40,7 +40,7 @@
         </div>
         <div v-if="!showError" class="row">
             <div class="col-md-12">
-                <div class="panel panel-default">
+                <div class="panel panel-info">
                         <div class="panel-heading">
                     <a href="#imei" data-toggle="collapse" style="color:#333333">
                             <h2 class="panel-title">Warehouse Product Receive</h2>
@@ -77,10 +77,10 @@
                               </div>
                               <div class="col-md-1"></div>
 
-                              <div class="col-md-2" @click="getColors">
+                              <div class="col-md-2" >
                                   <label for="product">Select Product Color</label>
                               </div>
-                              <div class="col-md-3">
+                              <div class="col-md-3" @click="getColors">
                                 <v-select label="color" v-model="newItems.productColor" :options="productColors"></v-select>
                               </div>
                               <div class="col-md-1"></div>
@@ -128,7 +128,7 @@
         </div>
          <div v-if="showError" class="row">
             <div class="col-md-12">
-                <div class="panel panel-default">
+                <div class="panel panel-info">
                     <a href="#imei" data-toggle="collapse" style="color:#333333">
                         <div class="panel-heading">
                             <h2 class="panel-title">Warehouse Product Receive</h2>

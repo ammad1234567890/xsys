@@ -8,7 +8,7 @@
                 </div>
             </div>
         <hr/>
-        <div class="panel panel-default" v-if="is_retailer_select==0">
+        <div class="panel panel-info" v-if="is_retailer_select==0">
             <div class="panel-heading">
                 <h2 class="panel-title">Select Retailer for Order</h2>
             </div>

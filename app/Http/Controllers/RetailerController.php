@@ -261,4 +261,8 @@ class RetailerController extends Controller
     public function create_order(){
         return View('create_retailer_order');
     }
+
+    public function retailer_list(){
+        return view('retailer_list');
+    }
 }

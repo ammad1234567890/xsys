@@ -1,12 +1,7 @@
 <template>
     <div class="row">
-            <div class="card headcolor">
-                <div class="card-header">
-                      <h3 class="card-title pad-bot"><i class="material-icons">description</i> <small>RETAILER ORDERS FOR APPROVAL</small> </h3>
-                </div>
-            </div>
         <div class="col-md-12">
-            <div class="panel panel-default">
+            <div class="panel panel-info">
                 <div class="panel-heading">
                     <h2 class="panel-title">Order Details</h2>
                 </div>
@@ -24,7 +19,7 @@
                             <!-- <th>Estimated Delivery</th> -->
                             <!-- <th>Retailer</th> -->
                             <!-- <th>Account Clearance</th> -->
-                            <th>Price(pkr)</th>
+                            <th>Price(PKR)</th>
                             <th>Account Clearance</th>
                             <th>Action</th>
                         </tr>
@@ -38,7 +33,7 @@
                             <!-- <td>{{order.retailer.name}}</td> -->
 
 
-                            <td>{{order.total_cost | currency('')}}</td>
+                            <td style="text-align: right;">{{order.total_cost | currency('')}}</td>
                             <td v-if="order.is_account_clearance==1"><i class="fa fa-check" title="Cleared from Finance" style="text-align:center; display:block; font-size:25px; color:green;"></i> </td>
                             
                             <td v-else><i class="fa fa-times" style="text-align:center; display:block; font-size:25px; color:red;"></i></td>
@@ -52,10 +47,11 @@
                                         <li><a href="#" v-on:click="edit_order_modal(index)">Edit</a></li>
                                         <li><a href="#" v-on:click="approve_order(index)">Approve</a></li>
                                     </ul>
-                                    <button class="btn btn-github btn-xs" type="button" v-on:click="view_order_details(index)">View Details</button>
-                                </div>
-                                <a class="btn btn-tumblr btn-xs" v-bind:href="'../invoice/create/'+order.id" v-if="order.is_account_clearance==1">Generate Invoice</a>
+                                    <button class="btn btn-success btn-xs" type="button" v-on:click="view_order_details(index)" title="View Detail"><i class="fa fa-eye"></i></button> &nbsp;
+                                
+                                <a class="btn btn-default btn-xs" v-bind:href="'../invoice/create/'+order.id" v-if="order.is_account_clearance==1" title="Generate Invoice"><i class="fa fa-file"></i></a>
                                <!-- <a class="btn btn-tumblr btn-xs">Invoice Received</a> -->
+                               </div>
                             </td>
                             
                         </tr>

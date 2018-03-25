@@ -56,6 +56,7 @@ Vue.component('department-component', require('./components/DepartmentComponent.
 Vue.component('stafftype-component', require('./components/StaffTypeComponent.vue'));
 Vue.component('designation-component', require('./components/DesignationComponent.vue'));
 Vue.component('staff-component', require('./components/staffComponent.vue'));
+Vue.component('viewstaff-component', require('./components/ViewStaffComponent.vue'));
 Vue.component('payment-component', require('./components/PaymentTypeComponent.vue'));
 Vue.component('currency-component', require('./components/CurrencyComponent.vue'));
 Vue.component('receivestatus-component', require('./components/ReceiveStatusComponent.vue'));
@@ -89,6 +90,8 @@ Vue.component('retailerledger-component', require('./components/RetailerLedgerCo
 Vue.component('bank-component', require('./components/BankComponent.vue'));
 Vue.component('retailerinvoice-component', require('./components/RetailerInvoiceComponent.vue'));
 Vue.component('retailerlist-component', require('./components/RetailerListComponent.vue'));
+Vue.component('allretailers-component', require('./components/AllRetailersComponent.vue'));
+
 
 
 const app = new Vue({

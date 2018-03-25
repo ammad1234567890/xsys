@@ -1,82 +1,96 @@
 <template>
 
     <div class="row">
+
         <div class="card headcolor">
             <div class="card-header">
-                    <h3 class="card-title pad-bot"><i class="material-icons">shopping_cart</i> <small>Purchase Order</small> </h3>
+                    <h3 class="card-title pad-bot">
+                        <h4 class="heading-inline" style="text-transform: uppercase; "> Create New Purchase Order </h4> </h3>
             </div>
+            <hr/>
         </div>
-        <div class="col-md-12">
-            <div class="panel panel-default">
+        <div class="row" v-if="message">
+<div class="col-md-12"><div class="alert alert-success">
+                    <strong>{{message}}</strong>
+                </div></div>
+        </div>
+        
+
+                <div class="clearfix"></div>
+
+
+            <div class="panel panel-info">
                 <div class="panel-heading">
                     <h2 class="panel-title">Create New Order</h2>
                 </div>
-                <div class="alert alert-success"  v-if="message">
-                    <strong>{{message}}</strong>
-                </div>
+                
                 <div class="panel-body">
                     <form @submit.prevent="add_order">
                         <div class="col-md-12">
-
-                            <div class="col-md-12 form-group">
-                                <label for="estimation_delivery">Estimated Delivery Date</label>
-                                <date-picker  v-model="estimation_date" type="date" style="width: 100%;" format="dd-MM-yyyy" placeholder="dd-mm-yyyy" lang="en"></date-picker>
+                            <div class="row">
+                                <div class="col-md-2"><label>Estimate Delivery Date</label></div>
+                                <div class="col-md-3">
+                                    <date-picker  v-model="estimation_date" type="date" style="width: 100%;" format="dd-MM-yyyy" placeholder="dd-mm-yyyy" lang="en" required></date-picker>
+                                </div>
                             </div>
-
                             <div  v-for="(find, index) in new_order.products">
-
-                                <div class="col-md-6 form-group">
-                                    <label for="select_product">Model</label>
-                                    <select name="select_product" class="form-control" v-model="find.product_id" @change="change_product(index, find.product_id)" required>
-                                        <option value="" selected>Select</option>
-                                        <option v-for="(product, index) in allProducts"  v-bind:value="product.id">{{product.name}}</option>
-                                    </select>
+                                <hr/>
+                                <div class="row">
+                                    <div class="col-md-2"><label>Model</label></div>
+                                    <div class="col-md-3">
+                                        <select class="textbox_dropdown" name="select_product" v-model="find.product_id" @change="change_product(index, find.product_id)" required>
+                                            <option value="" selected>Select</option>
+                                            <option v-for="(product, index) in allProducts"  v-bind:value="product.id">{{product.name}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-2"><label>Color</label></div>
+                                    <div class="col-md-3">
+                                        <select class="textbox_dropdown" v-model="new_order.products[index].product_color_id"  @change="myfunc(index)" required>
+                                            <option value="" selected>Select</option>
+                                            <option v-for="(product_color, index) in new_order.products[index].product_color"  v-bind:value="product_color.id">{{product_color.color}}</option>
+                                        </select>
+                                    </div>
                                 </div>
 
-                                <div class="col-md-6 form-group">
-                                    <label for="select_product_color">Color</label>
-                                    <select class="form-control" v-model="new_order.products[index].product_color_id"  @change="myfunc(index)" required>
-                                        <option value="" selected>Select</option>
-                                        <option v-for="(product_color, index) in new_order.products[index].product_color"  v-bind:value="product_color.id">{{product_color.color}}</option>
-                                    </select>
+                                <div class="row">
+                                    <div class="col-md-2"><label>Unit Price(PKR)</label></div>
+                                    <div class="col-md-3"><vue-numeric class="textbox" v-model="new_order.products[index].cost_per_set" placeholder="Cost" readonly></vue-numeric></div>
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-2"><label>Quantity</label></div>
+                                    <div class="col-md-3"><input type="text" class="textbox" v-model="new_order.products[index].quantity" placeholder="Quantity" required></div>
+                                    <div class="col-md-1"></div>
                                 </div>
-                                <div class="col-md-6 form-group">
-                                    <label for="cost_per_set">Unit Price(PKR)</label>
-                                    <vue-numeric class="form-control" v-model="new_order.products[index].cost_per_set" placeholder="Cost" readonly></vue-numeric>
-
-                                    <!-- <input type="text" class="form-control" v-model="new_order.products[index].cost_per_set" placeholder="Cost" required readonly> -->
+                                <div class="row">
+                                    <div class="col-md-11" v-if="index>0">
+                                        <button class="btn btn-danger pull-right" v-on:click="removeProductForm(index)">Remove</button>
+                                    </div>
+                                    <div class="col-md-1"></div>
                                 </div>
-
-                                <div class="col-md-6 form-group">
-                                    <label for="product_quanity">Quantity</label>
-                                    <input type="text" class="form-control" v-model="new_order.products[index].quantity" placeholder="Quantity" required>
-                                </div>
-
-
-
-                                <div class="col-md-12" v-if="index>0">
-                                    <button class="btn btn-pinterest pull-right" v-on:click="removeProductForm(index)">Remove</button>
-                                </div>
-
+                                <br/>
                                 <div class="clearfix"></div>
                             </div>
 
                         </div>
 
-                        <div class="row">
-                            <div class="col-md-3">
-                                <button class="btn btn-info" v-on:click="add_more_products"><i class="fa fa-plus"></i> Add More Products</button>
-                            </div>
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <button class="btn btn-info" v-on:click="add_more_products"><i class="fa fa-plus"></i> Add More Products</button>
+                                </div>
 
-                            <div class="col-md-9">
-                                <button class="btn btn-tumblr pull-right"><i class="fa fa-check"></i> Create Order</button>
+                                <div class="col-md-8">
+                                    <button class="btn btn-tumblr pull-right"><i class="fa fa-check"></i> Create Order</button>
+                                </div>
+                                <div class="col-md-1"></div>
                             </div>
                         </div>
+
                     </form>
 
                 </div>
             </div>
-        </div>
+
     </div>
 
 

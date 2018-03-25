@@ -10,7 +10,7 @@ html,body{
     margin: 80px auto;
     padding: 20px 40px 40px;
     text-align: center;
-    background: #fff;
+     background: rgba(255,255,255,0.1);
     border: 1px solid #ccc;
 }
 
@@ -36,7 +36,7 @@ html,body{
     position: absolute;
     width: 100%;height: 100%;
     top: 3.5px;left: 0;
-    background: #fff;
+  /*  background: #fff;*/
     z-index: -1;
     -webkit-transform: rotateZ(4deg);
     -moz-transform: rotateZ(4deg);
@@ -68,6 +68,7 @@ html,body{
     padding: 10px;
     text-align: center;
     height:40px;
+    color:#000;
     border: 1px solid #ccc;;
     background: #fafafa;
     transition:0.2s ease-in-out;
@@ -135,3 +136,18 @@ html,body{
   -webkit-animation-name: fadeInUp;
   animation-name: fadeInUp;
 }
+
+
+
+
+
+
+
+
+
+
+.login-container { color:#fff;}
+
+
+.white_text{ color:#fff}
+.paddingTop50{ padding-top:150px; padding-right:150px;}

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="panel panel-default">
+    <div class="panel panel-info">
         <div class="panel-heading">
             <h2 class="panel-title">Create New Locality</h2>
         </div>

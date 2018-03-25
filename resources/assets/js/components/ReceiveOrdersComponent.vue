@@ -1,12 +1,7 @@
 <template>
     <div class="row">
-        <div class="card headcolor">
-            <div class="card-header">
-                    <h3 class="card-title pad-bot"><i class="material-icons">shopping_cart</i> <small>RECEIVED ORDERS</small> </h3>
-            </div>
-        </div>
         <div class="col-md-12">
-            <div class="panel panel-default">
+            <div class="panel panel-info">
                 <div class="panel-heading">
                     <h2 class="panel-title">Receive Order Details</h2>
                 </div>
@@ -37,7 +32,7 @@
                             <td v-if="receive.qa_description==null"> ---- </td>
                             <td v-else>{{receive.qa_description}}</td>
                             <td>{{receive.receive_status.status}}</td>
-                            <td><button class="btn btn-github btn-xs" v-on:click="show_products(index)">View Detail</button></td>
+                            <td><button class="btn btn-success btn-xs" v-on:click="show_products(index)"><i class="fa fa-eye"></i></button></td>
                         </tr>
                         </tbody>
                     </table>

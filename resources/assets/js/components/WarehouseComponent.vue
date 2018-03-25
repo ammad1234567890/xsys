@@ -2,42 +2,50 @@
     <div>
       <div>
         <div class="row">
-            <div class="card headcolor">
-                <div class="card-header">
-                        <h3 class="card-title pad-bot"><i class="material-icons">store</i> <small>WAREHOUSE MANAGEMENT</small> </h3>
-                </div>
-            </div>
         </div>
           <div v-if="edit" class="row">
               <div class="col-md-12">
-                  <div class="panel panel-default">
-                    <a href="#d" data-toggle="collapse" style="color:#333333">
+                  <div class="panel panel-info">
                       <div class="panel-heading">
-                        <h2 class="panel-title">Add Warehouse</h2>
-                      </div>
+                    <a href="#d" data-toggle="collapse" style="color:#333333">
+                        <h2 class="panel-title">Edit Warehouse</h2>
                       </a>
+                      </div>
                       <div  class="panel-body">
                         <form @submit="createWarehouse">
-                          <div class="form-group col-md-6">
-                            <label for="name">Name</label>
-                            <input name="Name" type="text" class="form-control" v-validate="'required|regex:^[a-zA-Z ._]+$'" v-model="newWarehouse.name" >
-                            <span class="text-danger" v-show="errors.has('city')">
-                              {{errors.first('city')}}
-                            </span>
-                          </div>
-                          <div class="form-group col-md-6">
-                            <label for="warehouseType">Type</label>
-                            <select class="form-control" name="WarehouseType" v-validate="'required'" required v-model="newWarehouse.warehouse_type_id">
-                              <option value="">Select Warehouse Type</option>
-                              <option v-for="type in allWarehouseTypes" v-bind:value="type.id">{{type.type}}</option>
-                            </select>
-                            <span class="text-danger" v-show="errors.has('WarehouseType')">
-                              {{errors.first('WarehouseType')}}
-                            </span>
-                          </div>
-                          <div class="form-group col-md-6">
+                          <div class="row">
+                            <div class="col-md-2">
+                              <label for="name">Name</label>
+                            </div>
+                            <div class="col-md-3">
+                              <input name="Name" type="text" class="textbox" v-validate="'required|regex:^[a-zA-Z ._]+$'" v-model="newWarehouse.name" >
+                              <span class="text-danger" v-show="errors.has('city')">
+                                {{errors.first('city')}}
+                              </span>
+                            </div>
+                            <div class="col-md-1"></div>
+
+                              <div class="col-md-2">
+                                <label for="warehouseType">Type</label>
+                              </div>
+                              <div class="col-md-3">
+                                <select class="textbox" name="WarehouseType" v-validate="'required'" required v-model="newWarehouse.warehouse_type_id">
+                                  <option value="">Select Warehouse Type</option>
+                                  <option v-for="type in allWarehouseTypes" v-bind:value="type.id">{{type.type}}</option>
+                                </select>
+                                <span class="text-danger" v-show="errors.has('WarehouseType')">
+                                  {{errors.first('WarehouseType')}}
+                                </span>
+                              </div>
+                             <div class="col-md-1"></div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-md-2">
                             <label for="City">City</label>
-                            <!-- <select class="form-control" name="city" required v-model="newWarehouse.city">
+                          </div>
+                          <div class="col-md-3">
+                            <!-- <select class="textbox" name="city" required v-model="newWarehouse.city">
                               <option value="">Select City</option>
                               <option v-for="city in cities" v-bind:value="city.id">{{city.name}}</option>
                             </select> -->
@@ -46,9 +54,13 @@
                               {{errors.first('city')}}
                             </span>
                           </div>
-                          <div class="form-group col-md-6">
+                          <div class="col-md-1"></div>
+
+                          <div class="col-md-2">
                             <label for="region">Locality</label>
-                            <!-- <select class="form-control" name="region" required v-model="newWarehouse.region">
+                          </div>
+                          <div class="col-md-3">
+                            <!-- <select class="textbox" name="region" required v-model="newWarehouse.region">
                               <option value="">Select Region</option>
                               <option v-for="region in regions" v-bind:value="region.id">{{region.name}}</option>
                             </select> -->
@@ -57,30 +69,54 @@
                               {{errors.first('region')}}
                             </span>
                           </div>
-                          <div class="form-group col-md-6">
+                          <div class="col-md-1"></div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-md-2">
                             <label for="region">Latitude</label>
-                            <input type="text" v-validate="'regex:^[0-9.]+$'" name="latitude" class="form-control" v-model="newWarehouse.latitude">
+                          </div>
+                          <div class="col-md-3">
+                            <input type="text" v-validate="'regex:^[0-9.]+$'" name="latitude" class="textbox" v-model="newWarehouse.latitude">
                             <span class="text-danger" v-show="errors.has('latitude')">
                               {{errors.first('latitude')}}
                             </span>
                           </div>
-                          <div class="form-group col-md-6">
+                          <div class="col-md-1"></div>
+
+                          <div class="col-md-2">
                             <label for="region">Longitude</label>
-                            <input type="text" name="longitude" v-validate="'regex:^[0-9.]+$'" class="form-control" v-model="newWarehouse.longitude">
+                          </div>
+
+                          <div class="col-md-3">
+                            <input type="text" name="longitude" v-validate="'regex:^[0-9.]+$'" class="textbox" v-model="newWarehouse.longitude">
                             <span class="text-danger" v-show="errors.has('longitude')">
                               {{errors.first('longitude')}}
                             </span>
                           </div>
-                          <div class="form-group col-md-12">
+
+                          <div class="col-md-1"></div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-md-2">
                             <label for="region">Address</label>
-                            <input type="text" name="address" v-validate="'required'" class="form-control" v-model="newWarehouse.address">
+                          </div>
+                          <div class="col-md-3">
+                            <input type="text" name="address" v-validate="'required'" class="textbox" v-model="newWarehouse.address">
                             <span class="text-danger" v-show="errors.has('address')">
                               {{errors.first('address')}}
                             </span>
                           </div>
-                          <div class="form-group col-md-6">
+                          <div class="col-md-1"></div>
+
+                          <div class="col-md-2">
                             <label for="manager">Warehouse Incharge</label>
-                            <!-- <select class="form-control" name="manager" required v-model="newWarehouse.warehouse_manager">
+                          </div>
+
+                          <div class="col-md-3">
+
+                            <!-- <select class="textbox" name="manager" required v-model="newWarehouse.warehouse_manager">
                               <option value="">Select Manager</option>
                               <option v-for="manager in managers" v-bind:value="manager.id">{{manager.name}}</option>
                             </select> -->
@@ -89,9 +125,17 @@
                               {{errors.first('manager')}}
                             </span>
                           </div>
-                          <div class="form-group col-md-6">
+
+                          <div class="col-md-1"></div>
+                        </div>
+
+                        <div class="row">
+
+                          <div class="col-md-2">
                             <label for="accountant">Branch Accountant</label>
-                            <!-- <select class="form-control" name="accountant" required v-model="newWarehouse.warehouse_accountant">
+                          </div>
+                          <div class="col-md-3">
+                            <!-- <select class="textbox" name="accountant" required v-model="newWarehouse.warehouse_accountant">
                               <option value="">Select Accountant</option>
                               <option v-for="accountant in accountants" v-bind:value="accountant.id">{{accountant.name}}</option>
                             </select> -->
@@ -100,11 +144,14 @@
                               {{errors.first('accountant')}}
                             </span>
                           </div>
-                          <div class="form-group col-md-12">
+                          <div class="col-md-1"></div>
+
+                          <div class="col-md-6" style="    margin-top: 10px;">
                             <input v-if="edit==false" type="submit" class="btn btn-tumblr" value="Submit">
-                            <button v-if="edit==true" class="btn btn-tumblr" @click="saveEditing">Save Editing</button>
-                            <button v-if="edit==true" class="btn btn-pinterest" @click="cancelEding">Cancel Editing</button>
+                            <button v-if="edit==true" class="btn btn-primary" @click="saveEditing">Save Editing</button>
+                            <button v-if="edit==true" class="btn btn-danger" @click="cancelEding" style="margin-right: 80px;">Cancel Editing</button>
                           </div>
+                        </div>
                         </form>
                       </div>
                   </div>
@@ -113,13 +160,13 @@
       </div>
       <div class="row">
           <div class="col-md-12">
-              <div class="panel panel-default">
+              <div class="panel panel-info">
                   <div class="panel-heading">
                       <h2 class="panel-title">Warehouses</h2>
                   </div>
                   <div class="panel-body">
                     <div class="table-responsive">
-                      <table id="warehousetable" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                      <table id="ware" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                         <thead>
                           <tr>
                             <th>S.No</th>
@@ -147,15 +194,16 @@
                             <td>{{warehouse.address}}</td>
                             <td>{{warehouse.manager.name}}</td>
                             <td>{{warehouse.accountant.name}}</td>
-                            <td>
-                                <div class="dropdown">
+                            <td class="text-center">
+                                <a href="#" class="btn btn-primary btn-xs" v-on:click="editWarehouse(index)"><i class="fa fa-edit" title="Edit"></i></a>
+                                <!-- <div class="dropdown">
                                   <button class="btn btn-info btn-xs dropdown-toggle" type="button" data-toggle="dropdown">Action
                                   <span class="caret"></span></button>
                                     <ul class="dropdown-menu">
                                       <li><a href="#" v-on:click="editWarehouse(index)">Edit</a></li>
                                       <li><a href="#" v-on:click="deleteWarehouse(index,warehouse.id)">Delete</a></li>
                                     </ul>
-                                </div>
+                                </div> -->
                             </td>
                           </tr>
                         </tbody>
@@ -353,7 +401,7 @@ import vSelect from "vue-select"
 
     $(document).ready(function() {
         setTimeout(function(){
-            $('#warehousetable').DataTable({
+            $('#ware').DataTable({
             "pagingType": "full_numbers",
             "lengthMenu": [
                 [10, 25, 50, -1],

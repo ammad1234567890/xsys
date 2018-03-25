@@ -2,12 +2,18 @@
 
     <div class="row">
         <div class="card headcolor">
-              <div class="card-header">
-                      <h3 class="card-title pad-bot"><i class="material-icons">shopping_cart</i> <small>PO PAYMENT</small> </h3>
-              </div>
-          </div>
-        <div class="col-md-12">
-            <div class="panel panel-default">
+            <div class="card-header">
+                    <h3 class="card-title pad-bot">
+                        <h4 class="heading-inline" style="text-transform: uppercase; "> Purchase Orders Payments</h4> </h3>
+            </div>
+            <hr/>
+        </div>
+        <div class="alert alert-success"  v-if="message">
+                        <strong>{{message}}</strong>
+                    </div>
+                    <div class="clearfix"></div>
+        
+            <div class="panel panel-info">
                 <div class="panel-heading">
                     <h2 class="panel-title">
                         Create Order Payment
@@ -15,82 +21,88 @@
                 </div>
 
                 <div class="panel-body">
-                    <div class="alert alert-success"  v-if="message">
-                        <strong>{{message}}</strong>
-                    </div>
+                    
                     <form @submit.prevent="add_payment">
-                        <div class="row">
-                            <div class="col-md-6 form-group">
-                                <label for="select_order_no">Purchase Order</label>
-                                <select class="form-control" v-model="payment_data.order_id" @change="change_order()" required>
-                                    <option value="">Select</option>
-                                    <option v-for="order in all_orders" v-bind:value="order.id">
-                                        {{order.manufacture_order_no}}
-                                    </option>
-                                </select>
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-2"><label>Purchase Order</label></div>
+                                <div class="col-md-3">
+                                    <select class="textbox_dropdown" v-model="payment_data.order_id" @change="change_order()" required>
+                                        <option value="">Select</option>
+                                        <option v-for="order in all_orders" v-bind:value="order.id">
+                                            {{order.manufacture_order_no}}
+                                        </option>
+                                     </select>
+                                </div>
+                                <div class="col-md-1"></div>
+                                <div class="col-md-2"><label>Select Payment Method</label></div>
+                                <div class="col-md-3">
+                                    <select class="textbox_dropdown" v-model="payment_data.method_id" required>
+                                        <option value="">Select</option>
+                                        <option v-for="payment in all_payment_types" v-bind:value="payment.id">
+                                            {{payment.type}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="col-md-1"></div>
                             </div>
 
-                            <div class="col-md-6 form-group">
-                                <label for="select_products">Select Payment Method</label>
-                                <select class="form-control" v-model="payment_data.method_id" required>
-                                    <option value="">Select</option>
-                                    <option v-for="payment in all_payment_types" v-bind:value="payment.id">
-                                        {{payment.type}}
-                                    </option>
-                                </select>
-                            </div>
-
-                            <div class="col-md-6 form-group">
-                                <label for="product_quanity">Amount</label>
-                                <input type="text" class="form-control" placeholder="Amount" v-model="payment_data.amount" @change="change_amount()" required>
-                            </div>
-
-                            <div class="col-md-6 form-group">
-                                <label for="select_products">Select Currency</label>
-                                <select class="form-control" v-model="selected_currency_index" @change="change_currency()" required>
+                            <div class="row">
+                                <div class="col-md-2"><label>Amount</label></div>
+                                <div class="col-md-3">
+                                    <input type="text" class="textbox" placeholder="Amount" v-model="payment_data.amount" @change="change_amount()" required>
+                                </div>
+                                <div class="col-md-1"></div>
+                                <div class="col-md-2"><label>Select Currency</label></div>
+                                <div class="col-md-3">
+                                    <select class="textbox_dropdown" v-model="selected_currency_index" @change="change_currency()" required>
                                     <option value="">Select</option>
                                     <option v-for="(currency, index) in all_currencies" v-bind:value="index">
                                         {{currency.name}}
                                     </option>
                                 </select>
+                                </div>
+                                <div class="col-md-1"></div>
                             </div>
 
-
-
-                            <div class="col-md-6 form-group">
-                                <label for="product_quanity">Exchange Rate</label>
-                                <input type="text" v-model="payment_data.exchange_rate" class="form-control" placeholder="Exchange Rate" readonly>
-                            </div>
-
-                            <div class="col-md-6 form-group">
-
-                                <label for="product_quanity">Total Cost (PKR)</label>
-                                <vue-numeric class="form-control" name="remaining_payment" v-validate="{ max_value: remaining_payment }" currency="Rs" separator="," v-model="payment_data.total_payment" placeholder="Total Payment" readonly></vue-numeric>
+                            <div class="row">
+                                <div class="col-md-2"><label>Exchange Rate</label></div>
+                                <div class="col-md-3">
+                                    <input type="text" v-model="payment_data.exchange_rate" class="textbox" placeholder="Exchange Rate" readonly>
+                                </div>
+                                <div class="col-md-1"></div>
+                                <div class="col-md-2"><label>Total Cost (PKR)</label></div>
+                                <div class="col-md-3">
+                                    <vue-numeric class="textbox" name="remaining_payment" v-validate="{ max_value: remaining_payment }" currency="Rs" separator="," v-model="payment_data.total_payment" placeholder="Total Payment" readonly></vue-numeric>
 
 
                                 <span class="text-danger" v-show="errors.has('remaining_payment')">
                                   {{errors.first('remaining_payment')}}
                                 </span>
-
-
+                                </div>
+                                <div class="col-md-1"></div>
                             </div>
+
+                            
 
                             <div class="clearfix"></div>
-                        </div>
-
-
-
                         <div class="row">
-
-
-                            <div class="col-md-12">
-                                <button class="btn btn-tumblr pull-right"><i class="fa fa-check"></i> Add Payment</button>
+                            <div class="col-md-11">
+                                <button class="btn btn-success pull-right"><i class="fa fa-check"></i> Add Payment</button>
+                            </div>
+                            <div class="col-md-1">
                             </div>
                         </div>
+                        </div>
+                        
+
+
+
+                        
                     </form>
 
                 </div>
-            </div>
+        
         </div>
     </div>
 

@@ -2,7 +2,7 @@
     <div>
         <div class="row">
             <div class="col-md-12">
-                <div class="panel panel-default">
+                <div class="panel panel-info">
                     <div class="panel-heading">
                       <h2 class="panel-title">Assign Role</h2>
                     </div>
@@ -39,7 +39,7 @@
 
         <div class="row">
             <div class="col-md-12">
-                <div class="panel panel-default">
+                <div class="panel panel-info">
                     <div class="panel-heading">
                         <h2 class="panel-title">Assigned Roles</h2>
                     </div>

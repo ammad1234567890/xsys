@@ -45,6 +45,7 @@ Route::get('/test','ProductController@test');//->middleware('accesscontrol:1');
 
 //Retailers
 Route::get('/retailer', 'RetailerController@index')->name('retailer');
+Route::get('/retailer_list', 'RetailerController@retailer_list');
 Route::post('/retailer/create_retailer','RetailerController@create_retailer');
 Route::post('/retailer/edit_retailer','RetailerController@edit_retailer');
 Route::post('/retailer/delete_retailer','RetailerController@deactivate_retailer');
@@ -187,6 +188,7 @@ Route::post('/editDesignation','GeneralController@editDesignation');
 Route::get('/manager','StaffController@manager');
 Route::get('/accountant','StaffController@accountant');
 Route::get('/staff','StaffController@index');
+Route::get('/viewStaff','StaffController@viewStaff');
 Route::get('/allStaff','StaffController@showAll');
 Route::post('/createStaff','StaffController@store');
 Route::post('/editStaff','StaffController@update');

@@ -2,14 +2,16 @@
 
 <div class="row">
     <div class="card headcolor">
-        <div class="card-header">
-                <h3 class="card-title pad-bot"><i class="material-icons">shopping_cart</i> <small>NEW SHIPMENT</small> </h3>
+            <div class="card-header">
+                    <h3 class="card-title pad-bot">
+                        <h4 class="heading-inline" style="text-transform: uppercase; "> New Order Shipment</h4> </h3>
+            </div>
+            <hr/>
         </div>
-    </div>
-    <div class="col-md-12">
-        <div class="panel panel-default">
+    
+        <div class="panel panel-info">
             <div class="panel-heading">
-                <h2 class="panel-title">Purchase Order Details </h2>
+                <h2 class="panel-title">Order Shipment Details </h2>
             </div>
             <div class="alert alert-success"  v-if="message">
                 <strong>{{message}}</strong>
@@ -17,80 +19,92 @@
             <div class="panel-body">
                 <form @submit.prevent="recieve_order_submit">
                     <div class="row">
-                        <div class="col-md-6 form-group">
-                            <label for="select_order_no">Purchase Order</label>
-                            <select class="form-control" v-model="new_recieving.order_id" @change="order_change" required>
+                        <div class="col-md-2">
+                            <label>Purchase Order No.</label> 
+                            </div>
+                        <div class="col-md-3">    
+                            <select class="textbox_dropdown" v-model="new_recieving.order_id" @change="order_change" required>
                                 <option value="">Select</option>
                                 <option v-for="order in all_orders" v-bind:value="order.id">
                                     {{order.manufacture_order_no}}
                                 </option>
                             </select>
                         </div>
-
-                        <div class="col-md-6">
-                                <label for="select_collected_by">Transit Status</label>
-                                <select class="form-control" v-model="new_recieving.recieve_status_id" required>
+                            <div class="col-md-1"></div>
+                        <div class="col-md-2">
+                            <label for="select_collected_by">Transit Status</label> 
+                        </div>
+                        <div class="col-md-3">
+                                <select class="textbox_dropdown" v-model="new_recieving.recieve_status_id" required>
                                     <option value="">Select</option>
                                     <option v-for="status in all_status" v-bind:value="status.id">
                                         {{status.status}}
                                     </option>
-                                </select>
+                                </select> 
                         </div>
+                        <div class="col-md-1"></div>
+                        
                     </div>
 
                     <div class="row">
-                        
-                        <div class="col-md-6">
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox" v-bind:value="new_recieving.qa_check" id="checkboxFiveInput" name="" @change="change_qa_check"> QA Check
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-md-9" style="margin-top: 16px;" v-if="new_recieving.qa_check==1">
-                                    <label for="select_collected_by">QA Description</label>
-                                    <textarea class="form-control" v-model="new_recieving.qa_description">
-                            </textarea>
-                                </div>
-                            </div>
+                        <div class="col-md-2">
+                            <label for="select_collected_by">QA Check</label> 
                         </div>
-                        <div class="col-md-6 form-group" style="margin-top: 12px;">
-                            <label for="select_collected_by">Received  By</label>
-                            <select class="form-control" v-model="new_recieving.collected_id" required>
+                        <div class="col-md-1">
+                            <input type="checkbox" v-bind:value="new_recieving.qa_check" id="checkboxFiveInput" name="" @change="change_qa_check">
+                        </div>
+
+                        <div class="col-md-2">
+                            <textarea class="textbox" v-model="new_recieving.qa_description" placeholder="Description" v-if="new_recieving.qa_check==1">
+                            </textarea>
+                        </div>
+                        <div class="col-md-1"></div>
+                        <div class="col-md-2">
+                            <label for="select_collected_by">Received Person</label> 
+                        </div>
+                        <div class="col-md-3">
+                            <select class="textbox_dropdown" v-model="new_recieving.collected_id" required>
                                 <option value="">Select</option>
                                 <option v-for="staff in all_staff" v-bind:value="staff.id">{{staff.name}}</option>
                             </select>
                         </div>
+                        <div class="col-md-1"></div>
+                        
                     </div>
 
                     <div class="row" v-for="(find, index) in new_recieving.order_products">
-                        <div class="form-section" style="border-left:0px; border-right: 0px; border-bottom:0px; padding-left:0px; padding-right:0px;">
-
-                            <div class="col-md-6 form-group">
-                                <label for="select_products">Model</label>
-                                <select class="form-control" v-model="selected_order_product_index[index].index_no" @change="change_product(index)" required>
+                        <hr/>
+                        <div class="col-md-2">
+                            <label for="select_collected_by">Model</label> 
+                        </div>
+                        <div class="col-md-3">
+                            <select class="textbox_dropdown" v-model="selected_order_product_index[index].index_no" @change="change_product(index)" required>
                                     <option value="-1" selected="selected">Select</option>
                                     <option v-for="(products, index) in all_order_products"  v-bind:value="index">{{products.product_color.product.name}} ({{products.product_color.color}}) </option>
                                 </select>
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label for="product_quanity">Quantity</label>
-                                <input type="number" class="form-control" name="product_qty" v-model="new_recieving.order_products[index].quantity" :placeholder="'Quantity '+new_recieving.order_products[index].max_qty" v-validate="{ max_value: new_recieving.order_products[index].max_qty }"  @change="qty_change(index)" required>
+                        </div>
+                        <div class="col-md-1"></div>
+                        <div class="col-md-2">
+                            <label for="select_collected_by">Quantity</label> 
+                        </div>
+                        <div class="col-md-3">
+                            <input type="number" class="textbox_dropdown" name="product_qty" v-model="new_recieving.order_products[index].quantity" :placeholder="'Quantity '+new_recieving.order_products[index].max_qty" v-validate="{ max_value: new_recieving.order_products[index].max_qty }"  @change="qty_change(index)" required>
                                 <span class="text-danger" v-show="errors.has('product_qty')">
                                   {{errors.first('product_qty')}}
                                 </span>
-                            </div>
-                            <div class="col-md-12" v-if="index>0">
+                        </div>
+                            
+                            
+                            <div class="col-md-11" v-if="index>0">
                                 <button class="btn btn-danger pull-right" v-on:click="removeProductForm(index)">Remove</button>
                             </div>
+                            <div class="col-md-1"></div>
                             <div class="clearfix"></div>
-                        </div>
+                        
                     </div>
                     <div class="row">
                         <div class="col-md-12">
-                            <button class="btn btn-info" v-on:click="add_more_products"><i class="fa fa-plus"></i> Add More</button>
+                            <button class="btn btn-info" v-on:click="add_more_products"><i class="fa fa-plus"></i> Add More Products</button>
                         </div>
                     </div>
                     <br/>
@@ -132,14 +146,16 @@
                     <div class="row">
 
 
-                        <div class="col-md-12">
-                            <button class="btn btn-tumblr pull-right"><i class="fa fa-check"></i> Order Recieved</button>
+                        <div class="col-md-11">
+                            <button class="btn btn-success pull-right"><i class="fa fa-check"></i> Order Recieved</button>
+                        </div>
+                        <div class="col-md-1">
                         </div>
                     </div>
                 </form>
 
             </div>
-        </div>
+        
     </div>
 </div>
 

@@ -1,53 +1,36 @@
 @extends('layouts.auth')
 
 @section('content')
-<div class="wrapper wrapper-full-page">
-        <div class="full-page register-page" filter-color="black">
-            <div class="content">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-8 col-md-offset-2">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">Reset Password</div>
+<h1>Reset Password</h1>
 
-                                <div class="panel-body">
+                                <div class="form-box">
                                     @if (session('status'))
                                         <div class="alert alert-success">
                                             {{ session('status') }}
                                         </div>
                                     @endif
 
-                                    <form class="form-horizontal" method="POST" action="{{ route('password.email') }}">
+                                    <form method="POST" action="{{ route('password.email') }}">
                                         {{ csrf_field() }}
 
-                                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
 
-                                            <div class="col-md-6">
-                                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
+                                                <input id="email" type="email" placeholder="Email Address" name="email" value="{{ old('email') }}" required>
 
                                                 @if ($errors->has('email'))
-                                                    <span class="help-block">
+                                                    <span class="help-block" style="color:#fff;">
                                                         <strong>{{ $errors->first('email') }}</strong>
                                                     </span>
                                                 @endif
-                                            </div>
-                                        </div>
 
-                                        <div class="form-group">
-                                            <div class="col-md-6 col-md-offset-4">
-                                                <button type="submit" class="btn btn-primary">
+
+
+                                                <button type="submit"  class="btn btn-info btn-block login">
                                                     Send Password Reset Link
                                                 </button>
-                                            </div>
-                                        </div>
+
                                     </form>
+                                        <br />
+                                        <small class=""><a href="{{ route('login') }}" style="color:#fff;">Login</a> | <a href="{{ route('register') }}" style="color:#fff;">Register</a></small>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-</div>
+
 @endsection

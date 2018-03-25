@@ -2,7 +2,7 @@
       <div>    
         <div class="row" style="margin-top: 24px;">
             <div class="col-md-12">
-                <div class="panel panel-default">
+                <div class="panel panel-info">
                     <div class="panel-heading">
                         <h2 class="panel-title">Allocate Staff </h2>
                     </div>
@@ -18,46 +18,46 @@
                           <div class="col-md-1"></div>
 
 
-                          <div class="col-md-2" @click="setColum('id')">
+                          <div class="col-md-2">
                             <label for="ID">Emp ID</label>
                           </div>
-                          <div class="col-md-3">
+                          <div class="col-md-3" @click="setColum('id')">
                              <v-select label="id" :filterable="false" v-model="newStaff.staff" :options="searchedStaff" @search="searchStaff" ></v-select>
                           </div>
                           <div class="col-md-1"></div>
                         </div>
 
                         <div class="row">
-                          <div class="col-md-2" @click="setColum('name')">
+                          <div class="col-md-2">
                             <label for="Name">Name</label>
                           </div>
-                          <div class="col-md-3">
+                          <div class="col-md-3" @click="setColum('name')">
                               <v-select label="name" v-model="newStaff.staff" :options="searchedStaff" @search="searchStaff" ></v-select>
                           </div>
                           <div class="col-md-1"></div>
 
-                          <div class="col-md-2" @click="setColum('phoneNumber')">
+                          <div class="col-md-2">
                             <label for="phoneNumber">Phone Number</label>
                           </div>
-                          <div class="col-md-3">
+                          <div class="col-md-3" @click="setColum('phoneNumber')">
                               <v-select label="phoneNumber" v-model="newStaff.staff" :options="searchedStaff" @search="searchStaff"></v-select>
                           </div>
                           <div class="col-md-1"></div>
                         </div>
 
                         <div class="row">
-                          <div class="col-md-2" @click="setColum('email')">
+                          <div class="col-md-2" >
                             <label for="email">Email</label>
                           </div>
-                          <div class="col-md-3">
+                          <div class="col-md-3" @click="setColum('email')">
                               <v-select label="email" v-model="newStaff.staff" :options="searchedStaff" @search="searchStaff"></v-select>
                           </div>
                           <div class="col-md-1"></div>
 
-                          <div class="col-md-2" @click="setColum('CNIC')">
+                          <div class="col-md-2">
                             <label for="CNIC">CNIC</label>
                           </div>
-                          <div class="col-md-3">
+                          <div class="col-md-3"  @click="setColum('CNIC')">
                             <v-select label="CNIC" v-model="newStaff.staff" :options="searchedStaff" @search="searchStaff"></v-select>
                           </div>
                           <div class="col-md-1"></div>

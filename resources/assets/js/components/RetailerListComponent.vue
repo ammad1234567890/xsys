@@ -1,16 +1,9 @@
 <template>
     <div>
         <div class="row">
-            <div class="card headcolor">
-                <div class="card-header">
-                    <h3 class="card-title pad-bot"><i class="material-icons">description</i> <small>INVOICE LIST</small> </h3>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="panel panel-default">
+            <div class="panel panel-info">
                 <div class="panel-heading">
-                    <h5>Invoices</h5>
+                    <h5>INVOICE LIST</h5>
                 </div>
                 <div class="panel-body">
                     <div class="col-md-12">
@@ -27,12 +20,14 @@
                             </thead>
                             <tbody>
                             <tr v-for="(invoice, index) in all_invoice">
-                                <td>{{s_no-index}}</td>
+                                <td>{{s_no+index}}</td>
                                 <td>{{invoice.created_at  | moment }}</td>
                                 <td>{{invoice.retailer_order.order_no}}</td>
                                 <td>{{invoice.invoice_no}}</td>
                                 <td><span class="pull-right">{{invoice.total_amount | currency('')}}</span></td>
-                                <td><button class="btn btn-github btn-xs" v-on:click="details(invoice.id)">Details</button><button class="btn btn-github btn-xs">Print</button></td>
+                                <td>
+								<button type="button" title="View Detail" class="btn btn-success btn-xs" v-on:click="details(invoice.id)"><i class="fa fa-eye"></i></button>
+								<button class="btn btn-github btn-xs" title="Print"><i class="fa fa-print"></i></button></td>
                             </tr>
                             </tbody>
                         </table>
@@ -100,7 +95,8 @@
             get_all_invoice: function () {
                 axios.get('../invoice/get_invoice').then((response) => {
                     this.all_invoice = response.data;
-                    this.s_no=this.all_invoice.length;
+                   // this.s_no=this.all_invoice.length;
+				    this.s_no=1;
                     //  console.log(this.all_invoice);
                 });
             },

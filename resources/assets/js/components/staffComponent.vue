@@ -2,142 +2,169 @@
   <div>
     <div>
         <div class="row">
-          <div class="card headcolor">
-            <div class="card-header">
-                    <h3 class="card-title pad-bot"><i class="material-icons">group</i> <small>STAFF</small> </h3>
-            </div>
-          </div>
           <div >
             <div class="col-md-12">
-                <div class="panel panel-default">
-                  <a href="#d" data-toggle="collapse" style="color:#333333">
+                <div class="panel panel-info">
                     <div class="panel-heading">
-                      <h2 class="panel-title">New Enrolment</h2>
-                    </div>
+                  <a href="#d" data-toggle="collapse" style="color:#333333">
+                      <h2 class="panel-title">New Enrollment</h2>
                   </a>
-                    <div id="d" class="panel-body collapse" v-bind:class="{in:edit}">
-                      <form v-on:submit="createStaff">
-                            <div class="col-md-6">
-                                  <div class="form-group">
-                                    <label for="name">Name</label>
-                                    <input type="text" v-validate="'required|regex:^[a-zA-Z ._]+$'" v-model="newStaff.name" class="form-control" name="StaffName" placeholder="Full Name" required>
-                                    <span class="text-danger" v-show="errors.has('StaffName')">
-                                      {{errors.first('StaffName')}}
+                    </div>
+                    <div id="d" class="panel-body">
+                        <form v-on:submit="createStaff">
+
+                          <div class="row">
+                                <div class="col-md-2">
+                                        <label for="name">Name</label>
+                                </div>
+                                <div class="col-md-3">
+                                        <input type="text" v-validate="'required|regex:^[a-zA-Z ._]+$'" v-model="newStaff.name" class="textbox" name="StaffName" placeholder="Full Name" required>
+                                        <span class="text-danger" v-show="errors.has('StaffName')">
+                                          {{errors.first('StaffName')}}
+                                        </span>
+                                </div>
+                                <div class="col-md-1"></div>
+
+                              <div class="col-md-2">
+                                    <label for="CNIC">CNIC</label>
+                              </div>
+                              <div class="col-md-3">
+                                    <input type="text" v-validate="'required|regex:^[0-9 -]+$'" v-model="newStaff.CNIC" v-mask="'99999-9999999-9'" class="textbox" name="cnic" placeholder="CNIC without - /" required>
+                                    <span class="text-danger" v-show="errors.has('cnic')">
+                                      {{errors.first('cnic')}}
+                                    </span>
+                              </div>
+                              <div class="col-md-1"></div>
+                          </div>
+                          <div class="row">
+                              <div class="col-md-2">
+                                    <label for="address">Address</label>
+                              </div>
+                              <div class="col-md-3">
+                                    <input type="text" v-validate="'required'" v-model="newStaff.address" class="textbox" name="address" placeholder="Complete Address" required>
+                                    <span class="text-danger" v-show="errors.has('address')">
+                                      {{errors.first('address')}}
+                                    </span>
+                              </div>
+                              <div class="col-md-1"></div>
+
+                              <div class="col-md-2">
+                                    <label for="phoneNumber">Phone Number</label>
+                              </div>
+                              <div class="col-md-3">
+                                    <input type="text" v-validate="'required|regex:^[0-9 -]+$'" v-mask="'9999-9999999'" v-model="newStaff.phoneNumber" class="textbox" name="phoneNumber" placeholder="Phone Number" required>
+                                    <span class="text-danger" v-show="errors.has('phoneNumber')">
+                                      {{errors.first('phoneNumber')}}
+                                    </span>
+                              </div>
+                              <div class="col-md-1"></div>
+                          </div>
+                            
+                          <div class="row">
+                              <div class="col-md-2">
+                                    <label for="Department">Department</label>
+                              </div>
+                              <div class="col-md-3">
+                                    <select class="textbox" name="department" v-validate="'required'" v-model="newStaff.department_id">
+                                      <option value="">Department</option>
+                                      <option v-for="department in departments" v-bind:value="department.id">{{department.name}}</option>
+                                    </select>
+                                    <span class="text-danger" v-show="errors.has('department')">
+                                      {{errors.first('department')}}
+                                    </span>
+                              </div>
+                              <div class="col-md-1"></div>
+
+                              <div class="col-md-2">
+                                    <label for="staffType">Staff Type</label>
+                              </div>
+                              <div class="col-md-3">
+                                    <select class="textbox" name="staffType" v-validate="'required'" v-model="newStaff.staff_type_id">
+                                      <option value="">Staff Type</option>
+                                      <option v-for="staffType in staffTypes" v-bind:value="staffType.id">{{staffType.type}}</option>
+                                    </select>
+                                    <span class="text-danger" v-show="errors.has('staffType')">
+                                      {{errors.first('staffType')}}
+                                    </span>
+                              </div>
+                              <div class="col-md-1"></div>
+
+                          </div>
+                            
+                          <div class="row">
+                              <div class="col-md-2">
+                                    <label for="designation">Designation</label>
+                              </div>
+                              <div class="col-md-3">
+                                    <select class="textbox" name="designation" v-validate="'required'" v-model="newStaff.designation_id">
+                                      <option value="">Designation</option>
+                                      <option v-for="designation in designations" v-bind:value="designation.id">{{designation.designation}}</option>
+                                    </select>
+                                    <span class="text-danger" v-show="errors.has('designation')">
+                                      {{errors.first('designation')}}
+                                    </span>
+                              </div>
+                              <div class="col-md-1"></div>
+
+                              <div class="col-md-2">
+                                    <label for="email">E-Mail</label>
+                              </div>
+                              <div class="col-md-3">
+                                    <input type="email" v-validate="'required|email'" data-vv-value-path="innerValue" :has-error="errors.has('email')" v-model="newStaff.email" class="textbox" name="email" placeholder="E-Mail" required>
+                                    <span class="text-danger" v-show="errors.has('email')">
+                                      {{errors.first('email')}}
+                                    </span>
+                              </div>
+                              <div class="col-md-1"></div>
+                          </div>
+
+                          <div class="row">
+                                <div class="col-md-2">
+                                      <label for="city">City</label>
+                                </div>
+                                      <!-- <select class="form-control" name="city" v-validate="'required'" v-model="newStaff.city">
+                                        <option value="">Select City</option>
+                                        <option v-for="city in cities" v-bind:value="city.id">{{city.name}}</option>
+                                      </select> -->
+                                <div class="col-md-3">
+                                      <v-select label="name" v-model="newStaff.city" :options="cities"></v-select>
+                                      <span class="text-danger" v-show="errors.has('city')">
+                                        {{errors.first('city')}}
+                                      </span>
+                                </div>
+                                <div class="col-md-1"></div>
+
+                                <div class="col-md-2">
+                                      <label for="region">Locality</label>
+                                </div>
+                                    <!-- <select class="form-control" name="region" v-validate="'required'" v-model="newStaff.region">
+                                      <option value="">Select Region</option>
+                                      <option v-for="region in regions" v-bind:value="region.id">{{region.name}}</option>
+                                    </select> -->
+                                  <div class="col-md-3">
+                                    <v-select label="name" v-model="newStaff.region" :options="regions"></v-select>
+                                    <span class="text-danger" v-show="errors.has('region')">
+                                      {{errors.first('region')}}
                                     </span>
                                   </div>
+                                <div class="col-md-1"></div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                  <label for="CNIC">CNIC</label>
-                                  <input type="text" v-validate="'required|regex:^[0-9 -]+$'" v-model="newStaff.CNIC" v-mask="'99999-9999999-9'" class="form-control" name="cnic" placeholder="CNIC without - /" required>
-                                  <span class="text-danger" v-show="errors.has('cnic')">
-                                    {{errors.first('cnic')}}
-                                  </span>
-                                </div>
+
+                            <div class="row">
+                              <div class="col-md-12">
+                                    <input v-if="edit==false" type="submit" value="Submit" class="btn btn-tumblr">
+                                    <button v-if="edit" class="btn btn-tumblr" @click="saveEditing">Save Editing</button>
+                                    <button v-if="edit" class="btn btn-pinterest" @click="cancelEding">Cancel Editing</button>
+                              </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                  <label for="address">Address</label>
-                                  <input type="text" v-validate="'required'" v-model="newStaff.address" class="form-control" name="address" placeholder="Complete Address" required>
-                                  <span class="text-danger" v-show="errors.has('address')">
-                                    {{errors.first('address')}}
-                                  </span>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                  <label for="phoneNumber">Phone Number</label>
-                                  <input type="text" v-validate="'required|regex:^[0-9 -]+$'" v-mask="'9999-9999999'" v-model="newStaff.phoneNumber" class="form-control" name="phoneNumber" placeholder="Phone Number" required>
-                                  <span class="text-danger" v-show="errors.has('phoneNumber')">
-                                    {{errors.first('phoneNumber')}}
-                                  </span>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                  <label for="Department">Department</label>
-                                  <select class="form-control" name="department" v-validate="'required'" v-model="newStaff.department_id">
-                                    <option value="">Department</option>
-                                    <option v-for="department in departments" v-bind:value="department.id">{{department.name}}</option>
-                                  </select>
-                                  <span class="text-danger" v-show="errors.has('department')">
-                                    {{errors.first('department')}}
-                                  </span>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                  <label for="staffType">Staff Type</label>
-                                  <select class="form-control" name="staffType" v-validate="'required'" v-model="newStaff.staff_type_id">
-                                    <option value="">Staff Type</option>
-                                    <option v-for="staffType in staffTypes" v-bind:value="staffType.id">{{staffType.type}}</option>
-                                  </select>
-                                  <span class="text-danger" v-show="errors.has('staffType')">
-                                    {{errors.first('staffType')}}
-                                  </span>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                               <div class="form-group">
-                                  <label for="designation">Designation</label>
-                                  <select class="form-control" name="designation" v-validate="'required'" v-model="newStaff.designation_id">
-                                    <option value="">Designation</option>
-                                    <option v-for="designation in designations" v-bind:value="designation.id">{{designation.designation}}</option>
-                                  </select>
-                                  <span class="text-danger" v-show="errors.has('designation')">
-                                    {{errors.first('designation')}}
-                                  </span>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                  <label for="email">E-Mail</label>
-                                  <input type="email" v-validate="'required|email'" data-vv-value-path="innerValue" :has-error="errors.has('email')" v-model="newStaff.email" class="form-control" name="email" placeholder="E-Mail" required>
-                                  <span class="text-danger" v-show="errors.has('email')">
-                                    {{errors.first('email')}}
-                                  </span>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                  <label for="city">City</label>
-                                  <!-- <select class="form-control" name="city" v-validate="'required'" v-model="newStaff.city">
-                                    <option value="">Select City</option>
-                                    <option v-for="city in cities" v-bind:value="city.id">{{city.name}}</option>
-                                  </select> -->
-                                  <v-select label="name" v-model="newStaff.city" :options="cities"></v-select>
-                                  <span class="text-danger" v-show="errors.has('city')">
-                                    {{errors.first('city')}}
-                                  </span>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                 <div class="form-group">
-                                  <label for="region">Locality</label>
-                                  <!-- <select class="form-control" name="region" v-validate="'required'" v-model="newStaff.region">
-                                    <option value="">Select Region</option>
-                                    <option v-for="region in regions" v-bind:value="region.id">{{region.name}}</option>
-                                  </select> -->
-                                  <v-select label="name" v-model="newStaff.region" :options="regions"></v-select>
-                                  <span class="text-danger" v-show="errors.has('region')">
-                                    {{errors.first('region')}}
-                                  </span>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                  <input v-if="edit==false" type="submit" value="Submit" class="btn btn-tumblr">
-                                  <button v-if="edit" class="btn btn-tumblr" @click="saveEditing">Save Editing</button>
-                                  <button v-if="edit" class="btn btn-pinterest" @click="cancelEding">Cancel Editing</button>
-                                </div>
-                            </div>
-                      </form>
+                        </form>
+                      </div>
                     </div>
                 </div>
             </div>
           </div>
       </div>
-      <div class="row">
+<!--       <div class="row">
         <div class="col-md-12">
               <div class="panel panel-default">
                   <div class="panel-heading">
@@ -193,7 +220,7 @@
                   </div>
              </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -263,6 +290,8 @@ import vSelect from "vue-select"
                        staff_type_id:'',
                        designation_id:'',
                      }
+                     alert("New Staff Create");
+                     window.location.reload();
                    }else{
                      alert('Fail to create Staff');
                      console.log(response.data.data);

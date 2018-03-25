@@ -49,7 +49,7 @@
         </div> -->
         <div class="row" style="margin-top: 24px;">
             <div class="col-md-12">
-                <div class="panel panel-default">
+                <div class="panel panel-info">
                     <div class="panel-heading">
                       <h2 class="panel-title">Warehouse Staff</h2>
                     </div>

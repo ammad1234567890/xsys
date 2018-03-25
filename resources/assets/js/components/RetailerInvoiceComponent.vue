@@ -1,34 +1,58 @@
 <template>
     <div>
-        <div class="row"><div class="card headcolor"><div class="card-header"><h3 class="card-title pad-bot"><i class="material-icons"></i> <small>Create Invoice</small></h3></div></div></div>
+        
         <form @submit.prevent="add_invoice">
             <div class="panel">
                 <div class="panel-heading">
-                    <div class="row">
+                    <div class="row">  
                         <div class="col-md-12">
-                            <div class="col-md-12"><label><span class="h1">Xcell</span></label></div>
+                            <div class="col-md-6"><img src="http://172.16.1.253:82/xsys_new_version/public/img/ddl_logo.png"   width="150"></div>
                             <br><br><br>
                             <div class="col-md-6"><label><b>Order NO</b> :</label> <input type="text" :value="order_no" class="bordernone"/></div>
-                            <div class="col-md-3 col-md-offset-3 "><label ><b>Date</b> :</label> {{ current_date }}</div>
-							<div class="col-md-6"></div>
-                            <div class="col-md-3 col-md-offset-3"><label><b>Due Date</b> : {{ duedate }}</label></div>
+							<div class="col-md-6 text-right"><label><span class="h3"><strong>INVOICE</strong></span></label></div>
+                            <div class="col-md-12 "><label ><b>Date</b> :</label> {{ current_date }}</div>
+							
                             <div class="col-md-12">
                                 <hr>
                             </div>
-                            <div class="col-md-6"><label><b>Outlet Name</b> :</label>
-                                {{ outlet_name}}
-                            </div>
+							<div class="col-md-12 m-p-0">
+							<div class="col-md-6" >
+							<div class="panel panel-info" >
+							<div class="panel-heading m-p-0" style="color:white;background-color:#999;">
+							<label style="margin-top:13px;margin-left:12px;"><h5>Company Details</h5></label></div></div>
+							</div>
+							<div class="col-md-6 " >
+							<div class="panel panel-info" >
+							<div class="panel-heading m-p-0" style="background-color:rgb(0,176,80);color:white;">
+							<label style="margin-top:13px;margin-left:12px;"><h5>Bill To</h5></label></div></div>
+							</div>
+							</div>
+							<div class="col-md-12">
+							<div class="col-md-6 m-p-0" style="font-size:12px;" >
+							<div class="col-md-12"><label><b>Company</b> :</label> Deploy Distribution & Logistics</div>
+							<div class="col-md-12"><label><b>Company Tel</b> :</label> 021-35899116-7</div>
+							<div class="col-md-12"><label><b>Address</b> :</label> 46-C Jami Commercial</div>
+							</div>
+                           <div class="col-md-6">
+<div class="col-md-12"><label><b>Outlet Name</b> : {{ outlet_name}}</label></div>
 
-                            <div class="col-md-3 col-md-offset-3"><label><b>Payment type</b> : </label>
+							<div class="col-md-12"><label><b>Outlet Address</b> : {{ outlet_address}}</label>
+                            </div>
+							
+  
+						   <div class="col-md-12"><label><b>Payment type</b> : </label>
                                 <select id="payment_type_id">
                                     <option v-for="(type, index) in all_payment_type"  v-bind:value="type.id" :selected="type.id == 2">{{type.type}}</option>
                                 </select>
                             </div>
-                            <div class="col-md-6"><label><b>Outlet Address</b> : {{ outlet_address}}</label>
-                            </div>
-                            <div class="col-md-3 col-md-offset-3"><label><b>Previous Balance</b> : Rs.{{previous_balance>0?previous_balance:0 | currency('')}}</label></div>
+                                                      
+                            <div class="col-md-12"><label><b>Previous Balance</b> : Rs.{{previous_balance>0?previous_balance:0 | currency('')}}</label></div>
+							 
+							    <div class="col-md-12"><label><b>Due Date</b> : {{ duedate }}</label></div>
                         </div>
+						</div>
                     </div>
+					</div>
                     <br><br>
                     <div class="row">
                         <div class="col-md-12">
@@ -133,11 +157,14 @@
                                     </div>
                                 </span></div>
                         </div>
-                    </div>
+                    
                     <br><br>
-                    <div class="row">
-                        <div class="col-md-11 "><label>Remarks</label>
-                            <textarea class="form-control" id="decs" rows="10"></textarea>
+                    
+                        <div class="col-md-7 "><label>Remarks</label>
+                            <textarea class="form-control" id="decs" rows="4"></textarea>
+                        </div>
+						  <div class="col-md-7 "><label>Terms & Condition</label><br>
+                            <label>Payment Terms: 21st of the month following invoice date</label>
                         </div>
                     </div>
                     <div class="row">

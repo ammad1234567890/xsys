@@ -1,12 +1,7 @@
 <template>
     <div class="row">
-        <div class="card headcolor">
-            <div class="card-header">
-                  <h3 class="card-title pad-bot"><i class="material-icons">description</i><small>SUPPLY ORDERS</small></h3>
-            </div>
-        </div>
         <div class="col-md-12">
-            <div class="panel panel-Default">
+            <div class="panel panel-info">
                 <div class="panel-heading">
                     <h2 class="panel-title">Summary</h2>
                 </div>
@@ -23,7 +18,7 @@
                                 <th>Order No</th>
                                 <th>Outlet</th>
                                 <th>City</th>
-                                <th>Total Amount</th>
+                                <th>Total Amount (PKR)</th>
                                 <th class="col-md-3 text-center">Action</th>
                                 <th>Account Clearance</th>
 
@@ -35,18 +30,18 @@
                                 <td>{{order.order_no}}</td>
                                 <td>{{order.retailer_outlet.name}}</td>
                                 <td>{{order.retailer_outlet.city.name}}</td>
-                                <td>{{order.total_cost | currency('Rs')}}</td>
-                                <td class="text-center">
+                                <td style="text-align:right;">{{order.total_cost | currency(' ')}}</td>
+                                <td class="text-center col-md-1">
                                     <div class="dropdown">
 
-                                        <button class="btn btn-github btn-xs" type="button" v-on:click="view_order_details(index)">View Details</button> -
+                                        <button class="btn btn-success btn-xs" type="button" v-on:click="view_order_details(index)" title="View Detail"><i class="fa fa-eye"></i></button>
 
-                                        <a class="btn btn-tumblr btn-xs" v-bind:href="'../invoice/create/'+order.id" v-if="order.is_account_clearance==1">Generate Invoice</a>
-                                        <button class="btn btn-danger btn-xs" type="button" v-if="order.is_account_clearance==0" v-on:click="order_delete(index)">Delete </button>
+                                        <a class="btn btn-primary btn-xs" v-bind:href="'../invoice/create/'+order.id" v-if="order.is_account_clearance==1" title="Generate invoice"><i class="fa fa-file"></i></a>
+                                        <!-- <button class="btn btn-danger btn-xs" type="button" v-if="order.is_account_clearance==0" v-on:click="order_delete(index)">Delete </button> -->
                                     </div>
                                 </td>
 
-                                <td v-if="order.is_account_clearance==1"><i class="fa fa-check" title="Cleared from Finance" style="text-align:center; display:block; font-size:25px; color:green;"></i> </td>
+                                <td v-if="order.is_account_clearance==1" class="col-md-1"><i class="fa fa-check" title="Cleared from Finance" style="text-align:center; display:block; font-size:25px; color:green;"></i> </td>
                                 <td v-else><i class="fa fa-times" style="text-align:center; display:block; font-size:25px; color:red;"></i></td>
                             </tr>
                             </tbody>

@@ -149,4 +149,9 @@ class StaffController extends Controller
       return $accoutnant;
     }
 
+    public function viewStaff()
+    {
+      return view('viewStaff');
+    }
+
 }

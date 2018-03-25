@@ -3,7 +3,7 @@
 <div class="row" style="margin-top: 24px;">
     
     <div class="col-md-12">
-        <div class="panel panel-default">
+        <div class="panel panel-info">
             <div class="panel-heading"><h5 style="margin-top: 6px; font-variant: small-caps;">Ledger - Search</h5></div>
             <div class="panel-body">
                 <form @submit="searchLedger">
@@ -37,7 +37,7 @@
         
         <!-- RETAILER SHOW GRID -->
             <div class="panel panel-info" v-if="search_enabled">
-                <div class="panel-heading"><h5 style="margin-top: 6px; font-variant: small-caps; color: #000;">{{searchData.retailerName}} Ledger - Details<span class="pull-right">From-To: {{searchData.fdate | moment}} - {{searchData.tdate | moment}}</span></h5>
+                <div class="panel-heading"><h5 style="margin-top: 6px; font-variant: small-caps; color: #000;"><strong>{{searchData.retailerName}} Ledger - Details</strong><strong><span class="pull-right">From: {{searchData.fdate | moment}} To {{searchData.tdate | moment}}</span></strong></h5>
                 </div>
                 <div class="panel-body">
                     <table id="ledger-table" class="table table-bordered">
@@ -78,7 +78,7 @@
 
                         </tr>	--> 			
                         </tbody>	
-                            <tr>
+                      <!--      <tr>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -86,7 +86,7 @@
                                 <td>
                                     <strong>Opening Balance: <span class="pull-right" style="margin-right: 10px;">{{open_outstanding | currency('')}}</span></strong>
                                 </td>
-                            </tr>			
+                            </tr>	-->		
                     </table>
     				
                 </div>

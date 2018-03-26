@@ -409,8 +409,8 @@
 
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="{{url('/retailer')}}">Create Dealer Account</a></li>
-                                    <li><a href="{{url('/retailer_list')}}">Dealers List</a></li>
+                                    <li><a href="{{url('/retailer')}}">Create Outlet</a></li>
+                                    <li><a href="{{url('/retailer_list')}}">Outlets List</a></li>
                                     <li><a href="{{url('/retailer/create_order')}}">Create Supply Order</a></li>
                                     <li><a href="{{url('/retailer_order/orders')}}">Supply Order Detail</a></li>
                                 </ul>
@@ -558,10 +558,10 @@
                                 </div>
                                 <ul class="collapse " id="collapseExample5">
                                     <a href="{{ url('/retailer') }}">
-                                        <li>Create Dealer Account</li>
+                                        <li>Create Outlet</li>
                                     </a>
                                     <a href="{{ url('/retailer_list') }}">
-                                        <li>Dealers List </li>
+                                        <li>Outlets List </li>
                                     </a>
                                     <a href="{{ url('retailer/create_order') }}">
                                         <li>Create Supply Order </li>
@@ -672,7 +672,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-10 " style=" background:#fff;">
+                    <div class="col-md-10 ">
                         <div class="content-container ">
                             @yield('content')
                         </div>

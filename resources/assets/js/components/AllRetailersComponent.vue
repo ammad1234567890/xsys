@@ -1,19 +1,6 @@
 <template>
 
-        <div class="row">
-            <div class="card headcolor">
-            <div class="card-header">
-                    <h3 class="card-title pad-bot">
-                        <h4 class="heading-inline" style="text-transform: uppercase; "> Dealers Detail</h4> </h3>
-            </div>
-            <hr/>
-            </div>
-
-            
-
-                
-
-
+        <div class="row">     
                 <!-- RETAILER SHOW GRID -->
                 <div class="panel panel-info">
                     <div class="panel-heading">
@@ -24,16 +11,16 @@
                         <table id="outlet_table" class="table table-bordered">
                             <thead>
                             <tr>
-                                <th>Outlet Name</th>
+                                <th>Outlet</th>
 								<th>Dealer Code</th>
-                                <th>Contact Person</th>
+                                <th>Dealer</th>
                                 <th>Contact No.</th>
                                 <th>City</th>
                                 <th>Locality</th>
                                 <th>Address</th>
 
 
-                                <th class="col-md-2">Action</th>
+                                <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -50,16 +37,16 @@
 
                                 <td>
                                     <div class="dropdown">
-                                        <button class="btn btn-primary btn-xs dropdown-toggle" type="button" data-toggle="dropdown">Action
+                                        <!-- <button class="btn btn-primary btn-xs dropdown-toggle" type="button" data-toggle="dropdown">Action
                                             <span class="caret"></span></button>
                                         <ul class="dropdown-menu">
                                             <li><a href="#" v-on:click="enable_edit_mode(index)">Edit</a></li>
-
-
-
-                                        </ul>
-                                        -
-                                        <button class="btn btn-success btn-xs" type="button" v-on:click="view_outlet_details(index)"><i class="fa fa-eye"></i></button>
+                                        
+                                        
+                                        
+                                        </ul> -->
+                                        <button v-on:click="enable_edit_mode(index)" class="btn btn-primary btn-xs"><i class="fa fa-pencil" title="Edit"></i></button> 
+                                        <button class="btn btn-success btn-xs" v-on:click="view_outlet_details(index)" title="View Detail"><i class="fa fa-eye"></i></button>
                                     </div>
                                 </td>
                             </tr>
@@ -87,15 +74,15 @@
                                         <div class="col-md-10">
                                             <table class="table table-hovered">
                                                 <tr>
-                                                    <td>Name</td>
+                                                    <td><strong>Name</strong></td>
                                                     <td>{{outlet_view.retailer_name}} ({{outlet_view.retailer_no}})</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Phone</td>
+                                                    <td><strong>Phone</strong></td>
                                                     <td>{{outlet_view.retailer_phone}}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Cnic</td>
+                                                    <td><strong>Cnic</strong></td>
                                                     <td>{{outlet_view.retailer_cnic}}</td>
                                                 </tr>
 
@@ -103,11 +90,249 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-section padding10px">
+                                <div class="paddingtop5">
+
+                                      <!-- Nav tabs -->
+                                      <ul class="nav nav-tabs" role="tablist">
+                                        <li role="presentation" class="active"><a href="#outlet_tab" aria-controls="outlet_tab" role="tab" data-toggle="tab">Outlet</a></li>
+                                        <!-- <li role="presentation"><a href="#contact_person" aria-controls="contact_person" role="tab" data-toggle="tab">Contact Person</a></li> -->
+                                        <li role="presentation"><a href="#location" aria-controls="location" role="tab" data-toggle="tab">Location</a></li>
+                                        <li role="presentation"><a href="#financial_status" aria-controls="financial_status" role="tab" data-toggle="tab">Financial Status</a></li>
+                                      </ul>
+
+                                      <!-- Tab panes -->
+                                      <div class="tab-content"> 
+                                        <div role="tabpanel" class="tab-pane   active" id="outlet_tab"> <!-- outlet tab -->
+                                             <div class=" col-md-12 paddingmarginzero">
+                                                <div class="panel panel-info"> 
+                                                  <div class="panel-heading">  
+                                                    <div class="panel-title"></div>
+                                                  </div> 
+                                                    <div class="panel-body"> 
+                                                        <div class="col-md-2">
+                                                            <label><strong>Name</strong></label>
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                            <label>{{outlet_view.outlet_name}}</label>
+                                                        </div>
+
+                                                        <div class="col-md-2">
+                                                            <label><strong>Phone</strong></label>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <label>{{outlet_view.outlet_phone}}</label>
+                                                        </div>
+                                                        <!-- <table class="table table-hovered">
+                                                          <tr>
+                                                              <td>Name</td>
+                                                              <td>{{outlet_view.outlet_name}}</td>
+                                                          </tr>
+                                                          <tr>
+                                                              <td>Phone</td>
+                                                              <td>{{outlet_view.outlet_phone}}</td>
+                                                          </tr>
+                                                        </table> -->
+                                                    </div> 
+                                                </div>
+                                              </div>
+                                        </div> <!-- End outlet tab -->
+
+                                       <!--  <div role="tabpanel" class="tab-pane" id="contact_person"> Contact Person
+                                           <div class=" col-md-12 paddingmarginzero">
+                                                 <div class="panel panel-info"> 
+                                                     
+                                                     <div class="panel-heading">  
+                                                     </div>
+                                       
+                                                     <div class="panel-body"> 
+                                                       <div class="col-md-2">
+                                                           <label><b>Name</b></label>
+                                                       </div>
+                                                       <div class="col-md-5">
+                                                           <label>{{outlet_view.bussiness_person_name}}</label>
+                                                       </div>
+                                       
+                                                       <div class="col-md-2">
+                                                           <label><b>Phone</b></label>
+                                                       </div>
+                                                       <div class="col-md-3">
+                                                           <label>{{outlet_view.bussiness_person_phone}}</label>
+                                                       </div>
+                                                       <div class="col-md-2">
+                                                           <label><b>CNIC</b></label>
+                                                       </div>
+                                                       <div class="col-md-5">
+                                                           <label>{{outlet_view.bussiness_person_cnic}}</label>
+                                                       </div>
+                                                       <table class="table table-hovered">
+                                                           <tr>
+                                                               <td>Name</td>
+                                                               <td>{{outlet_view.bussiness_person_name}}</td>
+                                                           </tr>
+                                                           <tr>
+                                                               <td>Phone</td>
+                                                               <td>{{outlet_view.bussiness_person_phone}}</td>
+                                                           </tr>
+                                                           <tr>
+                                                               <td>CNIC</td>
+                                                               <td>{{outlet_view.bussiness_person_cnic}}</td>
+                                                           </tr>
+                                                       </table>
+                                                     </div>
+                                       
+                                                 </div>
+                                       
+                                           </div>
+                                       </div> End Contact Person -->
+
+                                        <div role="tabpanel" class="tab-pane" id="location"> <!-- Location Tab -->
+                                            <div class=" col-md-12 paddingmarginzero">
+                                                    <div class="panel panel-info"> 
+                                                        <div class="panel-heading">
+                                                        </div>
+
+                                                        <div class="panel-body"> 
+                                                        <div class="row">
+                                                            <div class="col-md-2">
+                                                            <label><strong>Address</strong></label>
+                                                            </div>
+                                                            <div class="col-md-5">
+                                                                <label>{{outlet_view.address}}</label>
+                                                            </div>
+
+                                                            <div class="col-md-2">
+                                                                <label><strong>Locality</strong></label>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <label>{{outlet_view.region_name}}</label>
+                                                            </div>
+                                                            <div class="col-md-2"></div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-2">
+                                                            <label><strong>City</strong></label>
+                                                            </div>
+                                                            <div class="col-md-5">
+                                                                <label>{{outlet_view.city_name}}</label>
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                            <label><strong>Latitude</strong></label>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <label v-if="outlet_view.latitude!=null">{{outlet_view.latitude}}</label>
+                                                                <td v-else> --- </td>
+                                                            </div>
+                                                            <div class="col-md-2"></div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-2">
+                                                                <label><strong>Longitude</strong></label>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <label v-if="outlet_view.longitude!=null">{{outlet_view.longitude}}</label>
+                                                                <td v-else> --- </td>
+                                                            </div>
+                                                        </div>
+                                                            <!-- <table class="table table-hovered">
+                                                                <tr>
+                                                                    <td>Address</td>
+                                                                    <td>{{outlet_view.address}}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Locality</td>
+                                                                    <td>{{outlet_view.region_name}}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>City</td>
+                                                                    <td>{{outlet_view.city_name}}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Latitude</td>
+                                                                    <td v-if="outlet_view.latitude!=null">{{outlet_view.latitude}}</td>
+                                                                    <td v-else> --- </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td>Longitude</td>
+                                                                    <td v-if="outlet_view.longitude!=null">{{outlet_view.longitude}}</td>
+                                                                    <td v-else> --- </td>
+                                                                </tr>
+                                                            </table> -->
+                                                        </div>
+                                                    </div>
+                                            </div>
+                                        </div> <!-- End Location Tab-->
+
+                                        <div role="tabpanel" class="tab-pane" id="financial_status"> <!-- Financial Status Tab-->
+
+                                            <div class=" col-md-12 paddingmarginzero">
+                                                    <div class="panel panel-info"> 
+                                                        
+                                                        <div class="panel-heading">
+                                                        </div>
+                                                            <div class="panel-body"> 
+
+                                                                <div class="row">
+                                                                    <div class="col-md-3">
+                                                                    <label><strong>Security Deposit</strong></label>
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <label>{{outlet_view.security_check_amount | currency('Rs')}}</label>
+                                                                    </div>
+
+                                                                    <div class="col-md-3">
+                                                                        <label><strong>Credit Limit</strong></label>
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <p>{{outlet_view.credit_limit | currency('Rs')}}</p>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-3">
+                                                                    <label><strong>Credit Duration</strong></label>
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <label>{{outlet_view.credit_duration}}</label>
+                                                                    </div>
+
+                                                                    <div class="col-md-4">
+                                                                        <label><strong>Security Cheque Image</strong></label>
+                                                                    </div>
+                                                                    <div class="col-md-2">
+                                                                        <label><a :href="'./deposit_check_img/'+outlet_view.copy_image" target="_blank">Link</a></label>
+                                                                    </div>
+                                                                </div>
+
+                                                                <!-- <table class="table table-hovered">
+                                                                    <tr>
+                                                                        <td>Security Cheque Amount</td>
+                                                                        <td>{{outlet_view.security_check_amount | currency('Rs')}}</td>
+                                                                                                                            
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Credit Limit</td>
+                                                                        <td>{{outlet_view.credit_limit | currency('Rs')}}</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Credit Duration</td>
+                                                                        <td>{{outlet_view.credit_duration}}</td>
+                                                                    </tr>
+                                                                                                                            
+                                                                    <tr>
+                                                                        <td>Security Cheque Image</td>
+                                                                        <td><a :href="'./deposit_check_img/'+outlet_view.copy_image" target="_blank">Link</a></td>
+                                                                    </tr>
+                                                                </table> -->
+                                                            </div>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                      </div>
+                                </div>
+                                <!-- <div class="form-section padding10px">
                                     <h4 class="form-section-heading" style="font-weight: bold;">BUSINESS PROFILE</h4>
                                     <h4 class="form-section-heading">Outlet</h4>
                                     <br/>
-
+                                
                                     <table class="table table-hovered">
                                         <tr>
                                             <td>Name</td>
@@ -137,7 +362,7 @@
                                                         <td>CNIC</td>
                                                         <td>{{outlet_view.bussiness_person_cnic}}</td>
                                                     </tr>
-
+                                
                                             </table>
                                         </div>
                                     </div>
@@ -158,8 +383,8 @@
                                             <td>City</td>
                                             <td>{{outlet_view.city_name}}</td>
                                         </tr>
-
-
+                                
+                                
                                         <tr>
                                             <td>Latitude</td>
                                             <td v-if="outlet_view.latitude!=null">{{outlet_view.latitude}}</td>
@@ -179,7 +404,7 @@
                                         <tr>
                                             <td>Security Cheque Amount</td>
                                             <td>{{outlet_view.security_check_amount | currency('Rs')}}</td>
-
+                                
                                         </tr>
                                         <tr>
                                             <td>Credit Limit</td>
@@ -189,14 +414,14 @@
                                             <td>Credit Duration</td>
                                             <td>{{outlet_view.credit_duration}}</td>
                                         </tr>
-
+                                
                                         <tr>
                                             <td>Security Cheque Image</td>
                                             <td><a :href="'./deposit_check_img/'+outlet_view.copy_image" target="_blank">Link</a></td>
                                         </tr>
                                     </table>
-                                </div>
-                            </div>
+                                </div> -->
+                            <!-- </div> -->
                             <div class="modal-footer">
                                 <button class="btn btn-github" data-dismiss="modal" aria-label="Close">Close</button>
                             </div>
@@ -583,7 +808,7 @@
     $(document).ready(function(){
         setTimeout(function(){
             $('#outlet_table').DataTable();
-        },8000);
+        },3000);
     });
 
 

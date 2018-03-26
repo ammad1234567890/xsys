@@ -35,7 +35,7 @@ class BankController extends Controller
         try{
             $createdBank=Bank::create([ 'bank_name'=>$bank_name,
                                         'city_id'=>$bank_city_id,
-                                        'bank_phone_no'=>$bank_phone_no
+                                        'bank_uan'=>$bank_phone_no
             ]);
 
         }catch(\Exception $e){

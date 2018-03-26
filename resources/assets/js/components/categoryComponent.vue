@@ -47,8 +47,8 @@
                                   </div>
                                   <div class="col-md-6">
                                       <input type="submit" value="Submit" v-if="editing==0" class="btn btn-tumblr pull-right" />
-                                      <button  class="btn btn-tumblr pull-right" v-on:click="saveEditing" v-if="editing==1">Save Editing</button>
-                                      <button  class="btn btn-default pull-right" v-on:click="cancelEding" v-if="editing==1">Cancel Editing</button>
+                                      <button  class="btn btn-tumblr pull-right" v-on:click="saveEditing" v-if="editing==1">Save</button>
+                                      <button  class="btn btn-danger pull-right" v-on:click="cancelEding" v-if="editing==1">Cancel</button>
                                   </div>
                                 </div>
                             </form>

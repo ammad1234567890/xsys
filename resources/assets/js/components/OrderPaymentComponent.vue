@@ -88,7 +88,7 @@
                             <div class="clearfix"></div>
                         <div class="row">
                             <div class="col-md-11">
-                                <button class="btn btn-success pull-right"><i class="fa fa-check"></i> Add Payment</button>
+                                <button class="btn btn-primary pull-right"><i class="fa fa-check"></i> Add Payment</button>
                             </div>
                             <div class="col-md-1">
                             </div>

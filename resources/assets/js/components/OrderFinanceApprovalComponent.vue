@@ -3,7 +3,9 @@
         <div class="col-md-12">
             <div class="panel panel-info">
                 <div class="panel-heading">
-                    <h2 class="panel-title">Order Details</h2>
+                    <h2 class="panel-title">Order Details <small class="pull-right"> Legends : <i class="fa fa-edit"> Edit</i> - <i class="fa fa-check"> Approve</i> - <i class="fa fa-eye"> View Detail</i> - <i class="fa fa-file"> Generate Invoice</i></small>
+                    </h2>
+
                 </div>
 
                 <div class="panel-body">
@@ -20,7 +22,7 @@
                             <!-- <th>Retailer</th> -->
                             <!-- <th>Account Clearance</th> -->
                             <th>Price(PKR)</th>
-                            <th>Account Clearance</th>
+                            <th class="col-md-1">Account Clearance</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -39,19 +41,23 @@
                             <td v-else><i class="fa fa-times" style="text-align:center; display:block; font-size:25px; color:red;"></i></td>
                             <td>
                                 
-                                <div class="dropdown">
+                                <!-- <div class="dropdown">
                                     <button class="btn btn-info btn-xs dropdown-toggle" type="button" data-toggle="dropdown"  v-if="order.is_account_clearance==0">Action
                                         <span class="caret"></span></button>
-
+                                
                                     <ul class="dropdown-menu">
                                         <li><a href="#" v-on:click="edit_order_modal(index)">Edit</a></li>
                                         <li><a href="#" v-on:click="approve_order(index)">Approve</a></li>
                                     </ul>
-                                    <button class="btn btn-success btn-xs" type="button" v-on:click="view_order_details(index)" title="View Detail"><i class="fa fa-eye"></i></button> &nbsp;
+                                </div> -->
+                                    <a href="#" v-on:click="edit_order_modal(index)" class="btn btn-primary btn-xs" title="Edit"><i class="fa fa-edit"></i></a>
+                                    <a href="#" v-on:click="approve_order(index)" class="btn btn-info btn-xs"><i class="fa fa-check" title="Approve"></i></a>
+                                    <button class="btn btn-success btn-xs" type="button" v-on:click="view_order_details(index)" title="View Detail"><i class="fa fa-eye"></i></button>
+
                                 
                                 <a class="btn btn-default btn-xs" v-bind:href="'../invoice/create/'+order.id" v-if="order.is_account_clearance==1" title="Generate Invoice"><i class="fa fa-file"></i></a>
                                <!-- <a class="btn btn-tumblr btn-xs">Invoice Received</a> -->
-                               </div>
+                               
                             </td>
                             
                         </tr>

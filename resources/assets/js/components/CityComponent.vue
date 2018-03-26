@@ -6,27 +6,30 @@
             </div>
             <div class="panel-body">
                 <form @submit="createCity">
-                    <div class="col-md-6">
-                          <div class="form-group">
+                    <div class="row">
+                      <div class="col-md-2">
                             <label for="City" >City</label>
-                            <input name="city" type="text" class="form-control" v-validate="'required|regex:^[a-zA-Z]+$'" v-model="cityData.city">
+                      </div>
+                      <div class="col-md-3">
+                            <input name="city" type="text" class="textbox" v-validate="'required|regex:^[a-zA-Z]+$'" v-model="cityData.city">
                             <span class="text-danger" v-show="errors.has('city')">
                               {{errors.first('city')}}
                             </span>
-                          </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                              <input v-if="editing==false" type="submit" class="btn btn-tumblr" value="Create City">
-                              <button v-if="editing==true" @click="saveEditing" class="btn btn-tumblr">Save Editing</button>
-                              <button v-if="editing==false" @click="showCities" class="btn btn-github" data-toggle="collapse" data-target="#cities">Show Cities</button>
-                              <button v-if="editing==true" @click="cancelEditing" class="btn btn-pinterest">Cancel Editing</button>
-                        </div>
-                    </div>
+                      </div>
+                      <div class="col-md-1"></div>
+
+                      <div class="col-md-6">
+                                <input v-if="editing==false" type="submit" class="btn btn-tumblr" value="Create City">
+                                <button v-if="editing==true" @click="saveEditing" class="btn btn-tumblr">Save Editing</button>
+                                <button v-if="editing==false" @click="showCities" class="btn btn-github" data-toggle="collapse" data-target="#cities">Show Cities</button>
+                                <button v-if="editing==true" @click="cancelEditing" class="btn btn-pinterest">Cancel Editing</button>
+                      </div>
+                    </div>                      
                 </form>
             </div>
 
             <div id="cities" class="collapse">
+              <hr>
                 <div class="panel-heading">
                     <h2 class="panel-title">City List</h2>
                 </div>
@@ -43,7 +46,7 @@
                           <tr v-for="(city,index) in allCities">
                             <td>{{index +1 }}</td>
                             <td>{{city.name}}</td>
-                            <td><button class="btn btn-info btn-sm" @click="edit(index,city.id)">Edit</button></td>
+                            <td><button class="btn btn-info btn-sm" @click="edit(index,city.id)" title="Edit"><i class="fa fa-edit"></i></button></td>
                           </tr>
                         </tbody>
                     </table>

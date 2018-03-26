@@ -9,34 +9,44 @@
               <strong>{{message}}</strong>
             </div>
             <form @submit="createCurrency">
-                <div class="col-md-6">
-                    <div class="form-group">
+              <div class="row">
+                <div class="col-md-2">
                       <label for="Currency">Currency</label>
-                      <input name="Currency" type="text" class="form-control" v-validate="'required|regex:^[a-zA-Z]+$'" v-model="currency_data.name">
+                </div>
+                <div class="col-md-3">
+                      <input name="Currency" type="text" class="textbox" v-validate="'required|regex:^[a-zA-Z]+$'" v-model="currency_data.name">
                       <span class="text-danger" v-show="errors.has('Currency')">
                         {{errors.first('Currency')}}
                       </span>
-                    </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="form-group">
+                <div class="col-md-1"></div>
+
+                <div class="col-md-2">
                       <label for="ISO">ISO</label>
-                      <input name="ISO" type="text" class="form-control" v-validate="'required|regex:^[a-zA-Z]+$'" v-model="currency_data.iso">
+                </div>
+
+                <div class="col-md-3">
+                      <input name="ISO" type="text" class="textbox" v-validate="'required|regex:^[a-zA-Z]+$'" v-model="currency_data.iso">
                       <span class="text-danger" v-show="errors.has('ISO')">
                         {{errors.first('ISO')}}
                       </span>
-                    </div>
                 </div>
+                <div class="col-md-1"></div>
 
-                <div class="col-md-6">
-                    <div class="form-group">
+              </div>
+
+              <div class="row">
+                <div class="col-md-2">
                       <label for="rate">Exhange Rate</label>
-                      <input name="rate" type="text" class="form-control" v-validate="'required|regex:^[0-9]+$'" v-model="currency_data.exchange_rate">
+                </div>
+                <div class="col-md-3">
+                      <input name="rate" type="text" class="textbox" v-validate="'required|regex:^[0-9]+$'" v-model="currency_data.exchange_rate">
                       <span class="text-danger" v-show="errors.has('rate')">
                         {{errors.first('rate')}}
                       </span>
-                    </div>
                 </div>
+                <div class="col-md-1"></div>
+
                 <div class="col-md-6">
                     <div class="form-group">
                       <input v-if="editing==false" type="submit" class="btn btn-tumblr" value="Add Currency">
@@ -44,11 +54,13 @@
                       <button v-if="editing==false" @click="showCities" class="btn btn-github" data-toggle="collapse" data-target="#currencies">Show Currencies</button>
                       <button v-if="editing==true" @click="cancelEditing" class="btn btn-pinterest">Cancel Editing</button>
                     </div>
-                </div>                
+                </div>  
+              </div>
             </form>
         </div>
 
         <div id="currencies" class="collapse">
+          <hr>
             <div class="panel-heading">
                 <h2 class="panel-title">Currency List</h2>
             </div>
@@ -69,7 +81,7 @@
                         <td>{{currency.name}}</td>
                         <td>{{currency.iso}}</td>
                         <td>{{currency.exchange_rate}}</td>
-                        <td><button class="btn btn-info btn-sm" @click="edit(index,currency.id)">Edit</button></td>
+                        <td><button class="btn btn-info btn-sm" @click="edit(index,currency.id)" title="Edit"><i class="fa fa-edit"></i></button></td>
                       </tr>
                     </tbody>
                 </table>

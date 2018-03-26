@@ -9,40 +9,56 @@
                         </div>
                 <div id="d" class="panel-body" v-bind:class="{in:edit}">
                     <form @submit="createProduct">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group col-md-4">
-                                    <label for="productName">Title</label>
-                                    <input type="text" name="productName" v-validate="'required|regex:^[a-zA-Z ._]+$'" class="form-control" v-model="newProduct.name" placeholder="Product Name" required>
-                                    <span class="text-danger" v-show="errors.has('productName')">
-                                  {{errors.first('productName')}}
-                                </span>
+                        <div>
+                            <div>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label for="productName">Title</label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="text" name="productName" v-validate="'required|regex:^[a-zA-Z0-9 ._]+$'" class="textbox" v-model="newProduct.name" placeholder="Product Name" required>
+                                        <span class="text-danger" v-show="errors.has('productName')">
+                                      {{errors.first('productName')}}
+                                    </span>
+                                    </div>
+                                    <div class="col-md-1"></div>
+
+                                    <div class="col-md-2">
+                                        <label for="productCategory">Category</label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <select class="textbox" required name="Category" v-model="newProduct.productCategory" v-validate="'required'" >
+                                            <option value="">Select Category</option>
+                                            <option v-for="category in categories" v-bind:value="category.id">{{category.name}}</option>
+                                        </select>
+                                        <span class="text-danger" v-show="errors.has('Category')">
+                                      {{errors.first('Category')}}
+                                    </span>
+                                    </div>
+                                    <div class="col-md-1"></div>
                                 </div>
-                                <div class="form-group col-md-4">
-                                    <label for="productCategory">Category</label>
-                                    <select class="form-control" required name="Category" v-model="newProduct.productCategory" v-validate="'required'" >
-                                        <option value="">Select Category</option>
-                                        <option v-for="category in categories" v-bind:value="category.id">{{category.name}}</option>
-                                    </select>
-                                    <span class="text-danger" v-show="errors.has('Category')">
-                                  {{errors.first('Category')}}
-                                </span>
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <label for="releaseDate">Estimated Release  Date</label>
-                                    <date-picker name="releaseDate" v-validate="'required'" style="width:100%;" v-model="releaseDate" type="date" format="dd-MM-yyyy" placeholder="dd-mm-yyyy" lang="en" required></date-picker>
-                                    <!-- <input type="date"  name="releaseDate" v-validate="'required'" class=" form-control" placeholder="Release Date" v-model="newProduct.releaseDate" required > -->
-                                                                      
-                                    <span class="text-danger" v-show="errors.has('Release Date')">
-                                  {{errors.first('Release Date')}}
-                                </span>
-                                </div>
-                                <div class="form-group col-md-12">
-                                    <button class="btn btn-tumblr" @click="addColorForm">Add Product Color</button>
+
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label for="releaseDate">Estimated Release  Date</label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <date-picker name="releaseDate" v-validate="'required'" style="width:100%;" v-model="releaseDate" type="date" format="dd-MM-yyyy" placeholder="dd-mm-yyyy" lang="en" required></date-picker>
+                                        <!-- <input type="date"  name="releaseDate" v-validate="'required'" class=" form-control" placeholder="Release Date" v-model="newProduct.releaseDate" required > -->
+                                                                          
+                                        <span class="text-danger" v-show="errors.has('Release Date')">
+                                      {{errors.first('Release Date')}}
+                                        </span>
+                                    </div>
+                                    <div class="col-md-1"></div>
+
+                                    <div class="col-md-5">
+                                        <button class="btn btn-info pull-right" @click="addColorForm">Add Product Color</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div v-for="(find, index) in newProduct.finds" class="well well-sm"> <!--Product Color Form-->
+                        <div v-for="(find, index) in newProduct.finds" class="well well-sm" style="    margin-top: 20px;"> <!--Product Color Form-->
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group col-md-3">
@@ -88,7 +104,7 @@
                             <div class="row" v-if="edit==false">
                                 <div class="col-md-12">
                                     <div v-for="(image, i) in find.product_images">
-                                        <img v-bind:src="image" class="col-md-1 img-thumbnail" height="auto" @click="deleteImage(index,i)" />
+                                        <img v-bind:src="image" class="col-md-1 img-thumbnail" height="auto" @click="deleteImage(index,i)" style="margin-left: 14px;"/>
                                     </div>
                                 </div>
                             </div>
@@ -98,7 +114,7 @@
                             <div style="    margin-left: 30px;">
                                 <button v-if="edit==false" type="submit" class="btn btn-default">Submit</button>
                                 <button v-if="edit==true" class="btn btn-tumblr"  @click="saveEditing">Save</button>
-                                <button v-if="edit==true" class="btn btn-pinterest"  @click="cancelEditing">Cancel Editing</button>
+                                <button v-if="edit==true" class="btn btn-Danger"  @click="cancelEditing">Cancel</button>
                             </div>
                         </div>
                     </form>

@@ -9,27 +9,30 @@
                     <strong>{{message}}</strong>
                 </div>
                 <form @submit="receiveStatusSubmit">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="ReceiveStatusName">Receive Status</label>
-                            <input name="ReceiveStatusName" type="text" class="form-control" v-validate="'required|regex:^[a-zA-Z]+$'" v-model="receive_status.name">
-                            <span class="text-danger" v-show="errors.has('ReceiveStatusName')">
-                            {{errors.first('ReceiveStatusName')}}
-                            </span>
+                    <div class="row">
+                        <div class="col-md-2">
+                                <label for="ReceiveStatusName">Receive Status</label>
                         </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <input v-if="editing==false" type="submit" class="btn btn-tumblr" value="Create Status">
-                            <button v-if="editing==true" @click="saveEditing" class="btn btn-tumblr">Save Editing</button>
-                            <button v-if="editing==false" @click="showStaffType" class="btn btn-github" data-toggle="collapse" data-target="#ReceiveStatus">Show Receive Status</button>
-                            <button v-if="editing==true" @click="cancelEditing" class="btn btn-pinterest">Cancel Editing</button>
+                        <div class="col-md-3">
+                                <input name="ReceiveStatusName" type="text" class="form-control" v-validate="'required|regex:^[a-zA-Z]+$'" v-model="receive_status.name">
+                                <span class="text-danger" v-show="errors.has('ReceiveStatusName')">
+                                {{errors.first('ReceiveStatusName')}}
+                                </span>
+                        </div>
+                        <div class="col-md-1"></div>
+
+                        <div class="col-md-6">
+                                <input v-if="editing==false" type="submit" class="btn btn-tumblr" value="Create Status">
+                                <button v-if="editing==true" @click="saveEditing" class="btn btn-tumblr">Save Editing</button>
+                                <button v-if="editing==false" @click="showStaffType" class="btn btn-github" data-toggle="collapse" data-target="#ReceiveStatus">Show Receive Status</button>
+                                <button v-if="editing==true" @click="cancelEditing" class="btn btn-pinterest">Cancel Editing</button>
                         </div>
                     </div>
                 </form>
             </div>
 
             <div id="ReceiveStatus" class="collapse">
+                <hr>
                 <div class="panel-heading">
                     <h2 class="panel-title">Receive Status List</h2>
                 </div>
@@ -46,7 +49,7 @@
                         <tr v-for="(receive_status,index) in all_receive_status">
                             <td>{{index +1 }}</td>
                             <td>{{receive_status.status}}</td>
-                            <td><button class="btn btn-info btn-sm" @click="edit(index,receive_status.id)">Edit</button></td>
+                            <td><button class="btn btn-info btn-sm" @click="edit(index,receive_status.id)" title="Edit"><i class="fa fa-edit"></i></button></td>
                         </tr>
                         </tbody>
                     </table>

@@ -6,15 +6,17 @@
         </div>
         <div class="panel-body">
           <form @submit="createDepartment">
-                <div class="col-md-6">
-                    <div class="form-group">
+            <div class="row">
+                <div class="col-md-2">
                       <label for="Department">Department</label>
-                      <input name="department" type="text" class="form-control" v-validate="'required|regex:^[a-zA-Z]+$'" v-model="departmentData.department">
+                </div>
+                <div class="col-md-3">
+                      <input name="department" type="text" class="textbox" v-validate="'required|regex:^[a-zA-Z]+$'" v-model="departmentData.department">
                       <span class="text-danger" v-show="errors.has('department')">
                         {{errors.first('department')}}
                       </span>
-                    </div>
                 </div>
+                <div class="col-md-1"></div>
 
                 <div class="col-md-6">
                     <div class="form-group">
@@ -24,9 +26,11 @@
                       <button v-if="editing==true" @click="cancelEditing" class="btn btn-pinterest">Cancel Editing</button>
                     </div>
                 </div>
+            </div>
           </form>
         </div>
       <div id="department" class="collapse">
+        <hr>
             <div class="panel-heading">
                 <h2 class="panel-title">Department List</h2>
             </div>
@@ -43,7 +47,7 @@
                       <tr v-for="(department,index) in allDepartments">
                         <td>{{index +1 }}</td>
                         <td>{{department.name}}</td>
-                        <td><button class="btn btn-info btn-sm" @click="edit(index,department.id)">Edit</button></td>
+                        <td><button class="btn btn-info btn-sm" @click="edit(index,department.id)" title="Edit"><i class="fa fa-edit"></i></button></td>
                       </tr>
                     </tbody>
                 </table>

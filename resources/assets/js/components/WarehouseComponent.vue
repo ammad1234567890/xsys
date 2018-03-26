@@ -146,10 +146,10 @@
                           </div>
                           <div class="col-md-1"></div>
 
-                          <div class="col-md-6" style="    margin-top: 10px;">
+                          <div class="col-md-6" style="margin-top: 10px;">
                             <input v-if="edit==false" type="submit" class="btn btn-tumblr" value="Submit">
-                            <button v-if="edit==true" class="btn btn-primary" @click="saveEditing">Save Editing</button>
-                            <button v-if="edit==true" class="btn btn-danger" @click="cancelEding" style="margin-right: 80px;">Cancel Editing</button>
+                            <button v-if="edit==true" class="btn btn-default" @click="saveEditing" style="    margin-left: 250px;">Save</button>
+                            <button v-if="edit==true" class="btn btn-danger pull-right" @click="cancelEding" style="margin-right: 80px;">Cancel</button>
                           </div>
                         </div>
                         </form>

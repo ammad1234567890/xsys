@@ -19,7 +19,7 @@
                             <th>QA Status</th>
                             <th>Description</th>
                             <th>Receive Status</th>
-                            <th>Action</th>
+                            <th class="col-md-1">Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -32,7 +32,7 @@
                             <td v-if="receive.qa_description==null"> ---- </td>
                             <td v-else>{{receive.qa_description}}</td>
                             <td>{{receive.receive_status.status}}</td>
-                            <td><button class="btn btn-success btn-xs" v-on:click="show_products(index)"><i class="fa fa-eye"></i></button></td>
+                            <td class="text-center"><button class="btn btn-success btn-xs" v-on:click="show_products(index)" title="View Detial"><i class="fa fa-eye"></i></button></td>
                         </tr>
                         </tbody>
                     </table>
@@ -66,7 +66,7 @@
                                             <td>{{product.product_color.product.product_category.name}}</td>
                                             <td>{{product.product_color.product.name}}</td>
                                             <td>{{product.product_color.color}}</td>
-                                            <td>{{product.product_qty}}</td>
+                                            <td  style="text-align:right;">{{product.product_qty}}</td>
                                         </tr>
                                         </tbody>
                                     </table>

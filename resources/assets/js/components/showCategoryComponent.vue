@@ -3,7 +3,7 @@
                 <div class="col-md-12">
                     <div v-if="editing==1" class="panel panel-info">
                         <div class="panel-heading">
-                            <h2 class="panel-title">Create Category</h2>
+                            <h2 class="panel-title">Edit Category</h2>
                         </div>
 
                         <div class="panel-body">
@@ -46,10 +46,10 @@
                                     </div>
                                     <div class="col-md-1"></div>
 
-                                  <div class="col-md-6">
+                                  <div class="col-md-6" style="    margin-top: 20px;">
                                       <input type="submit" value="Submit" v-if="editing==0" class="btn btn-default pull-right" />
-                                      <button  class="btn btn-primary" v-on:click="saveEditing" v-if="editing==1" style="margin-left: 130px;">Save Editing</button>
-                                      <button  class="btn btn-danger pull-right" v-on:click="cancelEding" v-if="editing==1" style="    margin-right: 84px;">Cancel Editing</button>
+                                      <button  class="btn btn-default" v-on:click="saveEditing" v-if="editing==1" style="margin-left: 250px;">Save</button>
+                                      <button  class="btn btn-danger pull-right" v-on:click="cancelEding" v-if="editing==1" style="    margin-right: 84px;">Cancel</button>
                                   </div>
                                 </div>
                             </form>

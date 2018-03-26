@@ -1,52 +1,58 @@
 <template>
     <div class="row">
-            <div class="card headcolor">
-                <div class="card-header">
-                      <h3 class="card-title pad-bot"><i class="material-icons">account_balance</i> <small>BANK</small> </h3>
-                </div>
-            </div>
     <!--<div class="col-md-4 panel panel-default">-->
-        <div class="col-md-12 panel panel-info">
+        <div class="panel panel-info">
             <div class="panel-heading">
                 <h2 class="panel-title">Add New Bank</h2>
             </div>
             <div class="panel-body">
                 <form @submit="createBank">
-                    <div class="col-md-6">
-                       <div class="form-group label-floating">
-                           <label for="Bank" class="control-label">Bank Name</label>
-                          <input name="bank_name" type="text" class="form-control"  v-model="bankData.bank_name">
-                            <span class="text-danger" v-show="errors.has('bank_name')">
-                                {{errors.first('bank_name')}}
-                            </span>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label>Bank Name</label>
                         </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group label-floating">
+                        <div class="col-md-3">
+                              <input name="bank_name" type="text" class="textbox"  v-model="bankData.bank_name">
+                                <span class="text-danger" v-show="errors.has('bank_name')">
+                                    {{errors.first('bank_name')}}
+                                </span>
+                        </div>
+                        <div class="col-md-1"></div>
+
+                        <div class="col-md-2">
                             <label for="Bank" class="control-label">Bank Phone No</label>
-                            <input name="bank_phone_no" type="text" class="form-control"  v-model="bankData.bank_phone_no">
+                        </div>
+                        <div class="col-md-3">
+                            <input name="bank_phone_no" type="text" class="textbox"  v-model="bankData.bank_phone_no">
                             <span class="text-danger" v-show="errors.has('bank_phone_no')">
                                 {{errors.first('bank_phone_no')}}
                             </span>
                         </div>
+                        <div class="col-md-1"></div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <select class="form-control" name="city" v-validate="'required'" v-model="bankData.city_id">
-                                <option value="">Select City</option>
-                                <option v-for="city in cities" v-bind:value="city.id">{{city.name}}</option>
-                            </select>
-                            <span class="text-danger" v-show="errors.has('city')">
-                                    {{errors.first('city')}}
-                            </span>
+
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label for="Bank" class="control-label">Bank Phone No</label>
                         </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
+                        <div class="col-md-3">
+                            <div>
+                                <select class="textbox" name="city" v-validate="'required'" v-model="bankData.city_id">
+                                    <option value="">Select City</option>
+                                    <option v-for="city in cities" v-bind:value="city.id">{{city.name}}</option>
+                                </select>
+                                <span class="text-danger" v-show="errors.has('city')">
+                                        {{errors.first('city')}}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-1"></div>
+
+                        <div class="col-md-6">
                             <!--<button v-if="editing==true" @click="saveEditing" class="btn btn-default col-md-6">Save Editing</button>-->
                             <!--<button v-if="editing==false" @click="showCities" class="btn btn-default col-md-6" data-toggle="collapse" data-target="#cities">Bank</button>-->
                             <!--<button v-if="editing==true" @click="cancelEditing" class="btn btn-default col-md-6">Cancel Editing</button>-->
-                        <input v-if="editing==false" type="submit" @click="createBank" class="btn btn-tumblr pull-right" value="Create Bank">
+                        <input v-if="editing==false" type="submit" @click="createBank" class="btn btn-tumblr pull-right" value="Create Bank" style="margin-right: 86px;">
                         </div>
                     </div>
                 </form>
@@ -54,7 +60,7 @@
         </div>
 
 
-        <div class="col-md-12 panel panel-info">
+        <div class="panel panel-info">
             <div class="panel-heading">
                 <h2 class="panel-title">Bank Details</h2>
             </div>
@@ -62,20 +68,20 @@
                  <table id="bank_detail_table" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                     <thead>
                     <tr>
-                        <th>S.No</th>
+                        <th class="col-md-1">S.No</th>
                         <th>Bank Names</th>
                         <th>Bank Phone No</th>
                         <th>Bank City</th>
-                        <th>Action</th>
+                        <th class="col-md-1">Action</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr v-for="(bank,index) in allBanks">
                         <td>{{index +1 }}</td>
                         <td>{{bank.bank_name}}</td>
-                        <td>{{bank.bank_phone_no}}</td>
+                        <td>{{bank.bank_uan}}</td>
                         <td>{{bank.name}}</td>
-                        <td><button class="btn btn-info btn-xs" @click="edit(index,city.id)">Edit</button></td>
+                        <td class="text-center"><button class="btn btn-info btn-xs" @click="edit(index,city.id)" title="Edit"><i class="fa fa-edit"></i></button></td>
                     </tr>
                     </tbody>
                 </table>

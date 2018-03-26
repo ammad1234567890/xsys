@@ -4,7 +4,7 @@
         <div class="col-md-12">
             <div v-if="edit" class="panel panel-info">
                 <div class="panel-heading">
-                            <h2 class="panel-title">Create Product</h2>
+                            <h2 class="panel-title">Edit Product</h2>
                         </div>
                 <div id="d" class="panel-body" v-bind:class="{in:edit}">
                     <form @submit="createProduct">
@@ -37,7 +37,7 @@
                                 </span>
                                 </div>
                                 <div class="form-group col-md-12">
-                                    <button class="btn btn-tumblr" @click="addColorForm">Add Product Color</button>
+                                    <button class="btn btn-info" @click="addColorForm">Add Product Color</button>
                                 </div>
                             </div>
                         </div>
@@ -79,7 +79,7 @@
                             <div class="row" v-if="edit==true">
                                 <div class="col-md-12">
                                     <div v-for="(image, i) in find.product_images">
-                                        <img v-if="localImage==false" v-bind:src="'./product_img/'+image.image" class="col-md-1 img-thumbnail" height="auto" @click="deleteImage(index,i)" />
+                                        <img v-if="localImage==false" v-bind:src="'./product_img/'+image.image" class="col-md-1 img-thumbnail" height="auto" @click="deleteImage(index,i)"  style="margin-left: 14px;"/>
                                         <img v-if="localImage==true" v-bind:src="image" class="col-md-1 img-thumbnail" height="auto" @click="deleteImage(index,i)" />
                                     </div>
                                 </div>
@@ -96,7 +96,7 @@
                         <div class="form-group row" style="    margin-left: 0px;">
                                 <button v-if="edit==false" type="submit" class="btn btn-tumblr">Submit</button>
                                 <button v-if="edit==true" class="btn btn-tumblr"  @click="saveEditing">Save</button>
-                                <button v-if="edit==true" class="btn btn-pinterest"  @click="cancelEditing">Cancel Editing</button>
+                                <button v-if="edit==true" class="btn btn-danger"  @click="cancelEditing">Cancel </button>
                         </div>
                     </form>
 
@@ -106,7 +106,7 @@
             <!-- end of panel -->
             <div class="panel panel-info">
                 <div class="panel-heading">
-                     <h2 class="panel-title">Products</h2>
+                     <h2 class="panel-title">Products Detail</h2>
                 </div>
                 <div class="panel-body">
                     <table id="pro" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
@@ -115,7 +115,7 @@
                             <th>Model</th>
                             <th>Category</th>
                             <th>Est.Release Date</th>
-                            <th>Action</th>
+                            <th class="col-md-1">Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -125,7 +125,7 @@
                             <td>{{product.release_date | moment}}</td>
                             <td>
                                 <button class="btn btn-success btn-xs" v-on:click="showDetails(index)" data-toggle="modal" data-target="#myModal" title="View Detail"><i class="fa fa-eye"></i></button>
-                                <button class="btn btn-primary btn-xs" v-on:click="editProduct(index)"><i class="fa fa-edit" title="Edit"></i></button>
+                                <button class="btn btn-info btn-xs" v-on:click="editProduct(index)"><i class="fa fa-edit" title="Edit"></i></button>
 
                             </td>
                             <!-- <td>
@@ -158,50 +158,67 @@
                     </div>
                     <div class="modal-body">
 
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group col-md-4">
-                                    <label for="productName">Product Name</label>
-                                    <input type="text" readonly class="form-control" v-bind:value="details.productName">
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <label for="productCategory">Product Category</label>
-                                    <input type="text" readonly class="form-control" v-bind:value="details.productCategory">
-                                </div>
-                                <div class="form-group col-md-4">
-                                    <label for="ReleaseDate">Release Date</label>
-                                    <input type="text" readonly class="form-control" v-bind:value="details.releaseDate | moment">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div v-for="(find, index) in details.finds" class="well well-sm"> <!--Product Color Form-->
                             <div class="row">
-                                <div class="col-md-12">
-                                    <div class="form-group col-md-6">
-                                        <label for="colorName">Color Name</label>
-                                        <input type="text" v-bind:value="find.color" class="form-control" readonly>
+                                    <div class="col-md-3">
+                                        <label for="productName">Product Name</label>
                                     </div>
-                                    <div class="form-group col-md-3">
-                                        <label for="price">Price</label>
-                                        <vue-numeric currency="Rs" class="form-control" separator="," v-bind:value="find.price" readonly></vue-numeric>
-                                    </div>
-                                    <div class="form-group col-md-3">
-                                        <label for="discount">Discount(%)</label>
-                                        <input type="text" name="Discount" class="form-control" v-bind:value="find.discount+'%'" readonly>
+                                    <div class="col-md-3">
+                                        <input type="text" readonly class="textbox" v-bind:value="details.productName">
                                     </div>
 
-                                </div>
+                                    <div class="col-md-3">
+                                        <label for="productCategory">Product Category</label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="text" readonly class="textbox" v-bind:value="details.productCategory">
+                                    </div>
+                                    <div class="col-md-1"></div>
                             </div>
+
                             <div class="row">
-                                <div class="col-md-12">
-                                    <div v-for="(image, index) in find.product_images">
-                                        <img v-bind:src="'./product_img/'+image.image" class="col-md-3 img-thumbnail" height="auto" />
+
+                                    <div class="col-md-3">
+                                        <label for="ReleaseDate">Release Date</label>
                                     </div>
-                                </div>
+
+                                    <div class="col-md-3">
+                                        <input type="text" readonly class="textbox" v-bind:value="details.releaseDate | moment">
+                                    </div>
                             </div>
 
-                        </div>
+                            <div v-for="(find, index) in details.finds" class="well well-sm" style="    margin-top: 5px;"> <!--Product Color Form-->
+                                <div class="row">
+                                        <div class="col-md-3">
+                                            <label for="colorName">Color Name</label>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="text" v-bind:value="find.color" class="textbox" readonly>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label for="price">Price</label>
+                                        </div>     
+                                        <div class="col-md-3">        
+                                            <vue-numeric currency="Rs" class="textbox" separator="," v-bind:value="find.price" readonly></vue-numeric>
+                                        </div>
+                                </div>
+                                <div class="row">
+
+                                        <div class="col-md-3">
+                                            <label for="discount">Discount(%)</label>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="text" name="Discount" class="textbox" v-bind:value="find.discount+'%'" readonly>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div v-for="(image, index) in find.product_images">
+                                                <img v-bind:src="'./product_img/'+image.image" class="col-md-3 img-thumbnail" height="auto" />
+                                            </div>
+                                        </div>
+                                </div>
+
+                            </div>
 
                     </div>
                     <div class="modal-footer">

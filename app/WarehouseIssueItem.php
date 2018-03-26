@@ -10,7 +10,8 @@ class WarehouseIssueItem extends Model
 
     public function warehouseIssue()
     {
-      return $this->belongsTo('App\WarehouseIssue');
+    //  return $this->belongsTo('App\WarehouseIssue');
+	      return $this->belongsTo('App\WarehouseIssue','warehouse_issue_id');
     }
 
     public function item()

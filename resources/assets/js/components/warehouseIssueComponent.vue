@@ -1,12 +1,5 @@
 <template>
     <div>
-      <div class="row">
-          <div class="card headcolor">
-              <div class="card-header">
-                      <h3 class="card-title pad-bot"><i class="material-icons">store</i> <small>SALE INVOICE </small> </h3>
-              </div>
-          </div>
-      </div>
         <div v-if="!created" class="row">
             <div class="col-md-12">
                 <div class="panel panel-info">
@@ -38,22 +31,22 @@
                                 <table class="table table-striped table-bordered table-hover">
                                     <thead>
                                     <tr>
-                                        <th>S.No</th>
+                                        <th class="col-md-1">S.No</th>
                                         <th>IMEI</th>
-                                        <th>Remove</th>
+                                        <th class="col-md-1">Action</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr v-for="(imei, index) in newIssueItems.imei">
                                         <td>{{index + 1}}</td>
                                         <td>{{imei}}</td>
-                                        <td><button class="btn btn-danger" @click="removeIMEI(index)">Remove</button></td>
+                                        <td class="text-center"><button class="btn btn-danger btn-xs" @click="removeIMEI(index)" title="Delete"><i class="fa fa-times"></i></button></td>
                                     </tr>
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="form-group col-md-12">
-                                <input type="submit" class="btn btn-round btn-tumblr fixedbutton" value="Submit">
+                            <div class="col-md-4">
+                                <input type="submit" class="btn btn-default" value="Submit">
                             </div>
                         </form>
                     </div>

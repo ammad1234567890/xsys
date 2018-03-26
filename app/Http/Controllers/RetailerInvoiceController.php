@@ -30,6 +30,7 @@ use App\RetailerInvoice_Products;
 use App\WarehouseStaff;
 use App\Staff;
 use App\WarehouseIssue;
+use App\WarehouseIssueItem;
 use App\Ledger;
 
 class RetailerInvoiceController extends Controller {
@@ -39,7 +40,7 @@ class RetailerInvoiceController extends Controller {
     }
 
     public function get_invoice() {
-              return $invoice_list = RetailerInvoice::with(
+        return $invoice_list = RetailerInvoice::with(
                         'payment_type'
                         , 'RetailerOrder'
                 )->orderBy('id', 'desc')->get();
@@ -56,7 +57,7 @@ class RetailerInvoiceController extends Controller {
 
     public function store(Request $request) {
         $product[] = null;
-      //  return $this->make_number($invoice_id);
+        //  return $this->make_number($invoice_id);
         // return $request;
         DB::beginTransaction();
         $staff_id = Auth::user()->staff_id;
@@ -71,7 +72,7 @@ class RetailerInvoiceController extends Controller {
                     'created_by' => Auth::user()->id,
         ]);
         $invoice_id = $invoice->id;
-        RetailerInvoice::where(['id' => $invoice_id])->update(['invoice_no' => $request->order_id_pattern.$this->make_number($invoice_id)]);
+        RetailerInvoice::where(['id' => $invoice_id])->update(['invoice_no' => $request->order_id_pattern . $this->make_number($invoice_id)]);
         for ($i = 0; $i < count($request->amount); $i++) {
             if ($request->productamount[$i] != 0) {
                 $product[$i]['invoice_id'] = $invoice_id;
@@ -101,7 +102,7 @@ class RetailerInvoiceController extends Controller {
             'created_by' => Auth::user()->id
         ]);
         Ledger::create(['invoice_id' => $invoice_id, 'TransDate' => date('Y-m-d H:i:s'),
-            'description' => "invoice (".$request->order_id_pattern.$this->make_number($invoice_id).")", 'Credit' => $request->total_amount,
+            'description' => "invoice (" . $request->order_id_pattern . $this->make_number($invoice_id) . ")", 'Credit' => $request->total_amount,
             'retailer_id' => $request->retailer_id]);
         DB::commit();
 
@@ -116,14 +117,18 @@ class RetailerInvoiceController extends Controller {
             $order_zeros = "0000";
         } elseif ($order_id <= 1000) {
             $order_zeros = "000";
-        }
-         elseif ($order_id <= 10000) {
+        } elseif ($order_id <= 10000) {
             $order_zeros = "00";
-        }
-         elseif ($order_id <= 100000) {
+        } elseif ($order_id <= 100000) {
             $order_zeros = "0";
         }
-        return $order_zeros.$order_id;
+        return $order_zeros . $order_id;
+    }
+
+    public function invoice_details($id) {
+        return $records = RetailerInvoice::with(
+                        'warehouse_issue.warehouseIssueItem.item.productColor.product', 'warehouse_issue.warehouseIssueItem.item.imei'
+                )->where(['id' => $id])->get();
     }
 
     public function show(RetailerInvoice $retailerInvoice) {
@@ -144,19 +149,16 @@ class RetailerInvoiceController extends Controller {
 
     //        /get_invoice_by_retailer
 
-    public function get_invoice_by_retailer(Request $request){
-        $outlet_id= $request->input('selected_invoice_retailer_outlet_id');
+    public function get_invoice_by_retailer(Request $request) {
+        $outlet_id = $request->input('selected_invoice_retailer_outlet_id');
         //$records= RetailerOutlet::with('retailer_order','retailer_order.invoices')->where('id',$outlet_id)->get();
-        $records=RetailerInvoice::with('RetailerOrder.retailer','RetailerOrder.retailer_outlet')->whereHas('RetailerOrder.retailer_outlet',function($q) use ($outlet_id)
-                {
+        $records = RetailerInvoice::with('RetailerOrder.retailer', 'RetailerOrder.retailer_outlet')->whereHas('RetailerOrder.retailer_outlet', function($q) use ($outlet_id) {
 
                     $q->where('id', $outlet_id);
                 })->get();
-       
-        
+
+
         return Response::json($records);
-        
-        
     }
 
 }

@@ -8,34 +8,42 @@
                     </div>
                     <div class="panel-body">
                         <form v-on:submit="addPermission">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="roleName">Role Name</label>
-                                    <input type="text" class="form-control" v-model="newRolePermission.roleName" name="roleName" placeholder="Role Name" required>
-                                </div>
-                            </div>
+                          <div class="row">
+                              <div class="col-md-2">
+                                  <label for="roleName">Role Name</label>
+                              </div>
+                              <div class="col-md-3">
+                                      <input type="text" class="textbox" v-model="newRolePermission.roleName" name="roleName" placeholder="Role Name" required>
+                              </div>
+                              <div class="col-md-1"></div>
+
                             
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="permission">Permissions</label>
+                              <div class="col-md-2">
+                                      <label for="permission">Permissions</label>
+                              </div>
+
+                              <div class="col-md-3">
                                     <v-select multiple label="permission" v-model="newRolePermission.selected" :options="permissions" required></v-select>
-                                </div>
-                            </div>
+                              </div>
+                              <div class="col-md-1"></div>
+                          </div>
 
-                            <div class="col-md-6">   
-                                <div class="form-group">
+                          <div class="row">
+                              <div class="col-md-2">   
                                     <label for="roleName">Role Description</label>
-                                    <textarea name="roleDescription" rows="2" v-model="newRolePermission.description" class="col-md-12 form-control"></textarea>
-                                </div>
-                            </div>
+                              </div>
+                              <div class="col-md-3">   
+                                    <textarea name="roleDescription" rows="2" v-model="newRolePermission.description" class="textbox"></textarea>
+                              </div>
+                              <div class="col-md-1"></div>
 
-                            <div class="col-md-6">
-                                <div class="form-group" style="bottom: -24px;">
-                                    <input type="submit" value="Submit" v-if="editing==0" class="btn btn-tumblr pull-right" />
-                                    <button  class="btn btn-tumblr pull-right" v-on:click="saveEditing" v-if="editing==1">Save Editing</button>
-                                    <button  class="btn btn-pinterest pull-right" v-on:click="cancelEding" v-if="editing==1">Cancel Editing</button>
-                                </div>
-                            </div>
+                              <div class="col-md-6">
+                                    <input type="submit" value="Submit" v-if="editing==0" class="btn btn-default pull-right" style="margin-right: 83px; margin-top: 9px;" />
+                                    <button  class="btn btn-primary" v-on:click="saveEditing" v-if="editing==1">Save Editing</button>
+                                    <button  class="btn btn-danger pull-right" v-on:click="cancelEding" v-if="editing==1">Cancel Editing</button>
+                              </div>
+
+                          </div>
 
                         </form>
                     </div>
@@ -53,10 +61,10 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th>S.No</th>
+                                    <th class="col-md-1">S.No</th>
                                     <th>Role</th>
                                     <th>Permissions</th>
-                                    <th>Action</th>
+                                    <th class="col-md-1">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -65,14 +73,16 @@
                                 <td>{{role.role}}</td>
                                 <td><span v-for="permission in role.permission" class="btn btn-github" data-toggle="tooltip" v-bind:title="permission.description" >{{permission.permission}} </span></td>
                                 <td>
-                                    <div class="dropdown">
+                                    <!-- <div class="dropdown">
                                         <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown">Action
                                             <span class="caret"></span></button>
                                         <ul class="dropdown-menu">
                                             <li><a href="#" v-on:click="edit(index)">Edit</a></li>
                                             <li><a href="#" v-on:click="deleteRole(role.id,index)">Delete</a></li>
                                         </ul>
-                                    </div>
+                                    </div> -->
+                                    <button class="btn btn-primary" v-on:click="edit(index)"><i class="fa fa-edit"></i></button>
+
                                 </td>
                             </tr>
                             </tbody>

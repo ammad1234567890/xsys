@@ -6,7 +6,7 @@
                 <div class="panel panel-info">
                     <div class="panel-heading">
                       <a href="#d" data-toggle="collapse" style="color:#333333">
-                          <h2 class="panel-title">New Enrolment</h2>
+                          <h2 class="panel-title">Edit Enrolment</h2>
                       </a>
                     </div>
                     <div id="d" class="panel-body">
@@ -154,8 +154,8 @@
                         <div class="row" style="    margin-top: 10px;">
                             <div class="col-md-12">
                                   <input v-if="edit==false" type="submit" value="Submit" class="btn btn-tumblr">
-                                  <button v-if="edit" class="btn btn-primary" @click="saveEditing">Save Editing</button>
-                                  <button v-if="edit" class="btn btn-danger" @click="cancelEding">Cancel Editing</button>
+                                  <button v-if="edit" class="btn btn-default" @click="saveEditing">Save </button>
+                                  <button v-if="edit" class="btn btn-danger" @click="cancelEding">Cancel </button>
                             </div>
                         </div>
                       </form>

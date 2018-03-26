@@ -19,7 +19,7 @@
                                 <th>Outlet</th>
                                 <th>City</th>
                                 <th>Total Amount (PKR)</th>
-                                <th class="col-md-3 text-center">Action</th>
+                                <th class="col-md-1 text-center">Action</th>
                                 <th>Account Clearance</th>
 
                             </tr>
@@ -76,22 +76,22 @@
 
 
                                     <h5><b>{{view_order.order_no}}</b> <span class="pull-right"><b>Created at:</b> <i> {{view_order.created_at | moment}}</i> </span></h5>
-                                    <table width="100%" class="table table-hovered">
+                                    <table class="table table-hovered">
                                         <tr>
-                                            <td>Total Cost</td>
+                                            <td style="width: 170px;">Total Cost :</td>
                                             <td>{{view_order.total_cost | currency('Rs')}} </td>
                                         </tr>
                                         <tr>
-                                            <td>Sales Officer/Manager</td>
+                                            <td style="width: 170px;">Sales Officer/Manager :</td>
                                             <td>{{view_order.sales_officer_name}}</td>
                                         </tr>
                                         <tr>
-                                            <td>Account Clearance</td>
+                                            <td style="width: 170px;">Account Clearance :</td>
                                             <td v-if="view_order.is_account_clear"><i class="fa fa-check"  title="Order Cleared!"></i></td>
                                             <td v-else><i class="fa fa-times"  title="Order Cleared!"></i> </td>
                                         </tr>
                                         <tr v-if="view_order.is_account_clear">
-                                            <td>Order Cleared By</td>
+                                            <td style="width: 170px;">Order Cleared By :</td>
                                             <td>{{view_order.updated_by}}</td>
                                         </tr>
 
@@ -116,10 +116,10 @@
                                             <td>{{products.product_color.product.product_category.name}}</td>
                                             <td>{{products.product_color.product.name}}</td>
                                             <td>{{products.product_color.color}}</td>
-                                            <td>{{products.product_qty}}</td>
-                                            <td>{{products.unit_price | currency('')}}</td>
-                                            <td>{{products.product_color.discount}}%</td>
-                                            <td>{{(products.product_qty*products.unit_price)-((products.product_qty*products.unit_price)/100)*(products.product_color.discount)}}</td>
+                                            <td style="text-align:right;">{{products.product_qty}}</td>
+                                            <td style="text-align:right;">{{products.unit_price | currency('')}}</td>
+                                            <td style="text-align:right;">{{products.product_color.discount}}%</td>
+                                            <td style="text-align:right;">{{(products.product_qty*products.unit_price)-((products.product_qty*products.unit_price)/100)*(products.product_color.discount) | currency('')}}</td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -318,6 +318,11 @@ function mydatatable(){
         padding: 3px;
         box-sizing: border-box;
 
+    }
+
+    thead tr td {
+            font-family: Calibri;
+            font-size: 12px;
     }
 
 </style>

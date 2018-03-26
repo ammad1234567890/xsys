@@ -280,3 +280,4 @@ Route::post('/invoice/store/','RetailerInvoiceController@store');
 Route::get('/invoice/list/','RetailerInvoiceController@index');
 Route::get('/invoice/get_invoice/','RetailerInvoiceController@get_invoice');
 Route::post('/get_invoice_by_retailer','RetailerInvoiceController@get_invoice_by_retailer');
+Route::get('/invoice/details/{id}','RetailerInvoiceController@invoice_details');

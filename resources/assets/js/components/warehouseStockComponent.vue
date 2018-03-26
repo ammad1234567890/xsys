@@ -32,25 +32,25 @@
                     </div>
                     <div class="panel-body">
                         <table v-if="showSummary==true" id="warehousestocktable" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
-                        	<thead>
-                        		<tr>
-                        			<th>S.No</th>
-                        			<th>Warehouse</th>
-                        			<th>Model</th>
-                        			<th>Color</th>
-                        			<th>Quantity</th>
-                        		</tr>
-                        	</thead>
-                        	<tbody>
-                        		<tr v-for="(stock,index) in showDetails">
-                        			<td>{{index + 1}}</td>
-                        			<td>{{stock.warehouse.name}}</td>
-                        			<td>{{stock.product_color.product.name}}</td>
-                        			<td>{{stock.product_color.color}}</td>
-                        			<td>{{stock.product_qty}}</td>
-                        		</tr>
-                        	</tbody>
-                        </table> <table v-if="showFull==true"  class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                          <thead>
+                            <tr>
+                              <th>S.No</th>
+                              <th>Warehouse</th>
+                              <th>Model</th>
+                              <th>Color</th>
+                              <th>Quantity</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr v-for="(stock,index) in showDetails">
+                              <td>{{index + 1}}</td>
+                              <td>{{stock.warehouse.name}}</td>
+                              <td>{{stock.product_color.product.name}}</td>
+                              <td>{{stock.product_color.color}}</td>
+                              <td>{{stock.product_qty}}</td>
+                            </tr>
+                          </tbody>
+                        </table> <table v-if="showFull==true" id="detailTable" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                           <thead>
                             <tr>
                               <th>S.No</th>
@@ -81,11 +81,12 @@
 import vSelect from "vue-select"
     export default {
         components: {vSelect},
-    	data(){
-    		return{
+      data(){
+        return{
           showSummary:false,
           showFull:false,
-    			allStock:[],
+          //selectedWarehouse:true,
+          allStock:[],
           allWarehouses:[],
           showDetails:[],
           detailRepot:[],
@@ -95,16 +96,16 @@ import vSelect from "vue-select"
             {'reportType':'Detail'}
           ],
           selectedReportType:null,
-    		}
-    	},
+        }
+      },
         mounted() {
             console.log('Component mounted.')
         },
         created(){
-        	axios.get('./allStock').then(response=>{
-        		this.allStock=response.data;
+          axios.get('./allStock').then(response=>{
+            this.allStock=response.data;
             this.showDetails=this.allStock;
-        	}),
+          }),
           axios.get('./allWarehouse').then(response=>{
             console.log(response.data);
             this.allWarehouses=response.data;
@@ -113,20 +114,26 @@ import vSelect from "vue-select"
         },
         methods:{
           showReport(e){
-           // loadDatatable(false);
             e.preventDefault();
+            loadDatatable(false,'',true);
+            loadDatatable(false,'detail',true);            
               this.showSummary=false;
               this.showFull=false;
+              //this.selectedWarehouse=true;
               //console.log(this.searchedWarehouse);
-              if(this.selectedReportType.reportType=="Summary" && this.searchedWarehouse==null){
+            if(this.selectedReportType.reportType=="Summary" && this.searchedWarehouse==null){
+                //this.selectedWarehouse=true;
+                console.log("Val "+this.selectedWarehouse);
                 this.showDetails=this.allStock;
                 this.showSummary=true;
-                loadDatatable(true);
+                loadDatatable(true,'',true);
             }else if (this.selectedReportType.reportType=="Summary" && this.searchedWarehouse!=null) {
-             loadDatatable(false);
+            // loadDatatable(false);
+            //this.selectedWarehouse=false;
              axios.get('./warehouseStockSearch/'+this.searchedWarehouse.id).then(response=>{
               this.showDetails=response.data;
               this.showSummary=true;
+              loadDatatable(true,'',false);
              })
               //  this.showDetails=result;
 
@@ -135,17 +142,24 @@ import vSelect from "vue-select"
                 this.detailRepot=response.data;
                 this.showFull=true;
                  console.log(response.data);
+                 loadDatatable(true,'detail',true);
               }) 
             }
           }
         }
     }
-    var showed=false;
-    function loadDatatable(show){
-      var table;
+    var showed=false;  
+    function loadDatatable(show,type,visible){  
+      var id;
+      if(type=="detail"){
+        id="#detailTable";
+      }else{
+        id="#warehousestocktable";
+      }
       if(show==true){
-            console.log()
-            table=$('#warehousestocktable').DataTable({
+            console.log(show);
+            setTimeout(function(){              
+            var table=$(id).DataTable({
             "pagingType": "full_numbers",
             "lengthMenu": [
                 [10, 25, 50, -1],
@@ -157,12 +171,19 @@ import vSelect from "vue-select"
                 searchPlaceholder: "Search records",
             }
             });
+            if(visible==true){
+              table.column( 1 ).visible( true );
+            }else{
+              table.column( 1 ).visible( false );
+            }
+            
+          },3000);
             showed=true;
 
     }else{
       if(showed==true){
-      //$('#warehousestocktable').DataTable().fnDestroy();
-      table.destroy();  
+      $(id).DataTable().destroy();
+     // table.destroy();  
 
       }
     }

@@ -2,19 +2,18 @@
         <div class="row">
             
                 
-            <div class="card headcolor">
+        <!--    <div class="card headcolor">
             <div class="card-header">
                     <h3 class="card-title pad-bot">
                         <h4 class="heading-inline" style="text-transform: uppercase; "> Dealer New Payment</h4> </h3>
             </div>
             <hr/>
-            </div>
-
+            </div> -->
                     <div class="row">
                         <div class="col-md-12">
                             <div class="panel panel-info" >
                                 <div class="panel-heading">
-                                    <h2 class="panel-title">Payment Details</h2>
+                                    <h2 class="panel-title">Dealer New Payment</h2>
                                 </div>
                                 <div class="col-md-12" style="    font-size: 14px; font-weight:bold; text-align:left; padding-left:30px;" v-if="new_payment.total_outstanding!=''">
                                     <br/>
@@ -124,9 +123,43 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div><!--New Dealer Payment panel ending-->
                 
-            
+				
+				<!--Payment Listing Panel starting-->
+                    <div class="col-md-12 panel panel-info">
+            <div class="panel-heading">
+                <h2 class="panel-title">Dealer Payment Details</h2>
+            </div>
+            <div class="panel-body">
+                 <table id="bank_detail_table" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                    <thead>
+                    <tr>
+                        <th>DS.No</th>
+                        <th>Date</th>
+						<th>Dealer Code</th>
+                        <th>Invoice No</th>
+						<th>Bank</th>
+                        <th>Payment Type</th>
+                        <th>Amount</th>
+						<th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>123456</td>
+						<td>26-03-2018</td>
+						<td>DC031800005</td>
+						<td>18KS000055</td>
+                        <td>MCB</td>
+                        <td>CASH</td>
+                        <td>15,000.00</td>
+                        <td><button class="btn btn-info btn-xs" @click="edit(index,city.id)">Edit</button></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
         </div>
 
 </template>

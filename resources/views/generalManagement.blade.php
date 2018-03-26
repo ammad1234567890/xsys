@@ -4,11 +4,6 @@
 
         <div class="container-fluid">
             <div class="row">
-                <div class="card headcolor">
-                    <div class="card-header">
-                          <h3 class="card-title pad-bot"><i class="material-icons">devices_other</i> <small>MISCELLANEOUS</small> </h3>
-                    </div>
-                </div>
                 <div class="col-md-12">
                     <div>
                         @if(in_array('city', $permissions))

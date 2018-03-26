@@ -39,7 +39,7 @@
                             <td  style="text-align:center; font-size: 20px;" v-if="order.transaction_closed==0"><i class="fa fa-times"></i></td>
                             <td  style="text-align:center; font-size: 20px; color: green;"  title="Payment Completed" v-else><i class="fa fa-check"></i></td>
                             <td>
-                                <div class="dropdown">
+                                <!-- <div class="dropdown">
                                     <button class="btn btn-info btn-xs dropdown-toggle" type="button" data-toggle="dropdown">Action
                                         <span class="caret"></span></button>
                                     <ul class="dropdown-menu">
@@ -47,8 +47,12 @@
                                         <li><a href="#" v-on:click="order_delete(index)">Delete</a></li>
                                         <li><a href="#" v-on:click="change_status_btn(index)">Change Status</a></li>
                                     </ul>
-                                    <button class="btn btn-success btn-xs" type="button" v-on:click="view_order_details(index)"><i class="fa fa-eye"></i></button>
-                                </div>
+                                </div> -->
+                                    <button class="btn btn-info btn-xs" type="button" v-on:click="editProduct(index)" title="Edit"><i class="fa fa-edit"></i></button>
+
+                                    <button class="btn btn-default btn-xs" type="button" v-on:click="change_status_btn(index)" title="Change Status"><i class="fa fa-file-text"></i></button>
+
+                                    <button class="btn btn-success btn-xs" type="button" v-on:click="view_order_details(index)" title="View Detail"><i class="fa fa-eye"></i></button>
                             </td>
                         </tr>
                         </tbody>
@@ -69,10 +73,10 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <h5><b>{{view_order.order_no}}</b> <span class="pull-right"><b>Date:</b> <i>{{view_order.created_at | moment}}</i> </span></h5>
-                                    <table width="100%" class="table table-hovered">
+                                    <table class="table table-hovered">
                                         <tr>
-                                            <td>Total Order Cost </td>
-                                            <td>{{view_order.total_cost | currency('Rs')}}</td>
+                                            <td style="width: 136px;">Total Order Cost :</td>
+                                            <td >{{view_order.total_cost | currency('Rs')}}</td>
                                         </tr><!-- 
                                         <tr>
                                             <td>Remaining Order Cost</td>
@@ -83,7 +87,7 @@
                                             <td>{{view_order.created_by}}</td>
                                         </tr> -->
                                         <tr>
-                                            <td>Current Status </td>
+                                            <td style="width: 136px;">Current Status :</td>
 
                                             <td v-if="view_order.current_status!=''">
                                                 <span  v-for="last_status in view_order.current_status">{{last_status.status}}</span>
@@ -101,7 +105,7 @@
                                             <td>Color</td>
                                             <td>Quantity</td>
                                             <td>Qty</td>
-                                            <td>Price</td>
+                                            <td>Price(PKR)</td>
 
                                         </tr>
                                         </thead>
@@ -110,9 +114,9 @@
                                             <td>{{products.product_color.product.product_category.name}}</td>
                                             <td>{{products.product_color.product.name}}</td>
                                             <td>{{products.product_color.color}}</td>
-                                            <td>{{products.quantity}}</td>
-                                            <td>{{(products.quantity-products.remaining_qty)}}</td>
-                                            <td>{{products.unit_cost | currency('Rs')}}</td>
+                                            <td style="text-align:right;">{{products.quantity}}</td>
+                                            <td style="text-align:right;">{{(products.quantity-products.remaining_qty)}}</td>
+                                            <td style="text-align:right;">{{products.unit_cost | currency(' ')}}</td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -124,7 +128,7 @@
                                             <td>Date</td>
                                             <td>Type</td>
                                             <td>Currency</td>
-                                            <td>Amount</td>
+                                            <td>Amount(PKR)</td>
                                             <td>XRT</td>
                                             <td>Total Amount (PKR)</td>
                                             <!-- <td>Payment By</td> -->
@@ -135,9 +139,9 @@
                                             <td>{{payment.created_at | moment}}</td>
                                             <td>{{payment.payment_type.type}}</td>
                                             <td>{{payment.currency.name}}</td>
-                                            <td>{{payment.payment_amount | currency(payment.currency.iso)}} </td>
-                                            <td>{{payment.exchange_rate}}</td>
-                                            <td>{{payment.total_amount | currency('Rs')}}</td>
+                                            <td style="text-align:right;">{{payment.payment_amount | currency(' ')}} </td>
+                                            <td  style="text-align:right;">{{payment.exchange_rate}}</td>
+                                            <td style="text-align:right;">{{payment.total_amount | currency(' ')}}</td>
                                             <!-- <td>{{payment.user.name}}</td> -->
                                         </tr>
                                         </tbody>

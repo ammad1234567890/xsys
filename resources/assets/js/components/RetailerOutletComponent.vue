@@ -1,13 +1,7 @@
 <template>
 
         <div class="row">
-            <div class="card headcolor">
-            <div class="card-header">
-                    <h3 class="card-title pad-bot">
-                        <h4 class="heading-inline" style="text-transform: uppercase; "> Dealers Detail</h4> </h3>
-            </div>
-            <hr/>
-            </div>
+
 
             
                 <div class="panel panel-info">
@@ -191,8 +185,6 @@
                                 <th>City</th>
                                 <th>Locality</th>
                                 <th>Address</th>
-
-
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -200,7 +192,7 @@
 
                             <tr v-for="(outlets,index) in outletsData">
                                 <td>{{outlets.name}}</td>
-								 <td>{{outlets.retailer.retailer_no}}</td>
+								<td>{{outlets.retailer.retailer_no}}</td>
                                 <td>{{outlets.business_person_name}}</td>
                                 <td>{{outlets.phone_no}}</td>
                                 <td>{{outlets.city.name}}</td>
@@ -210,10 +202,10 @@
 
                                 <td>
                                     <div class="dropdown">
-                                        <button class="btn btn-success btn-xs" v-on:click="enable_edit_mode(index)"><i class="fa fa-pencil"></i></button>
+                                        <button class="btn btn-primary btn-xs" v-on:click="enable_edit_mode(index)"><i class="fa fa-pencil" title="Edit"></i></button>
 
                                         -
-                                        <button class="btn btn-success btn-xs" type="button" v-on:click="view_outlet_details(index)"><i class="fa fa-eye"></i></button>
+                                        <button class="btn btn-success btn-xs" type="button" v-on:click="view_outlet_details(index)" title="View Detail"><i class="fa fa-eye"></i></button>
                                     </div>
                                 </td>
                             </tr>
@@ -783,5 +775,6 @@
     #form-section{
         border:1px solid black;
     }
+
 </style>
 

@@ -6,28 +6,31 @@
         </div>
       <div class="panel-body">
           <form @submit="createRegion">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label for="City" >Locality</label>
-                  <input name="region" type="text" class="form-control" v-validate="'required|regex:^[a-zA-Z]+$'" v-model="regionData.region">
-                  <span class="text-danger" v-show="errors.has('region')">
-                    {{errors.first('region')}}
-                  </span>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                  <input v-if="editing==false" type="submit" class="btn btn-tumblr" value="Create Locality">
-                  <button v-if="editing==true" @click="saveEditing" class="btn btn-tumblr">Save Editing</button>
-                  <button v-if="editing==false" @click="showRegions" class="btn btn-github" data-toggle="collapse" data-target="#regions">Show Locality</button>
-                  <button v-if="editing==true" @click="cancelEditing" class="btn btn-pinterest">Cancel Editing</button>
-                </div>
+            <div class="row">
+              <div class="col-md-2">
+                      <label for="City" >Locality</label>
+              </div>
+              <div class="col-md-3">
+                    <input name="region" type="text" class="textbox" v-validate="'required|regex:^[a-zA-Z]+$'" v-model="regionData.region">
+                    <span class="text-danger" v-show="errors.has('region')">
+                      {{errors.first('region')}}
+                    </span>
+              </div>
+              <div class="col-md-1"></div>
+
+              <div class="col-md-6">
+                    <input v-if="editing==false" type="submit" class="btn btn-tumblr" value="Create Locality">
+                    <button v-if="editing==true" @click="saveEditing" class="btn btn-tumblr">Save Editing</button>
+                    <button v-if="editing==false" @click="showRegions" class="btn btn-github" data-toggle="collapse" data-target="#regions">Show Locality</button>
+                    <button v-if="editing==true" @click="cancelEditing" class="btn btn-pinterest">Cancel Editing</button>
+              </div>
             </div>
           </form>
       </div>
         <div id="regions" class="collapse">
+          <hr>
             <div class="panel-heading">
-                <h2 class="panel-title">City List</h2>
+                <h2 class="panel-title">Locality List</h2>
             </div>
             <div class="panel-body">
                 <table class="table table-bordered col-md-12">
@@ -42,7 +45,7 @@
                       <tr v-for="(region,index) in allRegions">
                         <td>{{index +1 }}</td>
                         <td>{{region.name}}</td>
-                        <td><button class="btn btn-info btn-sm" @click="edit(index,region.id)">Edit</button></td>
+                        <td><button class="btn btn-info btn-sm" @click="edit(index,region.id)" title="Edit"><i class="fa fa-edit"></i></button></td>
                       </tr>
                     </tbody>
                 </table>

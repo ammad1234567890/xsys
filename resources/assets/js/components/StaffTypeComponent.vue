@@ -6,27 +6,31 @@
             </div>
         <div class="panel-body">
           <form @submit="createStaffType">
-            <div class="col-md-6">
-                <div class="form-group">
-                  <label for="StaffType">Staff Type</label>
-                  <input name="staffType" type="text" class="form-control" v-validate="'required|regex:^[a-zA-Z]+$'" v-model="staffTypeData.staffType">
-                  <span class="text-danger" v-show="errors.has('staffType')">
-                    {{errors.first('staffType')}}
-                  </span>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                  <input v-if="editing==false" type="submit" class="btn btn-tumblr" value="Create Staff Type">
-                  <button v-if="editing==true" @click="saveEditing" class="btn btn-tumblr">Save Editing</button>
-                  <button v-if="editing==false" @click="showStaffType" class="btn btn-github" data-toggle="collapse" data-target="#staffType">Sow Staff Type</button>
-                  <button v-if="editing==true" @click="cancelEditing" class="btn btn-pinterest">Cancel Editing</button>
-                </div>
+            <div class="row">
+              <div class="col-md-2">
+                    <label for="StaffType">Staff Type</label>
+              </div>
+
+              <div class="col-md-3">
+                    <input name="staffType" type="text" class="textbox" v-validate="'required|regex:^[a-zA-Z]+$'" v-model="staffTypeData.staffType">
+                    <span class="text-danger" v-show="errors.has('staffType')">
+                      {{errors.first('staffType')}}
+                    </span>
+              </div>
+              <div class="col-md-1"></div>
+
+              <div class="col-md-6">
+                    <input v-if="editing==false" type="submit" class="btn btn-tumblr" value="Create Staff Type">
+                    <button v-if="editing==true" @click="saveEditing" class="btn btn-tumblr">Save Editing</button>
+                    <button v-if="editing==false" @click="showStaffType" class="btn btn-github" data-toggle="collapse" data-target="#staffType">Show Staff Type</button>
+                    <button v-if="editing==true" @click="cancelEditing" class="btn btn-pinterest">Cancel Editing</button>
+              </div>
             </div>
           </form>
         </div>
 
         <div id="staffType" class="collapse">
+          <hr>
                 <div class="panel-heading">
                     <h2 class="panel-title">Staff Type List</h2>
                 </div>
@@ -43,7 +47,7 @@
                       <tr v-for="(staffType,index) in allStaffType">
                         <td>{{index +1 }}</td>
                         <td>{{staffType.type}}</td>
-                        <td><button class="btn btn-info btn-sm" @click="edit(index,staffType.id)">Edit</button></td>
+                        <td><button class="btn btn-info btn-sm" @click="edit(index,staffType.id)" title="Edit"><i class="fa fa-edit"></i></button></td>
                       </tr>
                     </tbody>
                 </table>

@@ -62,7 +62,7 @@
                             <th>Address</th>
                             <th>Outlet Name</th>
                             <th>Dealer ID</th>
-                            <th>Action</th>
+                            <th class="col-md-1">Action</th>
                         </tr>
                         </thead>
                         
@@ -73,7 +73,7 @@
                                 <td>{{outlets.address}}</td>
                                 <td>{{outlets.name}}</td>
                                 <td>{{outlets.retailer.retailer_no}}</td>
-                                <td><button class="btn btn-primary btn-sm" v-on:click="create_order_enabled(outlets.retailer.id, outlets.id, outlets.name, outlets.city.name,outlets.region.name, outlets.address, outlets.retailer.retailer_no)"><i class="fa fa-edit"></i> </button> </td>
+                                <td class="text-center"><button class="btn btn-primary btn-sm" v-on:click="create_order_enabled(outlets.retailer.id, outlets.id, outlets.name, outlets.city.name,outlets.region.name, outlets.address, outlets.retailer.retailer_no)" title="Edit"><i class="fa fa-edit"></i> </button> </td>
                             </tr>
             
                         </tbody>
@@ -407,6 +407,7 @@
                 });
             },
             create_order_enabled:function($retailer_id, $outlet_id, $outletname, $city, $locality, $address, $dealer_id){
+                $('#example_wrapper').css('display','none');
                 this.new_order.retailer_id=$retailer_id;
                 this.new_order.retailer_outlet_id=$outlet_id;
                 this.new_order.retailer_outlet_name=$outletname;
@@ -414,7 +415,6 @@
                 this.new_order.locality=$locality;
                 this.new_order.address=$address;
                 this.new_order.dealer_id=$dealer_id;
-                $('#example').css('display','none');
                 this.is_retailer_select=1;
 
 

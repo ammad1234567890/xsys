@@ -9,26 +9,30 @@
 
                     <div class="panel-body">
                         <form>
-                            <div class="col-md-6">
-                                <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-2">
                                     <label for="roleName">Users</label>
+                                </div>
                                     <!-- <select v-model="newUserRole.user" class="form-control" name="" required>
                                       <option v-for="user in Users"  v-bind:value="user.id">{{user.name}}</option>
                                     </select> -->
+                                <div class="col-md-3">
                                     <input type="text" name="user" v-model="newUserRole.user" class="form-control" placeholder="User Name" required>
                                 </div>
-                            </div>
+                                <div class="col-md-1"></div>
                             
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="permission">Role</label>
-                                    <v-select multiple label="role" v-model="newUserRole.roles" :options="Roles" required></v-select>
+                                <div class="col-md-2">
+                                        <label for="permission">Role</label>
                                 </div>
+                                <div class="col-md-3">
+                                        <v-select multiple label="role" v-model="newUserRole.roles" :options="Roles" required></v-select>
+                                </div>
+                                <div class="col-md-1"></div>
                             </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <button  class="btn btn-default" v-on:click="saveEditing" v-if="editing==1">Save Editing</button>
-                                    <button  class="btn btn-default" v-on:click="cancelEding" v-if="editing==1">Cancel Editing</button>
+                            <div class="row">
+                                <div class="col-md-12" style="margin-top: 20px;">
+                                        <button  class="btn btn-primary" v-on:click="saveEditing" v-if="editing==1">Save Editing</button>
+                                        <button  class="btn btn-danger" v-on:click="cancelEding" v-if="editing==1">Cancel Editing</button>
                                 </div>
                             </div>
                         </form>
@@ -47,10 +51,10 @@
                         <table class="table table-bordered">
                             <thead>
                             <tr>
-                                <th>S.No</th>
+                                <th class="col-md-1">S.No</th>
                                 <th>User</th>
                                 <th>Roles</th>
-                                <th>Action</th>
+                                <th class="col-md-1">Action</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -60,15 +64,16 @@
                                 <td>
                                     <span class="btn btn-default" v-for="(role, index) in userRole.role" data-toggle="tooltip" v-bind:title="role.description"> {{ role.role }} </span>
                                 </td>
-                                <td>
-                                    <div class="dropdown">
+                                <td class="text-center">
+                                    <!-- <div class="dropdown">
                                         <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-toggle="dropdown">Action
                                             <span class="caret"></span></button>
                                         <ul class="dropdown-menu">
                                             <li><a href="#" v-on:click="edit(index)">Edit</a></li>
                                             <li><a href="#" v-on:click="deleteRole(role.id,index)">Delete</a></li>
                                         </ul>
-                                    </div>
+                                    </div> -->
+                                    <button class="btn btn-primary btn-xs" v-on:click="edit(index)" title="Edit"><i class="fa fa-edit"></i></button>
                                 </td>
                             </tr>
                             </tbody>

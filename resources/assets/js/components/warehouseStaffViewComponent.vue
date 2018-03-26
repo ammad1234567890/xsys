@@ -81,7 +81,7 @@
                                 <th>Deparment</th>
                                 <th>Staff Type</th>
                                 <th>Designation</th>
-                                <th>Action</th>
+                                <!-- <th>Action</th> -->
                               </tr>
                             </thead>
                             <tbody>
@@ -97,8 +97,8 @@
                                 <td>{{staff.staff.department.name}}</td>
                                 <td>{{staff.staff.staff_type.type}}</td>
                                 <td>{{staff.staff.designation.designation}}</td>
-                                <td><button class="btn btn-danger btn-xs" v-on:click="removeStaff(index,staff.staff.id)">Remove</button>
-                                </td>
+                                <!-- <td><button class="btn btn-danger btn-xs" v-on:click="removeStaff(index,staff.staff.id)">Remove</button>
+                                </td> -->
                               </tr>
                             </tbody>
                           </table>

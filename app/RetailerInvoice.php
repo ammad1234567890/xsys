@@ -27,5 +27,11 @@ class RetailerInvoice extends Model {
     {
       return $this->belongsTo('App\RetailerOutlet','retailer_id');
     }
+	   public function warehouse_issue(){
+         return $this->hasMany('App\WarehouseIssue','invoice_id');
+    }
+        public function warehouse_issue_item(){
+         return $this->hasMany('App\WarehouseIssueItem','id','warehouse_id');
+    }
     
 }

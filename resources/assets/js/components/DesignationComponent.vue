@@ -6,26 +6,28 @@
             </div>
         <div class="panel-body">
             <form @submit="createDesignation">
-                <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="designation">Designation</label>
-                      <input name="designation" type="text" class="form-control" v-validate="'required|regex:^[a-zA-Z]+$'" v-model="designationData.designation">
-                      <span class="text-danger" v-show="errors.has('designation')">
-                        {{errors.first('designation')}}
-                      </span>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                      <input v-if="editing==false" type="submit" class="btn btn-tumblr" value="Create Designation">
-                      <button v-if="editing==true" @click="saveEditing" class="btn btn-tumblr">Save Editing</button>
-                      <button v-if="editing==false" @click="showDesignations" class="btn btn-github" data-toggle="collapse" data-target="#designation">Show Designations</button>
-                      <button v-if="editing==true" @click="cancelEditing" class="btn btn-pinterest">Cancel Editing</button>
-                    </div>
-                </div>
+              <div class="row">
+                  <div class="col-md-2">
+                        <label for="designation">Designation</label>
+                  </div>
+                  <div class="col-md-3">
+                        <input name="designation" type="text" class="textbox" v-validate="'required|regex:^[a-zA-Z]+$'" v-model="designationData.designation">
+                        <span class="text-danger" v-show="errors.has('designation')">
+                          {{errors.first('designation')}}
+                        </span>
+                  </div>
+                  <div class="col-md-1"></div>
+                  <div class="col-md-6">
+                        <input v-if="editing==false" type="submit" class="btn btn-tumblr" value="Create Designation">
+                        <button v-if="editing==true" @click="saveEditing" class="btn btn-tumblr">Save Editing</button>
+                        <button v-if="editing==false" @click="showDesignations" class="btn btn-github" data-toggle="collapse" data-target="#designation">Show Designations</button>
+                        <button v-if="editing==true" @click="cancelEditing" class="btn btn-pinterest">Cancel Editing</button>
+                  </div>
+                </div>             
             </form>
         </div>
         <div id="designation" class="collapse">
+          <hr>
             <div class="panel-heading">
                 <h2 class="panel-title">Designation List</h2>
             </div>
@@ -42,7 +44,7 @@
                       <tr v-for="(designation,index) in allDesignations">
                         <td>{{index +1 }}</td>
                         <td>{{designation.designation}}</td>
-                        <td><button class="btn btn-info btn-sm" @click="edit(index,designation.id)">Edit</button></td>
+                        <td><button class="btn btn-info btn-sm" @click="edit(index,designation.id)" title="Edit"><i class="fa fa-edit"></i></button></td>
                       </tr>
                     </tbody>
                 </table>

@@ -12,7 +12,7 @@
                             <thead>
                             <tr>
                                 <th>Outlet</th>
-								<th>Dealer Code</th>
+								                <th>Dealer Code</th>
                                 <th>Dealer</th>
                                 <th>Contact No.</th>
                                 <th>City</th>
@@ -27,7 +27,7 @@
 
                             <tr v-for="(outlets,index) in outletsData">
                                 <td>{{outlets.name}}</td>
-								 <td>{{outlets.retailer.retailer_no}}</td>
+								                <td>{{outlets.retailer.retailer_no}}</td>
                                 <td>{{outlets.business_person_name}}</td>
                                 <td>{{outlets.phone_no}}</td>
                                 <td>{{outlets.city.name}}</td>
@@ -45,7 +45,7 @@
                                         
                                         
                                         </ul> -->
-                                        <button v-on:click="enable_edit_mode(index)" class="btn btn-primary btn-xs"><i class="fa fa-pencil" title="Edit"></i></button> 
+                                        <button v-on:click="enable_edit_mode(index)" class="btn btn-info btn-xs"><i class="fa fa-edit" title="Edit"></i></button> 
                                         <button class="btn btn-success btn-xs" v-on:click="view_outlet_details(index)" title="View Detail"><i class="fa fa-eye"></i></button>
                                     </div>
                                 </td>
@@ -110,14 +110,14 @@
                                                   </div> 
                                                     <div class="panel-body"> 
                                                         <div class="col-md-2">
-                                                            <label><strong>Name</strong></label>
+                                                            <label><strong>Name :</strong></label>
                                                         </div>
                                                         <div class="col-md-5">
                                                             <label>{{outlet_view.outlet_name}}</label>
                                                         </div>
 
                                                         <div class="col-md-2">
-                                                            <label><strong>Phone</strong></label>
+                                                            <label><strong>Phone :</strong></label>
                                                         </div>
                                                         <div class="col-md-3">
                                                             <label>{{outlet_view.outlet_phone}}</label>
@@ -194,14 +194,14 @@
                                                         <div class="panel-body"> 
                                                         <div class="row">
                                                             <div class="col-md-2">
-                                                            <label><strong>Address</strong></label>
+                                                            <label><strong>Address :</strong></label>
                                                             </div>
                                                             <div class="col-md-5">
                                                                 <label>{{outlet_view.address}}</label>
                                                             </div>
 
                                                             <div class="col-md-2">
-                                                                <label><strong>Locality</strong></label>
+                                                                <label><strong>Locality :</strong></label>
                                                             </div>
                                                             <div class="col-md-3">
                                                                 <label>{{outlet_view.region_name}}</label>
@@ -210,13 +210,13 @@
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-md-2">
-                                                            <label><strong>City</strong></label>
+                                                            <label><strong>City :</strong></label>
                                                             </div>
                                                             <div class="col-md-5">
                                                                 <label>{{outlet_view.city_name}}</label>
                                                             </div>
                                                             <div class="col-md-2">
-                                                            <label><strong>Latitude</strong></label>
+                                                            <label><strong>Latitude :</strong></label>
                                                             </div>
                                                             <div class="col-md-3">
                                                                 <label v-if="outlet_view.latitude!=null">{{outlet_view.latitude}}</label>
@@ -225,8 +225,8 @@
                                                             <div class="col-md-2"></div>
                                                         </div>
                                                         <div class="row">
-                                                            <div class="col-md-2">
-                                                                <label><strong>Longitude</strong></label>
+                                                            <div class="col-md-3">
+                                                                <label><strong>Longitude :</strong></label>
                                                             </div>
                                                             <div class="col-md-3">
                                                                 <label v-if="outlet_view.longitude!=null">{{outlet_view.longitude}}</label>
@@ -273,14 +273,14 @@
 
                                                                 <div class="row">
                                                                     <div class="col-md-3">
-                                                                    <label><strong>Security Deposit</strong></label>
+                                                                    <label><strong>Security Deposit :</strong></label>
                                                                     </div>
                                                                     <div class="col-md-3">
                                                                         <label>{{outlet_view.security_check_amount | currency('Rs')}}</label>
                                                                     </div>
 
                                                                     <div class="col-md-3">
-                                                                        <label><strong>Credit Limit</strong></label>
+                                                                        <label><strong>Credit Limit :</strong></label>
                                                                     </div>
                                                                     <div class="col-md-3">
                                                                         <p>{{outlet_view.credit_limit | currency('Rs')}}</p>
@@ -288,14 +288,14 @@
                                                                 </div>
                                                                 <div class="row">
                                                                     <div class="col-md-3">
-                                                                    <label><strong>Credit Duration</strong></label>
+                                                                    <label><strong>Credit Duration :</strong></label>
                                                                     </div>
                                                                     <div class="col-md-3">
                                                                         <label>{{outlet_view.credit_duration}}</label>
                                                                     </div>
 
                                                                     <div class="col-md-4">
-                                                                        <label><strong>Security Cheque Image</strong></label>
+                                                                        <label><strong>Security Cheque Image :</strong></label>
                                                                     </div>
                                                                     <div class="col-md-2">
                                                                         <label><a :href="'./deposit_check_img/'+outlet_view.copy_image" target="_blank">Link</a></label>
@@ -821,6 +821,16 @@
 <style>
     #form-section{
         border:1px solid black;
+    }
+
+    table thead tr th {
+      font-family: calibri;
+      font-size: 12px;
+    }
+
+    table tbody tr td {
+      font-family: calibri;
+      font-size: 12px;
     }
 </style>
 

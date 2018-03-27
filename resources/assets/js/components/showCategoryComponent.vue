@@ -67,7 +67,7 @@
                             <table id="cat" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" style="width:100%" >
                                 <thead>
                                 <tr>
-                                    <th>S.No</th>
+                                    <th class="col-md-1">S.No</th>
                                     <th>Title</th>
                                     <th>Description</th>
                                     <th class="col-md-1 text-center">Action</th>

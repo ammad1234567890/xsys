@@ -126,9 +126,14 @@ class RetailerInvoiceController extends Controller {
     }
 
     public function invoice_details($id) {
-        return $records = RetailerInvoice::with(
-                        'warehouse_issue.warehouseIssueItem.item.productColor.product', 'warehouse_issue.warehouseIssueItem.item.imei'
-                )->where(['id' => $id])->get();
+           return $records = RetailerInvoice::with([
+                    'RetailerOrder.retailer_outlet',
+                    'warehouse_issue' => function($q) {
+                        $q->where('is_issued', 1);
+                    },
+                    'warehouse_issue.warehouseIssueItem.item.productColor.product',
+                    'warehouse_issue.warehouseIssueItem.item.imei'
+                ])->where(['id' => $id])->first();
     }
 
     public function show(RetailerInvoice $retailerInvoice) {

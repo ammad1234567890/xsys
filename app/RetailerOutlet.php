@@ -22,9 +22,11 @@ class RetailerOutlet extends Model
     {
       return $this->belongsTo('App\Region');
     }
+	
     public function retailer_order()
     {
-      return $this->hasMany('App\RetailerOrder','outlet_id');
+     // return $this->hasMany('App\RetailerOrder','outlet_id');
+	 return $this->hasMany('App\RetailerOrder');
     }
 
     static $a;

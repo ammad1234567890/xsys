@@ -75,7 +75,7 @@
                                     <h5><b>{{view_order.order_no}}</b> <span class="pull-right"><b>Date:</b> <i>{{view_order.created_at | moment}}</i> </span></h5>
                                     <table class="table table-hovered">
                                         <tr>
-                                            <td style="width: 136px;">Total Order Cost :</td>
+                                            <td style="width: 136px;"><strong>Total Order Cost :</strong></td>
                                             <td >{{view_order.total_cost | currency('Rs')}}</td>
                                         </tr><!-- 
                                         <tr>
@@ -87,7 +87,7 @@
                                             <td>{{view_order.created_by}}</td>
                                         </tr> -->
                                         <tr>
-                                            <td style="width: 136px;">Current Status :</td>
+                                            <td style="width: 136px;"><strong>Current Status :</strong></td>
 
                                             <td v-if="view_order.current_status!=''">
                                                 <span  v-for="last_status in view_order.current_status">{{last_status.status}}</span>

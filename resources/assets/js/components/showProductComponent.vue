@@ -159,61 +159,65 @@
                     <div class="modal-body">
 
                             <div class="row">
-                                    <div class="col-md-3">
-                                        <label for="productName">Product Name</label>
+                                    <div class="col-md-1">
+                                        <label for="productName"><strong>Model:</strong></label>
                                     </div>
-                                    <div class="col-md-3">
-                                        <input type="text" readonly class="textbox" v-bind:value="details.productName">
+                                    <div class="col-md-2">
+                                        <label>{{details.productName}}</label>
+                                        <!-- <input type="text" readonly class="textbox" v-bind:value="details.productName"> -->
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <label for="productCategory"><strong>Category:</strong></label>
+                                    </div>
+                                    <div class="col-md-2 m-p-0">
+                                        <label >{{details.productCategory}}</label>
+                                        <!-- <input type="text" readonly class="textbox" v-bind:value="details.productCategory"> -->
                                     </div>
 
                                     <div class="col-md-3">
-                                        <label for="productCategory">Product Category</label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="text" readonly class="textbox" v-bind:value="details.productCategory">
-                                    </div>
-                                    <div class="col-md-1"></div>
-                            </div>
-
-                            <div class="row">
-
-                                    <div class="col-md-3">
-                                        <label for="ReleaseDate">Release Date</label>
+                                        <label for="ReleaseDate"><strong>Release Date:</strong></label>
                                     </div>
 
-                                    <div class="col-md-3">
-                                        <input type="text" readonly class="textbox" v-bind:value="details.releaseDate | moment">
+                                    <div class="col-md-2 m-p-0">
+                                        <label>{{details.releaseDate | moment}}</label>
+                                        <!-- <input type="text" readonly class="textbox" v-bind:value="details.releaseDate | moment"> -->
                                     </div>
                             </div>
 
                             <div v-for="(find, index) in details.finds" class="well well-sm" style="    margin-top: 5px;"> <!--Product Color Form-->
                                 <div class="row">
                                         <div class="col-md-3">
-                                            <label for="colorName">Color Name</label>
+                                            <label for="colorName"><strong>Color Name:</strong></label>
                                         </div>
-                                        <div class="col-md-3">
-                                            <input type="text" v-bind:value="find.color" class="textbox" readonly>
+                                        <div class="col-md-2 m-p-0">
+                                            <label >{{find.color}}</label>
+                                            <!-- <input type="text" v-bind:value="find.color" class="textbox" readonly> -->
                                         </div>
 
-                                        <div class="col-md-3">
-                                            <label for="price">Price</label>
+                                        <div class="col-md-1">
+                                            <label for="price"><strong>Price:</strong></label>
                                         </div>     
-                                        <div class="col-md-3">        
-                                            <vue-numeric currency="Rs" class="textbox" separator="," v-bind:value="find.price" readonly></vue-numeric>
+                                        <div class="col-md-3">      
+                                            <label>{{find.price | currency('Rs')}}</label>  
+                                            <!-- <vue-numeric currency="Rs" class="textbox" separator="," v-bind:value="find.price" readonly style="text-align:right;"></vue-numeric> -->
                                         </div>
-                                </div>
-                                <div class="row">
+                               
+                                        <div class="col-md-2">
+                                            <label for="discount"><strong>Discount(%):</strong></label>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <label>{{find.discount+'%'}}</label>
+                                           <!--  <input type="text" name="Discount" class="textbox" v-bind:value="find.discount+'%'" readonly> -->
+                                        </div>
 
-                                        <div class="col-md-3">
-                                            <label for="discount">Discount(%)</label>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <input type="text" name="Discount" class="textbox" v-bind:value="find.discount+'%'" readonly>
-                                        </div>
+                                </div>
+
+                                <div class="row">
 
                                         <div class="col-md-12">
                                             <div v-for="(image, index) in find.product_images">
-                                                <img v-bind:src="'./product_img/'+image.image" class="col-md-3 img-thumbnail" height="auto" />
+                                                <img v-bind:src="'./product_img/'+image.image" class="col-md-3 img-thumbnail" height="auto"  style="    margin-left: 5px;"/>
                                             </div>
                                         </div>
                                 </div>
@@ -463,5 +467,8 @@
 
 .cont:hover .middle {
   opacity: 1;
+}
+.m-p-0{
+    margin: 0px; padding: 0px;
 }
 </style>

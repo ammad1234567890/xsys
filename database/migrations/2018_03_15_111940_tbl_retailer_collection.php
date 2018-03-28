@@ -25,6 +25,7 @@ class TblRetailerCollection extends Migration
             $table->decimal('amount', 13, 2);
             $table->string('cheque_number')->nullable();
             $table->string('deposit_slip_number');
+            $table->tinyInteger('is_reversible')->default(0);
             $table->longText('remarks');
             $table->unsignedInteger('created_by')->index();
             $table->unsignedInteger('updated_by')->index();

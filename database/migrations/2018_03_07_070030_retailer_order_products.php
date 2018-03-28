@@ -20,9 +20,10 @@ class RetailerOrderProducts extends Migration
             $table->unsignedInteger('product_color_id')->index();
             $table->unsignedInteger('product_qty');
             $table->unsignedInteger('unit_price');
-            $table->unsignedInteger('total_price');
-            
+            $table->unsignedInteger('remaining_qty');
+            $table->unsignedTinyInteger('is_delivered')->default(0);
             $table->unsignedTinyInteger('is_deleted')->default(0);
+            $table->decimal('total_price', 13, 2);
             $table->integer('created_by')->unsigned()->index();
             $table->integer('updated_by')->unsigned()->index();
 

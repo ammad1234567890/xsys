@@ -3,7 +3,7 @@
         <div class="col-md-12">
             <div class="panel panel-info">
                 <div class="panel-heading">
-                    <h2 class="panel-title">Summary</h2>
+                    <h2 class="panel-title">Supply Order List</h2>
                 </div>
 
                 <div class="panel-body">
@@ -14,13 +14,13 @@
                         <table id="example" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                             <thead>
                             <tr>
-                                <th>Date</th>
+                                <th  class="col-md-1">Date</th>
                                 <th>Order No</th>
                                 <th>Outlet</th>
                                 <th>City</th>
                                 <th>Total Amount (PKR)</th>
                                 <th class="col-md-1 text-center">Action</th>
-                                <th>Account Clearance</th>
+                                <th class="col-md-1">Clearance</th>
 
                             </tr>
                             </thead>
@@ -75,30 +75,60 @@
                                     <h5> <span class="pull-right"></span></h5>
 
 
-                                    <h5><b>{{view_order.order_no}}</b> <span class="pull-right"><b>Created at:</b> <i> {{view_order.created_at | moment}}</i> </span></h5>
-                                    <table class="table table-hovered">
-                                        <tr>
-                                            <td style="width: 170px;">Total Cost :</td>
-                                            <td>{{view_order.total_cost | currency('Rs')}} </td>
-                                        </tr>
-                                        <tr>
-                                            <td style="width: 170px;">Sales Officer/Manager :</td>
-                                            <td>{{view_order.sales_officer_name}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td style="width: 170px;">Account Clearance :</td>
-                                            <td v-if="view_order.is_account_clear"><i class="fa fa-check"  title="Order Cleared!"></i></td>
-                                            <td v-else><i class="fa fa-times"  title="Order Cleared!"></i> </td>
-                                        </tr>
-                                        <tr v-if="view_order.is_account_clear">
-                                            <td style="width: 170px;">Order Cleared By :</td>
-                                            <td>{{view_order.updated_by}}</td>
-                                        </tr>
+                                    <h5><b>{{view_order.order_no}}</b> <span class="pull-right"><b>Date:</b> <i> {{view_order.created_at | moment}}</i> </span></h5>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label><strong>Total Cost :</strong></label>
+                                        </div>
+                                        <div class="col-md-3 m-p-0">
+                                            <label>{{view_order.total_cost | currency('Rs')}} </label>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label><strong>Sales Officer :</strong></label>
+                                        </div>
+                                        <div class="col-md-3 m-p-0">
+                                            <label>{{view_order.sales_officer_name}}</label>
+                                        </div>
 
-
-                                    </table>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label><strong>Clearance :</strong></label>
+                                        </div>
+                                        <div class="col-md-3 m-p-0">
+                                            <label v-if="view_order.is_account_clear"><i class="fa fa-check"  title="Order Cleared!" style="color:green;"></i></label>
+                                            <label v-else> <i class="fa fa-times"  title="Order Cancel!" style="color:red;"></i></label>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label><strong>Order Cleared By :</strong></label>
+                                        </div>
+                                        <div class="col-md-3 m-p-0">
+                                            <label>{{view_order.updated_by}}</label>
+                                        </div>
+                                    </div>
+                                   <!--  <table class="table table-hovered">
+                                       <tr>
+                                           <td style="width: 170px;">Total Cost :</td>
+                                           <td>{{view_order.total_cost | currency('Rs')}} </td>
+                                       </tr>
+                                       <tr>
+                                           <td style="width: 170px;">Sales Officer/Manager :</td>
+                                           <td>{{view_order.sales_officer_name}}</td>
+                                       </tr>
+                                       <tr>
+                                           <td style="width: 170px;">Account Clearance :</td>
+                                           <td v-if="view_order.is_account_clear"><i class="fa fa-check"  title="Order Cleared!"></i></td>
+                                           <td v-else><i class="fa fa-times"  title="Order Cleared!"></i> </td>
+                                       </tr>
+                                       <tr v-if="view_order.is_account_clear">
+                                           <td style="width: 170px;">Order Cleared By :</td>
+                                           <td>{{view_order.updated_by}}</td>
+                                       </tr>
+                                   
+                                   
+                                   </table> -->
                                     <hr/>
-                                    <h4>Product Details</h4>
+                                    <h4>Product Detail</h4>
                                     <table class="table table-bordered">
                                         <thead>
                                         <tr>
@@ -313,16 +343,15 @@ function mydatatable(){
  tfoot {
     display: table-header-group;
 }
-   tfoot input {
+    tfoot input {
         width: 100%;
         padding: 3px;
         box-sizing: border-box;
-
     }
 
-    thead tr td {
-            font-family: Calibri;
-            font-size: 12px;
+    .m-p-0{
+    margin: 0px;
+    padding: 0px;
     }
 
 </style>

@@ -137,14 +137,14 @@ class StaffController extends Controller
 
     public function manager()
     {
-      $type=StaffType::where('type','Management')->first();
+      $type=StaffType::where('type','Manager')->first();
       $manager=Staff::where('staff_type_id',$type->id)->with('city')->with('region')->with('department')->with('staffType')->with('designation')->with('user')->where('is_deleted',0)->get();
       return $manager;
     }
 
     public function accountant()
     {
-      $type=StaffType::where('type','Accounts')->first();
+      $type=StaffType::where('type','Accountant')->first();
       $accoutnant=Staff::where('staff_type_id',$type->id)->with('city')->with('region')->with('department')->with('staffType')->with('designation')->with('user')->where('is_deleted',0)->get();
       return $accoutnant;
     }

@@ -66,13 +66,13 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title">Summary</h4>
+                            <h4 class="modal-title">Summary - Purchase Orders</h4>
                         </div>
                         <div class="modal-body">
 
                             <div class="row">
                                 <div class="col-md-12">
-                                    <h5><b>{{view_order.order_no}}</b> <span class="pull-right"><b>Date:</b> <i>{{view_order.created_at | moment}}</i> </span></h5>
+                                    <h5><b>Order No: {{view_order.order_no}}</b> <span class="pull-right"><b>Date:</b> <i>{{view_order.created_at | moment}}</i> </span></h5>
                                     <table class="table table-hovered">
                                         <tr>
                                             <td style="width: 136px;"><strong>Total Order Cost :</strong></td>
@@ -104,7 +104,7 @@
                                             <td>Model</td>
                                             <td>Color</td>
                                             <td>Quantity</td>
-                                            <td>Qty</td>
+                                            <td>Received Qty</td>
                                             <td>Price(PKR)</td>
 
                                         </tr>
@@ -128,7 +128,7 @@
                                             <td>Date</td>
                                             <td>Type</td>
                                             <td>Currency</td>
-                                            <td>Amount(PKR)</td>
+                                            <td>Amount</td>
                                             <td>XRT</td>
                                             <td>Total Amount (PKR)</td>
                                             <!-- <td>Payment By</td> -->

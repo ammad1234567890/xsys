@@ -18,6 +18,7 @@ class TblCurrency extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('iso');
+            $table->decimal('exchange_rate', 13, 2);
             $table->unsignedInteger('created_by')->index();
             $table->unsignedInteger('updated_by')->index()->nullable();
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');

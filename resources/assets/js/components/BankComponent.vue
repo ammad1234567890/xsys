@@ -9,7 +9,7 @@
                 <form @submit="createBank">
                     <div class="row">
                         <div class="col-md-2">
-                            <label>Bank Name</label>
+                            <label>Bank Name<span style="color:red;">*</span></label>
                         </div>
                         <div class="col-md-3">
                               <input name="bank_name" type="text" class="textbox"  v-model="bankData.bank_name">
@@ -20,7 +20,7 @@
                         <div class="col-md-1"></div>
 
                         <div class="col-md-2">
-                            <label for="Bank" class="control-label">Bank Phone No</label>
+                            <label for="Bank" class="control-label">Phone No<span style="color:red;">*</span></label>
                         </div>
                         <div class="col-md-3">
                             <input name="bank_phone_no" type="text" class="textbox"  v-model="bankData.bank_phone_no">
@@ -33,7 +33,7 @@
 
                     <div class="row">
                         <div class="col-md-2">
-                            <label for="Bank" class="control-label">Bank Phone No</label>
+                            <label for="Bank" class="control-label">City<span style="color:red;">*</span></label>
                         </div>
                         <div class="col-md-3">
                             <div>

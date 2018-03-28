@@ -19,7 +19,7 @@ class CreateTblWarehouseTable extends Migration
             $table->string('name');
             $table->unsignedInteger('warehouse_type_id');
             $table->unsignedInteger('city_id');
-            $table->unsignedInteger('region_id')->unique();
+            $table->unsignedInteger('region_id');
             $table->double('latitude')->nullable();
             $table->double('longitude')->nullable();
             $table->string('address');

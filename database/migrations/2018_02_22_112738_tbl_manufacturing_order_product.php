@@ -19,6 +19,7 @@ class TblManufacturingOrderProduct extends Migration
             $table->unsignedInteger('product_color_id')->index();
             $table->unsignedInteger('manufacture_order_id')->index();
             $table->unsignedInteger('quantity');
+            $table->unsignedInteger('remaining_qty');
             $table->unsignedInteger('unit_cost');
 
 

@@ -127,7 +127,7 @@
                 
 				
 				<!--Payment Listing Panel starting-->
-                    <div class="col-md-12 panel panel-info">
+                    <div class="panel panel-info">
             <div class="panel-heading">
                 <h2 class="panel-title">Dealer Payment Details</h2>
             </div>
@@ -153,7 +153,7 @@
 						<td>18KS000055</td>
                         <td>MCB</td>
                         <td>CASH</td>
-                        <td>15,000.00</td>
+                        <td style="text-align:right;">15,000.00</td>
                         <td><button class="btn btn-info btn-xs" @click="edit(index,city.id)">Edit</button></td>
                     </tr>
                     </tbody>

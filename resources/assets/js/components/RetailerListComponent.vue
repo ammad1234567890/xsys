@@ -26,9 +26,12 @@
                                 <td>{{invoice.invoice_no}}</td>
                                 <td><span class="pull-right">{{invoice.total_amount | currency('')}}</span></td>
                                 <td>
-                                    <button type="button" title="View Detail" class="btn btn-success btn-xs"
+                                 <button type="button" title="View Detail" class="btn btn-success btn-xs"
+                                            v-if="invoice.warehouse_issue[0].is_issued==1"
                                             v-on:click="details(invoice.id)"><i class="fa fa-eye"></i></button>
-                                    <button class="btn btn-github btn-xs" title="Print"><i class="fa fa-print"></i>
+                                    <button class="btn btn-github btn-xs" title="Print"
+                                            v-if="invoice.warehouse_issue[0].is_issued==1"
+                                    ><i class="fa fa-print"></i>
                                     </button>
                                 </td>
                             </tr>
@@ -123,7 +126,8 @@
                 invoice_details:[],
                 invoice:[],
                 outlet:[],
-                duedate:[],
+                duedate:'',
+			
 
 
             }

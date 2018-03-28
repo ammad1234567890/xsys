@@ -15,6 +15,7 @@ class TblRetailer extends Migration
     {
         Schema::create('tbl_retailer', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('retailer_no');
             $table->string('name');
             $table->string('cnic')->unique()->nullable();
             $table->string('phone_no');

@@ -10,7 +10,7 @@
                             <form v-on:submit="CreateCategory">
                               <div class="row">
                                   <div class="col-md-2">
-                                      <label for="categoryName">Title</label>
+                                      <label for="categoryName">Title<span style="color:red;">*</span></label>
                                   </div>
                                   <div class="col-md-3">
                                       <input type="text" v-validate="'required|regex:^[a-zA-Z ._]+$'" v-model="newCategory.name" class="textbox" name="categoryName" required>
@@ -21,7 +21,7 @@
                                   <div class="col-md-1"></div>
 
                                   <div class="col-md-2">
-                                      <label >Browse</label>
+                                      <label >Select Image</label>
                                   </div>
                                   <div class="col-md-3">
                                       <input type="file" v-validate="'required|mimes:image/jpeg,image/png'" class="textbox" name="categoryImage" ref="fileupload" @change="imageChange">

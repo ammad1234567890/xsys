@@ -175,12 +175,13 @@
                       <table id="staff" class="table table-striped table-bordered table-hover table-no" cellspacing="0" width="100%" style="width:100%">
                         <thead>
                         <tr>
-                          <th>S.No</th>
+                          <th style="width:8px !important;">S.No</th>
+                          <th>Staff ID</th>
                           <th>Name</th>
                           <th>Department</th>
-                          <th>Staff Type</th>
+                          <th>Type</th>
                           <th>Designation</th>
-                          <th>Phone Number</th>
+                          <th>Phone</th>
                           <th>E-Mail</th>
                           <th>CNIC</th>
                           <th>Address</th>
@@ -192,6 +193,7 @@
                         <tbody>
                         <tr v-for="(staff, index) in allStaff">
                           <td>{{index +1}}</td>
+                          <td>{{staff.id}}</td>
                           <td>{{staff.name}}</td>
                           <td>{{staff.department.name}}</td>
                           <td>{{staff.staff_type.type}}</td>
@@ -386,7 +388,7 @@ import vSelect from "vue-select"
     $(document).ready(function() {
         setTimeout(function(){
             $('#staff').DataTable({
-            /*"pagingType": "full_numbers",
+            "pagingType": "full_numbers",
             "lengthMenu": [
                 [10, 25, 50, -1],
                 [10, 25, 50, "All"]
@@ -395,9 +397,9 @@ import vSelect from "vue-select"
             language: {
                 search: "_INPUT_",
                 searchPlaceholder: "Search records",
-            }*/
+            }
 
-            dom: 'Bfrtip',
+            /*dom: 'Bfrtip',
             responsive: false,
             language: {
                 search: "_INPUT_",
@@ -406,7 +408,7 @@ import vSelect from "vue-select"
             stateSave: true,
             buttons: [
                 'colvis',
-            ]
+            ]*/
 
             });
         },3000);

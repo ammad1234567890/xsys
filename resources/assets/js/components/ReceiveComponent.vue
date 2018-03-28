@@ -20,7 +20,7 @@
                 <form @submit.prevent="recieve_order_submit">
                     <div class="row">
                         <div class="col-md-2">
-                            <label>Purchase Order No.</label> 
+                            <label>Purchase Order No.<span style="color:red;">*</span></label> 
                             </div>
                         <div class="col-md-3">    
                             <select class="textbox_dropdown" v-model="new_recieving.order_id" @change="order_change" required>
@@ -32,7 +32,7 @@
                         </div>
                             <div class="col-md-1"></div>
                         <div class="col-md-2">
-                            <label for="select_collected_by">Transit Status</label> 
+                            <label for="select_collected_by">Transit Status<span style="color:red;">*</span></label> 
                         </div>
                         <div class="col-md-3">
                                 <select class="textbox_dropdown" v-model="new_recieving.recieve_status_id" required>
@@ -48,7 +48,7 @@
 
                     <div class="row">
                         <div class="col-md-2">
-                            <label for="select_collected_by">QA Check</label> 
+                            <label for="select_collected_by">QA Check<span style="color:red;">*</span></label> 
                         </div>
                         <div class="col-md-1">
                             <input type="checkbox" v-bind:value="new_recieving.qa_check" id="checkboxFiveInput" name="" @change="change_qa_check">
@@ -60,7 +60,7 @@
                         </div>
                         <div class="col-md-1"></div>
                         <div class="col-md-2">
-                            <label for="select_collected_by">Received Person</label> 
+                            <label for="select_collected_by">Received Person<span style="color:red;">*</span></label> 
                         </div>
                         <div class="col-md-3">
                             <select class="textbox_dropdown" v-model="new_recieving.collected_id" required>
@@ -75,7 +75,7 @@
                     <div class="row" v-for="(find, index) in new_recieving.order_products">
                         <hr/>
                         <div class="col-md-2">
-                            <label for="select_collected_by">Model</label> 
+                            <label for="select_collected_by">Model<span style="color:red;">*</span></label> 
                         </div>
                         <div class="col-md-3">
                             <select class="textbox_dropdown" v-model="selected_order_product_index[index].index_no" @change="change_product(index)" required>
@@ -85,7 +85,7 @@
                         </div>
                         <div class="col-md-1"></div>
                         <div class="col-md-2">
-                            <label for="select_collected_by">Quantity</label> 
+                            <label for="select_collected_by">Quantity<span style="color:red;">*</span></label> 
                         </div>
                         <div class="col-md-3">
                             <input type="number" class="textbox_dropdown" name="product_qty" v-model="new_recieving.order_products[index].quantity" :placeholder="'Quantity '+new_recieving.order_products[index].max_qty" v-validate="{ max_value: new_recieving.order_products[index].max_qty }"  @change="qty_change(index)" required>

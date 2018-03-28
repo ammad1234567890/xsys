@@ -19,14 +19,14 @@ class TblLedger extends Migration
             $table->unsignedInteger('retailer_id')->index();
             $table->unsignedInteger('invoice_id')->index();
             $table->unsignedInteger('collection_id')->index();
-            $table->decimal('collection_amount', 13, 2);
-            $table->decimal('outstanding_amount', 13, 2);
+            $table->dateTime('TransDate');
+            $table->decimal('Collection', 13, 2);
+            $table->decimal('Credit', 13, 2);
             $table->longText('description');
-            $table->unsignedInteger('created_by')->index();
-            $table->unsignedInteger('updated_by')->index();
 
-            $table->foreign('created_by')->references('id')->on('user')->onDelete('cascade');
-            $table->foreign('updated_by')->references('id')->on('user')->onDelete('cascade');
+            $table->foreign('retailer_id')->references('id')->on('tbl_retailer_outlet')->onDelete('cascade');
+            $table->foreign('invoice_id')->references('id')->on('tbl_invoice')->onDelete('cascade');
+            $table->foreign('collection_id')->references('id')->on('tbl_retailer_collection')->onDelete('cascade');
             $table->timestamps();
         });
     }

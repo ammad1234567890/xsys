@@ -96,20 +96,20 @@
                             <div class="col-md-1"></div>
                           </div>
                           <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-12" style="margin-top: 10px;">
                                 <table class="table table-bordered">
                                     <thead>
                                     <tr>
-                                        <th>S.No</th>
+                                        <th class="col-md-1">S.No</th>
                                         <th>IMEI</th>
-                                        <th>Action</th>
+                                        <th class="col-md-1">Action</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr v-for="(imei, index) in newItems.imei">
                                         <td>{{index + 1}}</td>
                                         <td>{{imei}}</td>
-                                        <td><button class="btn btn-danger btn-sm" @click="removeIMEI(index)">Remove</button></td>
+                                        <td><button class="btn btn-danger btn-sm" @click="removeIMEI(index)"><i class="fa fa-times"></i></button></td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -309,3 +309,5 @@ import vSelect from "vue-select"
         }
     }
 </script>
+
+

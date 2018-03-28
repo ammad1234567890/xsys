@@ -10,7 +10,7 @@
                       <form @submit="createWarehouseStaff">
                         <div class="row">
                           <div class="col-md-2">
-                            <label for="warehouse">Warehouse</label>
+                            <label for="warehouse">Warehouse<span style="color:red;">*</span></label>
                           </div>
                           <div class="col-md-3">
                               <v-select label="name" v-model="newStaff.warehouse" :options="warehouses" @search="search"></v-select>
@@ -19,7 +19,7 @@
 
 
                           <div class="col-md-2">
-                            <label for="ID">Emp ID</label>
+                            <label for="ID">Emp ID<span style="color:red;">*</span></label>
                           </div>
                           <div class="col-md-3" @click="setColum('id')">
                              <v-select label="id" :filterable="false" v-model="newStaff.staff" :options="searchedStaff" @search="searchStaff" ></v-select>
@@ -29,7 +29,7 @@
 
                         <div class="row">
                           <div class="col-md-2">
-                            <label for="Name">Name</label>
+                            <label for="Name">Name<span style="color:red;">*</span></label>
                           </div>
                           <div class="col-md-3" @click="setColum('name')">
                               <v-select label="name" v-model="newStaff.staff" :options="searchedStaff" @search="searchStaff" ></v-select>
@@ -37,7 +37,7 @@
                           <div class="col-md-1"></div>
 
                           <div class="col-md-2">
-                            <label for="phoneNumber">Phone Number</label>
+                            <label for="phoneNumber">Phone Number<span style="color:red;">*</span></label>
                           </div>
                           <div class="col-md-3" @click="setColum('phoneNumber')">
                               <v-select label="phoneNumber" v-model="newStaff.staff" :options="searchedStaff" @search="searchStaff"></v-select>
@@ -47,7 +47,7 @@
 
                         <div class="row">
                           <div class="col-md-2" >
-                            <label for="email">Email</label>
+                            <label for="email">Email<span style="color:red;">*</span></label>
                           </div>
                           <div class="col-md-3" @click="setColum('email')">
                               <v-select label="email" v-model="newStaff.staff" :options="searchedStaff" @search="searchStaff"></v-select>
@@ -55,7 +55,7 @@
                           <div class="col-md-1"></div>
 
                           <div class="col-md-2">
-                            <label for="CNIC">CNIC</label>
+                            <label for="CNIC">CNIC<span style="color:red;">*</span></label>
                           </div>
                           <div class="col-md-3"  @click="setColum('CNIC')">
                             <v-select label="CNIC" v-model="newStaff.staff" :options="searchedStaff" @search="searchStaff"></v-select>

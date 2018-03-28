@@ -74,7 +74,7 @@
                                 <th>Name</th>
                                 <th>E-Mail</th>
                                 <th>Cnic</th>
-                                <th>Phone Number</th>
+                                <th>Phone No.</th>
                                 <th>Address</th>
                                 <th>City</th>
                                 <th>Locality</th>
@@ -240,3 +240,4 @@ function loadDatatable(){
             
 
 </script>
+

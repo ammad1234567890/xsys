@@ -25,6 +25,7 @@ class TblRetailerOutlet extends Migration
             $table->double('longitude');
             $table->string('business_person_name');
             $table->string('mobile_no');
+            $table->string('business_person_cnic');
             $table->string('address');
             $table->integer('security_deposit_amount');
             $table->string('security_deposit_image');

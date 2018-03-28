@@ -128,13 +128,6 @@
                                 </li>
 
                                 <li>
-                                    <a href="page-pricing.html">
-                                        <i class="fa fa-dollar"></i>
-                                        &nbsp;&nbsp;Plans &amp; Billing
-                                    </a>
-                                </li>
-
-                                <li>
                                     <a href="page-settings.html">
                                         <i class="fa fa-cogs"></i>
                                         &nbsp;&nbsp;Settings
@@ -447,7 +440,7 @@
                                     <li><a href="{{ url('warehouse') }}">Warehouse List</a></li>
                                     <li><a href="{{ url('warehouseStaff') }}">Allocate Staff</a></li>
                                     <li><a href="{{ url('warehouseStaffView') }}">Warehouse Staff</a></li>
-                                    <li><a href="{{ url('mainWarehouseReceive') }}">Warehouse Receive</a></li>
+                                    <li><a href="{{ url('mainWarehouseReceive') }}">Consigment Receive</a></li>
                                     <li><a href="{{ url('warehouseIssue') }}">Sales Invoice</a></li>
                                 </ul>
 
@@ -595,7 +588,7 @@
                                     </a>
 
                                     <a href="{{ url('mainWarehouseReceive') }}">
-                                        <li>Warehouse Receive</li>
+                                        <li>Consigment Receive</li>
                                     </a>
 
                                     <a href="{{ url('warehouseIssue') }}">

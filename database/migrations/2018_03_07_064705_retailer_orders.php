@@ -16,18 +16,18 @@ class RetailerOrders extends Migration
         Schema::disableForeignKeyConstraints();
         Schema::create('tbl_retailer_order', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('order_no')->nullable();
             $table->unsignedInteger('retailer_id')->index();
             $table->unsignedInteger('sales_officer_id')->index();
             $table->unsignedInteger('outlet_id')->index();
-            $table->date('order_date');
-            $table->date('expected_delivery_date');
             $table->unsignedInteger('total_cost');
             $table->unsignedInteger('remaining_payment');
-            $table->date('ageing_date');
             $table->unsignedTinyInteger('is_account_clearance')->default(0);
-            $table->unsignedTinyInteger('is_approved')->default(0);
+            
+            
             $table->unsignedTinyInteger('is_deleted')->default(0);
             $table->unsignedInteger('retailer_order_status_id')->index();
+            $table->unsignedTinyInteger('is_delivered')->default(0);
             $table->unsignedInteger('warehouse_id')->index();
             $table->integer('created_by')->unsigned()->index();
             $table->integer('updated_by')->unsigned()->index();

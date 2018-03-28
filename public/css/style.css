@@ -249,4 +249,28 @@ color:#fff;
 }
 
 
+table thead tr th {
+    font-family: calibri;
+    font-size:14px;
+    margin: 0px;
+    padding:0px;
+    height:20px;
+    }
+
+    table tbody tr td {
+        font-family: calibri;
+        font-size:14px;
+
+    }
+
+    table thead tr td {
+    font-family: calibri;
+    font-size:14px;
+    margin: 0px;
+    padding:0px;
+    height:20px;
+    }
+    
+
+
 

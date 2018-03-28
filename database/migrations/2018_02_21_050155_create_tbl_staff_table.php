@@ -17,8 +17,9 @@ class CreateTblStaffTable extends Migration
         Schema::create('tbl_staff', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('phoneNumber');
             $table->string('email')->unique();
-            $table->string('CNIC',13)->unique();
+            $table->string('CNIC',15)->unique();
             $table->string('address');
             $table->unsignedInteger('city_id')->index();
             $table->unsignedInteger('region_id')->index();

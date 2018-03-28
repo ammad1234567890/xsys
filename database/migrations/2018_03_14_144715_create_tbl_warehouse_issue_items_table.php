@@ -17,7 +17,7 @@ class CreateTblWarehouseIssueItemsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('warehouse_issue_id')->index();
             $table->unsignedInteger('item_id')->index();
-            $table->unsignedInteger('created_by');
+            $table->unsignedInteger('created_by')->index();
             $table->foreign('warehouse_issue_id')->references('id')->on('tbl_warehouse_issue')->onDelete('cascade');
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('item_id')->references('id')->on('tbl_item')->onDelete('cascade');

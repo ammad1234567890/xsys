@@ -15,7 +15,7 @@
 
                           <div class="row">
                                 <div class="col-md-2">
-                                        <label for="name">Name</label>
+                                        <label for="name">Name<span style="color:red;">*</span></label>
                                 </div>
                                 <div class="col-md-3">
                                         <input type="text" v-validate="'required|regex:^[a-zA-Z ._]+$'" v-model="newStaff.name" class="textbox" name="StaffName" placeholder="Full Name" required>
@@ -26,7 +26,7 @@
                                 <div class="col-md-1"></div>
 
                               <div class="col-md-2">
-                                    <label for="CNIC">CNIC</label>
+                                    <label for="CNIC">CNIC<span style="color:red;">*</span></label>
                               </div>
                               <div class="col-md-3">
                                     <input type="text" v-validate="'required|regex:^[0-9 -]+$'" v-model="newStaff.CNIC" v-mask="'99999-9999999-9'" class="textbox" name="cnic" placeholder="CNIC without - /" required>
@@ -38,7 +38,7 @@
                           </div>
                           <div class="row">
                               <div class="col-md-2">
-                                    <label for="address">Address</label>
+                                    <label for="address">Address<span style="color:red;">*</span></label>
                               </div>
                               <div class="col-md-3">
                                     <input type="text" v-validate="'required'" v-model="newStaff.address" class="textbox" name="address" placeholder="Complete Address" required>
@@ -49,7 +49,7 @@
                               <div class="col-md-1"></div>
 
                               <div class="col-md-2">
-                                    <label for="phoneNumber">Phone Number</label>
+                                    <label for="phoneNumber">Phone Number<span style="color:red;">*</span></label>
                               </div>
                               <div class="col-md-3">
                                     <input type="text" v-validate="'required|regex:^[0-9 -]+$'" v-mask="'9999-9999999'" v-model="newStaff.phoneNumber" class="textbox" name="phoneNumber" placeholder="Phone Number" required>
@@ -62,7 +62,7 @@
                             
                           <div class="row">
                               <div class="col-md-2">
-                                    <label for="Department">Department</label>
+                                    <label for="Department">Department<span style="color:red;">*</span></label>
                               </div>
                               <div class="col-md-3">
                                     <select class="textbox" name="department" v-validate="'required'" v-model="newStaff.department_id">
@@ -76,7 +76,7 @@
                               <div class="col-md-1"></div>
 
                               <div class="col-md-2">
-                                    <label for="staffType">Staff Type</label>
+                                    <label for="staffType">Staff Type<span style="color:red;">*</span></label>
                               </div>
                               <div class="col-md-3">
                                     <select class="textbox" name="staffType" v-validate="'required'" v-model="newStaff.staff_type_id">
@@ -93,7 +93,7 @@
                             
                           <div class="row">
                               <div class="col-md-2">
-                                    <label for="designation">Designation</label>
+                                    <label for="designation">Designation<span style="color:red;">*</span></label>
                               </div>
                               <div class="col-md-3">
                                     <select class="textbox" name="designation" v-validate="'required'" v-model="newStaff.designation_id">
@@ -107,7 +107,7 @@
                               <div class="col-md-1"></div>
 
                               <div class="col-md-2">
-                                    <label for="email">E-Mail</label>
+                                    <label for="email">E-Mail<span style="color:red;">*</span></label>
                               </div>
                               <div class="col-md-3">
                                     <input type="email" v-validate="'required|email'" data-vv-value-path="innerValue" :has-error="errors.has('email')" v-model="newStaff.email" class="textbox" name="email" placeholder="E-Mail" required>
@@ -120,7 +120,7 @@
 
                           <div class="row">
                                 <div class="col-md-2">
-                                      <label for="city">City</label>
+                                      <label for="city">City<span style="color:red;">*</span></label>
                                 </div>
                                       <!-- <select class="form-control" name="city" v-validate="'required'" v-model="newStaff.city">
                                         <option value="">Select City</option>
@@ -135,7 +135,7 @@
                                 <div class="col-md-1"></div>
 
                                 <div class="col-md-2">
-                                      <label for="region">Locality</label>
+                                      <label for="region">Locality<span style="color:red;">*</span></label>
                                 </div>
                                     <!-- <select class="form-control" name="region" v-validate="'required'" v-model="newStaff.region">
                                       <option value="">Select Region</option>

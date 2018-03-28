@@ -43,6 +43,7 @@ class RetailerInvoiceController extends Controller {
         return $invoice_list = RetailerInvoice::with(
                         'payment_type'
                         , 'RetailerOrder'
+						,'warehouse_issue'
                 )->orderBy('id', 'desc')->get();
     }
 

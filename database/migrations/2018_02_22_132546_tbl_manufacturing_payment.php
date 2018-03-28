@@ -17,7 +17,8 @@ class TblManufacturingPayment extends Migration
         Schema::create('tbl_manufacturing_payment', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('manufacture_order_id')->index();
-            $table->unsignedInteger('payment_amount');
+            $table->decimal('payment_amount',13, 2);
+            $table->decimal('total_amount', 13, 2);
             $table->unsignedInteger('payment_type_id')->index();
             $table->unsignedInteger('currency_id')->index();
             $table->unsignedInteger('exchange_rate');

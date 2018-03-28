@@ -14,60 +14,19 @@
                             <strong>{{message}}</strong>
                         </div>
                         <form @submit.prevent="add_outlet">
-                            <div class="form-section">
-                                <div>
-                                    <h4 class="form-section-heading" style="border-bottom:1px solid black; display: inline-block; font-size:15px; font-weight:bold;">PERSONAL INFO</h4>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        <label>Full Name</label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="text" class="textbox" v-model="outlet.fullname" autocomplete="off" required>
-                                    </div>
-                                    <div class="col-md-1"></div>
-                                    <div class="col-md-2">
-                                        <label>Phone No</label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="text" class="textbox" v-model="outlet.phone_no" v-mask="'9999-9999999'" autocomplete="off" required>
-                                    </div>
-                                    <div class="col-md-1"></div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        <label>CNIC</label>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input type="text" class="textbox" v-model="outlet.cnic" v-mask="'99999-9999999-9'" autocomplete="off" required>
-                                    </div>
-                                    <div class="col-md-1"></div>
-                                    <div class="col-md-2">
-                                        <label>Image</label>
-                                    </div>
-                                    <div class="col-md-3" v-if="!outlet.uploadImage">
-                                        <input type="file" class="textbox" v-on:change="retailer_image_file_preview" ref="imageInput" name="image" autocomplete="off" required>
-                                    </div>
-                                    <div class="col-md-3" v-else>
-                                        <img :src="outlet.uploadImage" class="img img-responsive form-control" style="    width: 100px; height: 90px;" />
-                                        <button @click="removeRetailerImage" class="btn btn-pinterest btn-xs"  style="width: 100px;"><i class="fa fa-times"></i> </button>
-                                    </div>
-                                    <div class="col-md-1"></div>
-                                    
-                                </div>
-                                    
-                            </div>
+
                             <div class="form-section">
                                 <div>
                                     <h4 class="form-section-heading" style="border-bottom:1px solid black; display: inline-block; font-size:15px; font-weight:bold;">BUSINESS PROFILE</h4> <br/>
                                     <!-- <h4 class="form-section-heading" style="border-bottom:1px solid black; display: inline-block; font-size:13px;">OUTLET</h4> -->
                                 </div>
 
+
                                 <div class="row">
-                                    <div class="col-md-2">Outlet Name</div>
+                                    <div class="col-md-2"><label>Outlet Name<span style="color: red;">*</span></label></div>
                                     <div class="col-md-3"><input type="text" class="textbox" v-model="outlet.outlet_name" autocomplete="off" required></div>
                                     <div class="col-md-1"></div>
-                                    <div class="col-md-2">Outlet Phone No</div>
+                                    <div class="col-md-2"><label>Outlet Phone No<span style="color: red;">*</span></label></div>
                                     <div class="col-md-3"><input type="text" class="textbox" v-mask="'9999-9999999'" v-model="outlet.outlet_phone" autocomplete="off" required></div>
                                     <div class="col-md-1"></div>
                                 </div>
@@ -80,7 +39,7 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-md-2">City</div>
+                                    <div class="col-md-2"><label>City<span style="color: red;">*</span></label></div>
                                     <div class="col-md-3">
                                         <select class="textbox_dropdown" name="city_id" v-model="outlet.city_id" required>
                                             <option value="">Select City</option>
@@ -88,7 +47,7 @@
                                         </select>
                                     </div>
                                     <div class="col-md-1"></div>
-                                    <div class="col-md-2">Locality</div>
+                                    <div class="col-md-2"><label>Locality<span style="color: red;">*</span></label></div>
                                     <div class="col-md-3">
                                         <select class="textbox_dropdown" name="region_id" v-model="outlet.region_id" required>
                                             <option value="">Select Locality</option>
@@ -100,16 +59,16 @@
 
                                 
                                 <div class="row">
-                                    <div class="col-md-2">Address</div>
+                                    <div class="col-md-2"><label>Address<span style="color: red;">*</span></label></div>
                                     <div class="col-md-3"><input type="text" class="textbox_dropdown" autocomplete="off" v-model="outlet.address" name="outlet_address" required/></div>
                                     <div class="col-md-1"></div>
-                                    <div class="col-md-2">Longitude(OPTIONAL)</div>
+                                    <div class="col-md-2"><label>Longitude(OPTIONAL)</label></div>
                                     <div class="col-md-3"><input type="text" class="textbox_dropdown" autocomplete="off" v-model="outlet.longitude" name="outlet_longitude"/></div>
                                     <div class="col-md-1"></div>
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-md-2">Latitude(OPTIONAL)</div>
+                                    <div class="col-md-2"><label>Latitude(OPTIONAL)</label></div>
                                     <div class="col-md-3"><input type="text" class="textbox_dropdown" autocomplete="off" v-model="outlet.latitude" name="outlet_latitude"/></div>
                                     <div class="col-md-1"></div>
 
@@ -123,25 +82,69 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-md-2">Secuity Amount</div>
+                                    <div class="col-md-2"><label>Security Amount<span style="color: red;">*</span></label></div>
                                     <div class="col-md-3"><vue-numeric currency="Rs" class="textbox_dropdown" separator="," v-model="outlet.security_check_amount"></vue-numeric></div>
                                     <div class="col-md-1"></div>
-                                    <div class="col-md-2">Credit Limit</div>
+                                    <div class="col-md-2"><label>Credit Limit<span style="color: red;">*</span></label></div>
                                     <div class="col-md-3"><vue-numeric currency="Rs" class="textbox_dropdown" separator="," v-model="outlet.credit_limit"></vue-numeric></div>
                                     <div class="col-md-1"></div>
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-md-2">Credit Duration</div>
+                                    <div class="col-md-2"><label>Credit Duration<span style="color: red;">*</span></label></div>
                                     <div class="col-md-3"><vue-numeric currency="Days" class="textbox_dropdown" autocomplete="off" v-model="outlet.credit_duration" name="credit_duration" required></vue-numeric></div>
                                     <div class="col-md-1"></div>
-                                    <div class="col-md-2">Cheque Image</div>
+                                    <div class="col-md-2"><label>Cheque Image<span style="color: red;">*</span></label></div>
                                     <div class="col-md-3" v-if="!outlet.copy_image"><input type="file" class="textbox_dropdown" v-on:change="file_preview" ref="imageInput" name="security_check_image" autocomplete="off" required></div>
                                     <div class="col-md-3" v-else>
                                         <img :src="outlet.copy_image" class="img img-responsive" style="width: 100px; height: 90px;" />
                                         <button @click="removeCopyImage" class="btn btn-pinterest btn-xs" style="width: 100px;"><i class="fa fa-times"></i> </button>
                                     </div>
                                     <div class="col-md-1"></div>
+                                </div>
+
+                            </div>
+                            <br/>
+                            <div class="form-section">
+                                <div>
+                                    <h4 class="form-section-heading" style="border-bottom:1px solid black; display: inline-block; font-size:15px; font-weight:bold;">DEALER DETAILS</h4>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label>Full Name<span style="color: red;">*</span></label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="text" class="textbox" v-model="outlet.fullname" autocomplete="off" required>
+                                    </div>
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-2">
+                                        <label>Phone No<span style="color: red;">*</span></label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="text" class="textbox" v-model="outlet.phone_no" v-mask="'9999-9999999'" autocomplete="off" required>
+                                    </div>
+                                    <div class="col-md-1"></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label>CNIC<span style="color: red;">*</span></label>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="text" class="textbox" v-model="outlet.cnic" v-mask="'99999-9999999-9'" autocomplete="off" required>
+                                    </div>
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-2">
+                                        <label>Image<span style="color: red;">*</span></label>
+                                    </div>
+                                    <div class="col-md-3" v-if="!outlet.uploadImage">
+                                        <input type="file" class="textbox" v-on:change="retailer_image_file_preview" ref="imageInput" name="image" autocomplete="off" required>
+                                    </div>
+                                    <div class="col-md-3" v-else>
+                                        <img :src="outlet.uploadImage" class="img img-responsive form-control" style="    width: 100px; height: 90px;" />
+                                        <button @click="removeRetailerImage" class="btn btn-pinterest btn-xs"  style="width: 100px;"><i class="fa fa-times"></i> </button>
+                                    </div>
+                                    <div class="col-md-1"></div>
+
                                 </div>
 
                             </div>
@@ -179,7 +182,7 @@
                             <thead>
                             <tr>
                                 <th>Outlet Name</th>
-								<th>Dealer Code</th>
+                                <th>Dealer Code</th>
                                 <th>Contact Person</th>
                                 <th>Contact No.</th>
                                 <th>City</th>
@@ -192,7 +195,7 @@
 
                             <tr v-for="(outlets,index) in outletsData">
                                 <td>{{outlets.name}}</td>
-								<td>{{outlets.retailer.retailer_no}}</td>
+                                <td>{{outlets.retailer.retailer_no}}</td>
                                 <td>{{outlets.business_person_name}}</td>
                                 <td>{{outlets.phone_no}}</td>
                                 <td>{{outlets.city.name}}</td>
@@ -215,69 +218,114 @@
                 </div>
 
                 <!-- View Details Modal Start-->
-                <div class="modal fade bs-add-Model-modal-md" tabindex="5" role="dialog"  id="outlet_info_modal" aria-labelledby="bs-add-Model-modal-md">
-                    <div class="modal-dialog modal-md" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title">Outlet Details</h4>
+            <div class="modal fade bs-add-Model-modal-md" tabindex="5" role="dialog"  id="outlet_info_modal" aria-labelledby="bs-add-Model-modal-md">
+                <div class="modal-dialog modal-md" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">Outlet Details</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-section padding10px">
+                                <h4 class="form-section-heading">Dealer</h4>
+                                <br/>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <img :src="outlet_view.retailer_image" height="65px" width="100%"/>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <table class="table table-hovered">
+                                            <tr>
+                                                <td><strong>Name</strong></td>
+                                                <td>{{outlet_view.retailer_name}} ({{outlet_view.retailer_no}})</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Phone</strong></td>
+                                                <td>{{outlet_view.retailer_phone}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Cnic</strong></td>
+                                                <td>{{outlet_view.retailer_cnic}}</td>
+                                            </tr>
+
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="modal-body">
-                                <div class="form-section padding10px">
-                                    <div class="panel panel-info">
-                                        <div class="panel-heading">
-                                            <h2 class="panel-title">Retailer</h2>
-                                        </div>
+                            <div class="paddingtop5">
 
-                                        <div class="panel-body">
-                                            <div class="row">
-                                                <div class="col-md-2">
-                                                    <img :src="outlet_view.retailer_image" height="65px" width="100%"/>
+                                <!-- Nav tabs -->
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li role="presentation" class="active"><a href="#outlet_tab" aria-controls="outlet_tab" role="tab" data-toggle="tab">Outlet</a></li>
+                                    <!-- <li role="presentation"><a href="#contact_person" aria-controls="contact_person" role="tab" data-toggle="tab">Contact Person</a></li> -->
+                                    <li role="presentation"><a href="#location" aria-controls="location" role="tab" data-toggle="tab">Location</a></li>
+                                    <li role="presentation"><a href="#financial_status" aria-controls="financial_status" role="tab" data-toggle="tab">Credit Worthness</a></li>
+                                </ul>
+
+                                <!-- Tab panes -->
+                                <div class="tab-content">
+                                    <div role="tabpanel" class="tab-pane   active" id="outlet_tab"> <!-- outlet tab -->
+                                        <div class=" col-md-12 paddingmarginzero">
+                                            <div class="panel panel-info">
+                                                <div class="panel-heading">
+                                                    <div class="panel-title"></div>
                                                 </div>
-                                                <div class="col-md-10">
-                                                    <table class="table table-hovered">
-                                                        <tr>
-                                                            <td>Name</td>
-                                                            <td>{{outlet_view.retailer_name}} ({{outlet_view.retailer_no}})</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Phone</td>
-                                                            <td>{{outlet_view.retailer_phone}}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Cnic</td>
-                                                            <td>{{outlet_view.retailer_cnic}}</td>
-                                                        </tr>
+                                                <div class="panel-body">
+                                                    <div class="col-md-2">
+                                                        <label><strong>Name :</strong></label>
+                                                    </div>
+                                                    <div class="col-md-5">
+                                                        <label>{{outlet_view.outlet_name}}</label>
+                                                    </div>
 
-                                                    </table>
+                                                    <div class="col-md-2">
+                                                        <label><strong>Phone :</strong></label>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label>{{outlet_view.outlet_phone}}</label>
+                                                    </div>
+                                                    <!-- <table class="table table-hovered">
+                                                      <tr>
+                                                          <td>Name</td>
+                                                          <td>{{outlet_view.outlet_name}}</td>
+                                                      </tr>
+                                                      <tr>
+                                                          <td>Phone</td>
+                                                          <td>{{outlet_view.outlet_phone}}</td>
+                                                      </tr>
+                                                    </table> -->
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="form-section padding10px">
-                                    <div class="panel panel-info">
-                                        <div class="panel-heading">
-                                            <h2 class="panel-title">BUSINESS PROFILE</h2>
-                                        </div>
+                                    </div> <!-- End outlet tab -->
 
-                                        <div class="panel-body">
-                                            <h4 class="form-section-heading">Outlet</h4>
-                                            <br/>
-                                            <table class="table table-hovered">
-                                                <tr>
-                                                    <td>Name</td>
-                                                    <td>{{outlet_view.outlet_name}}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Phone</td>
-                                                    <td>{{outlet_view.outlet_phone}}</td>
-                                                </tr>
-                                            </table>
-                                            <h4 class="form-section-heading">Contact Person</h4>
-                                            <br/>
-                                            <div class="row">
-                                                <div class="col-md-10">
+                                    <!--  <div role="tabpanel" class="tab-pane" id="contact_person"> Contact Person
+                                        <div class=" col-md-12 paddingmarginzero">
+                                              <div class="panel panel-info">
+
+                                                  <div class="panel-heading">
+                                                  </div>
+
+                                                  <div class="panel-body">
+                                                    <div class="col-md-2">
+                                                        <label><b>Name</b></label>
+                                                    </div>
+                                                    <div class="col-md-5">
+                                                        <label>{{outlet_view.bussiness_person_name}}</label>
+                                                    </div>
+
+                                                    <div class="col-md-2">
+                                                        <label><b>Phone</b></label>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label>{{outlet_view.bussiness_person_phone}}</label>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <label><b>CNIC</b></label>
+                                                    </div>
+                                                    <div class="col-md-5">
+                                                        <label>{{outlet_view.bussiness_person_cnic}}</label>
+                                                    </div>
                                                     <table class="table table-hovered">
                                                         <tr>
                                                             <td>Name</td>
@@ -291,90 +339,251 @@
                                                             <td>CNIC</td>
                                                             <td>{{outlet_view.bussiness_person_cnic}}</td>
                                                         </tr>
-
                                                     </table>
+                                                  </div>
+
+                                              </div>
+
+                                        </div>
+                                    </div> End Contact Person -->
+
+                                    <div role="tabpanel" class="tab-pane" id="location"> <!-- Location Tab -->
+                                        <div class=" col-md-12 paddingmarginzero">
+                                            <div class="panel panel-info">
+                                                <div class="panel-heading">
+                                                </div>
+
+                                                <div class="panel-body">
+                                                    <div class="row">
+                                                        <div class="col-md-2">
+                                                            <label><strong>Address :</strong></label>
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                            <label>{{outlet_view.address}}</label>
+                                                        </div>
+
+                                                        <div class="col-md-2">
+                                                            <label><strong>Locality :</strong></label>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <label>{{outlet_view.region_name}}</label>
+                                                        </div>
+                                                        <div class="col-md-2"></div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-2">
+                                                            <label><strong>City :</strong></label>
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                            <label>{{outlet_view.city_name}}</label>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <label><strong>Latitude :</strong></label>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <label v-if="outlet_view.latitude!=null">{{outlet_view.latitude}}</label>
+                                                            <td v-else> --- </td>
+                                                        </div>
+                                                        <div class="col-md-2"></div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-3">
+                                                            <label><strong>Longitude :</strong></label>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <label v-if="outlet_view.longitude!=null">{{outlet_view.longitude}}</label>
+                                                            <td v-else> --- </td>
+                                                        </div>
+                                                    </div>
+                                                    <!-- <table class="table table-hovered">
+                                                        <tr>
+                                                            <td>Address</td>
+                                                            <td>{{outlet_view.address}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Locality</td>
+                                                            <td>{{outlet_view.region_name}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>City</td>
+                                                            <td>{{outlet_view.city_name}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Latitude</td>
+                                                            <td v-if="outlet_view.latitude!=null">{{outlet_view.latitude}}</td>
+                                                            <td v-else> --- </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Longitude</td>
+                                                            <td v-if="outlet_view.longitude!=null">{{outlet_view.longitude}}</td>
+                                                            <td v-else> --- </td>
+                                                        </tr>
+                                                    </table> -->
                                                 </div>
                                             </div>
-                                            <table class="table table-hovered">
+                                        </div>
+                                    </div> <!-- End Location Tab-->
+
+                                    <div role="tabpanel" class="tab-pane" id="financial_status"> <!-- Financial Status Tab-->
+
+                                        <div class=" col-md-12 paddingmarginzero">
+                                            <div class="panel panel-info">
+
+                                                <div class="panel-heading">
+                                                </div>
+                                                <div class="panel-body">
+
+                                                    <div class="row">
+                                                        <div class="col-md-3">
+                                                            <label><strong>Security Deposit :</strong></label>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <label>{{outlet_view.security_check_amount | currency('Rs')}}</label>
+                                                        </div>
+
+                                                        <div class="col-md-3">
+                                                            <label><strong>Credit Limit :</strong></label>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <p>{{outlet_view.credit_limit | currency('Rs')}}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-3">
+                                                            <label><strong>Credit Duration :</strong></label>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <label>{{outlet_view.credit_duration}} Days</label>
+                                                        </div>
+
+                                                        <div class="col-md-4">
+                                                            <label><strong>Security Cheque Image :</strong></label>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <label><a :href="'./deposit_check_img/'+outlet_view.copy_image" target="_blank">Link</a></label>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- <table class="table table-hovered">
+                                                        <tr>
+                                                            <td>Security Cheque Amount</td>
+                                                            <td>{{outlet_view.security_check_amount | currency('Rs')}}</td>
+
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Credit Limit</td>
+                                                            <td>{{outlet_view.credit_limit | currency('Rs')}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Credit Duration</td>
+                                                            <td>{{outlet_view.credit_duration}}</td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td>Security Cheque Image</td>
+                                                            <td><a :href="'./deposit_check_img/'+outlet_view.copy_image" target="_blank">Link</a></td>
+                                                        </tr>
+                                                    </table> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="form-section padding10px">
+                                <h4 class="form-section-heading" style="font-weight: bold;">BUSINESS PROFILE</h4>
+                                <h4 class="form-section-heading">Outlet</h4>
+                                <br/>
+
+                                <table class="table table-hovered">
+                                    <tr>
+                                        <td>Name</td>
+                                        <td>{{outlet_view.outlet_name}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Phone</td>
+                                        <td>{{outlet_view.outlet_phone}}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="form-section padding10px">
+                                <h4 class="form-section-heading">Contact Person</h4>
+                                <br/>
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <table class="table table-hovered">
                                                 <tr>
                                                     <td>Name</td>
-                                                    <td>{{outlet_view.outlet_name}}</td>
+                                                    <td>{{outlet_view.bussiness_person_name}}</td>
                                                 </tr>
                                                 <tr>
                                                     <td>Phone</td>
-                                                    <td>{{outlet_view.outlet_phone}}</td>
-                                                </tr>
-                                            </table>
-                                            <h4 class="form-section-heading">Location</h4>
-                                            <br/>
-                                            <table class="table table-hovered">
-                                                <tr>
-                                                    <td>Address</td>
-                                                    <td>{{outlet_view.address}}</td>
+                                                    <td>{{outlet_view.bussiness_person_phone}}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Locality</td>
-                                                    <td>{{outlet_view.region_name}}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>City</td>
-                                                    <td>{{outlet_view.city_name}}</td>
+                                                    <td>CNIC</td>
+                                                    <td>{{outlet_view.bussiness_person_cnic}}</td>
                                                 </tr>
 
-
-                                                <tr>
-                                                    <td>Latitude</td>
-                                                    <td v-if="outlet_view.latitude!=null">{{outlet_view.latitude}}</td>
-                                                    <td v-else> --- </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Longitude</td>
-                                                    <td v-if="outlet_view.longitude!=null">{{outlet_view.longitude}}</td>
-                                                    <td v-else> --- </td>
-                                                </tr>
-                                            </table>
-
-                                        </div>
+                                        </table>
                                     </div>
-
                                 </div>
-                                <div class="form-section padding10px">
-                                    <div class="panel panel-info">
-                                        <div class="panel-heading">
-                                            <h2 class="panel-title">FINANCIAL DETAILS</h2>
-                                        </div>
-
-                                        <div class="panel-body">
-
-                                            <div class="form-section padding10px">
-
-                                                <table class="table table-hovered">
-                                                    <tr>
-                                                        <td>Security Cheque Amount</td>
-                                                        <td>{{outlet_view.security_check_amount | currency('Rs')}}</td>
-
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Credit Limit</td>
-                                                        <td>{{outlet_view.credit_limit | currency('Rs')}}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Credit Duration</td>
-                                                        <td>{{outlet_view.credit_duration}}</td>
-                                                    </tr>
-
-                                                    <tr>
-                                                        <td>Security Cheque Image</td>
-                                                        <td><a :href="'./deposit_check_img/'+outlet_view.copy_image" target="_blank">Link</a></td>
-                                                    </tr>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-
                             </div>
+                            <div class="form-section padding10px">
+                                <h4 class="form-section-heading">Location</h4>
+                                <br/>
+                                <table class="table table-hovered">
+                                    <tr>
+                                        <td>Address</td>
+                                        <td>{{outlet_view.address}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Locality</td>
+                                        <td>{{outlet_view.region_name}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>City</td>
+                                        <td>{{outlet_view.city_name}}</td>
+                                    </tr>
+
+
+                                    <tr>
+                                        <td>Latitude</td>
+                                        <td v-if="outlet_view.latitude!=null">{{outlet_view.latitude}}</td>
+                                        <td v-else> --- </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Longitude</td>
+                                        <td v-if="outlet_view.longitude!=null">{{outlet_view.longitude}}</td>
+                                        <td v-else> --- </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="form-section padding10px">
+                                <h4 class="form-section-heading">Financial Status</h4>
+                                <br/>
+                                <table class="table table-hovered">
+                                    <tr>
+                                        <td>Security Cheque Amount</td>
+                                        <td>{{outlet_view.security_check_amount | currency('Rs')}}</td>
+
+                                    </tr>
+                                    <tr>
+                                        <td>Credit Limit</td>
+                                        <td>{{outlet_view.credit_limit | currency('Rs')}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Credit Duration</td>
+                                        <td>{{outlet_view.credit_duration}}</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Security Cheque Image</td>
+                                        <td><a :href="'./deposit_check_img/'+outlet_view.copy_image" target="_blank">Link</a></td>
+                                    </tr>
+                                </table>
+                            </div> -->
+                            <!-- </div> -->
                             <div class="modal-footer">
                                 <button class="btn btn-github" data-dismiss="modal" aria-label="Close">Close</button>
                             </div>
@@ -465,7 +674,7 @@
                     retailer_id:'',
                     outlet_name:'',
                     outlet_phone:'',
-					retailer_no:'',
+                    retailer_no:'',
                     bussiness_person_name:'',
                     bussiness_person_cnic:'',
                     bussiness_person_phone:'',
@@ -633,7 +842,7 @@
                     this.outlet_view.bussiness_person_name=this.outletsData[index].business_person_name;
                     this.outlet_view.bussiness_person_cnic=this.outletsData[index].business_person_cnic;
                     this.outlet_view.bussiness_person_phone=this.outletsData[index].mobile_no;
-					this.outlet_view.retailer_no=this.outletsData[index].retailer.retailer_no;
+                    this.outlet_view.retailer_no=this.outletsData[index].retailer.retailer_no;
                     this.outlet_view.city_id=this.outletsData[index].city_id;;
                     this.outlet_view.region_id=this.outletsData[index].region_id;;
                     this.outlet_view.address=this.outletsData[index].address;

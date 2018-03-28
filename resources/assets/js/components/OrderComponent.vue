@@ -28,7 +28,7 @@
                     <form @submit.prevent="add_order">
                         <div class="col-md-12">
                             <div class="row">
-                                <div class="col-md-2"><label>Estimate Delivery Date</label></div>
+                                <div class="col-md-2"><label>Estimate Delivery Date<span style="color:red;">*</span></label></div>
                                 <div class="col-md-3">
                                     <date-picker  v-model="estimation_date" type="date" style="width: 100%;" format="dd-MM-yyyy" placeholder="dd-mm-yyyy" lang="en" required></date-picker>
                                 </div>
@@ -36,7 +36,7 @@
                             <div  v-for="(find, index) in new_order.products">
                                 <hr/>
                                 <div class="row">
-                                    <div class="col-md-2"><label>Model</label></div>
+                                    <div class="col-md-2"><label>Model<span style="color:red;">*</span></label></div>
                                     <div class="col-md-3">
                                         <select class="textbox_dropdown" name="select_product" v-model="find.product_id" @change="change_product(index, find.product_id)" required>
                                             <option value="" selected>Select</option>
@@ -44,7 +44,7 @@
                                         </select>
                                     </div>
                                     <div class="col-md-1"></div>
-                                    <div class="col-md-2"><label>Color</label></div>
+                                    <div class="col-md-2"><label>Color<span style="color:red;">*</span></label></div>
                                     <div class="col-md-3">
                                         <select class="textbox_dropdown" v-model="new_order.products[index].product_color_id"  @change="myfunc(index)" required>
                                             <option value="" selected>Select</option>
@@ -54,16 +54,16 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-md-2"><label>Unit Price(PKR)</label></div>
+                                    <div class="col-md-2"><label>Unit Price(PKR)<span style="color:red;">*</span></label></div>
                                     <div class="col-md-3"><vue-numeric class="textbox" v-model="new_order.products[index].cost_per_set" placeholder="Cost" readonly></vue-numeric></div>
                                     <div class="col-md-1"></div>
-                                    <div class="col-md-2"><label>Quantity</label></div>
+                                    <div class="col-md-2"><label>Quantity<span style="color:red;">*</span></label></div>
                                     <div class="col-md-3"><input type="text" class="textbox" v-model="new_order.products[index].quantity" placeholder="Quantity" required></div>
                                     <div class="col-md-1"></div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-11" v-if="index>0">
-                                        <button class="btn btn-danger pull-right" v-on:click="removeProductForm(index)">Remove</button>
+                                        <button class="btn btn-danger pull-right" v-on:click="removeProductForm(index)" title="Delete"><i class="fa fa-times"></i></button>
                                     </div>
                                     <div class="col-md-1"></div>
                                 </div>

@@ -13,7 +13,7 @@
                             <div>
                                 <div class="row">
                                     <div class="col-md-2">
-                                        <label for="productName">Title</label>
+                                        <label for="productName">Title<span style="color:red;">*</span></label>
                                     </div>
                                     <div class="col-md-3">
                                         <input type="text" name="productName" v-validate="'required|regex:^[a-zA-Z0-9 ._]+$'" class="textbox" v-model="newProduct.name" placeholder="Product Name" required>
@@ -24,7 +24,7 @@
                                     <div class="col-md-1"></div>
 
                                     <div class="col-md-2">
-                                        <label for="productCategory">Category</label>
+                                        <label for="productCategory">Category<span style="color:red;">*</span></label>
                                     </div>
                                     <div class="col-md-3">
                                         <select class="textbox" required name="Category" v-model="newProduct.productCategory" v-validate="'required'" >
@@ -40,7 +40,7 @@
 
                                 <div class="row">
                                     <div class="col-md-2">
-                                        <label for="releaseDate">Estimated Release  Date</label>
+                                        <label for="releaseDate">Estimated Release Date<span style="color:red;">*</span></label>
                                     </div>
                                     <div class="col-md-3">
                                         <date-picker name="releaseDate" v-validate="'required'" style="width:100%;" v-model="releaseDate" type="date" format="dd-MM-yyyy" placeholder="dd-mm-yyyy" lang="en" required></date-picker>
@@ -62,31 +62,30 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group col-md-3">
-                                        <label for="colorName">Color</label>
+                                        <label for="colorName">Color<span style="color:red;">*</span></label>
                                         <input type="text" v-validate="'required|regex:^[a-zA-Z ._]+$'" name="colorName" v-model="find.color" class="form-control" placeholder="Color" required>
                                         <span class="text-danger" v-show="errors.has('colorName')">
                                               {{errors.first('colorName')}}
                                             </span>
                                     </div>
                                     <div class="form-group col-md-2">
-                                        <label for="price">Price (Rs) </label>
+                                        <label for="price">Price(PKR)<span style="color:red;">*</span></label>
+                                        
                                         <input type="number" name="Price" v-validate="'required|regex:^[0-9]+$|min_value:1'" v-model="find.price" class="form-control" placeholder="Price" required>
                                         <span class="text-danger" v-show="errors.has('Price')">
                                               {{errors.first('Price')}}
                                             </span>
                                     </div>
                                     <div class="form-group col-md-2">
-                                        <label for="discount">Discount(%)</label>
+                                        <label for="discount">Discount(%)<span style="color:red;">*</span></label>
                                         <input type="number" name="Discount" v-validate="'required||regex:^[0-9]+$|min_value:1'" class="form-control" v-model="find.discount" placeholder="Discount" required>
                                         <span class="text-danger" v-show="errors.has('Discount')">
                                               {{errors.first('Discount')}}
                                             </span>
                                     </div>
-                                    <div class="form-group col-md-3" style="margin-top: 8px;">
-                                        <span class="btn btn-round btn-file">
-                                            <span class="fileinput-new">Select image(s)</span>
+                                    <div class="form-group col-md-3">
+                                        <label >Select image(s)<span style="color:red;">*</span></label>
                                                 <input type="file" class="form-control" ref="fileupload" @change="imageChange(index)">
-                                            </span>
                                     </div>
                                     <div class="form-group col-md-2" style="margin-top: 35px;">
                                         <button class="btn btn-danger col-md-12" @click="removeColorForm(index)">Cancel</button>

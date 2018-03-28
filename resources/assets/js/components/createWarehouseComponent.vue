@@ -11,17 +11,17 @@
                         <form @submit="createWarehouse">
                           <div class="row">
                               <div class="col-md-2">
-                                <label for="name">Name</label>
+                                <label for="name">Name<span style="color:red;">*</span></label>
                               </div>
                               <div class="col-md-3">
-                                <input name="Name" type="text" class="textbox" v-validate="'required|regex:^[a-zA-Z ._]+$'" v-model="newWarehouse.name" >
+                                <input name="Name" type="text" class="textbox" v-validate="'required|regex:^[a-zA-Z ._]+$'" v-model="newWarehouse.name" required="required">
                                 <span class="text-danger" v-show="errors.has('city')">
                                   {{errors.first('city')}}
                                 </span>
                               </div>
                               <div class="col-md-1"></div>
                               <div class="col-md-2">
-                                <label for="warehouseType">Type</label>
+                                <label for="warehouseType">Type<span style="color:red;">*</span></label>
                               </div>
                               <div class="col-md-3">
                                 <select class="textbox" name="WarehouseType" v-validate="'required'" required v-model="newWarehouse.warehouse_type_id">
@@ -36,10 +36,10 @@
                           </div>
                           <div class="row">
                             <div class="col-md-2">
-                              <label for="City">City</label>
+                              <label for="City">City<span style="color:red;">*</span></label>
                             </div>
                             <div class="col-md-3">
-                              <v-select label="name" v-validate="'required'" v-model="newWarehouse.city" :options="cities" name="city"></v-select>
+                              <v-select label="name" v-validate="'required'" v-model="newWarehouse.city" :options="cities" name="city" ></v-select>
                               <span class="text-danger" v-show="errors.has('city')">
                                 {{errors.first('city')}}
                               </span>
@@ -47,7 +47,7 @@
                             <div class="col-md-1"></div>
 
                             <div class="col-md-2">
-                              <label for="region">Locality</label>
+                              <label for="region">Locality<span style="color:red;">*</span></label>
                             </div>
                             <div class="col-md-3">
 
@@ -90,10 +90,10 @@
 
                         <div class="row">
                           <div class="col-md-2">
-                            <label for="region">Address</label>
+                            <label for="region">Address<span style="color:red;">*</span></label>
                           </div>
                           <div class="col-md-3">
-                            <input type="text" name="address" v-validate="'required'" class="textbox" v-model="newWarehouse.address">
+                            <input type="text" name="address" v-validate="'required'" class="textbox" v-model="newWarehouse.address" required="required">
                             <span class="text-danger" v-show="errors.has('address')">
                               {{errors.first('address')}}
                             </span>
@@ -101,7 +101,7 @@
                           <div class="col-md-1"></div>
 
                           <div class="col-md-2">
-                            <label for="manager">Warehouse Incharge</label>
+                            <label for="manager">Warehouse Incharge<span style="color:red;">*</span></label>
                           </div>
                           <div class="col-md-3">
                             <!-- <select class="form-control" name="manager" required v-model="newWarehouse.warehouse_manager">
@@ -118,7 +118,7 @@
 
                         <div class="row">
                           <div class="col-md-2">
-                            <label for="accountant">Branch Accountant</label>
+                            <label for="accountant">Branch Accountant<span style="color:red;">*</span></label>
                           </div>
                           <div class="col-md-3">
                             <!-- <select class="form-control" name="accountant" required v-model="newWarehouse.warehouse_accountant">

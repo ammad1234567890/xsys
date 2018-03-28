@@ -16,10 +16,11 @@ class TblRecieve extends Migration
          Schema::disableForeignKeyConstraints();
         Schema::create('tbl_receive', function (Blueprint $table) {
           $table->increments('id');
+          $table->string('receive_no')->nullable();
            $table->unsignedInteger('manufacturing_order_id')->index();
            $table->unsignedInteger('collected_by')->index();
            $table->unsignedTinyInteger('is_qa_pass')->default(0);
-           $table->string('qa_description');
+           $table->string('qa_description')->nullable();
            $table->unsignedInteger('receive_status_id')->index();
            $table->unsignedInteger('created_by')->index();
            $table->unsignedInteger('updated_by')->index()->nullable();
@@ -29,8 +30,7 @@ class TblRecieve extends Migration
            $table->foreign('receive_status_id')->references('id')->on('tbl_receive_status')->onDelete('cascade');
            $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
            $table->foreign('updated_by')->references('id')->on('users')->onDelete('cascade');
-           $table->timestamps();
-            $table->timestamps();
+           $table->timestamps();          
         });
     }
 

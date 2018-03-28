@@ -39,8 +39,20 @@ class FinanceController extends Controller
     //route     /finance/approve_order
     public function approve_retailer_order(Request $request){
         $id=$request->input('id');
+        $credit_limit=$request->input('credit_limit');
+        $total_amount=$request->input('total_cost');
+        $remarks=$request->input('remarks');
+        $id=$request->input('id');
         $user=Auth::user()->id;
-        RetailerOrder::where('id',$id)->update(['is_account_clearance'=>1, 'updated_by'=>$user]);
-        return 201;
+        if($total_amount>$credit_limit){
+            RetailerOrder::where('id',$id)->update(['is_account_clearance'=>1, 'clearance_remarks'=>$remarks,'is_forcefully_approve'=>1 ,'updated_by'=>$user]);
+            return 201;
+        }
+        else{
+            RetailerOrder::where('id',$id)->update(['is_account_clearance'=>1, 'clearance_remarks'=>$remarks, 'updated_by'=>$user]);
+            return 201;
+        }
+
+
     }
 }

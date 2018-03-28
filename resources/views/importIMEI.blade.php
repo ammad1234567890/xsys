@@ -16,7 +16,7 @@
                                 {{ csrf_field() }}
                                 <div class="row">
                                     <div class="col-md-2">
-                                        <label > Browse</label>
+                                        <label > Browse File<span style="color:red;">*</span></label>
                                     </div>
                                     <div class="col-md-5">
                                         <span>

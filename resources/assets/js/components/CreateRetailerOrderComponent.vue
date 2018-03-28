@@ -107,26 +107,26 @@
             <div class="panel-body">
 
                 <div class="row">
-                    <div class="col-md-2"><label>City</label></div>
+                    <div class="col-md-2"><label>City<span style="color:red;">*</span></label></div>
                     <div class="col-md-3"><input type="text" v-model="new_order.city" class="textbox" readonly></div>
                     <div class="col-md-1"></div>
-                    <div class="col-md-2"><label>Locality </label></div>
+                    <div class="col-md-2"><label>Locality<span style="color:red;">*</span></label></div>
                     <div class="col-md-3"><input type="text" v-model="new_order.locality"class="textbox" readonly></div>
                     <div class="col-md-1"></div>
                 </div>
                 <div class="row">
-                    <div class="col-md-2"><label>Address</label></div>
+                    <div class="col-md-2"><label>Address<span style="color:red;">*</span></label></div>
                     <div class="col-md-3"><input type="text" class="textbox" v-model="new_order.address" readonly></div>
                     <div class="col-md-1"></div>
-                    <div class="col-md-2"><label>Dealer ID</label></div>
+                    <div class="col-md-2"><label>Dealer ID<span style="color:red;">*</span></label></div>
                     <div class="col-md-3"><input type="text" class="textbox" v-model="new_order.dealer_id" readonly></div>
                     <div class="col-md-1"></div>
                 </div>
                 <div class="row">
-                    <div class="col-md-2"><label>Outlet</label></div>
+                    <div class="col-md-2"><label>Outlet<span style="color:red;">*</span></label></div>
                     <div class="col-md-3"><input type="text" class="textbox" v-model="new_order.retailer_outlet_name" readonly></div>
                     <div class="col-md-1"></div>
-                    <div class="col-md-2"><label>Warehouses</label></div>
+                    <div class="col-md-2"><label>Warehouses<span style="color:red;">*</span></label></div>
                     <div class="col-md-3">
 
                             <select name="select_product" class="textbox_dropdown" v-model="new_order.warehouse_id" @change="get_warehouse_sales_officers()" required>
@@ -137,7 +137,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-2"><label>Sales Officer</label></div>
+                    <div class="col-md-2"><label>Sales Officer<span style="color:red;">*</span></label></div>
                     <div class="col-md-3">
                         <select name="select_product" class="textbox_dropdown" v-model="new_order.sales_officer_id" required>
                             <option value="" selected>Sales Officers</option>
@@ -153,7 +153,7 @@
                     <hr/>
                     <div class="col-md-12">
                         <div class="row">
-                            <div class="col-md-2"><label>Products</label></div>
+                            <div class="col-md-2"><label>Products<span style="color:red;">*</span></label></div>
                             <div class="col-md-3">
                                 <select name="select_product" class="textbox_dropdown" v-model="find.product_id" @change="change_product(index, find.product_id)" required>
                                     <option value="" selected>Select</option>
@@ -161,7 +161,7 @@
                                 </select>
                             </div>
                             <div class="col-md-1"></div>
-                            <div class="col-md-2"><label>Colors</label></div>
+                            <div class="col-md-2"><label>Colors<span style="color:red;">*</span></label></div>
                             <div class="col-md-3">
                                 <select class="textbox_dropdown" v-model="new_order.products[index].product_color_id" @change="myfunc(index)" required>
                                     <option value="" selected>Select</option>
@@ -172,13 +172,13 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-2"><label>Quantity</label></div>
+                            <div class="col-md-2"><label>Quantity<span style="color:red;">*</span></label></div>
                             <div class="col-md-3">
 
                                 <input type="text" class="textbox" v-model="new_order.products[index].quantity"/>
                             </div>
                             <div class="col-md-1"></div>
-                            <div class="col-md-2"><label>Price</label></div>
+                            <div class="col-md-2"><label>Price(PKR)<span style="color:red;">*</span></label></div>
                             <div class="col-md-3">
                                 <input type="text" class="textbox" v-model="new_order.products[index].cost_per_set"/>
                             </div>
@@ -186,7 +186,7 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12" v-if="index>0">
-                                <button class="btn btn-danger" v-on:click="removeProductForm(index)">Remove</button>
+                                <button class="btn btn-danger" v-on:click="removeProductForm(index)"><i class="fa fa-times" title="Delete"></i></button>
                             </div>
                         </div>
                     </div>

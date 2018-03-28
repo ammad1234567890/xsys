@@ -97,18 +97,18 @@
                                         <li role="presentation" class="active"><a href="#outlet_tab" aria-controls="outlet_tab" role="tab" data-toggle="tab">Outlet</a></li>
                                         <!-- <li role="presentation"><a href="#contact_person" aria-controls="contact_person" role="tab" data-toggle="tab">Contact Person</a></li> -->
                                         <li role="presentation"><a href="#location" aria-controls="location" role="tab" data-toggle="tab">Location</a></li>
-                                        <li role="presentation"><a href="#financial_status" aria-controls="financial_status" role="tab" data-toggle="tab">Financial Status</a></li>
+                                        <li role="presentation"><a href="#financial_status" aria-controls="financial_status" role="tab" data-toggle="tab">Credit Worthness</a></li>
                                       </ul>
 
                                       <!-- Tab panes -->
-                                      <div class="tab-content"> 
+                                      <div class="tab-content">
                                         <div role="tabpanel" class="tab-pane   active" id="outlet_tab"> <!-- outlet tab -->
                                              <div class=" col-md-12 paddingmarginzero">
-                                                <div class="panel panel-info"> 
-                                                  <div class="panel-heading">  
+                                                <div class="panel panel-info">
+                                                  <div class="panel-heading">
                                                     <div class="panel-title"></div>
-                                                  </div> 
-                                                    <div class="panel-body"> 
+                                                  </div>
+                                                    <div class="panel-body">
                                                         <div class="col-md-2">
                                                             <label><strong>Name :</strong></label>
                                                         </div>
@@ -132,26 +132,26 @@
                                                               <td>{{outlet_view.outlet_phone}}</td>
                                                           </tr>
                                                         </table> -->
-                                                    </div> 
+                                                    </div>
                                                 </div>
                                               </div>
                                         </div> <!-- End outlet tab -->
 
                                        <!--  <div role="tabpanel" class="tab-pane" id="contact_person"> Contact Person
                                            <div class=" col-md-12 paddingmarginzero">
-                                                 <div class="panel panel-info"> 
-                                                     
-                                                     <div class="panel-heading">  
+                                                 <div class="panel panel-info">
+
+                                                     <div class="panel-heading">
                                                      </div>
-                                       
-                                                     <div class="panel-body"> 
+
+                                                     <div class="panel-body">
                                                        <div class="col-md-2">
                                                            <label><b>Name</b></label>
                                                        </div>
                                                        <div class="col-md-5">
                                                            <label>{{outlet_view.bussiness_person_name}}</label>
                                                        </div>
-                                       
+
                                                        <div class="col-md-2">
                                                            <label><b>Phone</b></label>
                                                        </div>
@@ -179,19 +179,19 @@
                                                            </tr>
                                                        </table>
                                                      </div>
-                                       
+
                                                  </div>
-                                       
+
                                            </div>
                                        </div> End Contact Person -->
 
                                         <div role="tabpanel" class="tab-pane" id="location"> <!-- Location Tab -->
                                             <div class=" col-md-12 paddingmarginzero">
-                                                    <div class="panel panel-info"> 
+                                                    <div class="panel panel-info">
                                                         <div class="panel-heading">
                                                         </div>
 
-                                                        <div class="panel-body"> 
+                                                        <div class="panel-body">
                                                         <div class="row">
                                                             <div class="col-md-2">
                                                             <label><strong>Address :</strong></label>
@@ -265,11 +265,11 @@
                                         <div role="tabpanel" class="tab-pane" id="financial_status"> <!-- Financial Status Tab-->
 
                                             <div class=" col-md-12 paddingmarginzero">
-                                                    <div class="panel panel-info"> 
-                                                        
+                                                    <div class="panel panel-info">
+
                                                         <div class="panel-heading">
                                                         </div>
-                                                            <div class="panel-body"> 
+                                                            <div class="panel-body">
 
                                                                 <div class="row">
                                                                     <div class="col-md-3">
@@ -291,7 +291,7 @@
                                                                     <label><strong>Credit Duration :</strong></label>
                                                                     </div>
                                                                     <div class="col-md-3">
-                                                                        <label>{{outlet_view.credit_duration}}</label>
+                                                                        <label>{{outlet_view.credit_duration}} Days</label>
                                                                     </div>
 
                                                                     <div class="col-md-4">
@@ -306,7 +306,7 @@
                                                                     <tr>
                                                                         <td>Security Cheque Amount</td>
                                                                         <td>{{outlet_view.security_check_amount | currency('Rs')}}</td>
-                                                                                                                            
+
                                                                     </tr>
                                                                     <tr>
                                                                         <td>Credit Limit</td>
@@ -316,7 +316,7 @@
                                                                         <td>Credit Duration</td>
                                                                         <td>{{outlet_view.credit_duration}}</td>
                                                                     </tr>
-                                                                                                                            
+
                                                                     <tr>
                                                                         <td>Security Cheque Image</td>
                                                                         <td><a :href="'./deposit_check_img/'+outlet_view.copy_image" target="_blank">Link</a></td>
@@ -332,7 +332,7 @@
                                     <h4 class="form-section-heading" style="font-weight: bold;">BUSINESS PROFILE</h4>
                                     <h4 class="form-section-heading">Outlet</h4>
                                     <br/>
-                                
+
                                     <table class="table table-hovered">
                                         <tr>
                                             <td>Name</td>
@@ -362,7 +362,7 @@
                                                         <td>CNIC</td>
                                                         <td>{{outlet_view.bussiness_person_cnic}}</td>
                                                     </tr>
-                                
+
                                             </table>
                                         </div>
                                     </div>
@@ -383,8 +383,8 @@
                                             <td>City</td>
                                             <td>{{outlet_view.city_name}}</td>
                                         </tr>
-                                
-                                
+
+
                                         <tr>
                                             <td>Latitude</td>
                                             <td v-if="outlet_view.latitude!=null">{{outlet_view.latitude}}</td>
@@ -404,7 +404,7 @@
                                         <tr>
                                             <td>Security Cheque Amount</td>
                                             <td>{{outlet_view.security_check_amount | currency('Rs')}}</td>
-                                
+
                                         </tr>
                                         <tr>
                                             <td>Credit Limit</td>
@@ -414,7 +414,7 @@
                                             <td>Credit Duration</td>
                                             <td>{{outlet_view.credit_duration}}</td>
                                         </tr>
-                                
+
                                         <tr>
                                             <td>Security Cheque Image</td>
                                             <td><a :href="'./deposit_check_img/'+outlet_view.copy_image" target="_blank">Link</a></td>
@@ -823,14 +823,5 @@
         border:1px solid black;
     }
 
-    table thead tr th {
-      font-family: calibri;
-      font-size: 12px;
-    }
-
-    table tbody tr td {
-      font-family: calibri;
-      font-size: 12px;
-    }
 </style>
 

@@ -16,9 +16,12 @@ class TblManufacturingOrder extends Migration
         Schema::disableForeignKeyConstraints();
         Schema::create('tbl_manufacturing_order', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('manufacture_order_no');
             $table->date('eta');
             $table->unsignedInteger('total_cost');
             $table->unsignedInteger('remaining_payment');
+            $table->tinyInteger('transaction_closed');
+            $table->tinyInteger('is_deleted');
             $table->unsignedInteger('created_by')->index();
             $table->unsignedInteger('updated_by')->index()->nullable();
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');

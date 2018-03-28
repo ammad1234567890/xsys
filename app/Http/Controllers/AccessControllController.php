@@ -12,9 +12,17 @@ use App\User;
 class AccessControllController extends Controller
 {
 
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
     *@return view
     */
+
+    
    public function index() //return view for creating role
    {
      return view('AccessControl');

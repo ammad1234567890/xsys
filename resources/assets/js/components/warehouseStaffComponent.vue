@@ -13,7 +13,11 @@
                             <label for="warehouse">Warehouse<span style="color:red;">*</span></label>
                           </div>
                           <div class="col-md-3">
-                              <v-select label="name" v-model="newStaff.warehouse" :options="warehouses" @search="search"></v-select>
+                             <select class="textbox" name="warehouse" required v-model="newStaff.warehouse">
+                              <option value="">Select Warehouse</option>
+                              <option v-for="warehouse in warehouses" v-bind:value="warehouse">{{warehouse.name}}</option>
+                            </select>
+                              <!-- <v-select label="name" v-model="newStaff.warehouse" :options="warehouses" @search="search"></v-select> -->
                           </div>
                           <div class="col-md-1"></div>
 
@@ -22,7 +26,11 @@
                             <label for="ID">Emp ID<span style="color:red;">*</span></label>
                           </div>
                           <div class="col-md-3" @click="setColum('id')">
-                             <v-select label="id" :filterable="false" v-model="newStaff.staff" :options="searchedStaff" @search="searchStaff" ></v-select>
+                          <select class="textbox" name="staff_id" required v-model="newStaff.staff">
+                              <option value="">Select Staff ID</option>
+                              <option v-for="searchStaff in searchedStaff" v-bind:value="searchStaff">{{searchStaff.id}}</option>
+                            </select>
+                            <!--  <v-select label="id" :filterable="false" v-model="newStaff.staff" :options="searchedStaff" @search="searchStaff" ></v-select> -->
                           </div>
                           <div class="col-md-1"></div>
                         </div>
@@ -32,7 +40,11 @@
                             <label for="Name">Name<span style="color:red;">*</span></label>
                           </div>
                           <div class="col-md-3" @click="setColum('name')">
-                              <v-select label="name" v-model="newStaff.staff" :options="searchedStaff" @search="searchStaff" ></v-select>
+                            <select class="textbox" name="staffName" required v-model="newStaff.staff">
+                              <option value="">Name</option>
+                              <option v-for="searchStaff in searchedStaff" v-bind:value="searchStaff">{{searchStaff.name}}</option>
+                            </select>
+                              <!-- <v-select label="name" v-model="newStaff.staff" :options="searchedStaff" @search="searchStaff" ></v-select> -->
                           </div>
                           <div class="col-md-1"></div>
 
@@ -40,7 +52,11 @@
                             <label for="phoneNumber">Phone Number<span style="color:red;">*</span></label>
                           </div>
                           <div class="col-md-3" @click="setColum('phoneNumber')">
-                              <v-select label="phoneNumber" v-model="newStaff.staff" :options="searchedStaff" @search="searchStaff"></v-select>
+                            <select class="textbox" name="staffPhoneNumber" required v-model="newStaff.staff">
+                              <option value="">Phone Number</option>
+                              <option v-for="searchStaff in searchedStaff" v-bind:value="searchStaff">{{searchStaff.phoneNumber}}</option>
+                            </select>
+                              <!-- <v-select label="phoneNumber" v-model="newStaff.staff" :options="searchedStaff" @search="searchStaff"></v-select> -->
                           </div>
                           <div class="col-md-1"></div>
                         </div>
@@ -50,7 +66,11 @@
                             <label for="email">Email<span style="color:red;">*</span></label>
                           </div>
                           <div class="col-md-3" @click="setColum('email')">
-                              <v-select label="email" v-model="newStaff.staff" :options="searchedStaff" @search="searchStaff"></v-select>
+                            <select class="textbox" name="staffEmail" required v-model="newStaff.staff">
+                              <option value="">Email</option>
+                              <option v-for="searchStaff in searchedStaff" v-bind:value="searchStaff">{{searchStaff.email}}</option>
+                            </select>
+                              <!-- <v-select label="email" v-model="newStaff.staff" :options="searchedStaff" @search="searchStaff"></v-select> -->
                           </div>
                           <div class="col-md-1"></div>
 
@@ -58,7 +78,11 @@
                             <label for="CNIC">CNIC<span style="color:red;">*</span></label>
                           </div>
                           <div class="col-md-3"  @click="setColum('CNIC')">
-                            <v-select label="CNIC" v-model="newStaff.staff" :options="searchedStaff" @search="searchStaff"></v-select>
+                            <select class="textbox" name="staffCNIC" required v-model="newStaff.staff">
+                              <option value="">CNIC</option>
+                              <option v-for="searchStaff in searchedStaff" v-bind:value="searchStaff">{{searchStaff.CNIC}}</option>
+                            </select>
+                            <!-- <v-select label="CNIC" v-model="newStaff.staff" :options="searchedStaff" @search="searchStaff"></v-select> -->
                           </div>
                           <div class="col-md-1"></div>
                         </div>
@@ -156,6 +180,16 @@ import vSelect from "vue-select"
       },
         mounted() {
             console.log('Component mounted.')
+        },
+        created(){
+          axios.get('./allWarehouse').then(response=>{
+                    //this.warehouses.push(response.data);
+                    this.warehouses=response.data;
+                  });
+           axios.get('./allStaff').then(response=>{
+                    //console.log(response.data);
+                    this.searchedStaff=response.data;
+                });
         },
         methods:{
               fetchStaff(){

@@ -28,6 +28,11 @@ use Response;
 class RetailerLedgersController extends Controller
 {
 
+  public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * this function will displays retailer  ledger View
      */

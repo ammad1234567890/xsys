@@ -18,6 +18,11 @@ use Response;
 
 class GeneralController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function checkPermission($permission){
       $return=Auth::User()->hasPermission($permission);
       return $return;

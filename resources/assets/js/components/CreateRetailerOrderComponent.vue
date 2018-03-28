@@ -2,12 +2,13 @@
 
 <div class="row">
     <div class="col-md-12">
+    <!-- <div class="col-md-12">
             <div class="card headcolor">
                 <div class="card-header">
-                    <h4 class="heading-inline"> Create New Supply Order </h4>
+                    <h4 class="heading-inline"> Create New Retail Order </h4>
                 </div>
             </div>
-        <hr/>
+        <hr/> -->
         <div class="panel panel-info" v-if="is_retailer_select==0">
             <div class="panel-heading">
                 <h2 class="panel-title">Select Retailer for Order</h2>

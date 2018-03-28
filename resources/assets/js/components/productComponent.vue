@@ -16,7 +16,7 @@
                                         <label for="productName">Title<span style="color:red;">*</span></label>
                                     </div>
                                     <div class="col-md-3">
-                                        <input type="text" name="productName" v-validate="'required|regex:^[a-zA-Z0-9 ._]+$'" class="textbox" v-model="newProduct.name" placeholder="Product Name" required>
+                                        <input type="text" name="productName" v-validate="'required|regex:^[a-zA-Z0-9 ._]+$'" class="textbox" v-model="newProduct.name" placeholder="Model Name" required>
                                         <span class="text-danger" v-show="errors.has('productName')">
                                       {{errors.first('productName')}}
                                     </span>
@@ -40,7 +40,7 @@
 
                                 <div class="row">
                                     <div class="col-md-2">
-                                        <label for="releaseDate">Estimated Release Date<span style="color:red;">*</span></label>
+                                        <label for="releaseDate">Est. Release Date<span style="color:red;">*</span></label>
                                     </div>
                                     <div class="col-md-3">
                                         <date-picker name="releaseDate" v-validate="'required'" style="width:100%;" v-model="releaseDate" type="date" format="dd-MM-yyyy" placeholder="dd-mm-yyyy" lang="en" required></date-picker>
@@ -110,7 +110,7 @@
 
                         </div> <!--Product Color Form-->
                         <div class="form-group row">
-                            <div style="    margin-left: 30px;">
+                            <div style="    margin-left: 15px;">
                                 <button v-if="edit==false" type="submit" class="btn btn-default">Submit</button>
                                 <button v-if="edit==true" class="btn btn-tumblr"  @click="saveEditing">Save</button>
                                 <button v-if="edit==true" class="btn btn-Danger"  @click="cancelEditing">Cancel</button>

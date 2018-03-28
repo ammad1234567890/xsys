@@ -70,7 +70,7 @@ Vue.component('warehouseissue-component', require('./components/WarehouseIssueCo
 Vue.component('warehousestaff-component', require('./components/warehouseStaffComponent.vue'));
 Vue.component('warehousestaffview-component', require('./components/warehouseStaffViewComponent.vue'));
 Vue.component('warehousestock-component', require('./components/warehouseStockComponent.vue'));
-Vue.component('mainwarehousereceive-component',require('./components/mainWarehouseReceiveComponent.vue'));
+//Vue.component('mainwarehousereceive-component',require('./components/mainWarehouseReceiveComponent.vue'));
 Vue.component('mainwarehousereceive-component',require('./components/mainWarehouseReceiveComponent.vue'));
 Vue.component('warehousetype-component', require('./components/WarehouseTypeComponent.vue'));
 Vue.component('financeorderapproval-component', require('./components/OrderFinanceApprovalComponent.vue'));

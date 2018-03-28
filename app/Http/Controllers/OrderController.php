@@ -20,12 +20,17 @@ use App\ProductColor;
 use App\ProductImage;
 use App\OrderPayment;
 use App\OrderStatus;
+use App\MainWarehouseReceive;
 use Response;
 
 
 
 class OrderController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
     public function make_number($order_id){
         $order_zeros='';
@@ -286,6 +291,12 @@ class OrderController extends Controller
     public function received_order_details(){
         $records=Receive::with('Order','Staff','ReceiveStatus','ReceiveProducts','ReceiveProducts.ProductColor','ReceiveProducts.ProductColor.product','ReceiveProducts.ProductColor.product.productCategory')->get();
         return Response::json($records);
+    }
+
+    public function received_order_status(){
+        $mainReceive=MainWarehouseReceive::pluck('receive_id')->all();
+        $records=Receive::with('Order','Staff','ReceiveStatus','ReceiveProducts','ReceiveProducts.ProductColor','ReceiveProducts.ProductColor.product','ReceiveProducts.ProductColor.product.productCategory','mainWarehouseReceive')->where('is_qa_pass',1)->get();
+        return $records;
     }
     //Registered a route with the name of /order/delete
     public function delete_order(Request $request){

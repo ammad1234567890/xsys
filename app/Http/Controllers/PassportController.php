@@ -8,6 +8,11 @@ use Auth;
 use Validator;
 class PassportController extends Controller
 {
+  public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public $successStatus = 200;
 
     public function login()

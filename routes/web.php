@@ -129,6 +129,7 @@ Route::post('/order/get_products','OrderController@get_products_by_order');
 Route::post('/order/received','OrderController@order_received');
 Route::get('/order/received_orders','OrderController@received_orders');
 Route::get('/order/received_order_details','OrderController@received_order_details');
+Route::get('/order/received_order_status','OrderController@received_order_status');
 Route::post('/order/add_payment','OrderController@add_payment');
 Route::post('/order/change_order_status','OrderController@change_order_status');
 Route::post('/order/delete','OrderController@delete_order');

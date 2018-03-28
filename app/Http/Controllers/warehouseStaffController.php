@@ -9,6 +9,11 @@ use App\WarehouseStaff;
 use DB;
 class WarehouseStaffController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
       return view('WarehouseStaff');

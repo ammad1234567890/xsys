@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-if="!showReceive" class="row" style="margin-top: 24px;">
+        <div class="row" style="margin-top: 24px;">
 
             <div class="col-md-12">
                 <div class="panel panel-info">
@@ -8,44 +8,37 @@
                             <h2 class="panel-title">Warehouse Consignment Receive</h2>
                         </div>
 
-                    <div  id="d" class="panel-body">
-                       <table id="receive_orders_table" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
-                        <thead>
-                        <tr>
-                            <th>Order No</th>
-                            <th>Receive  No</th>
-                            <th>Received By</th>
-                            <th>QA Status</th>
-                            <th>Description</th>
-                            <th>Receive Status</th>
-                            <th>Receive At</th>
-                            <th class="col-md-1">Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr v-for="(receive, index) in all_receive_orders">
-                            <td>{{receive.order.manufacture_order_no}}</td>
-                            <td>{{receive.receive_no}}</td>
-                            <td>{{receive.staff.name}}</td>
-                            <td  style="text-align:center; font-size: 20px;" title="QA Failed" v-if="receive.is_qa_pass==0"><i class="fa fa-times"></i></td>
-                            <td  style="text-align:center; font-size: 20px; color: green;"  title="QA Passed" v-else><i class="fa fa-check"></i></td>
-                            <td v-if="receive.qa_description==null"> ---- </td>
-                            <td v-else>{{receive.qa_description}}</td>
-                            <td>{{receive.receive_status.status}}</td>
-                            <td>{{receive.created_at | moment}}</td>
-                             <td class="text-center"><span v-if="receive.main_warehouse_receive!=null">Received</span>
-                              <button v-if="receive.main_warehouse_receive==null" class="btn btn-success btn-xs" v-on:click="createMainWarehouseReceive(receive)" title="Receive">Receive</button></td>
-                             
-                           <!--  <td class="text-center"><button class="btn btn-success btn-xs" v-on:click="show_products(index)" title="View Detial"><i class="fa fa-eye"></i></button></td> -->
-                        </tr>
-                        </tbody>
-                    </table>
+                    <div id="d" class="panel-body collapse" v-bind:class="{in:edit}">
+                        <form @submit="createMainWarehouseReceive">
+                          <div class="row">
+                              <div class="col-md-2">
+                                  <label for="warehouse">Warehouse</label>
+                              </div>
+                              <div class="col-md-3">
+                                  <input type="text" readonly v-model="warehouse.name" class="textbox"  placeholder="Warehouse">
+                              </div>
+                              <div class="col-md-1"></div>
+
+                              <div class="col-md-2">
+                                  <label for="receive">Receive ID</label>
+                              </div>
+                              <div class="col-md-3">
+                                  <!-- <input type="text" class="form-control"  placeholder="Receive ID"> -->
+                                  <v-select label="id" :filterable="false" v-model="newWarehouseReceive.receive" :options="receive" @search="searchReceive" ></v-select>
+                              </div>
+                              <div class="col-md-1"></div>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-2">
+                                <input type="Submit" value="Submit" class="btn btn-tumblr" />
+                            </div>
+                          </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- <div v-if="!showError" class="row"> -->
-          <div v-if="showReceive" class="row">
+        <div v-if="!showError" class="row">
             <div class="col-md-12">
                 <div class="panel panel-info">
                         <div class="panel-heading">
@@ -60,8 +53,7 @@
                                   <label for="product">Warehouse Receive ID</label>
                               </div>
                               <div class="col-md-3">
-                                <input type="text" name="" v-model="mainReceiveId" readonly>
-                               <!--  <v-select label="id" :filterable="false" v-model="newItems.main_receive" :options="mainWarehouseReceive" @search="searchProduct"></v-select> -->
+                                <v-select label="id" :filterable="false" v-model="newItems.main_receive" :options="mainWarehouseReceive" @search="searchProduct"></v-select>
                              <!--   <input type="text" v-bind:value="newItems.main_receive.id" readonly class="form-control" /> -->
                               </div>
                               <div class="col-md-1"></div>
@@ -182,11 +174,8 @@ import vSelect from "vue-select"
               quantity:0,
               warehouse_id:'',
           },
-          all_receive_orders:'',
-          showReceive:false,
-          mainWarehouseReceive:'',
+          mainWarehouseReceive:[],
           productColors:[],
-          mainReceiveId:'',
           edit:true,//use for acordion
           received:false,//use for acordion
           product:'',
@@ -224,17 +213,12 @@ import vSelect from "vue-select"
           //   this.products=response.data.data;
           //   //console.log(this.products);
           // })
-          // axios.get('./lastWarehouseReceive').then(response=>{
-          //   if(response.data.replay==0){
-          //     this.mainWarehouseReceive.push(response.data.data);
-          //     //console.log(response.data);
-          //   }
-          //   //console.log(response.data);
-          // });
-          axios.get('./order/received_order_status').then((response)=>{
-                    this.all_receive_orders=response.data;
-                    console.log(this.all_receive_orders);
-                });
+          axios.get('./lastWarehouseReceive').then(response=>{
+            if(response.data.replay==0){
+              this.mainWarehouseReceive.push(response.data.data);
+            }
+            console.log(response.data);
+          })
         },
         watch:{
           imei:function(){
@@ -271,15 +255,11 @@ import vSelect from "vue-select"
             }
 
           },
-          createMainWarehouseReceive(receive){
-            this.newWarehouseReceive.receive=receive;
-          event.preventDefault();
+          createMainWarehouseReceive(e){
+          e.preventDefault();
             axios.post('./createMainWarehouseReceive',this.newWarehouseReceive).then(response=>{
                 if(response.data.replay==0){
-                  this.showReceive=true;
-                  console.log(response.data);
-                  this.newItems.main_receive=response.data.data;
-                  this.mainReceiveId=response.data.id;
+                  this.mainWarehouseReceive.push(response.data.data);
                   console.log(this.mainWarehouseReceive);
                   this.received=true;
                   this.edit=false;

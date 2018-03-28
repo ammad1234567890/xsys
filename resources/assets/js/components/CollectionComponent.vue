@@ -10,6 +10,7 @@
             <hr/>
             </div> -->
                     <div class="row">
+
                         <div class="col-md-12">
                             <div class="panel panel-info" >
                                 <div class="panel-heading">
@@ -75,11 +76,14 @@
                                                 </div>
                                                 <div class="col-md-1"></div>
                                                 <div class="col-md-2"><label>Payment Type</label></div>
-                                                <div class="col-md-3">
+                                                <div class="col-md-2">
                                                     <select class="textbox_dropdown" v-model="selected_payment_index" @change="change_payment()" required>
                                                             <option value="">Select Payment Type</option>
                                                             <option v-for="(payment, index) in payments" v-bind:value="index">{{payment.type}}</option>
                                                     </select>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <input type="checkbox" v-model="new_payment.reverse" @change="change_reversible_check($event)"/> Reversible
                                                 </div>
                                                 <div class="col-md-1"></div>
                                             </div>
@@ -182,6 +186,7 @@
                     invoice_actual_amount:'',
                     payment_id:'',
                     currency_id:'',
+                    reverse:0,
                     selected_invoice_retailer_id:'',
                     selected_invoice_retailer_outlet_id:'',
                     selected_invoice_retailer:'',
@@ -276,6 +281,16 @@
                     }
                 });
 
+            },
+            change_reversible_check:function($event){
+                const checked = $event.target.checked;
+
+                if(checked){
+                    this.new_payment.reverse=1;
+                }
+                else{
+                    this.new_payment.reverse=0;
+                }
             },
             get_invoices_by_outlet:function(){
                 axios.post('../get_invoice_by_retailer',this.new_payment).then((response)=>{

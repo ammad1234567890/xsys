@@ -33,6 +33,11 @@ use Response;
 class RetailerOrderController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     //Registered a route with the name of /retailer_order/non_clear_orders
     public function get_all_non_clear_orders(){
         $records=RetailerOrder::with(
@@ -159,20 +164,39 @@ class RetailerOrderController extends Controller
         $deposit_slip_no= $request->input('deposit_slip_no');
         $user=Auth::user()->id;
         $remarks= $request->input('remarks');
+        $is_reversible= $request->input('reverse');
         $total_invoice_amount= $request->input('invoice_actual_amount');
 
-        $OrderCollection=RetailerCollection::create(['bank_id'=>$bank_id,
-            'currency_id'=>$currency_id,
-            'payment_type_id'=>$payment_id,
-            'retailer_id'=>$selected_invoice_retailer_id,
-            'retailer_outlet_id'=>$selected_invoice_retailer_outlet_id,
-            'invoice_id'=>$invoice_id,
-            'cheque_number'=>$cheque_no,
-            'amount'=>$amount_in_rs,
-            'deposit_slip_number'=>$deposit_slip_no,
-            'remarks'=>$remarks,
-            'created_by'=>$user
-        ]);
+        if($is_reversible==0){
+            $OrderCollection=RetailerCollection::create(['bank_id'=>$bank_id,
+                'currency_id'=>$currency_id,
+                'payment_type_id'=>$payment_id,
+                'retailer_id'=>$selected_invoice_retailer_id,
+                'retailer_outlet_id'=>$selected_invoice_retailer_outlet_id,
+                'invoice_id'=>$invoice_id,
+                'cheque_number'=>$cheque_no,
+                'amount'=>$amount_in_rs,
+                'deposit_slip_number'=>$deposit_slip_no,
+                'remarks'=>$remarks,
+                'created_by'=>$user
+            ]);
+        }
+        else{
+            $OrderCollection=RetailerCollection::create(['bank_id'=>$bank_id,
+                'currency_id'=>$currency_id,
+                'payment_type_id'=>$payment_id,
+                'retailer_id'=>$selected_invoice_retailer_id,
+                'retailer_outlet_id'=>$selected_invoice_retailer_outlet_id,
+                'invoice_id'=>$invoice_id,
+                'cheque_number'=>$cheque_no,
+                'is_reversible'=>1,
+                'amount'=>$amount_in_rs,
+                'deposit_slip_number'=>$deposit_slip_no,
+                'remarks'=>$remarks,
+                'created_by'=>$user
+            ]);
+        }
+
 
         $payment_type_format='';
         if($payment_id==4){
@@ -183,16 +207,28 @@ class RetailerOrderController extends Controller
         }
 
         $collection_id=$OrderCollection->id;
+        if($is_reversible==0){
+            Ledger::create([
+                'invoice_id'=>null,
+                'retailer_id'=>$selected_invoice_retailer_outlet_id,
+                'collection_id'=>$collection_id,
+                'TransDate'=>date('Y-m-d H:i:s'),
+                'description'=>' Collection (DS#'.$deposit_slip_no.' '.$payment_type_format.')',
+                'Collection'=>$amount_in_rs,
+                'Credit'=>null
+            ]);
+        }
+        else{
+            Ledger::create([
+                'invoice_id'=>null,
+                'retailer_id'=>$selected_invoice_retailer_outlet_id,
+                'collection_id'=>$collection_id,
+                'TransDate'=>date('Y-m-d H:i:s'),
+                'description'=>' Collection (DS#'.$deposit_slip_no.' '.$payment_type_format.'Reversed)',
+                'Credit'=>$amount_in_rs,
+            ]);
+        }
 
-        Ledger::create([
-            'invoice_id'=>null,
-            'retailer_id'=>$selected_invoice_retailer_outlet_id,
-            'collection_id'=>$collection_id,
-            'TransDate'=>date('Y-m-d H:i:s'),
-            'description'=>' Collection (DS#'.$deposit_slip_no.' '.$payment_type_format.')',
-            'Collection'=>$amount_in_rs,
-            'Credit'=>null
-        ]);
 
         return 201;
 

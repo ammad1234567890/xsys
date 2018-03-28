@@ -12,6 +12,13 @@ use Response;
 
 class BankController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    
     public function index()
     {
         return view("bank");

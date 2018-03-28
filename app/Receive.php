@@ -25,6 +25,10 @@ class Receive extends Model
    		return $this->hasMany('App\ReceiveProducts','receive_id');
    }
 
+   public function mainWarehouseReceive(){
+    return $this->hasOne('App\MainWarehouseReceive');
+   }
+
    static $a;
     public static function updated($v){
       Retailer::$a=$v;

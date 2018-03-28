@@ -283,7 +283,7 @@
                                                                         <label><strong>Credit Limit :</strong></label>
                                                                     </div>
                                                                     <div class="col-md-3">
-                                                                        <label>{{outlet_view.credit_limit | currency('Rs')}}</label>
+                                                                        <p>{{outlet_view.credit_limit | currency('Rs')}}</p>
                                                                     </div>
                                                                 </div>
                                                                 <div class="row">

@@ -45,11 +45,11 @@
                             <label for="City">City</label>
                           </div>
                           <div class="col-md-3">
-                            <!-- <select class="textbox" name="city" required v-model="newWarehouse.city">
+                            <select class="textbox" name="city" required v-model="newWarehouse.city">
                               <option value="">Select City</option>
-                              <option v-for="city in cities" v-bind:value="city.id">{{city.name}}</option>
-                            </select> -->
-                            <v-select label="name" v-validate="'required'" v-model="newWarehouse.city" :options="cities" name="city"></v-select>
+                              <option v-for="city in cities" v-bind:value="city">{{city.name}}</option>
+                            </select>
+                           <!--  <v-select label="name" v-validate="'required'" v-model="newWarehouse.city" :options="cities" name="city"></v-select> -->
                             <span class="text-danger" v-show="errors.has('city')">
                               {{errors.first('city')}}
                             </span>
@@ -60,11 +60,11 @@
                             <label for="region">Locality</label>
                           </div>
                           <div class="col-md-3">
-                            <!-- <select class="textbox" name="region" required v-model="newWarehouse.region">
+                            <select class="textbox" name="region" required v-model="newWarehouse.region">
                               <option value="">Select Region</option>
-                              <option v-for="region in regions" v-bind:value="region.id">{{region.name}}</option>
-                            </select> -->
-                            <v-select label="name" v-validate="'required'" name="region" v-model="newWarehouse.region" :options="regions"></v-select>
+                              <option v-for="region in regions" v-bind:value="region">{{region.name}}</option>
+                            </select>
+                           <!--  <v-select label="name" v-validate="'required'" name="region" v-model="newWarehouse.region" :options="regions"></v-select> -->
                             <span class="text-danger" v-show="errors.has('region')">
                               {{errors.first('region')}}
                             </span>
@@ -116,11 +116,11 @@
 
                           <div class="col-md-3">
 
-                            <!-- <select class="textbox" name="manager" required v-model="newWarehouse.warehouse_manager">
+                            <select class="textbox" name="manager" required v-model="newWarehouse.warehouse_manager">
                               <option value="">Select Manager</option>
-                              <option v-for="manager in managers" v-bind:value="manager.id">{{manager.name}}</option>
-                            </select> -->
-                            <v-select label="name" name="manager" v-validate="'required'" v-model="newWarehouse.warehouse_manager" :options="managers"></v-select>
+                              <option v-for="manager in managers" v-bind:value="manager">{{manager.name}}</option>
+                            </select>
+                         <!--    <v-select label="name" name="manager" v-validate="'required'" v-model="newWarehouse.warehouse_manager" :options="managers"></v-select> -->
                             <span class="text-danger" v-show="errors.has('manager')">
                               {{errors.first('manager')}}
                             </span>
@@ -135,11 +135,11 @@
                             <label for="accountant">Branch Accountant</label>
                           </div>
                           <div class="col-md-3">
-                            <!-- <select class="textbox" name="accountant" required v-model="newWarehouse.warehouse_accountant">
+                            <select class="textbox" name="accountant" required v-model="newWarehouse.warehouse_accountant">
                               <option value="">Select Accountant</option>
-                              <option v-for="accountant in accountants" v-bind:value="accountant.id">{{accountant.name}}</option>
-                            </select> -->
-                            <v-select label="name" v-validate="'required'" name="accountant" v-model="newWarehouse.warehouse_accountant" :options="accountants"></v-select>
+                              <option v-for="accountant in accountants" v-bind:value="accountant">{{accountant.name}}</option>
+                            </select>
+                           <!--  <v-select label="name" v-validate="'required'" name="accountant" v-model="newWarehouse.warehouse_accountant" :options="accountants"></v-select> -->
                             <span class="text-danger" v-show="errors.has('accountant')">
                               {{errors.first('accountant')}}
                             </span>

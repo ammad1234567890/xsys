@@ -404,8 +404,8 @@
                                 <ul class="dropdown-menu">
                                     <li><a href="{{url('/retailer')}}">Create Outlet</a></li>
                                     <li><a href="{{url('/retailer_list')}}">Outlets List</a></li>
-                                    <li><a href="{{url('/retailer/create_order')}}">Create Supply Order</a></li>
-                                    <li><a href="{{url('/retailer_order/orders')}}">Supply Order Detail</a></li>
+                                    <li><a href="{{url('/retailer/create_order')}}">Create Retail Order</a></li>
+                                    <li><a href="{{url('/retailer_order/orders')}}">Retail Order Detail</a></li>
                                 </ul>
 
                             </li>
@@ -557,11 +557,11 @@
                                         <li>Outlets List </li>
                                     </a>
                                     <a href="{{ url('retailer/create_order') }}">
-                                        <li>Create Supply Order </li>
+                                        <li>Create Retail Order </li>
                                     </a>
 
                                     <a href="{{ url('retailer_order/orders') }}">
-                                        <li>Supply Orders </li>
+                                        <li>Retail Orders </li>
                                     </a>
 
 

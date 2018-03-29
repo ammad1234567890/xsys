@@ -9,7 +9,7 @@
                         </div>
 
                     <div  id="d" class="panel-body">
-                       <table id="receive_orders_table" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                       <table id="" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                         <thead>
                         <tr>
                             <th>Order No</th>
@@ -60,7 +60,7 @@
                                   <label for="product">Warehouse Receive ID</label>
                               </div>
                               <div class="col-md-3">
-                                <input type="text" name="" v-model="mainReceiveId" readonly>
+                                <input type="text" class="textbox" name="" v-model="mainReceiveId" readonly>
                                <!--  <v-select label="id" :filterable="false" v-model="newItems.main_receive" :options="mainWarehouseReceive" @search="searchProduct"></v-select> -->
                              <!--   <input type="text" v-bind:value="newItems.main_receive.id" readonly class="form-control" /> -->
                               </div>
@@ -70,7 +70,7 @@
                                 <label for="product">Receive Date</label>
                             </div>
                             <div class="col-md-3">
-                                <input type="text" v-bind:value="newItems.main_receive.created_at | moment" readonly class="form-control" />
+                                <input type="text"  v-bind:value="newItems.main_receive.created_at | moment" readonly class="textbox" />
                                 <!-- <p class="col-md-12">{{newItems.main_receive.created_at | moment}}</p> -->
                                 <!-- <v-select label="created_at" v-model="newItems.main_receive" :options="mainWarehouseReceive" @search="searchProduct"></v-select> -->
                             </div>
@@ -81,7 +81,11 @@
                                   <label for="product">Select Product</label>
                               </div>
                               <div class="col-md-3">
-                                  <v-select label="name" v-model="product" :options="products" @search="searchProduct"></v-select>
+                                <select class="textbox" name="selectProduct" required v-model="product">
+                                  <option value="">Select Product</option>
+                                  <option v-for="product in products" v-bind:value="product">{{product.name}}</option>
+                                </select>
+                                  <!-- <v-select label="name" v-model="product" :options="products" @search="searchProduct"></v-select> -->
                               </div>
                               <div class="col-md-1"></div>
 
@@ -235,6 +239,11 @@ import vSelect from "vue-select"
                     this.all_receive_orders=response.data;
                     console.log(this.all_receive_orders);
                 });
+
+          axios.get('./allProducts').then(response=>{
+              console.log(response.data.data);
+                this.products=response.data.data;
+            })
         },
         watch:{
           imei:function(){
@@ -273,14 +282,15 @@ import vSelect from "vue-select"
           },
           createMainWarehouseReceive(receive){
             this.newWarehouseReceive.receive=receive;
-          event.preventDefault();
+          //event.preventDefault();
             axios.post('./createMainWarehouseReceive',this.newWarehouseReceive).then(response=>{
                 if(response.data.replay==0){
                   this.showReceive=true;
-                  console.log(response.data);
+                 // console.log(response.data);
                   this.newItems.main_receive=response.data.data;
-                  this.mainReceiveId=response.data.id;
-                  console.log(this.mainWarehouseReceive);
+                  this.mainReceiveId=response.data.data.id;
+                  console.log(this.mainReceiveId);
+                  //console.log(this.mainWarehouseReceive);
                   this.received=true;
                   this.edit=false;
                   alert('Record Inserted Succcessfully');

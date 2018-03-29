@@ -103966,6 +103966,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -104044,6 +104048,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       _this.all_receive_orders = response.data;
       console.log(_this.all_receive_orders);
     });
+
+    axios.get('./allProducts').then(function (response) {
+      console.log(response.data.data);
+      _this.products = response.data.data;
+    });
   },
 
   watch: {
@@ -104090,14 +104099,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this5 = this;
 
       this.newWarehouseReceive.receive = receive;
-      event.preventDefault();
+      //event.preventDefault();
       axios.post('./createMainWarehouseReceive', this.newWarehouseReceive).then(function (response) {
         if (response.data.replay == 0) {
           _this5.showReceive = true;
-          console.log(response.data);
+          // console.log(response.data);
           _this5.newItems.main_receive = response.data.data;
-          _this5.mainReceiveId = response.data.id;
-          console.log(_this5.mainWarehouseReceive);
+          _this5.mainReceiveId = response.data.data.id;
+          console.log(_this5.mainReceiveId);
+          //console.log(this.mainWarehouseReceive);
           _this5.received = true;
           _this5.edit = false;
           alert('Record Inserted Succcessfully');
@@ -104172,11 +104182,7 @@ var render = function() {
                       staticClass:
                         "table table-striped table-bordered table-hover",
                       staticStyle: { width: "100%" },
-                      attrs: {
-                        id: "receive_orders_table",
-                        cellspacing: "0",
-                        width: "100%"
-                      }
+                      attrs: { id: "", cellspacing: "0", width: "100%" }
                     },
                     [
                       _vm._m(1),
@@ -104300,6 +104306,7 @@ var render = function() {
                               expression: "mainReceiveId"
                             }
                           ],
+                          staticClass: "textbox",
                           attrs: { type: "text", name: "", readonly: "" },
                           domProps: { value: _vm.mainReceiveId },
                           on: {
@@ -104319,7 +104326,7 @@ var render = function() {
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-3" }, [
                         _c("input", {
-                          staticClass: "form-control",
+                          staticClass: "textbox",
                           attrs: { type: "text", readonly: "" },
                           domProps: {
                             value: _vm._f("moment")(
@@ -104335,24 +104342,52 @@ var render = function() {
                     _c("div", { staticClass: "row" }, [
                       _vm._m(5),
                       _vm._v(" "),
-                      _c(
-                        "div",
-                        { staticClass: "col-md-3" },
-                        [
-                          _c("v-select", {
-                            attrs: { label: "name", options: _vm.products },
-                            on: { search: _vm.searchProduct },
-                            model: {
-                              value: _vm.product,
-                              callback: function($$v) {
-                                _vm.product = $$v
-                              },
-                              expression: "product"
+                      _c("div", { staticClass: "col-md-3" }, [
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.product,
+                                expression: "product"
+                              }
+                            ],
+                            staticClass: "textbox",
+                            attrs: { name: "selectProduct", required: "" },
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.product = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              }
                             }
-                          })
-                        ],
-                        1
-                      ),
+                          },
+                          [
+                            _c("option", { attrs: { value: "" } }, [
+                              _vm._v("Select Product")
+                            ]),
+                            _vm._v(" "),
+                            _vm._l(_vm.products, function(product) {
+                              return _c(
+                                "option",
+                                { domProps: { value: product } },
+                                [_vm._v(_vm._s(product.name))]
+                              )
+                            })
+                          ],
+                          2
+                        )
+                      ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-md-1" }),
                       _vm._v(" "),

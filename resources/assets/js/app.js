@@ -91,6 +91,9 @@ Vue.component('bank-component', require('./components/BankComponent.vue'));
 Vue.component('retailerinvoice-component', require('./components/RetailerInvoiceComponent.vue'));
 Vue.component('retailerlist-component', require('./components/RetailerListComponent.vue'));
 Vue.component('allretailers-component', require('./components/AllRetailersComponent.vue'));
+Vue.component('retailerinvoiceprint-component', require('./components/RetailerInvoicePrint.vue'));
+Vue.component('retailermasterdetails-component', require('./components/RetailerMasterDetailsComponent.vue'));
+Vue.component('itemdetail-component', require('./components/itemDetailComponent.vue'));
 
 
 

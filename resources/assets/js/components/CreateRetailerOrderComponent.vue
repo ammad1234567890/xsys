@@ -96,7 +96,7 @@
 
 
             <div class="col-md-5 paddingmarginzero ">
-                Create Supply Order
+                Create Retailer Order
             </div>
 
             <div class="col-md-6  text-right">

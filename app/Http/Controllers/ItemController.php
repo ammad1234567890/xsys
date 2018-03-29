@@ -24,6 +24,11 @@ class ItemController extends Controller
       $getItem=Item::where('is_deleted',0)->with('imei')->with('productColor')->with('receiveBy')->get();
     }
 
+    public function itemDetails($imei){
+      $imei=IMEI::where('imei1',$imei)->with('item.receive.Order','item.receive.mainWarehouseReceive','item.productColor.product')->get();
+      return $imei;
+    }
+
     public function store(Request $request)
     {
       $productColorId=$request->input('product_color_id');
@@ -59,10 +64,14 @@ class ItemController extends Controller
         Item::where('item_id',$id)->update(['is_deleted'=>1]);
       }
       catch(\Exception $e){
-        $return=array('replay'=>1,'data'=$e);
+        $return=array('replay'=>1,'data'=>$e);
         return $return;
       }
 
+    }
+
+    public function detail(){
+      return view('itemDetail');
     }
 
 }

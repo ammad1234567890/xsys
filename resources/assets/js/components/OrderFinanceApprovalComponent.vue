@@ -53,7 +53,7 @@
                                     <a href="#" v-on:click="edit_order_modal(index)" class="btn btn-primary btn-xs" title="Edit"><i class="fa fa-edit"></i></a>
                                     <a href="#" v-on:click="approve_order(index)" class="btn btn-info btn-xs" v-if="order.is_account_clearance==0"><i class="fa fa-check" title="Approve order"></i></a>
                                     <button class="btn btn-success btn-xs" type="button" v-on:click="view_order_details(index)" title="View Detail"><i class="fa fa-eye"></i></button>
-
+                                <a class="btn btn-danger btn-xs" v-bind:href="'../retailer/master_details/'+order.retailer_outlet.id" title="Retailer Master Details" target="_blank"><i class="fa fa-info"></i></a>
                                 
                                 <a class="btn btn-default btn-xs" v-bind:href="'../invoice/create/'+order.id" v-if="order.is_account_clearance==1" title="Generate Invoice"><i class="fa fa-file"></i></a>
                                <!-- <a class="btn btn-tumblr btn-xs">Invoice Received</a> -->

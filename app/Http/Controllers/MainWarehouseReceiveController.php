@@ -9,6 +9,7 @@ use App\IMEI;
 use App\WarehouseStaff;
 use App\Warehouse;
 use App\Receive;
+use App\ReceiveProducts;
 use App\MainWarehouseReceive;
 use App\MainWarehouseReceiveProduct;
 use App\MainWarehouseReceiveItem;
@@ -58,6 +59,21 @@ class MainWarehouseReceiveController extends Controller
       return $return;
    }
 
+   public function getReceive($id){
+      $mainWarehouseReceive=MainWarehouseReceive::where('receive_id',$id)->first();
+      return $mainWarehouseReceive;
+   }
+
+   public function getRemainingQuantity($receiveId,$productColorId){
+      $mainWarehouseReceive=MainWarehouseReceive::where('id',$receiveId)->first();
+      $mainWarehouseReceiveProduct=MainWarehouseReceiveProduct::where('product_color_id',$productColorId)->where('main_receive_id',$receiveId)->first();
+      $receive=ReceiveProducts::where('receive_id',$mainWarehouseReceive['receive_id'])->where('product_color_id',$productColorId)->first();
+      $a=(int)$mainWarehouseReceiveProduct['product_qty'];
+      $b=(int)$receive['product_qty'];
+      $remainingQuantity=$b-$a;
+      return $remainingQuantity;
+   }
+
    public function lastWarehouseReceive()
    {
      $currentWarehouse=$this->currentWarehouse();
@@ -81,15 +97,22 @@ class MainWarehouseReceiveController extends Controller
      $userId=Auth::user()->id;    
      $alocatedIMEI=array();
      $notInDB=array();
-     try{
-       DB::beginTransaction();
+      try{
+      DB::beginTransaction();
           //get receiveID
         $receive=MainWarehouseReceive::where('id',$main_receive['id'])->first();
         $receiveId=$receive['receive_id'];
           //entry in main receive product
         // $return=array('replay'=>1,'data'=>$receiveId);
-        // return $return;
-        $MainWarehouseReceiveProduct=MainWarehouseReceiveProduct::create(['main_receive_id'=>$main_receive['id'],'product_color_id'=>$productColor['id'],'product_qty'=>$quantity,'created_by'=>$userId]);
+        // return $return;      
+        if(MainWarehouseReceiveProduct::where([['main_receive_id','=',$main_receive['id']],['product_color_id','=',$productColor['id']]])->exists()){          
+         $MainWarehouseReceiveProduct=MainWarehouseReceiveProduct::where('main_receive_id',$main_receive['id'])->where('product_color_id',$productColor['id'])->first();
+           $qty=$quantity+(int)$MainWarehouseReceiveProduct['product_qty'];
+           $MainWarehouseReceiveProduct=MainWarehouseReceiveProduct::where('main_receive_id',$main_receive['id'])->where('product_color_id',$productColor['id'])->update(['product_qty'=>$qty]); 
+        }else{
+          $MainWarehouseReceiveProduct=MainWarehouseReceiveProduct::create(['main_receive_id'=>$main_receive['id'],'product_color_id'=>$productColor['id'],'product_qty'=>$quantity,'created_by'=>$userId]);
+        }
+        
         foreach ($imei as $i) {
           //Item Creation
           if(IMEI::where('imei1',$i)->exists()){

@@ -173,7 +173,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <h4>Order# {{change_order_status.id}}</h4>
+                                    <h4>{{change_order_status.order_no}}</h4>
                                     <form @submit.prevent="add_order_status">
                                         <textarea class="form-control" v-model="change_order_status.status" placeholder="Status Text ..." required></textarea>
                                         <br/>
@@ -242,6 +242,7 @@
                 change_order_status:{
                     id:'',
                     status:'',
+                    order_no:''
                 }
             }
         },
@@ -276,6 +277,7 @@
             change_status_btn:function(index){
                 $('#change_status_modal').modal('show');
                 this.change_order_status.id=this.all_orders[index].id;
+                this.change_order_status.order_no=this.all_orders[index].manufacture_order_no;
             },
             view_order_details:function(index){
                 $('#order_info_modal').modal('show');

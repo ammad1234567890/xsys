@@ -15,6 +15,10 @@ class Item extends Model
       return $this->hasMany('App\IMEI');
     }
 
+    public function receive(){
+      return $this->belongsTo('App\Receive','receive_id');
+    }
+
     public function productColor()
     {
      return $this->belongsTo('App\ProductColor','product_color_id');

@@ -1,6 +1,5 @@
 <template>
     <div>
-
         <form @submit.prevent="add_invoice">
             <div class="panel">
                 <div class="panel-heading">
@@ -76,6 +75,7 @@
                                         <th>Discount</th>
                                         <th>Amount (PKR)</th>
                                         <th style="display:none;">Extra</th>
+                                        <th>Discount</th>
                                         <th>Total Amount (PKR)</th>
                                         <th>Action</th>
                                     </tr>
@@ -99,7 +99,7 @@
                                                    v-bind:data-id="`unit`+index"/>
                                             <input type="text" class="width60px bordernone text-right pull-right"
                                                    :value="order.unit_price | currency('')"
-                                                   v-bind:data-id="`unit_view`+index"/>
+                                                   v-bind:data-id="`unit_view`+index" readonly/>
                                         </td>
                                         <td>
                                             <input type="number" min="1" v-bind:data-id="`qty`+index"
@@ -139,6 +139,15 @@
                                                                          v-bind:id="`extra`+order.id" maxlength="3"/>
                                         </td>
                                         <td>
+                                            <input type="text" v-bind:id="`discountamount`+order.id"
+                                                   :value="(order.unit_price*(order.remaining_qty==0?order.product_qty:order.remaining_qty)) -(order.unit_price*(order.remaining_qty==0?order.product_qty:order.remaining_qty)-order.unit_price*(order.remaining_qty==0?order.product_qty:order.remaining_qty)/100*order.product_color.discount)"
+                                                   v-bind:data-id="`discountamount`+index" readonly class="hidden"/>
+                                            <input type="text" v-bind:id="`discountamount_view`+order.id"
+                                                   :value="(order.unit_price*(order.remaining_qty==0?order.product_qty:order.remaining_qty)) -(order.unit_price*(order.remaining_qty==0?order.product_qty:order.remaining_qty)-order.unit_price*(order.remaining_qty==0?order.product_qty:order.remaining_qty)/100*order.product_color.discount) | currency('')"
+                                                   v-bind:data-id="`discountamount_view`+index" readonly
+                                                   class="amount bordernone text-right pull-right"/>
+                                        </td>
+                                        <td>
                                             <input type="text" v-bind:id="`finalprice`+order.id"
                                                    :value="order.unit_price*(order.remaining_qty==0?order.product_qty:order.remaining_qty)-order.unit_price*(order.remaining_qty==0?order.product_qty:order.remaining_qty)/100*order.product_color.discount "
                                                    v-bind:data-id="`count`+index" readonly class="hidden"/>
@@ -169,6 +178,21 @@
                                     <input type="text" class="hidden" id="subamount"
                                            :value="subamount" readonly>
                                         <input type="text" class="bordernone text-right " id="subamount_view"
+                                               readonly>
+                                    </div>
+                                </span></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 col-md-offset-7">
+                            <div class="col-md-4 text-right">
+                                <label><span class="h4">Discount : </span></label></div>
+                            <div class="col-md-6">
+                                <span class="h4">
+                                    <div class='col-md-9'>
+                                    <input type="text" class="hidden" id="discount_amount"
+                                           :value="discountamount" readonly>
+                                        <input type="text" class="bordernone text-right " id="discount_amount_view"
                                                readonly>
                                     </div>
                                 </span></div>
@@ -226,6 +250,7 @@
                 order_id: '',
                 payment_type_id: '',
                 finalamount: '',
+                discountamount: '',
                 desc: '',
                 retailer_name: '',
                 outlet_name: '',
@@ -273,9 +298,9 @@
             },
             get_all_orders: function () {
                 //  console.log(window.location.href.substr(45));
-                // console.log(window.location.href.substr(74));
+                 //console.log(window.location.pathname.split('/')[5]);
                // console.log(window.location.href.substr(62));
-                axios.get('../../retailer_order/get_order/' + window.location.href.substr(62)).then((response) => {
+                axios.get('../../retailer_order/get_order/' + window.location.pathname.split('/')[5]).then((response) => {
 
                     this.all_payment_type = response.data.payment_type;
                     this.all_discount_type = response.data.discount_type;
@@ -290,8 +315,8 @@
                     this.order_id_pattern += this.all_orders.retailer_outlet.city.name.substr(0, 1) + this.all_orders.retailer_outlet.region.name.substr(0, 1);
                     //  this.order_id_pattern+= this.order_id<10?'0000':this.order_id<=99?'000':this.order_id<=999?'00':this.order_id<=9999?'0':'';
                     //this.order_id_pattern+=this.order_id;
-                    this.current_date = moment().format('DD-M-YYYY');
-                    this.duedate = moment().add(this.all_orders.retailer_outlet.credit_duration, 'days').format('DD-M-YYYY');
+                    this.current_date = moment().format('DD-MM-YYYY');
+                    this.duedate = moment().add(this.all_orders.retailer_outlet.credit_duration, 'days').format('DD-MM-YYYY');
                     var pro_qty = 0;
                     for (var i = 0; i < this.all_orders.order_products.length; i++) {
                         this.countrow++;
@@ -302,7 +327,13 @@
                         this.totalamount += this.all_orders.order_products[i].unit_price * pro_qty - this.all_orders.order_products[i].unit_price * pro_qty / 100 * this.all_orders.order_products[i].product_color.discount;
                         //console.log( this.subamount);
                     }
+                    this.discountamount = this.subamount - this.totalamount;
+                    // alert(this.discountamount);
                     $("#subamount_view").val("Rs. " + accounting.formatMoney(this.subamount, {
+                        symbol: "",
+                        format: "%v %s"
+                    }));
+                    $("#discount_amount_view").val("Rs. " + accounting.formatMoney(this.discountamount, {
                         symbol: "",
                         format: "%v %s"
                     }));
@@ -328,6 +359,7 @@
             remove: function (id) {
                 //$("#row" + id).remove();
                 $("[data-id='count" + id + "']").val(0);
+                $("[data-id='discountamount" + id + "']").val(0);
                 $("[data-id='amount" + id + "']").val(0);
                 this.totalamount_method();
                 $("#row" + id).hide();
@@ -344,17 +376,24 @@
                 // console.log(this.countrow);
                 var cont = null;
                 var contsub = null;
+                var contdiscount = null;
                 for (var i = 0; i < this.countrow; i++) {
                     var attid = "[data-id='count" + i + "']";
                     cont += parseFloat($(attid).val());
                     var attidsub = "[data-id='amount" + i + "']";
                     contsub += parseFloat($(attidsub).val());
+                    var discount = "[data-id='discountamount" + i + "']";
+                    contdiscount += parseFloat($(discount).val());
                     // console.log(contsub);
                 }
-
+                $('#discount_amount').val(contdiscount);
                 $('#finalamount').val(cont);
                 $('#subamount').val(contsub);
                 $('#subamount_view').val("Rs. " + accounting.formatMoney(contsub, {symbol: "", format: "%v %s"}));
+                $('#discount_amount_view').val("Rs. " + accounting.formatMoney(contdiscount, {
+                    symbol: "",
+                    format: "%v %s"
+                }));
                 $('#finalamount_view').val("Rs. " + accounting.formatMoney(cont, {symbol: "", format: "%v %s"}));
             },
             discount: function (discount, orderid) {
@@ -374,8 +413,13 @@
             qty: function (id, qty, unit) {
                 $("#amount" + id).val(unit * qty);
                 var discount_amount = $("[data-id='discount_amount" + id + "']").val();
+                $("#discountamount" + id).val((unit * qty) - (unit * qty - unit * qty / 100 * discount_amount));
                 $("#finalprice" + id).val(unit * qty - unit * qty / 100 * discount_amount);
                 $("#amount_view" + id).val(accounting.formatMoney(unit * qty, {symbol: "", format: "%v %s"}));
+                $("#discountamount_view" + id).val(accounting.formatMoney((unit * qty) - (unit * qty - unit * qty / 100 * discount_amount), {
+                    symbol: "",
+                    format: "%v %s"
+                }));
                 $("#finalprice_view" + id).val(accounting.formatMoney(unit * qty - unit * qty / 100 * discount_amount, {
                     symbol: "",
                     format: "%v %s"
@@ -439,7 +483,6 @@
             },
         }
     }
-
 </script>
 
 

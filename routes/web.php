@@ -70,6 +70,7 @@ Route::post('/retailer/order/add_payment','RetailerOrderController@add_order_pay
 //Outlets
 Route::get('/retailer/outlets', 'RetailerOutletController@index')->name('retailer_outlets');
 Route::get('/outlet/get_all_outlets', 'RetailerOutletController@get_all_outlets');
+Route::get('/outlet/get_all_outlets_by_id/{id}', 'RetailerOutletController@get_all_outlets_by_id');
 Route::post('/outlet/create_outlet', 'RetailerOutletController@add_outlet');
 Route::post('/outlet/delete_outlet', 'RetailerOutletController@deactivate_outlet');
 Route::post('/outlet/reactivate_outlet', 'RetailerOutletController@activate_outlet');
@@ -240,6 +241,8 @@ Route::get('/mainWarehouseReceive','MainWarehouseReceiveController@index');
 Route::get('/currentWarehouse','MainWarehouseReceiveController@currentWarehouse');
 Route::get('/receivSearch/{search}','MainWarehouseReceiveController@receive');
 Route::post('/createMainWarehouseReceive','MainWarehouseReceiveController@store');
+Route::get('/getMainWarehouseReceive/{id}','MainWarehouseReceiveController@getReceive');
+Route::get('/getRemainingQuantity/{receiveId}/{productColorId}','MainWarehouseReceiveController@getRemainingQuantity');
 Route::get('/lastWarehouseReceive','MainWarehouseReceiveController@lastWarehouseReceive');
 Route::post('/createReceiveItems','MainWarehouseReceiveController@createReceiveItems');
 //MainWarehouseReceive
@@ -282,3 +285,18 @@ Route::get('/invoice/list/','RetailerInvoiceController@index');
 Route::get('/invoice/get_invoice/','RetailerInvoiceController@get_invoice');
 Route::post('/get_invoice_by_retailer','RetailerInvoiceController@get_invoice_by_retailer');
 Route::get('/invoice/details/{id}','RetailerInvoiceController@invoice_details');
+Route::get('/invoice/print/{id}','RetailerInvoiceController@print_invoice');
+Route::get('/invoice/generate_invoice/{id}','RetailerInvoiceController@generate_invoice');
+
+//After
+Route::get('/retailer/order/get_all_collection','RetailerOrderController@get_all_order_payment');
+Route::post('/retailer/order/check_edit_order','RetailerOrderController@check_order_can_edit');
+Route::get('/retailer/master_details/{id}','RetailerController@retailer_master_info');
+Route::get('/retailer/get_orders_by_outlet/{id}','RetailerOrderController@get_order_by_id');
+Route::get('/retailer/get_all_ledger_by_outlet/{id}','RetailerLedgersController@get_all_ledger_by_outlet');
+Route::post('/get_collection','RetailerOrderController@get_all_collections');
+
+//item
+Route::get('/itemDetails/{imei}','ItemController@itemDetails');
+Route::get('/itemDetail','ItemController@detail');
+//item

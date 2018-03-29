@@ -172,7 +172,7 @@
                   </div>
                   <div class="panel-body">
                     <div class="table-responsive">
-                      <table id="staff" class="table table-striped table-bordered table-hover table-no" cellspacing="0" width="100%" style="width:100%">
+                      <table id="staff" class="table table-striped table-bordered table-hover table-no" cellspacing="0">
                         <thead>
                         <tr>
                           <th style="width:8px !important;">S.No</th>

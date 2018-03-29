@@ -17,7 +17,7 @@ class InvoiceProduct extends Model
 
     public function productColor()
     {
-      return $this->belongsTo('App\ProductColor');
+      return $this->belongsTo('App\ProductColor','product_color_id');
     }
 }
 

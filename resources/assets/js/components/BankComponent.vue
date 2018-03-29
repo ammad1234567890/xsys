@@ -70,8 +70,8 @@
                     <tr>
                         <th class="col-md-1">S.No</th>
                         <th>Bank Names</th>
-                        <th>Bank Phone No</th>
-                        <th>Bank City</th>
+                        <th>Phone No</th>
+                        <th>City</th>
                         <th class="col-md-1">Action</th>
                     </tr>
                     </thead>

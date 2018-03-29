@@ -389,4 +389,10 @@ class RetailerOutletController extends Controller
         return Response::json($records);
     }
 
+    public function get_all_outlets_by_id($outlet_id){
+        $records=RetailerOutlet::with('retailer','city','region')->where('is_deleted',0)->where('id', $outlet_id)->get();
+
+        return Response::json($records);
+    }
+
 }

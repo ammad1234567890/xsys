@@ -266,4 +266,8 @@ class RetailerController extends Controller
     public function retailer_list(){
         return view('retailer_list');
     }
+
+    public function retailer_master_info(){
+        return View('RetailerMasterDetails');
+    }
 }

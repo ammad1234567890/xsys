@@ -9,7 +9,7 @@
                         </div>
 
                     <div  id="d" class="panel-body">
-                       <table id="" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
+                       <table id="consignment_table" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
                         <thead>
                         <tr>
                             <th>Order No</th>
@@ -33,7 +33,8 @@
                             <td v-else>{{receive.qa_description}}</td>
                             <td>{{receive.receive_status.status}}</td>
                             <td>{{receive.created_at | moment}}</td>
-                             <td class="text-center"><span v-if="receive.main_warehouse_receive!=null">Received</span>
+                             <td class="text-center"><!-- <span v-if="receive.main_warehouse_receive!=null">Received</span> -->
+                              <button v-if="receive.main_warehouse_receive!=null" class="btn btn-success btn-xs" v-on:click="getMainWarehouseReceive(receive)" title="Receive">Add Items</button>
                               <button v-if="receive.main_warehouse_receive==null" class="btn btn-success btn-xs" v-on:click="createMainWarehouseReceive(receive)" title="Receive">Receive</button></td>
                              
                            <!--  <td class="text-center"><button class="btn btn-success btn-xs" v-on:click="show_products(index)" title="View Detial"><i class="fa fa-eye"></i></button></td> -->
@@ -83,7 +84,7 @@
                               <div class="col-md-3">
                                 <select class="textbox" name="selectProduct" required v-model="product">
                                   <option value="">Select Product</option>
-                                  <option v-for="product in products" v-bind:value="product">{{product.name}}</option>
+                                  <option v-for="product in products" v-bind:value="product.product_color.product">{{product.product_color.product.name}}</option>
                                 </select>
                                   <!-- <v-select label="name" v-model="product" :options="products" @search="searchProduct"></v-select> -->
                               </div>
@@ -92,8 +93,12 @@
                               <div class="col-md-2" >
                                   <label for="product">Select Product Color</label>
                               </div>
-                              <div class="col-md-3" @click="getColors">
-                                <v-select label="color" v-model="newItems.productColor" :options="productColors"></v-select>
+                              <div class="col-md-3" >
+                                <select class="textbox" name="selectColor" required v-model="selectedColor">
+                                  <option value="">Select Color</option>
+                                  <option v-for="productColor in productColors" v-bind:value="productColor">{{productColor.color}}</option>
+                                </select>
+                               <!--  <v-select label="color" v-model="newItems.productColor" :options="productColors"></v-select> -->
                               </div>
                               <div class="col-md-1"></div>
                           </div>
@@ -190,6 +195,8 @@ import vSelect from "vue-select"
           showReceive:false,
           mainWarehouseReceive:'',
           productColors:[],
+          selectedColor:'',
+          product_qty:'',
           mainReceiveId:'',
           edit:true,//use for acordion
           received:false,//use for acordion
@@ -237,11 +244,11 @@ import vSelect from "vue-select"
           // });
           axios.get('./order/received_order_status').then((response)=>{
                     this.all_receive_orders=response.data;
-                    console.log(this.all_receive_orders);
+                   // console.log(this.all_receive_orders);
                 });
 
           axios.get('./allProducts').then(response=>{
-              console.log(response.data.data);
+             // console.log(response.data.data);
                 this.products=response.data.data;
             })
         },
@@ -249,11 +256,37 @@ import vSelect from "vue-select"
           imei:function(){
               if(this.imei!=''){
                 this.newItems.imei.push(this.imei);
-                this.newItems.quantity +=1;
-                this.imei='';
+                 if(this.newItems.quantity < this.product_qty){
+                  this.newItems.quantity +=1;
+                  this.imei='';  
+                }else{
+                  alert("Product Limit Exceeded");
+                }
+                
                 //console.log(this.newItems.imei);
             }
+          },
+          product:function(){
+            if(this.product.id!=''){
+              axios.get('./productColor/'+this.product.id).then(response=>{
+                this.productColors=response.data;
+                console.log(this.productColors);
+              })
+              
+            }
+          },
+          selectedColor:function(){
+            if(this.selectedColor!=''){
+              this.newItems.productColor=this.selectedColor;
+              console.log(this.mainReceiveId);
+              console.log(this.selectedColor.id);
+              axios.get('./getRemainingQuantity/'+this.mainReceiveId+"/"+this.selectedColor.id).then(response=>{
+                this.product_qty=response.data;
+                console.log(this.product_qty);
+              })
+            }
           }
+
         },
         methods:{
           searchReceive(search){
@@ -264,7 +297,7 @@ import vSelect from "vue-select"
           },
           searchProduct(search){
             axios.get('./productSearch/'+search).then(response=>{
-              console.log(response.data);
+             // console.log(response.data);
                 this.products=response.data;
             })
           },
@@ -282,11 +315,16 @@ import vSelect from "vue-select"
           },
           createMainWarehouseReceive(receive){
             this.newWarehouseReceive.receive=receive;
+            console.log(this.mainWarehouseReceive);
+            this.products=receive.receive_products;
+           distroyTable();
+           // this.product_qty=receive.receive_products.product_qty;
           //event.preventDefault();
             axios.post('./createMainWarehouseReceive',this.newWarehouseReceive).then(response=>{
+              //console.log(response.data);
                 if(response.data.replay==0){
                   this.showReceive=true;
-                 // console.log(response.data);
+                  console.log(response.data);
                   this.newItems.main_receive=response.data.data;
                   this.mainReceiveId=response.data.data.id;
                   console.log(this.mainReceiveId);
@@ -300,10 +338,27 @@ import vSelect from "vue-select"
                 }
             })
           },
+          getMainWarehouseReceive(receive){
+            this.newWarehouseReceive.receive=receive;
+            console.log(this.newWarehouseReceive.receive);
+            this.products=receive.receive_products;
+            distroyTable();
+            //this.product_qty=receive.receive_products.product_qty;
+            axios.get('./getMainWarehouseReceive/'+receive.id).then(response=>{                
+                  this.showReceive=true;
+                 // console.log(response.data);
+                  this.newItems.main_receive=response.data;
+                  this.mainReceiveId=response.data.id;
+                  //console.log(this.mainReceiveId);
+                  //console.log(this.mainWarehouseReceive);
+                  this.received=true;
+                  this.edit=false;              
+            })
+          },
           createReceiveItems(e){
             e.preventDefault();
             axios.post('./createReceiveItems',this.newItems).then(response=>{
-              console.log(response.data);
+             // console.log(response.data);
               if(response.data.replay==0){
                 if(response.data.alocated.length > 0){
                   this.alocatedIMEI=response.data.alocated;
@@ -338,6 +393,28 @@ import vSelect from "vue-select"
           }
         }
     }
+    $(document).ready(function() {
+
+        setTimeout(function(){
+            $('#consignment_table').DataTable({
+            "pagingType": "full_numbers",
+            "lengthMenu": [
+                [10, 25, 50, -1],
+                [10, 25, 50, "All"]
+            ],
+            responsive: true,
+            language: {
+                search: "_INPUT_",
+                searchPlaceholder: "Search here",
+            }
+            });
+        },3000); 
+
+        
+    });
+    function distroyTable(){
+          $("#consignment_table").DataTable().destroy();
+        }
 </script>
 
 

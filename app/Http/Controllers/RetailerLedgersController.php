@@ -121,4 +121,34 @@ class RetailerLedgersController extends Controller
 
 
     }
+
+    public function get_all_ledger_by_outlet($outlet_id)
+    {
+        $retailer_id = $outlet_id;
+
+        return $ledgerData = DB::select('SELECT 
+                                          x.TransDate,
+                                          x.`retailer_id`,
+                                          x.`invoice_id`,
+                                          x.`collection_id`,
+                                          x.description,
+                                          x.Credit,
+                                          x.Collection,
+                                            SUM(
+                                                COALESCE(y.Credit, 0) - COALESCE(y.Collection, 0)
+                                                ) AS Outstanding 
+                                            FROM
+                                          tbl_ledger X
+                                            INNER JOIN tbl_ledger Y
+                                            ON y.TransDate <= x.TransDate                                           
+                                            WHERE x.`retailer_id` = ' . $retailer_id . ' AND y.`retailer_id` = ' . $retailer_id . '
+                                            GROUP BY x.TransDate,
+                                          x.Credit,
+                                          x.Collection,
+                                          x.description,
+                                          x.invoice_id,
+                                          x.collection_id,
+                                          x.retailer_id 
+                                          ');
+    }
 }

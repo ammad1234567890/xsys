@@ -37,7 +37,7 @@
         
         <!-- RETAILER SHOW GRID -->
             <div class="panel panel-info" v-if="search_enabled">
-                <div class="panel-heading"><h5 style="margin-top: 6px; font-variant: small-caps; color: #000;"><strong>{{searchData.retailerName}} Ledger - Details</strong><strong><span class="pull-right">From: {{searchData.fdate | moment}} To {{searchData.tdate | moment}}</span></strong></h5>
+                <div class="panel-heading"><h5 style="margin-top: 6px; font-variant: small-caps;"><strong>{{searchData.retailerName}}</strong> Ledger - Details<span class="pull-right">From: {{searchData.fdate | moment}} To {{searchData.tdate | moment}}</span></h5>
                 </div>
                 <div class="panel-body">
                     <table id="ledger-table" class="table table-bordered">
@@ -52,13 +52,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                    <!--    <tr>
+                    <tr>
 
                             <td style="font-weight: bold;" colspan="5" align="right">
                                 Opening Balance: {{open_outstanding | currency('')}}
                             </td>
 
-                        </tr> -->
+                        </tr>
                             <tr v-for="(ledger,index) in ledgerData">
                                 <!--<td>{{index +1}}</td>-->
                                 <td>{{ledger.TransDate | moment}}</td>
@@ -71,12 +71,12 @@
                             <td style="font-weight: bold;" colspan="5" align="right">                       
                             </td>
                         </tr> -->
-                     <!-- <tr>
+                     <tr>
                             <td style="font-weight: bold;" colspan="5" align="right">
                                 Closing Balance: {{last_outstanding | currency('')}}
                             </td>
 
-                        </tr>	--> 			
+                        </tr>
                         </tbody>	
                       <!--      <tr>
                                 <td></td>

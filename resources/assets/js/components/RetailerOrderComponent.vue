@@ -3,7 +3,7 @@
         <div class="col-md-12">
             <div class="panel panel-info">
                 <div class="panel-heading">
-                    <h2 class="panel-title">Supply Order List</h2>
+                    <h2 class="panel-title">Retailer Order List</h2>
                 </div>
 
                 <div class="panel-body">

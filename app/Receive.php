@@ -13,6 +13,10 @@ class Receive extends Model
    		return $this->belongsTo('App\Staff','collected_by');
    }
 
+   public function item(){
+    return $this->hasMany('App\Item');
+   }
+
    public function ReceiveStatus(){
    		return $this->belongsTo('App\ReceiveStatus','receive_status_id');
    }

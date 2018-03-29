@@ -26,6 +26,7 @@ use App\Invoice;
 use App\RetailerInvoice;
 use App\RetailerCollection;
 use App\Ledger;
+use DateTime;
 use Response;
 
 
@@ -232,6 +233,55 @@ class RetailerOrderController extends Controller
 
         return 201;
 
+    }
+
+    //Registered a route /retailer/order/get_all_collection
+    public function get_all_order_payment(){
+        $records= RetailerCollection::with('bank','currency','payment_type','retailer_outlet','retailer','invoice')->get();
+        return Response::json($records);
+    }
+
+    public function check_order_can_edit(Request $request){
+        $order_id= $request->input('order_id');
+        $date=date('Y-m-d');
+        $records=RetailerCollection::where('id', $order_id)->get();
+        $now = new DateTime($records[0]['created_at']);
+        $order_date = $now->format('Y-m-d');
+
+        if($order_date==$date){
+            return 201;
+        }
+        else{
+            echo "Cannot Edit the Record";
+        }
+
+
+    }
+
+
+
+    //               /retailer/get_orders_by_outlet/{id}
+    public function get_order_by_id($outlet_id){
+        $records=RetailerOrder::with(
+            ['order_products'=> function($q){ $q->where('is_deleted',0);},
+                'order_products.ProductColor',
+                'sales_officer',
+                'order_products.ProductColor.product',
+                'order_products.ProductColor.product.productCategory',
+                'retailer',
+                'retailer_outlet',
+                'retailer_outlet.city',
+                'user','updated_user']
+        )->where('is_deleted',0)->where('outlet_id', $outlet_id)->get();
+
+        return Response::json($records);
+    }
+
+    public function get_all_collections(Request $request){
+        $collection_id= $request->input('collection_id');
+        return RetailerCollection::
+        with('bank', 'currency', 'payment_type', 'invoice')
+            ->where('id', $collection_id)->get();
     }
 }
 

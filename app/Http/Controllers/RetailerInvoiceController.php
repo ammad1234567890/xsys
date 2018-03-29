@@ -32,13 +32,9 @@ use App\Staff;
 use App\WarehouseIssue;
 use App\WarehouseIssueItem;
 use App\Ledger;
+use App\InvoiceProduct;
 
 class RetailerInvoiceController extends Controller {
-
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
 
     public function index() {
         return view('retailerInvoiceList');
@@ -48,7 +44,7 @@ class RetailerInvoiceController extends Controller {
         return $invoice_list = RetailerInvoice::with(
                         'payment_type'
                         , 'RetailerOrder'
-						,'warehouse_issue'
+                        , 'warehouse_issue'
                 )->orderBy('id', 'desc')->get();
     }
 
@@ -63,56 +59,56 @@ class RetailerInvoiceController extends Controller {
 
     public function store(Request $request) {
         $product[] = null;
-        //  return $this->make_number($invoice_id);
-        // return $request;
-        DB::beginTransaction();
-        $staff_id = Auth::user()->staff_id;
-        $warehouse_id = $warehousestaff = WarehouseStaff::where('staff_id', $staff_id)->first();
+        try {
+            DB::beginTransaction();
+            $staff_id = Auth::user()->staff_id;
+            $warehouse_id = $warehousestaff = WarehouseStaff::where('staff_id', $staff_id)->first();
 
-        $invoice = RetailerInvoice::create([
-                    'order_id' => $request->order_id,
-                    'payment_type_id' => $request->payment_type_id,
-                    'invoice_type_id' => $request->invoice_type_id,
-                    'total_amount' => $request->total_amount,
-                    'description' => $request->decs,
-                    'created_by' => Auth::user()->id,
-        ]);
-        $invoice_id = $invoice->id;
-        RetailerInvoice::where(['id' => $invoice_id])->update(['invoice_no' => $request->order_id_pattern . $this->make_number($invoice_id)]);
-        for ($i = 0; $i < count($request->amount); $i++) {
-            if ($request->productamount[$i] != 0) {
-                $product[$i]['invoice_id'] = $invoice_id;
-                $product[$i]['product_color_id'] = $request->colorid[$i];
-                $product[$i]['product_qty'] = $request->quantity[$i];
-                $product[$i]['product_price'] = $request->unitcost[$i];
-                //  $product[$i]['discount_type_id'] = $request->discount_type_id[$i];
-                $product[$i]['total_amount'] = $request->productamount[$i];
-                //  $product[$i]['extra'] = $request->extra[$i];
-                $product[$i]['created_by'] = Auth::user()->id;
-                if ($request->qty_db[$i] <= $request->quantity[$i]) {
-                    RetailerOrderProduct::where(['id' => $request->product_id[$i]])->update(['is_delivered' => 1, 'remaining_qty' => 0]);
-                    $count_status = RetailerOrderProduct::where(['id' => $request->product_id[$i], 'is_delivered' => 0])->count();
-                    if ($count_status == 0) {
-                        RetailerOrder::where(['id' => $request->order_id])->update(['is_delivered' => 1]);
+            $invoice = RetailerInvoice::create([
+                        'order_id' => $request->order_id,
+                        'payment_type_id' => $request->payment_type_id,
+                        'invoice_type_id' => $request->invoice_type_id,
+                        'total_amount' => $request->total_amount,
+                        'description' => $request->decs,
+                        'created_by' => Auth::user()->id,
+            ]);
+            $invoice_id = $invoice->id;
+            RetailerInvoice::where(['id' => $invoice_id])->update(['invoice_no' => $request->order_id_pattern . $this->make_number($invoice_id)]);
+            for ($i = 0; $i < count($request->amount); $i++) {
+                if ($request->productamount[$i] != 0) {
+                    $product[$i]['invoice_id'] = $invoice_id;
+                    $product[$i]['product_color_id'] = $request->colorid[$i];
+                    $product[$i]['product_qty'] = $request->quantity[$i];
+                    $product[$i]['product_price'] = $request->unitcost[$i];
+                    $product[$i]['total_amount'] = $request->productamount[$i];
+                    $product[$i]['created_by'] = Auth::user()->id;
+                    if ($request->qty_db[$i] <= $request->quantity[$i]) {
+                        RetailerOrderProduct::where(['id' => $request->product_id[$i]])->update(['is_delivered' => 1, 'remaining_qty' => 0]);
+                        $count_status = RetailerOrderProduct::where(['id' => $request->product_id[$i], 'is_delivered' => 0])->count();
+                        if ($count_status == 0) {
+                            RetailerOrder::where(['id' => $request->order_id])->update(['is_delivered' => 1]);
+                        }
+                    } else {
+                        RetailerOrderProduct::where(['id' => $request->product_id[$i]])->update(['remaining_qty' => $request->qty_db[$i] - $request->quantity[$i]]);
                     }
-                } else {
-                    RetailerOrderProduct::where(['id' => $request->product_id[$i]])->update(['remaining_qty' => $request->qty_db[$i] - $request->quantity[$i]]);
                 }
             }
+            RetailerInvoice_Products::insert($product);
+
+            WarehouseIssue::create([
+                'invoice_id' => $invoice_id,
+                'warehouse_id' => $warehouse_id->warehouse_id,
+                'created_by' => Auth::user()->id
+            ]);
+            Ledger::create(['invoice_id' => $invoice_id, 'TransDate' => date('Y-m-d H:i:s'),
+                'description' => "invoice (" . $request->order_id_pattern . $this->make_number($invoice_id) . ")", 'Credit' => $request->total_amount,
+                'retailer_id' => $request->retailer_id]);
+            DB::commit();
+            return 201;
+        } catch (Exception $ex) {
+             DB::rollBack();
+             return ['message'=>'fail create invoice','Exception'=>$ex];
         }
-        RetailerInvoice_Products::insert($product);
-
-        WarehouseIssue::create([
-            'invoice_id' => $invoice_id,
-            'warehouse_id' => $warehouse_id->warehouse_id,
-            'created_by' => Auth::user()->id
-        ]);
-        Ledger::create(['invoice_id' => $invoice_id, 'TransDate' => date('Y-m-d H:i:s'),
-            'description' => "invoice (" . $request->order_id_pattern . $this->make_number($invoice_id) . ")", 'Credit' => $request->total_amount,
-            'retailer_id' => $request->retailer_id]);
-        DB::commit();
-
-        return 201;
     }
 
     public function make_number($order_id) {
@@ -132,7 +128,7 @@ class RetailerInvoiceController extends Controller {
     }
 
     public function invoice_details($id) {
-           return $records = RetailerInvoice::with([
+        return $records = RetailerInvoice::with([
                     'RetailerOrder.retailer_outlet',
                     'warehouse_issue' => function($q) {
                         $q->where('is_issued', 1);
@@ -142,23 +138,16 @@ class RetailerInvoiceController extends Controller {
                 ])->where(['id' => $id])->first();
     }
 
-    public function show(RetailerInvoice $retailerInvoice) {
-        //
+    public function print_invoice() {
+        return view('retailerInvoicePrint');
     }
 
-    public function edit(RetailerInvoice $retailerInvoice) {
-        //
+    public function generate_invoice($id) {
+        return $records = RetailerInvoice::with([
+                    'invoice_Products.productColor.product'
+                    , 'RetailerOrder.retailer_outlet'
+                ])->where(['id' => $id])->first();
     }
-
-    public function update(Request $request, RetailerInvoice $retailerInvoice) {
-        //
-    }
-
-    public function destroy(RetailerInvoice $retailerInvoice) {
-        //
-    }
-
-    //        /get_invoice_by_retailer
 
     public function get_invoice_by_retailer(Request $request) {
         $outlet_id = $request->input('selected_invoice_retailer_outlet_id');

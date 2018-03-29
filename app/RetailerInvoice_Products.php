@@ -12,4 +12,12 @@ class RetailerInvoice_Products extends Model {
     protected $primaryKey = 'id';
     public $timestamps = false;
 
+    public function invoice_Products() {
+        return $this->belongsTo('App\RetailerInvoice', 'invoice_id');
+    }
+
+    public function productColor() {
+        return $this->belongsTo('App\ProductColor', 'product_color_id');
+    }
+
 }

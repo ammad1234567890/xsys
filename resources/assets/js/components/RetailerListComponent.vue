@@ -26,10 +26,10 @@
                                 <td>{{invoice.invoice_no}}</td>
                                 <td><span class="pull-right">{{invoice.total_amount | currency('')}}</span></td>
                                 <td>
-                                 <button type="button" title="View Detail" class="btn btn-success btn-xs"
+                                    <button type="button" title="View Detail" class="btn btn-success btn-xs"
                                             v-if="invoice.warehouse_issue[0].is_issued==1"
                                             v-on:click="details(invoice.id)"><i class="fa fa-eye"></i></button>
-                                    <button class="btn btn-github btn-xs" title="Print"
+                                    <button class="btn btn-github btn-xs" title="Print" v-on:click="print(invoice.id)"
                                             v-if="invoice.warehouse_issue[0].is_issued==1"
                                     ><i class="fa fa-print"></i>
                                     </button>
@@ -127,7 +127,7 @@
                 invoice:[],
                 outlet:[],
                 duedate:'',
-			
+                is_issued:[]
 
 
             }
@@ -155,9 +155,10 @@
             get_all_invoice: function () {
                 axios.get('../invoice/get_invoice').then((response) => {
                     this.all_invoice = response.data;
+                   // this.is_issued=response.data[0].warehouse_issue
                     // this.s_no=this.all_invoice.length;
                     this.s_no = 1;
-                    //  console.log(this.all_invoice);
+                    console.log(this.all_invoice.length);
                 });
 
             },
@@ -181,7 +182,11 @@
                 });
              //   console.log(this.duedate);
 
-            },
+            },print:function (id) {
+                //alert(id);
+               // location.assign("../invoice/print/"+id);
+                window.open("../invoice/print/"+id, '_blank');
+            }
         }
     }
     $(document).ready(function () {
@@ -201,5 +206,3 @@
         }, 3000);
     });
 </script>
-
-

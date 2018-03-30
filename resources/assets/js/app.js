@@ -10,16 +10,18 @@ window.Vue = require('vue');
 import VeeValidate from 'vee-validate';
 import DatePicker from 'vue2-datepicker';
 const VueInputMask = require('vue-inputmask').default
+import alert  from 'vue-strap';
 import DatatableFactory from 'vuejs-datatable';
 import VueNumeric from 'vue-numeric';
 import VueCurrencyFilter from 'vue-currency-filter'
-
 import $ from 'jquery';
 import 'datatables.net';
+
 Vue.use(VueInputMask)
 Vue.use(DatatableFactory);
 Vue.use(DatePicker);
 Vue.use(VueNumeric);
+Vue.use(alert);
 Vue.use(VueCurrencyFilter,
     {
         symbol : '$',
@@ -29,6 +31,7 @@ Vue.use(VueCurrencyFilter,
         symbolPosition: 'front',
         symbolSpacing: true
     });
+
 
 
 
@@ -94,8 +97,9 @@ Vue.component('allretailers-component', require('./components/AllRetailersCompon
 Vue.component('retailerinvoiceprint-component', require('./components/RetailerInvoicePrint.vue'));
 Vue.component('retailermasterdetails-component', require('./components/RetailerMasterDetailsComponent.vue'));
 Vue.component('itemdetail-component', require('./components/itemDetailComponent.vue'));
-
-
+Vue.component('productdetail-component',require('./components/productDetailComponent.vue'));
+Vue.component('warehousetransfer-component',require('./components/warehouseTransferComponent.vue'));
+Vue.component('retailerinvoicereversal-component', require('./components/RetailerInvoiceReversalComponent.vue'));
 
 const app = new Vue({
     el: '#app'

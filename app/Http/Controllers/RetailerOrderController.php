@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\WarehouseStaff;
+use App\WarehouseStock;
 use Illuminate\Http\Request;
 use Auth;
 use DB;
@@ -60,13 +62,23 @@ class RetailerOrderController extends Controller
             ['order_products'=> function($q){ $q->where('is_deleted',0);},
             'order_products.ProductColor',
             'sales_officer',
-            'order_products.ProductColor.product',
+            'sales_officer.warehouseStaff.warehouse',
             'order_products.ProductColor.product.productCategory',
             'retailer',
             'retailer_outlet',
             'retailer_outlet.city',
             'user','updated_user']
         )->where('is_deleted',0)->get();
+        return Response::json($records);
+
+    }
+
+    //Registered a route with the name of /retailer_order/get_orders_with_warehouse_stock
+    public function get_all_orders_with_warehouse_stock(Request $request){
+        $product_color_id= $request->input('product_color_id');
+        $warehouse_id= $request->input('warehouse_id');
+
+        $records= WarehouseStock::where([['product_color_id','=',$product_color_id],['warehouse_id','=', $warehouse_id]])->get();
 
         return Response::json($records);
     }

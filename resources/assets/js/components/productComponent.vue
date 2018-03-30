@@ -442,6 +442,58 @@
             });
         },5000); 
     });
+
+        // Value constants
+    var units = ['','one','two','three','four','five','six','seven','eight','nine'];
+    var tenToTwenties = ['ten','eleven','twelve','thirteen','fourteen','fifteen','sixteen','seventeen','eighteen','nineteen'];
+    var tens = ['','','twenty','thirty','forty','fifty','sixty','seventy','eighty','ninety'];
+
+    // Unit constants
+    var million = " million ";
+    var thousand = " thousand ";
+    var hundred = " hundred ";
+    var zero = "zero";
+
+    function convert_millions(num){
+        if (num>=1000000){
+            return convert_millions(Math.floor(num/1000000))+ million +convert_thousands(num%1000000);
+        }
+        else {
+            return convert_thousands(num);
+        }
+    }
+
+    function convert_thousands(num){
+        if (num>=1000){
+            return convert_hundreds(Math.floor(num/1000))+ thousand +convert_hundreds(num%1000);
+        }
+        else{
+            return convert_hundreds(num);
+        }
+    }
+
+    function convert_hundreds(num){
+        if (num>99){
+            return units[Math.floor(num/100)]+ hundred +convert_tens(num%100);
+        }
+        else{
+            return convert_tens(num);
+        }
+    }
+
+    function convert_tens(num){
+        if (num<10) return units[num];
+        else if (num>=10 && num<20) return tenToTwenties[num-10];
+        else return tens[Math.floor(num/10)]+" "+units[num%10];   
+    }
+
+    //only call this function for cnversion
+    function get_amount_in_words(num){
+        if (num==0) return zero;
+        else return convert_millions(num);
+    }
+
+
 </script>
 <style scoped>
 .middle {

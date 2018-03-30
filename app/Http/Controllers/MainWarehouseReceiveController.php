@@ -48,13 +48,17 @@ class MainWarehouseReceiveController extends Controller
       $receive=$request->input('receive');
       $userId=Auth::user()->id;
       try{
+        DB::beginTransaction();
         $mainWarehouseReceive=MainWarehouseReceive::create(['warehouse_id'=>$warehouse_id,'receive_id'=>$receive['id'],'created_by'=>$userId]);
+        Receive::where('id',$receive['id'])->update(['receive_status_id'=>2]);
       }
       catch(\Exception $e){
+        DB::rollBack();
         $return=array('replay'=>1,'data'=>$e);
         return $return;
       }
       //$mainWarehouseReceive=MainWarehouseReceive::where('id',$mainWarehouseReceive['id'])->with('receive.receiveProducts.ProductColor.product')->with('warehouse')->first();
+      DB::commit();
       $return=array('replay'=>0,'data'=>$mainWarehouseReceive);
       return $return;
    }

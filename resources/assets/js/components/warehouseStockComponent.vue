@@ -13,13 +13,21 @@
                             <div class="col-md-5">
                               <div class="form-group">
                                 <label for="warehouse">Warehouse</label>
-                                <v-select label="name" v-model="searchedWarehouse" :options="allWarehouses"></v-select>
+                                 <select class="textbox" name="warehouse" required v-model="searchedWarehouse">
+                                  <option value="">Select Warehouse</option>
+                                  <option v-for="warehouse in allWarehouses" v-bind:value="warehouse">{{warehouse.name}}</option>
+                                </select>
+                                <!-- <v-select label="name" v-model="searchedWarehouse" :options="allWarehouses"></v-select> -->
                               </div>
                             </div>
                             <div class="col-md-5">
                               <div class="form-group">
                                 <label for="Report Type">Report Type</label>
-                                <v-select label="reportType" v-model="selectedReportType" :options="reportTypes"></v-select>
+                                <select class="textbox" name="warehouse" required v-model="selectedReportType">
+                                  <option value="">Report Type</option>
+                                  <option v-for="reportType in reportTypes" v-bind:value="reportType">{{reportType.reportType}}</option>
+                                </select>
+                                <!-- <v-select label="reportType" v-model="selectedReportType" :options="reportTypes"></v-select> -->
                               </div>
                             </div>
                             <div class="col-md-2">

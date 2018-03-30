@@ -298,7 +298,7 @@
             },
             get_all_orders: function () {
                 //  console.log(window.location.href.substr(45));
-                 //console.log(window.location.pathname.split('/')[5]);
+                // console.log(window.location.href.substr(74));
                // console.log(window.location.href.substr(62));
                 axios.get('../../retailer_order/get_order/' + window.location.pathname.split('/')[5]).then((response) => {
 

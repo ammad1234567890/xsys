@@ -27,6 +27,15 @@ class ProductController extends Controller
         return view('Product');
     }
 
+    public function productDetailView(){
+      return view('productDetails');
+    }
+
+    public function productDetails($id){
+        $productDetails=Product::where('id',$id)->with('productCategory','productColor.mainWarehouseReceiveProduct','productColor.warehouseStock.warehouse')->first();
+        return $productDetails;
+    }
+
     public function products()
     {
       $return=array('data'=>Product::with('productCategory')->with('productColor.productImages')->where('is_deleted',0)->get(),'path'=>public_path());

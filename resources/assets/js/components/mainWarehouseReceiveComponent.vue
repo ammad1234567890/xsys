@@ -22,7 +22,7 @@
                             <th class="col-md-1">Action</th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody>                      
                         <tr v-for="(receive, index) in all_receive_orders">
                             <td>{{receive.order.manufacture_order_no}}</td>
                             <td>{{receive.receive_no}}</td>
@@ -341,7 +341,12 @@ import vSelect from "vue-select"
           getMainWarehouseReceive(receive){
             this.newWarehouseReceive.receive=receive;
             console.log(this.newWarehouseReceive.receive);
-            this.products=receive.receive_products;
+            function removeDuplicateUsingSet(arr){
+            let unique_array = Array.from(new Set(arr))
+            return unique_array
+            }
+
+            this.products=removeDuplicateUsingSet(receive.receive_products);
             distroyTable();
             //this.product_qty=receive.receive_products.product_qty;
             axios.get('./getMainWarehouseReceive/'+receive.id).then(response=>{                
@@ -378,6 +383,7 @@ import vSelect from "vue-select"
                     warehouse_id:'',
                 },
                 alert("Record Created");
+                window.location.reload();
               }else{
                 if(response.data.replay==2){
                   alert(response.data.data);

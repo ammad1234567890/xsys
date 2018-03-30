@@ -287,6 +287,8 @@ Route::post('/get_invoice_by_retailer','RetailerInvoiceController@get_invoice_by
 Route::get('/invoice/details/{id}','RetailerInvoiceController@invoice_details');
 Route::get('/invoice/print/{id}','RetailerInvoiceController@print_invoice');
 Route::get('/invoice/generate_invoice/{id}','RetailerInvoiceController@generate_invoice');
+Route::get('/invoice/reversal/{id}','RetailerInvoiceController@reversal');
+Route::post('/invoice/add_reversal','RetailerInvoiceController@invoice_reversal');
 
 //After
 Route::get('/retailer/order/get_all_collection','RetailerOrderController@get_all_order_payment');
@@ -295,8 +297,17 @@ Route::get('/retailer/master_details/{id}','RetailerController@retailer_master_i
 Route::get('/retailer/get_orders_by_outlet/{id}','RetailerOrderController@get_order_by_id');
 Route::get('/retailer/get_all_ledger_by_outlet/{id}','RetailerLedgersController@get_all_ledger_by_outlet');
 Route::post('/get_collection','RetailerOrderController@get_all_collections');
-
-//item
+Route::post('/retailer_order/get_orders_with_warehouse_stock','RetailerOrderController@get_all_orders_with_warehouse_stock');
+//item Details
 Route::get('/itemDetails/{imei}','ItemController@itemDetails');
 Route::get('/itemDetail','ItemController@detail');
-//item
+//item Details
+
+// Porduct Detils
+Route::get('/productDetails/{id}','ProductController@productDetails');
+Route::get('/productDetailsView','ProductController@productDetailView');
+// Porduct Detils
+
+//warehouseTransfer
+Route::get('/warehouseTransfer','WarehouseTransferController@index');
+//warehouseTransfer

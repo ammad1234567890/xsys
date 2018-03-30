@@ -25,7 +25,7 @@ class ItemController extends Controller
     }
 
     public function itemDetails($imei){
-      $imei=IMEI::where('imei1',$imei)->with('item.receive.Order','item.receive.mainWarehouseReceive','item.productColor.product')->get();
+      $imei=IMEI::where('imei1',$imei)->with('item.receive.Order','item.receive.mainWarehouseReceive.warehouse','item.productColor.product','item.productColor.productImages','item.warehouseIssueItem')->first();
       return $imei;
     }
 

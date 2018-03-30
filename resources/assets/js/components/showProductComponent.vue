@@ -60,7 +60,7 @@
                                     </div>
                                     <div class="form-group col-md-2">
                                         <label for="discount">Discount(%)</label>
-                                        <input type="number" name="Discount" v-validate="'required||regex:^[0-9]+$|min_value:1'" class="form-control" v-model="find.discount" placeholder="Discount" required>
+                                        <input type="number" name="Discount" v-validate="'required||regex:^[0-9]+$|min_value:0'" class="form-control" v-model="find.discount" placeholder="Discount" required>
                                         <span class="text-danger" v-show="errors.has('Discount')">
                                               {{errors.first('Discount')}}
                                             </span>

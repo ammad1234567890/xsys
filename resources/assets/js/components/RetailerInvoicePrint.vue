@@ -87,12 +87,12 @@
                         <td class="border">{{++index}}</td>
                         <td class="border">{{details.product_color.product.name}}</td>
                         <td class="border">{{details.product_color.color}} </td>
-                        <td class="border">{{details.product_price}}</td>
+                        <td class="border t-a-r">{{details.product_price}}</td>
                         <td class="border">{{details.product_qty}}</td>
                         <td class="border">{{details.product_color.discount}}%</td>
-                        <td class="border">{{details.product_price*details.product_qty | currency('')}} </td>
-                        <td class="border">{{(details.product_price*details.product_qty)-(details.total_amount) | currency('')}}</td>
-                        <td class="border">{{details.total_amount | currency('')}}</td>
+                        <td class="border t-a-r">{{details.product_price*details.product_qty | currency('')}} </td>
+                        <td class="border t-a-r">{{(details.product_price*details.product_qty)-(details.total_amount) | currency('')}}</td>
+                        <td class="border t-a-r">{{details.total_amount | currency('')}}</td>
                     </tr>
                     <tr class="border">
                         <td></td>
@@ -103,7 +103,7 @@
                         <td></td>
                         <td></td>
                         <td class="border">Sub Total</td>
-                        <td class="border">{{subtotal | currency('')}}</td>
+                        <td class="border t-a-r">{{subtotal | currency('')}}</td>
                     </tr>
                     <tr class="border">
                         <td></td>
@@ -114,7 +114,7 @@
                         <td></td>
                         <td></td>
                         <td class="border">Discount</td>
-                        <td class="border">{{discount | currency('')}}</td>
+                        <td class="border t-a-r">{{discount | currency('')}}</td>
                     </tr>
                     <tr class="border">
                         <td></td>
@@ -125,7 +125,7 @@
                         <td></td>
                         <td></td>
                         <td class="border"><b>Total</b></td>
-                        <td class="border"><b>{{data.total_amount | currency('')}}</b></td>
+                        <td class="border t-a-r"><b>{{data.total_amount | currency('')}}</b></td>
                     </tr>
                     </tbody>
                 </table>
@@ -139,7 +139,7 @@
                 <center>Warehouse Incharge</center>
             </div>
             <div class="qrcode">
-                <img src="http://localhost/xcell/public/img/qrcode.png" width="100px"/>
+                <img src="http://172.16.1.253:82/xsys_new_version/public/img/qrcode.png" width="100px"/>
                 <br>
                 <center>Accountant</center>
             </div>
@@ -190,7 +190,7 @@
                     this.discount=this.subtotal-response.data.total_amount;
                     setTimeout("window.print()", 70 );
                     setTimeout("self.close()", 70 );
-                  //  console.log(response.data);
+
                 });
 
             },
@@ -291,6 +291,9 @@
         margin-top: 30px;
         width: 100px;
         float: left;
+    }
+    .t-a-r{
+        text-align: right
     }
 
 </style>

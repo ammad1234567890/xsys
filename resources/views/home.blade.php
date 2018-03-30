@@ -27,7 +27,7 @@
         <div class="col-sm-6 col-md-3 paddingmarginzero">
             <div class="row-stat">
                 <p class="row-stat-label">Invoice</p>
-                <h3 class="row-stat-value">Amount(PKR)</h3>
+                <h4 class="row-stat-value">Amount(PKR)</h4>
                 <span class="label label-success row-stat-badge">{{number_format($invoiceAmount, 2)}}</span>
             </div> <!-- /.row-stat -->
         </div> <!-- /.col -->
@@ -35,21 +35,21 @@
         <div class="col-sm-6 col-md-3 paddingmarginzero">
             <div class="row-stat">
                 <p class="row-stat-label">Recovery</p>
-                <h3 class="row-stat-value">Amount(PKR)</h3>
+                <h4 class="row-stat-value">Amount(PKR)</h4>
                 <span class="label label-success row-stat-badge">{{number_format($collectionAmount, 2)}}</span>
             </div> <!-- /.row-stat -->
         </div> <!-- /.col -->
         <div class="col-sm-6 col-md-3 paddingmarginzero">
             <div class="row-stat">
                 <p class="row-stat-label"> Warehouse</p>
-                <h3 class="row-stat-value">Total</h3>
+                <h4 class="row-stat-value">Total</h4>
                 <span class="label label-success row-stat-badge">{{number_format($warehouseTotal, 0)}}</span>
             </div> <!-- /.row-stat -->
         </div> <!-- /.col -->
         <div class="col-sm-6 col-md-3 paddingmarginzero">
             <div class="row-stat">
                 <p class="row-stat-label"> In Stock</p>
-                <h3 class="row-stat-value">Product Qty</h3>
+                <h4 class="row-stat-value">Product Qty</h4>
                 <span class="label label-success row-stat-badge">{{number_format($itemTotalStock, 0)}}</span>
             </div> <!-- /.row-stat -->
         </div> <!-- /.col -->
@@ -57,7 +57,7 @@
         <div class="col-sm-6 col-md-3 paddingmarginzero">
             <div class="row-stat">
                 <p class="row-stat-label">Users</p>
-                <h3 class="row-stat-value">Total</h3>
+                <h4 class="row-stat-value">Total</h4>
                 <span class="label label-success row-stat-badge">{{count($user)}}</span>
                 {{--<span class="label label-danger row-stat-badge"></span>--}}
             </div> <!-- /.row-stat -->
@@ -66,14 +66,14 @@
         <div class="col-sm-6 col-md-3 paddingmarginzero">
             <div class="row-stat">
                 <p class="row-stat-label"> Retailer</p>
-                <h3 class="row-stat-value">Total</h3>
+                <h4 class="row-stat-value">Total</h4>
                 <span class="label label-success row-stat-badge">{{count($retailer)}}</span>
             </div> <!-- /.row-stat -->
         </div>
         <div class="col-sm-6 col-md-3 paddingmarginzero">
             <div class="row-stat">
                 <p class="row-stat-label"> Staff</p>
-                <h3 class="row-stat-value">Total</h3>
+                <h4 class="row-stat-value">Total</h4>
                 <span class="label label-success row-stat-badge">{{count($staff)}}</span>
             </div> <!-- /.row-stat -->
         </div>

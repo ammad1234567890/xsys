@@ -176,7 +176,10 @@
                             <div class="col-md-2"><label>Quantity<span style="color:red;">*</span></label></div>
                             <div class="col-md-3">
 
-                                <input type="text" class="textbox" v-model="new_order.products[index].quantity"/>
+                                <input type="text" class="textbox" name="total_qty" v-validate="{ max_value: new_order.products[index].actual_qty }" v-model="new_order.products[index].quantity"/>
+                                <span class="text-danger" v-show="errors.has('total_qty')">
+                                  {{errors.first('total_qty')}}
+                                </span>
                             </div>
                             <div class="col-md-1"></div>
                             <div class="col-md-2"><label>Price(PKR)<span style="color:red;">*</span></label></div>
@@ -267,6 +270,7 @@
                             product_color_id:'',
                             product_color:[],
                             quantity:'',
+                            actual_qty:'',
                             cost_per_set:''
                         }
                     ],
@@ -398,6 +402,13 @@
                 //this.new_order.products[index].product_color_id=
                 axios.get('../getproductColor/'+this.new_order.products[index].product_color_id).then((response) => {
                     this.new_order.products[index].cost_per_set=response.data[0].price;
+                });
+                //alert(this.new_order.warehouse_id);
+                axios.post('../retailer_order/get_orders_with_warehouse_stock',{'warehouse_id':this.new_order.warehouse_id, 'product_color_id':this.new_order.products[index].product_color_id}).then((response)=> {
+                    //alert(response.data);
+                    this.new_order.products[index].actual_qty= response.data[0].product_qty;
+                    this.new_order.products[index].quantity= response.data[0].product_qty;
+
                 });
                 //this.new_order.products[index].quantity=this.allProducts.warehouse_stock[index].product_qty;
 

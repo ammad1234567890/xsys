@@ -127,6 +127,16 @@
                                         </div>
                                     </div>
 
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label><strong>Sales Officer</strong></label>
+                                        </div>
+                                        <div class="col-md-3 m-p-0" >
+                                            <label>{{view_order.sales_officer_name}}</label>
+                                        </div>
+
+                                    </div>
+
                                     <!-- <table width="100%" class="table table-hovered">
                                         <tr>
                                             <td>Total Order Cost</td>
@@ -314,7 +324,8 @@
                     order_products:[],
                     order_payments:[],
                     current_status:[],
-                    remove_product_ids:[]
+                    remove_product_ids:[],
+                    sales_officer_name:''
                 },
                 change_order_status:{
                     id:'',
@@ -421,6 +432,7 @@
                 this.view_order.order_no=this.all_orders[index].order_no;
                 this.view_order.is_forcely_approved=this.all_orders[index].is_forcefully_approve;
                 this.view_order.reason=this.all_orders[index].clearance_remarks;
+                this.view_order.sales_officer_name=this.all_orders[index].sales_officer.name;
 
             },
             approve_order:function(index){

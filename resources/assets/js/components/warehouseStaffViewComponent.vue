@@ -59,7 +59,11 @@
                           <label class="labelmarginsearch" for="warehouse">Search Warehouse</label>
                         </div>
                         <div class="form-group col-md-8">
-                          <v-select label="name" v-model="searchedWarehouse" :options="warehousesforStaff" @search="searchforStaff"></v-select>
+                          <select class="textbox" name="warehouse" required v-model="searchedWarehouse">
+                              <option value="">Select Warehouse</option>
+                              <option v-for="warehouse in warehousesforStaff" v-bind:value="warehouse">{{warehouse.name}}</option>
+                            </select>
+                          <!-- <v-select label="name" v-model="searchedWarehouse" :options="warehousesforStaff" @search="searchforStaff"></v-select> -->
                         </div>
                           
                         <div class="form-group col-md-2">
@@ -71,6 +75,7 @@
                             <thead>
                               <tr>
                                 <th>S.No</th>
+                                <th>Staff ID</th>
                                 <th>Name</th>
                                 <th>E-Mail</th>
                                 <th>Cnic</th>
@@ -87,6 +92,7 @@
                             <tbody>
                               <tr v-for="(staff, index) in warehouseStaff">
                                 <td>{{index+1}}</td>
+                                <td>{{staff.id}}</td>
                                 <td>{{staff.staff.name}}</td>
                                 <td>{{staff.staff.email}}</td>
                                 <td>{{staff.staff.CNIC}}</td>
@@ -130,6 +136,12 @@ import vSelect from "vue-select"
       },
         mounted() {
             console.log('Component mounted.')
+        },
+        created(){
+          axios.get('./allWarehouse').then(response=>{
+                    //this.warehouses.push(response.data);
+                    this.warehousesforStaff=response.data;
+                  });
         },
         methods:{
               fetchStaff(){

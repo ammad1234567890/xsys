@@ -25,14 +25,15 @@
                                 <td>{{invoice.retailer_order.order_no}}</td>
                                 <td>{{invoice.invoice_no}}</td>
                                 <td><span class="pull-right">{{invoice.total_amount | currency('')}}</span></td>
-                                <td>
+                                <td><!-- v-if="invoice.warehouse_issue[0].is_issued==1" -->
                                     <button type="button" title="View Detail" class="btn btn-success btn-xs"
-                                            v-if="invoice.warehouse_issue[0].is_issued==1"
+
                                             v-on:click="details(invoice.id)"><i class="fa fa-eye"></i></button>
                                     <button class="btn btn-github btn-xs" title="Print" v-on:click="print(invoice.id)"
-                                            v-if="invoice.warehouse_issue[0].is_issued==1"
+
                                     ><i class="fa fa-print"></i>
                                     </button>
+                                    <button class="btn btn-github btn-xs" v-on:click="reversal(invoice.id)"><span title="Reversed" class="fa fa-mail-reply-all" style="color: red;"></span></button>
                                 </td>
                             </tr>
                             </tbody>
@@ -158,7 +159,7 @@
                    // this.is_issued=response.data[0].warehouse_issue
                     // this.s_no=this.all_invoice.length;
                     this.s_no = 1;
-                    console.log(this.all_invoice.length);
+                    //  console.log(this.all_invoice);
                 });
 
             },
@@ -186,6 +187,9 @@
                 //alert(id);
                // location.assign("../invoice/print/"+id);
                 window.open("../invoice/print/"+id, '_blank');
+            },reversal:function (id) {
+                //alert(id);
+                location.assign("../invoice/reversal/"+id);
             }
         }
     }
@@ -206,3 +210,5 @@
         }, 3000);
     });
 </script>
+
+

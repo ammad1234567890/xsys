@@ -11,11 +11,19 @@ class ProductColor extends Model
     public function product(){
       return $this->belongsTo('App\Product');
     }
-	public function invoiceProduct(){
+	  public function invoiceProduct(){
         return $this->hasMany('App\InvoiceProduct');
     }
 	
-	public function productColor() {
+    public function mainWarehouseReceiveProduct(){
+      return $this->hasMany('App\MainWarehouseReceiveProduct');
+    }
+
+    public function warehouseStock(){
+      return $this->hasMany('App\warehouseStock');
+    }
+
+	  public function productColor() {
         return $this->hasMany('App\RetailerInvoice');
     }
     public function productImages()

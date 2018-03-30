@@ -10,9 +10,13 @@
             <hr/>
         </div>
         <div class="row" v-if="message">
-<div class="col-md-12"><div class="alert alert-success">
+<div class="col-md-12">
+    <div class="alert alert-success">
                     <strong>{{message}}</strong>
-                </div></div>
+                </div>
+
+
+</div>
         </div>
         
 
@@ -30,7 +34,7 @@
                             <div class="row">
                                 <div class="col-md-2"><label>Estimate Delivery Date<span style="color:red;">*</span></label></div>
                                 <div class="col-md-3">
-                                    <date-picker  v-model="estimation_date" type="date" style="width: 100%;" format="dd-MM-yyyy" placeholder="dd-mm-yyyy" lang="en" required></date-picker>
+                                    <date-picker  v-model="estimation_date" style="width: 100%;" format="dd-MM-yyyy" placeholder="dd-mm-yyyy" lang="en" v-validate="'required'"></date-picker>
                                 </div>
                             </div>
                             <div  v-for="(find, index) in new_order.products">
@@ -55,7 +59,7 @@
 
                                 <div class="row">
                                     <div class="col-md-2"><label>Unit Price(PKR)<span style="color:red;">*</span></label></div>
-                                    <div class="col-md-3"><vue-numeric class="textbox" v-model="new_order.products[index].cost_per_set" placeholder="Cost" readonly></vue-numeric></div>
+                                    <div class="col-md-3"><vue-numeric class="textbox" v-model="new_order.products[index].cost_per_set" placeholder="Cost"></vue-numeric></div>
                                     <div class="col-md-1"></div>
                                     <div class="col-md-2"><label>Quantity<span style="color:red;">*</span></label></div>
                                     <div class="col-md-3"><input type="text" class="textbox" v-model="new_order.products[index].quantity" placeholder="Quantity" required></div>
@@ -159,7 +163,7 @@
             },
             add_order:function(e){
                 this.$validator.validateAll();
-                if (!this.errors.any()) {
+                if (!this.errors.any() && this.estimation_date!='') {
                     axios.post('../order/create',this.new_order).then((response) => {
                         if(response.data==201){
                             this.new_order.id='';
@@ -168,6 +172,7 @@
                             this.new_order.products.product_color_id='';
                             this.new_order.products.quantity='';
                             this.new_order.products.cost_per_set='';
+                            this.estimation_date='';
 
                             this.new_order.products.forEach(function(order, index) {
                                 order.product_id="";
@@ -185,6 +190,9 @@
                         }
                     });
 
+                }
+                else{
+                    alert("Please Select Estimation Date");
                 }
 
             },

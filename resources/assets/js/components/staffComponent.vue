@@ -127,7 +127,11 @@
                                         <option v-for="city in cities" v-bind:value="city.id">{{city.name}}</option>
                                       </select> -->
                                 <div class="col-md-3">
-                                      <v-select label="name" v-model="newStaff.city" :options="cities"></v-select>
+                                  <select class="textbox" name="city" v-validate="'required'" v-model="newStaff.city">
+                                        <option value="">Select City</option>
+                                        <option v-for="city in cities" v-bind:value="city">{{city.name}}</option>
+                                      </select>
+                                     <!--  <v-select label="name" v-model="newStaff.city" :options="cities"></v-select> -->
                                       <span class="text-danger" v-show="errors.has('city')">
                                         {{errors.first('city')}}
                                       </span>
@@ -142,7 +146,11 @@
                                       <option v-for="region in regions" v-bind:value="region.id">{{region.name}}</option>
                                     </select> -->
                                   <div class="col-md-3">
-                                    <v-select label="name" v-model="newStaff.region" :options="regions"></v-select>
+                                     <select class="textbox" name="region" v-validate="'required'" v-model="newStaff.region">
+                                      <option value="">Select Region</option>
+                                      <option v-for="region in regions" v-bind:value="region">{{region.name}}</option>
+                                    </select>
+                                    <!-- <v-select label="name" v-model="newStaff.region" :options="regions"></v-select> -->
                                     <span class="text-danger" v-show="errors.has('region')">
                                       {{errors.first('region')}}
                                     </span>

@@ -171,7 +171,7 @@
                         this.warehouse_issue = response.data.warehouse_issue[0].warehouse_issue_item;
                         this.invoice = this.invoice_details.retailer_order;
                         this.outlet = this.invoice.retailer_outlet;
-                        this.duedate = moment(this.invoice_details.created_at).add(this.outlet.credit_duration, 'days').format('DD-M-YYYY');
+                        this.duedate = moment(this.invoice_details.created_at).add(this.outlet.credit_duration, 'days').format('DD-MM-YYYY');
 
                         $('#order_details').modal('show');
                         // order_no.retailer_outlet
@@ -196,6 +196,7 @@
     $(document).ready(function () {
         setTimeout(function () {
             $('#invoice_table').DataTable({
+                "order": [[ 0,"desc" ]],
                 "pagingType": "full_numbers",
                 "lengthMenu": [
                     [10, 25, 50, -1],

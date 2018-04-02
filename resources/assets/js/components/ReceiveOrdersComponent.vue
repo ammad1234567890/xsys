@@ -3,7 +3,7 @@
         <div class="col-md-12">
             <div class="panel panel-info">
                 <div class="panel-heading">
-                    <h2 class="panel-title">Receive Order Details</h2>
+                    <h2 class="panel-title">Received Orders</h2>
                 </div>
 
                 <div class="panel-body">
@@ -27,12 +27,12 @@
                             <td>{{receive.order.manufacture_order_no}}</td>
                             <td>{{receive.receive_no}}</td>
                             <td>{{receive.staff.name}}</td>
-                            <td  style="text-align:center; font-size: 20px;" title="QA Failed" v-if="receive.is_qa_pass==0"><i class="fa fa-times"></i></td>
+                            <td  style="text-align:center; font-size: 20px;" title="QA Failed" v-if="receive.is_qa_pass==0"><i class="fa fa-rotate-right"></i></td>
                             <td  style="text-align:center; font-size: 20px; color: green;"  title="QA Passed" v-else><i class="fa fa-check"></i></td>
                             <td v-if="receive.qa_description==null"> ---- </td>
                             <td v-else>{{receive.qa_description}}</td>
                             <td>{{receive.receive_status.status}}</td>
-                            <td class="text-center"><button class="btn btn-success btn-xs" v-on:click="show_products(index)" title="View Detial"><i class="fa fa-eye"></i></button></td>
+                            <td class="text-center"><button class="btn btn-success btn-xs" v-on:click="show_products(index)" title="View Details"><i class="fa fa-eye"></i></button></td>
                         </tr>
                         </tbody>
                     </table>
@@ -45,10 +45,10 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title">Product Details</h4>
+                            <h4 class="modal-title">Product Received</h4>
                         </div>
                         <div class="modal-body">
-                            <h4>{{receive_number}}</span></h4>
+                            <h4>{{receive_number}}</h4>
 
                             <div class="row">
                                 <div class="col-md-12">
@@ -130,6 +130,8 @@
     $(document).ready(function() {
         setTimeout(function(){
             $('#receive_orders_table').DataTable({
+                "order": [[ 0,"desc" ]],
+                
             "pagingType": "full_numbers",
             "lengthMenu": [
                 [10, 25, 50, -1],

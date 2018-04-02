@@ -116,7 +116,7 @@
                                 </td>
 
                                 <td v-if="order.is_account_clearance==1" class="col-md-1"><i class="fa fa-check" title="Cleared from Finance" style="text-align:center; display:block; font-size:25px; color:green;"></i> </td>
-                                <td v-else><i class="fa fa-times" style="text-align:center; display:block; font-size:25px; color:red;"></i></td>
+                                <td v-else><i class="fa fa-rotate-right" style="text-align:center; display:block; font-size:25px; color:red;"></i></td>
                             </tr>
                             </tbody>
 
@@ -139,13 +139,13 @@
                             <th>Debit</th>
                             <th>Credit</th>
                             <th>Balance</th>
-                            <th>Details</th>
+                            <!--<th>Details</th>-->
                         </tr>
                         </thead>
                         <tbody>
                         <tr>
 
-                            <td style="font-weight: bold;" colspan="6" align="right">
+                            <td style="font-weight: bold;" colspan="5" align="right">
                                 Opening Balance: {{open_outstanding | currency('')}}
                             </td>
 
@@ -157,11 +157,13 @@
                             <td align="right">{{ledger.Credit | currency('')}}</td>
                             <td align="right">{{ledger.Collection | currency('')}}</td>
                             <td align="right">{{ledger.Outstanding | currency('')}}</td>
+                            <!--
                             <td v-if="ledger.invoice_id==null"><button class="btn btn-success btn-xs" v-on:click="view_collection(ledger.collection_id)">view collection</button></td>
                             <td v-if="ledger.collection_id==null"><button class="btn btn-success btn-xs" v-on:click="view_invoice(ledger.invoice_id)">view invoice</button></td>
+                            -->
                         </tr>
                         <tr>
-                            <td style="font-weight: bold;" colspan="6" align="right">
+                            <td style="font-weight: bold;" colspan="5" align="right">
                                 Closing Balance: {{last_outstanding | currency('')}}
                             </td>
 
@@ -209,7 +211,7 @@
                                         </div>
                                         <div class="col-md-3">
                                             <label v-if="view_order.is_account_clear"><i class="fa fa-check"  title="Order Cleared!" style="color:green;"></i></label>
-                                            <label v-else><i class="fa fa-times"  title="Order Cancel!" style="color:red;"></i></label>
+                                            <label v-else><i class="fa fa-rotate-right"  title="Order Cancel!" style="color:red;"></i></label>
                                         </div>
 
                                         <div class="col-md-3">
@@ -438,7 +440,7 @@
                     this.outlet_name=this.outletsData[0].name;
                     this.city=this.outletsData[0].city.name;
                     this.locality=this.outletsData[0].region.name;
-                    this.address=this.outletsData[0].name;
+                    this.address=this.outletsData[0].address;
                     this.credit_limit=this.outletsData[0].credit_limit;
                     this.credit_duration=this.outletsData[0].credit_duration;
                 });

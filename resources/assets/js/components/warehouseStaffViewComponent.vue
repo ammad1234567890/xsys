@@ -226,6 +226,7 @@ function loadDatatable(){
   $("#staffsearch-table").dataTable().fnDestroy()
   setTimeout(function(){
   $('#staffsearch-table').DataTable({
+    "order": [[ 0,"desc" ]],
         /*"pagingType": "full_numbers",
         "lengthMenu": [
           [10, 25, 50, -1],

@@ -15,12 +15,13 @@ class CreateTblImeiTable extends Migration
     {
         Schema::disableForeignKeyConstraints();
         Schema::create('tbl_imei', function (Blueprint $table) {
-             $table->increments('id');
+            $table->increments('id');
             $table->string('imei1')->unique()->index();
             $table->string('imei2')->unique()->index();
             $table->unsignedInteger('item_id')->index()->nullable();
             $table->unsignedInteger('created_by')->index();
             $table->foreign('item_id')->references('id')->on('tbl_item');
+            
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });

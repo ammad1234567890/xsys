@@ -103,11 +103,11 @@
                                         </td>
                                         <td>
                                             <input type="number" min="1" v-bind:data-id="`qty`+index"
-                                                   @keypress="isNumber(this)"
+                                                   @keypress="isNumber(this.event)"
                                                    class="width60px bordernone"
                                                    :value="order.remaining_qty==0?order.product_qty:order.remaining_qty"
                                                    @click="qty(order.id,$event.target.value,order.unit_price)"
-                                                   @keyup="qty(order.id,$event.target.value,order.unit_price)"
+
                                                    :max="order.remaining_qty==0?order.product_qty:order.remaining_qty"/>
                                             <input type="text" class="hidden "
                                                    :value="order.remaining_qty==0?order.product_qty:order.remaining_qty"
@@ -299,7 +299,7 @@
             get_all_orders: function () {
                 //  console.log(window.location.href.substr(45));
                 // console.log(window.location.href.substr(74));
-               // console.log(window.location.href.substr(62));
+                console.log(window.location.href.substr(62));
                 axios.get('../../retailer_order/get_order/' + window.location.pathname.split('/')[5]).then((response) => {
 
                     this.all_payment_type = response.data.payment_type;
@@ -429,10 +429,12 @@
                 $("#discount_id" + id).val([]);
                 //  $("#extra" + id).val("");
             },
-            isNumber: function (e) {
-                //alert();
-                //console.log(e);
-                return false;
+            isNumber: function (evt) {
+               // alert();
+                var theEvent = evt || window.event;
+                //var key = theEvent.keyCode || theEvent.which;
+                theEvent.returnValue = false;
+
             },
             add_invoice: function (e) {
                 this.payment_type_id = $("#payment_type_id").val();

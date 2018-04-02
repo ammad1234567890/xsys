@@ -51,7 +51,7 @@
                                                 <div class="col-md-2"><label>Retailer Outlets</label></div>
                                                 <div class="col-md-3">
                                                     <select class="textbox_dropdown" v-model="new_payment.selected_invoice_retailer_outlet_id" @change="get_invoices_by_outlet()" required>
-                                                        <option value="">Select Outlets</option>
+                                                        <option value="">Select Outlet</option>
                                                         <option v-for="(outlet, index) in outletsData" v-bind:value="outlet.id">{{outlet.name}}</option>
                                                     </select>
                                                 </div>

@@ -46,9 +46,9 @@
                                 <!--<th>SNO</th>-->
                                 <th>Date</th>
                                 <th>Narration</th>
-                                <th>Debit</th>
-                                <th>Credit</th>
-                                <th>Balance</th>
+                                <th>Debit(PKR)</th>
+                                <th>Credit(PKR)</th>
+                                <th>Balance(PKR)</th>
                             </tr>
                         </thead>
                         <tbody>

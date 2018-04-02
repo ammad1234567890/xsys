@@ -38,7 +38,7 @@
                             <td style="text-align: right;">{{order.total_cost | currency('')}}</td>
                             <td v-if="order.is_account_clearance==1"><i class="fa fa-check" title="Cleared from Finance" style="text-align:center; display:block; font-size:25px; color:green;"></i> </td>
                             
-                            <td v-else><i class="fa fa-times" style="text-align:center; display:block; font-size:25px; color:red;"></i></td>
+                            <td v-else><i class="fa fa-rotate-right" style="text-align:center; display:block; font-size:25px; color:red;"></i></td>
                             <td>
                                 
                                 <!-- <div class="dropdown">
@@ -103,7 +103,7 @@
                                         </div>
                                         <div class="col-md-3">
                                             <label v-if="view_order.is_account_clear"><i class="fa fa-check"  title="Order Cleared!" style="color:green;"></i></label>
-                                            <label v-else><i class="fa fa-times"  title="Order Cancel!" style="color:red;"></i></label>
+                                            <label v-else><i class="fa fa-rotate-right"  title="Order Cancel!" style="color:red;"></i></label>
                                         </div>
 
                                         <div class="col-md-3">
@@ -492,6 +492,7 @@
     $(document).ready(function() {
         setTimeout(function(){
             $('#order_detail_table').DataTable({
+                "order": [[ 1,"desc" ]],
             "pagingType": "full_numbers",
             "lengthMenu": [
                 [10, 25, 50, -1],

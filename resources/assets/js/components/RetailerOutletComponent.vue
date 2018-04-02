@@ -83,10 +83,10 @@
 
                                 <div class="row">
                                     <div class="col-md-2"><label>Security Amount<span style="color: red;">*</span></label></div>
-                                    <div class="col-md-3"><vue-numeric currency="Rs" class="textbox_dropdown" separator="," v-model="outlet.security_check_amount"></vue-numeric></div>
+                                    <div class="col-md-3"><vue-numeric currency="Rs" class="textbox_dropdown" separator="," v-model="outlet.security_check_amount" required></vue-numeric></div>
                                     <div class="col-md-1"></div>
                                     <div class="col-md-2"><label>Credit Limit<span style="color: red;">*</span></label></div>
-                                    <div class="col-md-3"><vue-numeric currency="Rs" class="textbox_dropdown" separator="," v-model="outlet.credit_limit"></vue-numeric></div>
+                                    <div class="col-md-3"><vue-numeric currency="Rs" class="textbox_dropdown" separator="," v-model="outlet.credit_limit" required></vue-numeric></div>
                                     <div class="col-md-1"></div>
                                 </div>
 
@@ -244,7 +244,7 @@
                                                 <td>{{outlet_view.retailer_phone}}</td>
                                             </tr>
                                             <tr>
-                                                <td><strong>Cnic</strong></td>
+                                                <td><strong>CNIC</strong></td>
                                                 <td>{{outlet_view.retailer_cnic}}</td>
                                             </tr>
 
@@ -967,10 +967,38 @@
         }
     }
 
+    function loadDatatable(){
+        $("#staffsearch-table").dataTable().fnDestroy()
+        setTimeout(function(){
+            $('#staffsearch-table').DataTable({
+                /*"pagingType": "full_numbers",
+                "lengthMenu": [
+                  [10, 25, 50, -1],
+                  [10, 25, 50, "All"]
+                ],
+                responsive: true,
+                language: {
+                  search: "_INPUT_",
+                  searchPlaceholder: "Search records",
+                }*/
+
+                dom: 'Bfrtip',
+                language: {
+                    search: "_INPUT_",
+                    searchPlaceholder: "Search records",
+                },
+                stateSave: true,
+                buttons: [
+                    'colvis',
+                ]
+            });
+        },5000);
+    }
+
     $(document).ready(function(){
         setTimeout(function(){
             $('#outlet_table').DataTable();
-        },8000);
+        },5000);
     });
 
 

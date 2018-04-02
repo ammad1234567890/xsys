@@ -48,7 +48,7 @@
 
                     <div class="row">
                         <div class="col-md-2">
-                            <label for="select_collected_by">QA Check<span style="color:red;">*</span></label> 
+                            <label for="select_collected_by">QA Passed<span style="color:red;">*</span></label>
                         </div>
                         <div class="col-md-1">
                             <input type="checkbox" v-bind:value="new_recieving.qa_check" id="checkboxFiveInput" name="" @change="change_qa_check">
@@ -60,7 +60,7 @@
                         </div>
                         <div class="col-md-1"></div>
                         <div class="col-md-2">
-                            <label for="select_collected_by">Received Person<span style="color:red;">*</span></label> 
+                            <label for="select_collected_by">Received By<span style="color:red;">*</span></label>
                         </div>
                         <div class="col-md-3">
                             <select class="textbox_dropdown" v-model="new_recieving.collected_id" required>

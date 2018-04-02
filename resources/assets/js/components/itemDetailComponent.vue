@@ -11,16 +11,18 @@
                         </div>
 
                         <div class="panel-body">
-                            <div class="col-md-1">
-                                <label>Imei</label>
-                            </div>
-                            <div class="col-md-6">
-                                <input type="text" class="textbox" v-model="imei" placeholder="Enter Imei no." >
-                            </div>
-                            <div class="col-md-5">
-                            <button class="btn btn-primary" @click="getDetails">Get Detail</button>
-                            </div>
-                            <!-- <div v-if="itemDetails!=''">{{itemDetails.item.product_color.color}}</div> -->
+
+                                <div class="col-md-1">
+                                    <label>Imei</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="text" class="textbox" v-model="imei" placeholder="Enter Imei no." required="">
+                                </div>
+                                <div class="col-md-5">
+                                    <button class="btn btn-primary" @click="getDetails">Get Detail</button>
+                                </div>
+
+                            <!-- <div v-if="itemDetails==''">Imei not Matched</div> -->
                         </div>
                     </div>
                 </div>
@@ -28,7 +30,7 @@
             <div v-if="itemDetails!=''" class="col-md-12 well"  style="margin-top: 20px;" v-cloak>
 
                 <div class="col-md-3">
-                    <h1 class="col-md-12 text-center">Xcell - {{itemDetails.item.product_color.product.name}}</h1>
+                    <h3 class="col-md-12 text-center">{{itemDetails.item.product_color.product.name}}</h3>
                     <img v-bind:src="'./product_img/'+itemDetails.item.product_color.product_images[0].image" class=" img-thumbnail" height="auto" />
                     <!-- <h1 class="col-md-12 text-center">{{itemDetails.item.product_color.product.name}}</h1> -->
                 </div>
@@ -83,17 +85,22 @@
                                 <td>{{itemDetails.item.receive.created_at |moment()}}</td>
                             </tr>
                             <tr>
-                                <td><b>Main Warehouse Receive:</b> </td>
+                                <td><b>Warehouse Receive:</b> </td>
                                 <td>{{itemDetails.item.receive.main_warehouse_receive.warehouse.name}}</td>
                             </tr>
                             <tr>
-                                <td><b>Main Warehouse Receive Date:</b> </td>
+                                <td><b>Warehouse Receive Date:</b> </td>
                                 <td>{{itemDetails.item.receive.main_warehouse_receive.created_at|moment()}}</td>
                             </tr>
                             <tr>
                                 <td><b>Stock Status</b> </td>
-                                <td v-if="itemDetails.item.warehouse_issue_item!=null" >{{itemDetails.item.warehouse_issue_item.created_at |moment()}}</td>
+                                <td v-if="itemDetails.item.warehouse_issue_item!=null" style="color:red;">Sold out</td>
                                 <td v-else style="color:green;">In-stock</td>
+                            </tr>
+                            <tr>
+                                <td><b>Sold Date</b> </td>
+                                <td v-if="itemDetails.item.warehouse_issue_item!=null">{{itemDetails.item.warehouse_issue_item.created_at |moment()}}</td>
+                                <td v-else style="color:green;">-</td>
                             </tr>
                         </tbody>
                     </table>
@@ -146,6 +153,10 @@
                     </div>
                 </div> -->
             </div>
+
+            <!-- <div v-else class="col-md-12" style="margin-top: 20px;">
+                <h4 style="color:red; text-align:center;" >Imei not Matched</h4>
+            </div> -->
         </div>
     </div>
 </template>
@@ -172,6 +183,7 @@
         },
         methods:{
             getDetails(){
+                
                 axios.get('./itemDetails/'+this.imei).then(response=>{
                     this.itemDetails=response.data;
                     //console.log(this.itemDetails.item.product_color.product_images[0].image);

@@ -19,6 +19,7 @@
                             <th>Description</th>
                             <th>Receive Status</th>
                             <th>Receive At</th>
+                            <th>Details</th>
                             <th class="col-md-1">Action</th>
                         </tr>
                         </thead>
@@ -33,6 +34,7 @@
                             <td v-else>{{receive.qa_description}}</td>
                             <td>{{receive.receive_status.status}}</td>
                             <td>{{receive.created_at | moment}}</td>
+                            <td><button class="btn btn-success btn-xs" v-on:click="show_products(index)">Details</button></td>
                              <td class="text-center"><!-- <span v-if="receive.main_warehouse_receive!=null">Received</span> -->
                               <button v-if="receive.main_warehouse_receive!=null" class="btn btn-success btn-xs" v-on:click="getMainWarehouseReceive(receive)" title="Receive">Add Items</button>
                               <button v-if="receive.main_warehouse_receive==null" class="btn btn-success btn-xs" v-on:click="createMainWarehouseReceive(receive)" title="Receive">Receive</button></td>
@@ -173,6 +175,49 @@
             </div>
           </div>
         </div>
+
+        <!-- View Details Modal Start-->
+        <div v-if="showModal" class="modal fade bs-add-Model-modal-md" tabindex="5" role="dialog"  id="receive_info_modal" aria-labelledby="bs-add-Model-modal-md">
+            <div class="modal-dialog modal-md" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Product Details</h4>
+                    </div>
+                    <div class="modal-body">
+                        <h4>{{receive_number}}</h4>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <td>Category</td>
+                                        <td>Product</td>
+                                        <td>Color</td>
+                                        <td>Quantity</td>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr v-for="product in products">
+                                        <td>{{product.product_color.product.product_category.name}}</td>
+                                        <td>{{product.product_color.product.name}}</td>
+                                        <td>{{product.product_color.color}}</td>
+                                        <td  style="text-align:right;">{{product.product_qty}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-github" data-dismiss="modal" aria-label="Close">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- View Details Modal END -->
     </div>
 
 
@@ -184,6 +229,10 @@ import vSelect from "vue-select"
         components: {vSelect},
        data(){
          return{
+             showModal:false,
+             order_no:'',
+             receive_no:'',
+             receive_number:'',
           newItems:{
               productColor:'',
               main_receive:'',
@@ -191,7 +240,7 @@ import vSelect from "vue-select"
               quantity:0,
               warehouse_id:'',
           },
-          all_receive_orders:'',
+          all_receive_orders:[],
           showReceive:false,
           mainWarehouseReceive:'',
           productColors:[],
@@ -212,7 +261,12 @@ import vSelect from "vue-select"
           newWarehouseReceive:{
              warehouse_id:'',
              receive:''
-           }
+           },
+           Details:{
+            productName:'',
+            productColor:'',
+            productQuantity:''
+           },
          }
        },
        filters: {
@@ -226,6 +280,7 @@ import vSelect from "vue-select"
         },
         created(){
           axios.get('./currentWarehouse').then(response=>{
+            console.log("Response");
             console.log(response.data.id);
             this.warehouse=response.data;
             this.newItems.warehouse_id=response.data.id;
@@ -244,7 +299,7 @@ import vSelect from "vue-select"
           // });
           axios.get('./order/received_order_status').then((response)=>{
                     this.all_receive_orders=response.data;
-                   // console.log(this.all_receive_orders);
+                   console.log(this.all_receive_orders);
                 });
 
           axios.get('./allProducts').then(response=>{
@@ -255,8 +310,8 @@ import vSelect from "vue-select"
         watch:{
           imei:function(){
               if(this.imei!=''){
-                this.newItems.imei.push(this.imei);
                  if(this.newItems.quantity < this.product_qty){
+                  this.newItems.imei.push(this.imei);
                   this.newItems.quantity +=1;
                   this.imei='';  
                 }else{
@@ -289,6 +344,10 @@ import vSelect from "vue-select"
 
         },
         methods:{
+          showDetails(index){
+            //console.log(this.all_receive_orders[index]);
+           
+          },
           searchReceive(search){
             axios.get('./receivSearch/'+search).then(response=>{
               this.receive=response.data;
@@ -315,7 +374,7 @@ import vSelect from "vue-select"
           },
           createMainWarehouseReceive(receive){
             this.newWarehouseReceive.receive=receive;
-            console.log(this.mainWarehouseReceive);
+            console.log(this.mainWarehouseReceive.receive);
             this.products=receive.receive_products;
            distroyTable();
            // this.product_qty=receive.receive_products.product_qty;
@@ -338,6 +397,17 @@ import vSelect from "vue-select"
                 }
             })
           },
+            show_products:function(index){
+
+                $('#receive_info_modal').modal('show');
+                this.products=this.all_receive_orders[index].receive_products;
+                this.order_no=this.all_receive_orders[index].manufacturing_order_id;
+                this.receive_no=this.all_receive_orders[index].id;
+                this.receive_number=this.all_receive_orders[index].receive_no;
+
+                //alert(this.products[0].product_color.product.product_category.name);
+                this.showModal=true;
+            },
           getMainWarehouseReceive(receive){
             this.newWarehouseReceive.receive=receive;
             console.log(this.newWarehouseReceive.receive);
@@ -402,7 +472,7 @@ import vSelect from "vue-select"
     $(document).ready(function() {
 
         setTimeout(function(){
-            $('#consignment_table').DataTable({
+            $('#consignment_table').DataTable({             
             "pagingType": "full_numbers",
             "lengthMenu": [
                 [10, 25, 50, -1],

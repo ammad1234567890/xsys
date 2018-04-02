@@ -129,9 +129,9 @@ class MainWarehouseReceiveController extends Controller
                 }else{
                   array_push($alocatedIMEI,$i);
                   $quantity=$quantity-1;
-                  // $return=array('replay'=>2,'data'=>$i." IMEI is alocated to another Item");
-                  // DB::rollBack();
-                  // return $return;
+                  $return=array('replay'=>2,'data'=>$i." IMEI is alocated to another Item");
+                  DB::rollBack();
+                  return $return;
                 }
           }else{
             array_push($notInDB,$i);

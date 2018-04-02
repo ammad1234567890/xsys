@@ -310,4 +310,5 @@ Route::get('/productDetailsView','ProductController@productDetailView');
 
 //warehouseTransfer
 Route::get('/warehouseTransfer','WarehouseTransferController@index');
+Route::get('/currentWarehouseData/{id}','WarehouseTransferController@warehouseProductDetails');
 //warehouseTransfer

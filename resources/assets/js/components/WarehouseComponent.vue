@@ -402,6 +402,7 @@ import vSelect from "vue-select"
     $(document).ready(function() {
         setTimeout(function(){
             $('#ware').DataTable({
+              "order": [[ 0,"desc" ]],
             "pagingType": "full_numbers",
             "lengthMenu": [
                 [10, 25, 50, -1],

@@ -162,7 +162,7 @@
                                 </select>
                             </div>
                             <div class="col-md-1"></div>
-                            <div class="col-md-2"><label>Colors<span style="color:red;">*</span></label></div>
+                            <div class="col-md-2"><label>Color<span style="color:red;">*</span></label></div>
                             <div class="col-md-3">
                                 <select class="textbox_dropdown" v-model="new_order.products[index].product_color_id" @change="myfunc(index)" required>
                                     <option value="" selected>Select</option>
@@ -322,6 +322,8 @@
             },
             change_product:function(index, product_id){
                 this.new_order.products[index].product_id=product_id;
+                this.new_order.products[index].quantity='';
+                this.new_order.products[index].cost_per_set='';
                 axios.post('../get_product_colors',this.new_order.products[index]).then((response) => {
                     this.new_order.products[index].product_color=response.data;
                     // alert(response.data);

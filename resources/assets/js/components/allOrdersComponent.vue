@@ -36,7 +36,7 @@
                             <td>{{order.created_at | moment}}</td>
                             <td>{{order.eta | moment}}</td>
                             <!-- <td>{{order.user.name}}</td> -->
-                            <td  style="text-align:center; font-size: 20px;" v-if="order.transaction_closed==0"><i class="fa fa-times"></i></td>
+                            <td  style="text-align:center; font-size: 20px;" v-if="order.transaction_closed==0"><i class="fa fa-rotate-right"></i></td>
                             <td  style="text-align:center; font-size: 20px; color: green;"  title="Payment Completed" v-else><i class="fa fa-check"></i></td>
                             <td>
                                 <!-- <div class="dropdown">
@@ -66,7 +66,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title">Summary - Purchase Orders</h4>
+                            <h4 class="modal-title">Summary - Purchase Order</h4>
                         </div>
                         <div class="modal-body">
 
@@ -77,12 +77,12 @@
                                         <tr>
                                             <td style="width: 136px;"><strong>Total Order Cost :</strong></td>
                                             <td >{{view_order.total_cost | currency('Rs')}}</td>
-                                        </tr><!-- 
-                                        <tr>
-                                            <td>Remaining Order Cost</td>
-                                            <td>{{view_order.remaining_payment | currency('Rs')}}</td>
                                         </tr>
                                         <tr>
+                                            <td><strong>Remaining Cost</strong></td>
+                                            <td>{{view_order.remaining_payment | currency('Rs')}}</td>
+                                        </tr>
+                                        <tr><!--
                                             <td>Order By</td>
                                             <td>{{view_order.created_by}}</td>
                                         </tr> -->
@@ -301,6 +301,7 @@
                         if(response.data==201){
                             this.message="Status Changed Successfully!";
                             this.change_order_status.status='';
+                            this.get_all_orders();
                         }
                         else{
                             alert(response.data);

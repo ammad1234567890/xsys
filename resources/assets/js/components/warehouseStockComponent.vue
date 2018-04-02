@@ -168,6 +168,7 @@ import vSelect from "vue-select"
             console.log(show);
             setTimeout(function(){              
             var table=$(id).DataTable({
+                "order": [[ 0,"desc" ]],
             "pagingType": "full_numbers",
             "lengthMenu": [
                 [10, 25, 50, -1],

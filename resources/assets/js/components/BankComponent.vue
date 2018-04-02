@@ -164,6 +164,7 @@
     $(document).ready(function() {
         setTimeout(function(){
             $('#bank_detail_table').DataTable({
+                "order": [[ 0,"desc" ]],
             "pagingType": "full_numbers",
             "lengthMenu": [
                 [10, 25, 50, -1],

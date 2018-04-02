@@ -442,6 +442,8 @@
                                     <li><a href="{{ url('warehouseStaffView') }}">Warehouse Staff</a></li>
                                     <li><a href="{{ url('mainWarehouseReceive') }}">Consigment Receive</a></li>
                                     <li><a href="{{ url('warehouseIssue') }}">Sales Invoice</a></li>
+                                    <li><a href="{{ url('itemDetail') }}">Item Detail</a></li>
+                                    <li><a href="{{ url('productDetailsView') }}">Product Detail</a></li>
                                 </ul>
 
                             </li>
@@ -594,6 +596,15 @@
                                     <a href="{{ url('warehouseIssue') }}">
                                         <li>Sales Invoice </li>
                                     </a>
+
+                                    <a href="{{ url('itemDetail') }}">
+                                        <li>Item Detail </li>
+                                    </a>
+
+                                    <a href="{{ url('productDetailsView') }}">
+                                        <li>Product Detail </li>
+                                    </a>
+
                                 </ul>
                             </div>
                             <div class="menutab active">

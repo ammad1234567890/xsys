@@ -134,14 +134,7 @@
                 <label>Payment Terms: 21st of the month following invoice date</label>
             </div>
             <div class="qrcode">
-                <img src="http://localhost/xcell/public/img/qrcode.png" width="100px"/>
-                <br>
-                <center>Warehouse Incharge</center>
-            </div>
-            <div class="qrcode">
-                <img src="http://172.16.1.253:82/xsys_new_version/public/img/qrcode.png" width="100px"/>
-                <br>
-                <center>Accountant</center>
+                <div id="qrcode" style="width:100px; height:100px; margin-top:15px;"></div>
             </div>
         </div>
     </div>
@@ -188,9 +181,13 @@
 
                     }
                     this.discount=this.subtotal-response.data.total_amount;
+                    var qrcode = new QRCode(document.getElementById("qrcode"), {
+                        width : 100,
+                        height : 100
+                    });
+                    qrcode.makeCode(response.data.id+"");
                     setTimeout("window.print()", 70 );
                     setTimeout("self.close()", 70 );
-
                 });
 
             },
@@ -291,6 +288,7 @@
         margin-top: 30px;
         width: 100px;
         float: left;
+        margin-bottom: 100px;
     }
     .t-a-r{
         text-align: right

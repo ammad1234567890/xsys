@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTblImeiTable extends Migration
+class CreateTblInvoiceReverseItemsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,14 @@ class CreateTblImeiTable extends Migration
      */
     public function up()
     {
-        Schema::disableForeignKeyConstraints();
-        Schema::create('tbl_imei', function (Blueprint $table) {
+        Schema::create('tbl_invoice_reverse_items', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('imei1')->unique()->index();
-            $table->string('imei2')->unique()->index();
-            $table->unsignedInteger('item_id')->index()->nullable();
-            $table->unsignedInteger('product_id')->index();
+            $table->unsignedInteger('warehouse_issue_id')->index();
+            $table->unsignedInteger('item_id')->index();
             $table->unsignedInteger('created_by')->index();
-            $table->foreign('item_id')->references('id')->on('tbl_item');
-            $table->foreign('product_id')->references('id')->on('tbl_product');
+            $table->foreign('warehouse_issue_id')->references('id')->on('tbl_warehouse_issue')->onDelete('cascade');
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('item_id')->references('id')->on('tbl_item')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -35,6 +32,6 @@ class CreateTblImeiTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_imei');
+        Schema::dropIfExists('tbl_invoice_reverse_items');
     }
 }

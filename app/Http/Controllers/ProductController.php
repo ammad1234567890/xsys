@@ -255,4 +255,9 @@ class ProductController extends Controller
       $productColor=ProductColor::where('id',$id)->where('is_deleted',0)->get();
       return $productColor;
     }
+
+
+    public function product_specs(){
+        return View('product_specs');
+    }
 }

@@ -22,5 +22,12 @@ class Product extends Model
     {
       return $this->belongsTo('App\User','created_by');
     }
+
+    public function imei()
+    {
+        return $this->hasMany('App\IMEI');
+    }
+
+
     protected $table="tbl_product";
 }

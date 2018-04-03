@@ -30046,7 +30046,7 @@ Vue.component('itemdetail-component', __webpack_require__(267));
 Vue.component('productdetail-component', __webpack_require__(272));
 Vue.component('warehousetransfer-component', __webpack_require__(284));
 Vue.component('retailerinvoicereversal-component', __webpack_require__(287));
-
+Vue.component('productspecs-component', __webpack_require__(290));
 var app = new Vue({
     el: '#app'
 
@@ -71934,6 +71934,319 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -71972,7 +72285,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 name: '',
                 productCategory: '',
                 releaseDate: '',
-                finds: []
+                finds: [],
+                network: {
+                    technology: '',
+                    twog_bands: '',
+                    threeg_bands: '',
+                    fourg_bands: '',
+                    gprs: '',
+                    edge: ''
+                },
+                body: {
+                    dimension: '',
+                    weight: '',
+                    build: '',
+                    fourg_bands: '',
+                    sim: ''
+                },
+                camera: {
+                    primary: '',
+                    secondary: '',
+                    video: '',
+                    features: ''
+                }
             }
         };
     },
@@ -72436,7 +72770,33 @@ var render = function() {
                             )
                           ],
                           1
-                        ),
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("hr"),
+                      _vm._v(" "),
+                      _vm._m(4),
+                      _vm._v(" "),
+                      _vm._m(5),
+                      _vm._v(" "),
+                      _vm._m(6),
+                      _vm._v(" "),
+                      _vm._m(7),
+                      _vm._v(" "),
+                      _vm._m(8),
+                      _vm._v(" "),
+                      _vm._m(9),
+                      _vm._v(" "),
+                      _vm._m(10),
+                      _vm._v(" "),
+                      _vm._m(11),
+                      _vm._v(" "),
+                      _vm._m(12),
+                      _vm._v(" "),
+                      _vm._m(13),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "row" }, [
+                        _c("div", { staticClass: "col-md-5" }),
                         _vm._v(" "),
                         _c("div", { staticClass: "col-md-1" }),
                         _vm._v(" "),
@@ -72465,7 +72825,7 @@ var render = function() {
                         _c("div", { staticClass: "row" }, [
                           _c("div", { staticClass: "col-md-12" }, [
                             _c("div", { staticClass: "form-group col-md-3" }, [
-                              _vm._m(4, true),
+                              _vm._m(14, true),
                               _vm._v(" "),
                               _c("input", {
                                 directives: [
@@ -72525,7 +72885,7 @@ var render = function() {
                             ]),
                             _vm._v(" "),
                             _c("div", { staticClass: "form-group col-md-2" }, [
-                              _vm._m(5, true),
+                              _vm._m(15, true),
                               _vm._v(" "),
                               _c("input", {
                                 directives: [
@@ -72586,7 +72946,7 @@ var render = function() {
                             ]),
                             _vm._v(" "),
                             _c("div", { staticClass: "form-group col-md-2" }, [
-                              _vm._m(6, true),
+                              _vm._m(16, true),
                               _vm._v(" "),
                               _c("input", {
                                 directives: [
@@ -72651,7 +73011,7 @@ var render = function() {
                             ]),
                             _vm._v(" "),
                             _c("div", { staticClass: "form-group col-md-3" }, [
-                              _vm._m(7, true),
+                              _vm._m(17, true),
                               _vm._v(" "),
                               _c("input", {
                                 ref: "fileupload",
@@ -72813,7 +73173,7 @@ var render = function() {
         [
           _c("div", { staticClass: "modal-dialog" }, [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(8),
+              _vm._m(18),
               _vm._v(" "),
               _c(
                 "div",
@@ -72939,7 +73299,7 @@ var render = function() {
                 2
               ),
               _vm._v(" "),
-              _vm._m(9)
+              _vm._m(19)
             ])
           ])
         ]
@@ -72986,6 +73346,796 @@ var staticRenderFns = [
       _c("label", { attrs: { for: "releaseDate" } }, [
         _vm._v("Est. Release Date"),
         _c("span", { staticStyle: { color: "red" } }, [_vm._v("*")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "panel-group" }, [
+      _c("div", { staticClass: "panel panel-default" }, [
+        _c("div", { staticClass: "panel-heading" }, [
+          _c("h4", { staticClass: "panel-title" }, [
+            _c(
+              "a",
+              {
+                attrs: { "data-toggle": "collapse", href: "#collapse-network" }
+              },
+              [_c("b", [_vm._v("Network:")])]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "panel-collapse collapse",
+            attrs: { id: "collapse-network" }
+          },
+          [
+            _c("div", { staticClass: "panel-body" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-2" }, [_vm._v("Technology")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-3" }, [
+                  _c("input", {
+                    staticClass: "textbox",
+                    attrs: { type: "text" }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-1" }),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-2" }, [_vm._v("2G Bands")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-3" }, [
+                  _c("input", {
+                    staticClass: "textbox",
+                    attrs: { type: "text" }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-1" })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-2" }, [_vm._v("3G Bands")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-3" }, [
+                  _c("input", {
+                    staticClass: "textbox",
+                    attrs: { type: "text" }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-1" }),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-2" }, [_vm._v("4G Bands")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-3" }, [
+                  _c("input", {
+                    staticClass: "textbox",
+                    attrs: { type: "text" }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-1" })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-2" }, [_vm._v("GPRS")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-3" }, [
+                  _c("input", {
+                    staticClass: "textbox",
+                    attrs: { type: "text" }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-1" }),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-2" }, [_vm._v("Edge")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-3" }, [
+                  _c("input", {
+                    staticClass: "textbox",
+                    attrs: { type: "text" }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-1" })
+              ])
+            ])
+          ]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "panel-group" }, [
+      _c("div", { staticClass: "panel panel-default" }, [
+        _c("div", { staticClass: "panel-heading" }, [
+          _c("h4", { staticClass: "panel-title" }, [
+            _c(
+              "a",
+              { attrs: { "data-toggle": "collapse", href: "#collapse-body" } },
+              [_c("b", [_vm._v("Body:")])]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "panel-collapse collapse",
+            attrs: { id: "collapse-body" }
+          },
+          [
+            _c("div", { staticClass: "panel-body" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-2" }, [_vm._v("Dimension")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-3" }, [
+                  _c("input", {
+                    staticClass: "textbox",
+                    attrs: { type: "text" }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-1" }),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-2" }, [_vm._v("Weight")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-3" }, [
+                  _c("input", {
+                    staticClass: "textbox",
+                    attrs: { type: "text" }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-1" })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-2" }, [_vm._v("Build")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-3" }, [
+                  _c("input", {
+                    staticClass: "textbox",
+                    attrs: { type: "text" }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-1" }),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-2" }, [_vm._v("SIM")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-3" }, [
+                  _c("input", {
+                    staticClass: "textbox",
+                    attrs: { type: "text" }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-1" })
+              ])
+            ])
+          ]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "panel-group" }, [
+      _c("div", { staticClass: "panel panel-default" }, [
+        _c("div", { staticClass: "panel-heading" }, [
+          _c("h4", { staticClass: "panel-title" }, [
+            _c(
+              "a",
+              {
+                attrs: { "data-toggle": "collapse", href: "#collapse-camera" }
+              },
+              [_c("b", [_vm._v("Camera:")])]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "panel-collapse collapse",
+            attrs: { id: "collapse-camera" }
+          },
+          [
+            _c("div", { staticClass: "panel-body" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-2" }, [_vm._v("Primary")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-3" }, [
+                  _c("input", {
+                    staticClass: "textbox",
+                    attrs: { type: "text" }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-1" }),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-2" }, [_vm._v("Secondary")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-3" }, [
+                  _c("input", {
+                    staticClass: "textbox",
+                    attrs: { type: "text" }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-1" })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-2" }, [_vm._v("Video")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-3" }, [
+                  _c("input", {
+                    staticClass: "textbox",
+                    attrs: { type: "text" }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-1" }),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-2" }, [_vm._v("Features")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-3" }, [
+                  _c("input", {
+                    staticClass: "textbox",
+                    attrs: { type: "text" }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-1" })
+              ])
+            ])
+          ]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "panel-group" }, [
+      _c("div", { staticClass: "panel panel-default" }, [
+        _c("div", { staticClass: "panel-heading" }, [
+          _c("h4", { staticClass: "panel-title" }, [
+            _c(
+              "a",
+              {
+                attrs: { "data-toggle": "collapse", href: "#collapse-Platform" }
+              },
+              [_c("b", [_vm._v("Platform:")])]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "panel-collapse collapse",
+            attrs: { id: "collapse-Platform" }
+          },
+          [
+            _c("div", { staticClass: "panel-body" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-2" }, [_vm._v("OS")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-3" }, [
+                  _c("input", {
+                    staticClass: "textbox",
+                    attrs: { type: "text" }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-1" }),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-2" }, [_vm._v("Chipset")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-3" }, [
+                  _c("input", {
+                    staticClass: "textbox",
+                    attrs: { type: "text" }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-1" })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-2" }, [_vm._v("CPU")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-3" }, [
+                  _c("input", {
+                    staticClass: "textbox",
+                    attrs: { type: "text" }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-1" }),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-2" }, [_vm._v("GPU")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-3" }, [
+                  _c("input", {
+                    staticClass: "textbox",
+                    attrs: { type: "text" }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-1" })
+              ])
+            ])
+          ]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "panel-group" }, [
+      _c("div", { staticClass: "panel panel-default" }, [
+        _c("div", { staticClass: "panel-heading" }, [
+          _c("h4", { staticClass: "panel-title" }, [
+            _c(
+              "a",
+              {
+                attrs: { "data-toggle": "collapse", href: "#collapse-Memory" }
+              },
+              [_c("b", [_vm._v("Memory:")])]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "panel-collapse collapse",
+            attrs: { id: "collapse-Memory" }
+          },
+          [
+            _c("div", { staticClass: "panel-body" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-2" }, [_vm._v("Card Slot")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-3" }, [
+                  _c("input", {
+                    staticClass: "textbox",
+                    attrs: { type: "text" }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-1" }),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-2" }, [_vm._v("Internal")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-3" }, [
+                  _c("input", {
+                    staticClass: "textbox",
+                    attrs: { type: "text" }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-1" })
+              ])
+            ])
+          ]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "panel-group" }, [
+      _c("div", { staticClass: "panel panel-default" }, [
+        _c("div", { staticClass: "panel-heading" }, [
+          _c("h4", { staticClass: "panel-title" }, [
+            _c(
+              "a",
+              { attrs: { "data-toggle": "collapse", href: "#collapse-Comms" } },
+              [_c("b", [_vm._v("Comms:")])]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "panel-collapse collapse",
+            attrs: { id: "collapse-Comms" }
+          },
+          [
+            _c("div", { staticClass: "panel-body" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-2" }, [_vm._v("WLAN")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-3" }, [
+                  _c("input", {
+                    staticClass: "textbox",
+                    attrs: { type: "text" }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-1" }),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-2" }, [_vm._v("Bluetooth")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-3" }, [
+                  _c("input", {
+                    staticClass: "textbox",
+                    attrs: { type: "text" }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-1" })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-2" }, [_vm._v("GPS")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-3" }, [
+                  _c("input", {
+                    staticClass: "textbox",
+                    attrs: { type: "text" }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-1" }),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-2" }, [_vm._v("NFC")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-3" }, [
+                  _c("input", {
+                    staticClass: "textbox",
+                    attrs: { type: "text" }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-1" })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-2" }, [_vm._v("Radio")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-3" }, [
+                  _c("input", {
+                    staticClass: "textbox",
+                    attrs: { type: "text" }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-1" }),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-2" }, [_vm._v("USB")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-3" }, [
+                  _c("input", {
+                    staticClass: "textbox",
+                    attrs: { type: "text" }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-1" })
+              ])
+            ])
+          ]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "panel-group" }, [
+      _c("div", { staticClass: "panel panel-default" }, [
+        _c("div", { staticClass: "panel-heading" }, [
+          _c("h4", { staticClass: "panel-title" }, [
+            _c(
+              "a",
+              {
+                attrs: { "data-toggle": "collapse", href: "#collapse-Battery" }
+              },
+              [_c("b", [_vm._v("Battery:")])]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "panel-collapse collapse",
+            attrs: { id: "collapse-Battery" }
+          },
+          [
+            _c("div", { staticClass: "panel-body" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-2" }, [_vm._v("Type")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-3" }, [
+                  _c("input", {
+                    staticClass: "textbox",
+                    attrs: { type: "text" }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-1" }),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-2" }, [_vm._v("Talk Type")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-3" }, [
+                  _c("input", {
+                    staticClass: "textbox",
+                    attrs: { type: "text" }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-1" })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-2" }, [_vm._v("Music Play")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-3" }, [
+                  _c("input", {
+                    staticClass: "textbox",
+                    attrs: { type: "text" }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-1" })
+              ])
+            ])
+          ]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "panel-group" }, [
+      _c("div", { staticClass: "panel panel-default" }, [
+        _c("div", { staticClass: "panel-heading" }, [
+          _c("h4", { staticClass: "panel-title" }, [
+            _c(
+              "a",
+              {
+                attrs: { "data-toggle": "collapse", href: "#collapse-Features" }
+              },
+              [_c("b", [_vm._v("Features:")])]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "panel-collapse collapse",
+            attrs: { id: "collapse-Features" }
+          },
+          [
+            _c("div", { staticClass: "panel-body" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-2" }, [_vm._v("Sensors")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-3" }, [
+                  _c("input", {
+                    staticClass: "textbox",
+                    attrs: { type: "text" }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-1" }),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-2" }, [_vm._v("Messaging")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-3" }, [
+                  _c("input", {
+                    staticClass: "textbox",
+                    attrs: { type: "text" }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-1" })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-2" }, [_vm._v("Browser")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-3" }, [
+                  _c("input", {
+                    staticClass: "textbox",
+                    attrs: { type: "text", required: "" }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-1" })
+              ])
+            ])
+          ]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "panel-group" }, [
+      _c("div", { staticClass: "panel panel-default" }, [
+        _c("div", { staticClass: "panel-heading" }, [
+          _c("h4", { staticClass: "panel-title" }, [
+            _c(
+              "a",
+              {
+                attrs: { "data-toggle": "collapse", href: "#collapse-Display" }
+              },
+              [_c("b", [_vm._v("Display:")])]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "panel-collapse collapse",
+            attrs: { id: "collapse-Display" }
+          },
+          [
+            _c("div", { staticClass: "panel-body" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-2" }, [_vm._v("Type")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-3" }, [
+                  _c("input", {
+                    staticClass: "textbox",
+                    attrs: { type: "text" }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-1" }),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-2" }, [_vm._v("Size")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-3" }, [
+                  _c("input", {
+                    staticClass: "textbox",
+                    attrs: { type: "text" }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-1" })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-2" }, [_vm._v("Resolution")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-3" }, [
+                  _c("input", {
+                    staticClass: "textbox",
+                    attrs: { type: "text", required: "" }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-1" }),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-2" }, [_vm._v("Multi-Touch")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-3" }, [
+                  _c("input", {
+                    staticClass: "textbox",
+                    attrs: { type: "text", required: "" }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-1" })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-2" }, [_vm._v("Protection")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-3" }, [
+                  _c("input", {
+                    staticClass: "textbox",
+                    attrs: { type: "text", required: "" }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-1" })
+              ])
+            ])
+          ]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "panel-group" }, [
+      _c("div", { staticClass: "panel panel-default" }, [
+        _c("div", { staticClass: "panel-heading" }, [
+          _c("h4", { staticClass: "panel-title" }, [
+            _c(
+              "a",
+              { attrs: { "data-toggle": "collapse", href: "#collapse-Sound" } },
+              [_c("b", [_vm._v("Sound:")])]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "panel-collapse collapse",
+            attrs: { id: "collapse-Sound" }
+          },
+          [
+            _c("div", { staticClass: "panel-body" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-2" }, [_vm._v("Alert Types")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-3" }, [
+                  _c("input", {
+                    staticClass: "textbox",
+                    attrs: { type: "text" }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-1" }),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-2" }, [
+                  _vm._v("Loud Speaker")
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-3" }, [
+                  _c("input", {
+                    staticClass: "textbox",
+                    attrs: { type: "text" }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-1" })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-2" }, [_vm._v("3.5mm Jack")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-3" }, [
+                  _c("input", {
+                    staticClass: "textbox",
+                    attrs: { type: "text", required: "" }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-1" })
+              ])
+            ])
+          ]
+        )
       ])
     ])
   },
@@ -119963,6 +121113,201 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-0c199529", module.exports)
+  }
+}
+
+/***/ }),
+/* 290 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(291)
+/* template */
+var __vue_template__ = __webpack_require__(292)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\ProductSpecsComponent.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-844c0ca6", Component.options)
+  } else {
+    hotAPI.reload("data-v-844c0ca6", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 291 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_select__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_select___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_select__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    components: { vSelect: __WEBPACK_IMPORTED_MODULE_0_vue_select___default.a },
+    data: function data() {
+        return {};
+    },
+    mounted: function mounted() {
+        console.log('Component mounted.');
+    },
+    created: function created() {},
+
+    methods: {}
+
+});
+
+/***/ }),
+/* 292 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm._m(0)
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "card headcolor" }, [
+          _c("div", { staticClass: "card-header" }, [
+            _c("h3", { staticClass: "card-title pad-bot" }, [
+              _c(
+                "h4",
+                {
+                  staticClass: "heading-inline",
+                  staticStyle: { "text-transform": "uppercase" }
+                },
+                [_vm._v(" Add Product Specification")]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("hr")
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "panel panel-info" }, [
+          _c("div", { staticClass: "panel-heading" }, [
+            _c("h2", { staticClass: "panel-title" }, [
+              _vm._v("Product Specification")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "panel-body" }, [
+            _c("div", { staticClass: "col-md-2" }, [
+              _c("label", [_vm._v("Phone Category")])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-3" }, [
+              _c(
+                "select",
+                { staticClass: "textbox_dropdown", attrs: { required: "" } },
+                [_c("option", [_vm._v("Select Phone Category")])]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-1" }),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-2" }, [
+              _c("label", [_vm._v("Products")])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-3" }, [
+              _c(
+                "select",
+                { staticClass: "textbox_dropdown", attrs: { required: "" } },
+                [_c("option", [_vm._v("Select Products")])]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-1" })
+          ])
+        ])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-844c0ca6", module.exports)
   }
 }
 

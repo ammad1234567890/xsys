@@ -50,6 +50,319 @@
                                       {{errors.first('Release Date')}}
                                         </span>
                                     </div>
+                                </div>
+                                <hr/>
+
+                                <div class="panel-group">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" href="#collapse-network"><b>Network:</b></a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapse-network" class="panel-collapse collapse">
+                                            <div class="panel-body">
+                                                <div class="row">
+                                                    <div class="col-md-2">Technology</div>
+                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-2">2G Bands</div>
+                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-1"></div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-2">3G Bands</div>
+                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-2">4G Bands</div>
+                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-1"></div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-2">GPRS</div>
+                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-2">Edge</div>
+                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-1"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel-group">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" href="#collapse-body"><b>Body:</b></a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapse-body" class="panel-collapse collapse">
+                                            <div class="panel-body">
+                                                <div class="row">
+                                                    <div class="col-md-2">Dimension</div>
+                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-2">Weight</div>
+                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-1"></div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-2">Build</div>
+                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-2">SIM</div>
+                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-1"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel-group">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" href="#collapse-camera"><b>Camera:</b></a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapse-camera" class="panel-collapse collapse">
+                                            <div class="panel-body">
+                                                <div class="row">
+                                                    <div class="col-md-2">Primary</div>
+                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-2">Secondary</div>
+                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-1"></div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-2">Video</div>
+                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-2">Features</div>
+                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-1"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel-group">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" href="#collapse-Platform"><b>Platform:</b></a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapse-Platform" class="panel-collapse collapse">
+                                            <div class="panel-body">
+                                                <div class="row">
+                                                    <div class="col-md-2">OS</div>
+                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-2">Chipset</div>
+                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-1"></div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-2">CPU</div>
+                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-2">GPU</div>
+                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-1"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel-group">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" href="#collapse-Memory"><b>Memory:</b></a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapse-Memory" class="panel-collapse collapse">
+                                            <div class="panel-body">
+                                                <div class="row">
+                                                    <div class="col-md-2">Card Slot</div>
+                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-2">Internal</div>
+                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-1"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel-group">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" href="#collapse-Comms"><b>Comms:</b></a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapse-Comms" class="panel-collapse collapse">
+                                            <div class="panel-body">
+                                                <div class="row">
+                                                    <div class="col-md-2">WLAN</div>
+                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-2">Bluetooth</div>
+                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-1"></div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-2">GPS</div>
+                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-2">NFC</div>
+                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-1"></div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-2">Radio</div>
+                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-2">USB</div>
+                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-1"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel-group">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" href="#collapse-Battery"><b>Battery:</b></a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapse-Battery" class="panel-collapse collapse">
+                                            <div class="panel-body">
+                                                <div class="row">
+                                                    <div class="col-md-2">Type</div>
+                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-2">Talk Type</div>
+                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-1"></div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-2">Music Play</div>
+                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-1"></div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel-group">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" href="#collapse-Features"><b>Features:</b></a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapse-Features" class="panel-collapse collapse">
+                                            <div class="panel-body">
+                                                <div class="row">
+                                                    <div class="col-md-2">Sensors</div>
+                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-2">Messaging</div>
+                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-1"></div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-2">Browser</div>
+                                                    <div class="col-md-3"><input type="text" class="textbox"  required></div>
+                                                    <div class="col-md-1"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel-group">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" href="#collapse-Display"><b>Display:</b></a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapse-Display" class="panel-collapse collapse">
+                                            <div class="panel-body">
+                                                <div class="row">
+                                                    <div class="col-md-2">Type</div>
+                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-2">Size</div>
+                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-1"></div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-2">Resolution</div>
+                                                    <div class="col-md-3"><input type="text" class="textbox"  required></div>
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-2">Multi-Touch</div>
+                                                    <div class="col-md-3"><input type="text" class="textbox"  required></div>
+                                                    <div class="col-md-1"></div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-2">Protection</div>
+                                                    <div class="col-md-3"><input type="text" class="textbox"  required></div>
+                                                    <div class="col-md-1"></div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="panel-group">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a data-toggle="collapse" href="#collapse-Sound"><b>Sound:</b></a>
+                                            </h4>
+                                        </div>
+                                        <div id="collapse-Sound" class="panel-collapse collapse">
+                                            <div class="panel-body">
+                                                <div class="row">
+                                                    <div class="col-md-2">Alert Types</div>
+                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-2">Loud Speaker</div>
+                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-1"></div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-2">3.5mm Jack</div>
+                                                    <div class="col-md-3"><input type="text" class="textbox"  required></div>
+                                                    <div class="col-md-1"></div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="row">
+                                    <div class="col-md-5"></div>
                                     <div class="col-md-1"></div>
 
                                     <div class="col-md-5">
@@ -269,6 +582,27 @@
                 productCategory:'',
                 releaseDate:'',
                 finds: [],
+                network:{
+                    technology:'',
+                    twog_bands:'',
+                    threeg_bands:'',
+                    fourg_bands:'',
+                    gprs:'',
+                    edge:'',
+                },
+                body:{
+                    dimension:'',
+                    weight:'',
+                    build:'',
+                    fourg_bands:'',
+                    sim:'',
+                },
+                camera:{
+                    primary:'',
+                    secondary:'',
+                    video:'',
+                    features:'',
+                },
             }
           }
         },

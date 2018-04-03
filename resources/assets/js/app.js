@@ -100,7 +100,7 @@ Vue.component('itemdetail-component', require('./components/itemDetailComponent.
 Vue.component('productdetail-component',require('./components/productDetailComponent.vue'));
 Vue.component('warehousetransfer-component',require('./components/warehouseTransferComponent.vue'));
 Vue.component('retailerinvoicereversal-component', require('./components/RetailerInvoiceReversalComponent.vue'));
-
+Vue.component('productspecs-component', require('./components/ProductSpecsComponent.vue'));
 const app = new Vue({
     el: '#app'
 

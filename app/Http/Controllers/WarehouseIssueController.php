@@ -10,6 +10,7 @@ use App\Invoice;
 use App\IMEI;
 use App\WarehouseStock;
 use App\Item;
+use App\InvoiceReverseItems;
 use DB;
 
 use Illuminate\Http\Request;
@@ -67,8 +68,14 @@ class WarehouseIssueController extends Controller
         return $return;
       }else{
         WarehouseIssueItem::create(['warehouse_issue_id'=>$warehouseIssue_id,'item_id'=>$itemId,'created_by'=>$userId]);
-        WarehouseIssue::where('id',$warehouseIssue_id)->update(['is_issued'=>True]);
+        
         $warehouseIssue=WarehouseIssue::where('id',$warehouseIssue_id)->first();
+        if($warehouseIssue['is_issued']==1){
+          DB::rollback();
+          $return=array('replay'=>2,'data'=>"Items are Alrady issued against this invoice");
+          return $return;
+        }
+        WarehouseIssue::where('id',$warehouseIssue_id)->update(['is_issued'=>1]);
         $warehouseStock=WarehouseStock::where([['product_color_id','=',$productColorId],['warehouse_id','=',$warehouseIssue['warehouse_id']]])->first();
         $qty=$warehouseStock['product_qty']-1;
         WarehouseStock::where([['product_color_id','=',$productColorId],['warehouse_id','=',$warehouseIssue['warehouse_id']]])->update(['product_qty'=>$qty]);
@@ -85,9 +92,41 @@ class WarehouseIssueController extends Controller
       return $return;
   }
 
-  public function inverseIssue()
+  public function inverseIssue($invoiceId)
   {
-    
+    //try{
+          DB::beginTransaction();
+          $warehouseIssue=WarehouseIssue::where('invoice_id',$invoiceId)->first(['id','is_issued','warehouse_id']);
+          $userId=Auth::user()->id;
+          if($warehouseIssue['is_issued']!=1){
+            if($warehouseIssue['is_issued']==2){
+                $return=array('replay'=>1,'data'=>"Items are Alrady Reversed");
+                return $return;  
+            }
+            $return=array('replay'=>1,'data'=>"Items Are not issued against this invoice");
+            return $return;
+          }
+          $items=WarehouseIssueItem::where('warehouse_issue_id',$warehouseIssue['id'])->get();    
+          foreach ($items as $item) {
+              $data=item::where('id',$item['item_id'])->with('productColor')->first();
+              $stock=WarehouseStock::where(['warehouse_id','=',$warehouseIssue['warehouse_id']],['product_color_id','=',$data->productColor->id])->first();
+              $qty=$stock['product_qty'];
+              $newQty=1+(int)$stock['product_qty'];
+              WarehouseStock::where('id',$stock['id'])->update(['product_qty'=>$newQty]);
+              $issuedItems=WarehouseIssueItem::where('id',$item['id'])->first();
+              InvoiceReverseItems::create(['warehouse_issue_id'=>$issuedItems['warehouse_issue_id'],$issuedItems['item_id'],'created_by'=>$userId]);
+              WarehouseIssueItem::where('id',$item['id'])->delete();
+          }
+           $warehouseIssue=WarehouseIssue::where('invoice_id',$invoiceId)->update(['is_issued'=>2]);
+      // }catch(\Exception $e){
+           DB::rollback();
+      //      $return=array('replay'=>2,'data'=>$e);
+      //       return $return;
+      // }
+           //DB::commit();
+      $return=array('replay'=>0);
+      return $return;
+
   }
 
 }

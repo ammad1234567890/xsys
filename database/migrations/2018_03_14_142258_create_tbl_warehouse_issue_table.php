@@ -17,7 +17,7 @@ class CreateTblWarehouseIssueTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('invoice_id')->index()->unique();
             $table->unsignedInteger('warehouse_id')->index()->unique();
-            $table->boolean('is_issued')->default(False);
+            $table->smallInteger('is_issued')->default(0);
             $table->unsignedInteger('created_by')->index();
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('invoice_id')->references('id')->on('tbl_invoice')->onDelete('cascade');

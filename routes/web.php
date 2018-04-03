@@ -250,6 +250,7 @@ Route::post('/createReceiveItems','MainWarehouseReceiveController@createReceiveI
 //Warehouse Issue
 Route::get('/warehouseIssue','WarehouseIssueController@index');
 Route::get('/warehouseIssueRequest','WarehouseIssueController@warehouseIssueRequest');
+Route::get('/itemReversal/{invoiceId}','WarehouseIssueController@inverseIssue');
 Route::get('/getProducts/{id}','WarehouseIssueController@getProducts');
 Route::post('/createIssue','WarehouseIssueController@createIssue');
 //Warehouse Issue
@@ -312,3 +313,9 @@ Route::get('/productDetailsView','ProductController@productDetailView');
 Route::get('/warehouseTransfer','WarehouseTransferController@index');
 Route::get('/currentWarehouseData/{id}','WarehouseTransferController@warehouseProductDetails');
 //warehouseTransfer
+
+
+//ProductSpecs
+Route::get('/product_specs','ProductController@product_specs');
+
+//ProductSpecs

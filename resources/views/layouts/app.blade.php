@@ -357,6 +357,13 @@
                                             Import IMEI
                                         </a>
                                     </li>
+
+                                    <li>
+                                        <a href="{{ url('/product_specs') }}">
+                                            Add Product Specification
+                                        </a>
+                                    </li>
+
                                 </ul>
 
                             </li>
@@ -505,6 +512,9 @@
                                     </a>
                                     <a href="{{ url('importIMEI') }}">
                                         <li> Import IMEI</li>
+                                    </a>
+                                    <a href="{{ url('/product_specs') }}">
+                                        <li> Add Product Specification</li>
                                     </a>
                                 </ul>
                             </div>

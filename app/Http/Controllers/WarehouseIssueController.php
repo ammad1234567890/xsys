@@ -94,7 +94,7 @@ class WarehouseIssueController extends Controller
 
   public function inverseIssue($invoiceId)
   {
-    //try{
+    try{
           DB::beginTransaction();
           $warehouseIssue=WarehouseIssue::where('invoice_id',$invoiceId)->first(['id','is_issued','warehouse_id']);
           $userId=Auth::user()->id;
@@ -109,21 +109,23 @@ class WarehouseIssueController extends Controller
           $items=WarehouseIssueItem::where('warehouse_issue_id',$warehouseIssue['id'])->get();    
           foreach ($items as $item) {
               $data=item::where('id',$item['item_id'])->with('productColor')->first();
-              $stock=WarehouseStock::where(['warehouse_id','=',$warehouseIssue['warehouse_id']],['product_color_id','=',$data->productColor->id])->first();
+              // return $warehouseIssue['warehouse_id'];
+              $stock=WarehouseStock::where([['warehouse_id','=',$warehouseIssue['warehouse_id']],['product_color_id','=',$data->productColor->id]])->first();
+            
               $qty=$stock['product_qty'];
               $newQty=1+(int)$stock['product_qty'];
               WarehouseStock::where('id',$stock['id'])->update(['product_qty'=>$newQty]);
               $issuedItems=WarehouseIssueItem::where('id',$item['id'])->first();
-              InvoiceReverseItems::create(['warehouse_issue_id'=>$issuedItems['warehouse_issue_id'],$issuedItems['item_id'],'created_by'=>$userId]);
+              InvoiceReverseItems::create(['warehouse_issue_id'=>$issuedItems['warehouse_issue_id'],'item_id'=>$issuedItems['item_id'],'created_by'=>$userId]);
               WarehouseIssueItem::where('id',$item['id'])->delete();
           }
            $warehouseIssue=WarehouseIssue::where('invoice_id',$invoiceId)->update(['is_issued'=>2]);
-      // }catch(\Exception $e){
+      }catch(\Exception $e){
            DB::rollback();
-      //      $return=array('replay'=>2,'data'=>$e);
-      //       return $return;
-      // }
-           //DB::commit();
+           $return=array('replay'=>2,'data'=>$e);
+            return $return;
+      }
+           DB::commit();
       $return=array('replay'=>0);
       return $return;
 

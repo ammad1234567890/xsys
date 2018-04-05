@@ -97,19 +97,21 @@ class GeneralController extends Controller
     //Region Managemnet
     public function regions()
     {
-        return Region::all();
+        return Region::with('city')->get();
     }
 
     public function createRegion(Request $request)
     {
         $region=$request->input('region');
+        $cityId=$request->input('cityId');
         try{
-          $createdRegion=Region::create(['name'=>$region]);
+          $createdRegion=Region::create(['city_id'=>$cityId,'name'=>$region]);
         }catch(\Exception $e){
           $return=array('return'=>1,'data'=>$e);
           return $return;
         }
-        $return=array('return'=>0,'data'=>$createdRegion);
+        $region=Region::where('id',$createdRegion['id'])->with('city')->first();
+        $return=array('return'=>0,'data'=>$region);
         return $return;
     }
 

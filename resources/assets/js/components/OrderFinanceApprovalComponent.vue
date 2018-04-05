@@ -271,7 +271,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-danger" v-if="approve_order_var.total_cost > approve_order_var.credit_limit">
-                                Forcefully Approve
+                                Approve
                             </button>
                             <button type="submit" class="btn btn-primary" v-else>
                                 Approve

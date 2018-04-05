@@ -8,6 +8,7 @@ use DB;
 use App\Product;
 use App\ProductColor;
 use App\ProductImage;
+use App\Warehouse;
 use Response;
 
 class ProductController extends Controller
@@ -34,7 +35,31 @@ class ProductController extends Controller
     public function productDetails($id){
         $productDetails=Product::where('id',$id)->with('productCategory','productColor.mainWarehouseReceiveProduct','productColor.warehouseStock.warehouse')->first();
         return $productDetails;
-    }
+    //       $warehouses=Warehouse::with(['warehouseStock.productColor.product'=>function($q){
+    //         $q->where(['id','=',15]);
+    //       }])->get();
+    //     $warehouses=Warehouse::whereRaw('warehouseStock.productColor.product->id',$id)->get();
+
+      
+    // }])->get();
+
+
+       // $warehouses= DB::table('tbl_warehouse')
+       //      ->leftJoin('tbl_warehouse_stock','warehouseStock.productColor.product.id'=15)
+       //      ->get();
+
+
+
+    //     // $warehouses=Warehouse
+    //     // ::whereHas('warehouseStock.productColor.product', function($q) use($id) {
+    //     //        $q->where('id', $id); 
+    //     // })->with('warehouseStock.productColor.product')->get();
+    //     //  $data=array('product'=>$productDetails,'warehouse'=>$warehouses);
+    //     // //return $productDetails;
+    //     // //return $warehouses;
+    //     //  return $data;
+    //      return $warehouses;
+     }
 
     public function products()
     {
@@ -46,8 +71,7 @@ class ProductController extends Controller
     //get_product_colors
     public function get_colors_by_product(Request $request){
        $id=$request->input('product_id');
-
-       // $record =  Product::with('productColor')->where('productColor.product_id',$id)->get();
+    // $record =  Product::with('productColor')->where('productColor.product_id',$id)->get();
         $record = ProductColor::with('product')->where('product_id',$id)->get();
         return Response::json($record);
     }
@@ -80,7 +104,10 @@ class ProductController extends Controller
         $productColors=$request->input('finds');
         $images=array();
         $userId=Auth::user()->id;
-        try{
+        $productColors=$request->input('finds');
+
+        echo $twoG_name= $request->input('two_G_name');
+       /* try{
         DB::beginTransaction();
         $product=Product::create(['category_id'=>$productCategoryId,'name'=>$name,'release_date'=>$releaseDate,'created_by'=>$userId]);//create product
         foreach ($productColors as $productColor) {
@@ -115,7 +142,7 @@ class ProductController extends Controller
       DB::commit();
       $CreatedProduct=Product::where('id',$product->id)->with('productColor.productImages')->with('productCategory')->get();
       $return=array('replay'=>0,'data'=>$CreatedProduct);
-      return $return;
+      return $return; */
     }
 
     /**

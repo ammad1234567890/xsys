@@ -42,47 +42,49 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td class=""><b>Category:</b> </td>
-                                <td>{{productDetails.product_category.name}}</td>
+
+                           <tr>
+                               <td class=""><b>Category:</b> </td>
+                               <td>{{productDetails.product_category.name}}</td>
+                           </tr>
+                           <tr>
+                               <td><b>Model Name:</b> </td>
+                               <td>{{productDetails.name}}</td>
+                           </tr>
+                           <tr>
+                               <td><b>Release Date:</b> </td>
+                               <td>{{productDetails.release_date|moment()}}</td>
+                           </tr>
+                           <tr>
+                               <th>Color</th>
+                               <th>Quantity</th>
+                               <th>Discount</th>
+                               <th>Price</th>
+                               <th>Warehouse</th>
+                               <th>Address</th>
+                           </tr>
+                           <tr>
+                              <td><p v-for="productColor in productDetails.product_color">{{productColor.color}}</p></td>
+                              <td><p v-for="productColor in productDetails.product_color">
+                                  <span v-for="quantity in productColor.warehouse_stock">{{quantity.product_qty}} <span style="color:green;">In stock</span></span>
+                                  </p>
+                              </td>
+                              <td><p v-for="productDiscount in productDetails.product_color">{{productDiscount.discount}}% </p></td>
+                              <td><p v-for="productPrice in productDetails.product_color">{{productPrice.price |currency('Rs')}} </p></td>
+                              <td><p v-for="productColor in productDetails.product_color">
+                                     <span v-for="warehousestock in productColor.warehouse_stock">
+                                             <span>{{warehousestock.warehouse.name}}</span>
+                                     </span>
+                                 </p>
+                              </td>
+                              <td><p v-for="productColor in productDetails.product_color">
+                                     <span v-for="warehousestock in productColor.warehouse_stock">
+                                             <span>{{warehousestock.warehouse.address}}</span>
+                                     </span>
+                                 </p>
+                              </td>
                             </tr>
-                            <tr>
-                                <td><b>Model Name:</b> </td>
-                                <td>{{productDetails.name}}</td>
-                            </tr>
-                            <tr>
-                                <td><b>Release Date:</b> </td>
-                                <td>{{productDetails.release_date|moment()}}</td>
-                            </tr>
-                            <tr>
-                                <th>Color</th>
-                                <th>Quantity</th>
-                                <th>Discount</th>
-                                <th>Price</th>
-                                <th>Warehouse</th>
-                                <th>Address</th>
-                            </tr>
-                            <tr>
-                                <td><p v-for="productColor in productDetails.product_color">{{productColor.color}}</p></td>
-                                <td><p v-for="productColor in productDetails.product_color">
-                                    <span v-for="quantity in productColor.warehouse_stock">{{quantity.product_qty}} <span style="color:green;">In stock</span></span>
-                                    </p>
-                                </td>
-                                <td><p v-for="productDiscount in productDetails.product_color">{{productDiscount.discount}}% </p></td>
-                                <td><p v-for="productPrice in productDetails.product_color">{{productPrice.price |currency('Rs')}} </p></td>
-                                <td><p v-for="productColor in productDetails.product_color">
-                                       <span v-for="warehousestock in productColor.warehouse_stock">
-                                               <span>{{warehousestock.warehouse.name}}</span>
-                                       </span>
-                                   </p>
-                                </td>
-                                <td><p v-for="productColor in productDetails.product_color">
-                                       <span v-for="warehousestock in productColor.warehouse_stock">
-                                               <span>{{warehousestock.warehouse.address}}</span>
-                                       </span>
-                                   </p>
-                                </td>
-                            </tr>
+
                         </tbody>
                     </table>
                 </div>

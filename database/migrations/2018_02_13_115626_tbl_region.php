@@ -15,7 +15,9 @@ class TblRegion extends Migration
     {
         Schema::create('tbl_region',function(Blueprint $table){
             $table->increments('id');
+            $table->unsignedInteger('city_id')->index();
             $table->string('name');
+            $table->foreign('city_id')->references('id')->on('tbl_city')->onDelete('cascade');
             $table->timestamps();
         });
     }

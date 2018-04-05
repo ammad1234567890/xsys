@@ -34,7 +34,7 @@
                             <td v-else>{{receive.qa_description}}</td>
                             <td>{{receive.receive_status.status}}</td>
                             <td>{{receive.created_at | moment}}</td>
-                            <td><button class="btn btn-success btn-xs" v-on:click="show_products(index)">Details</button></td>
+                            <td><button class="btn btn-success btn-xs" v-on:click="show_products(index)" title="View Details">Details</button></td>
                              <td class="text-center"><!-- <span v-if="receive.main_warehouse_receive!=null">Received</span> -->
                               <button v-if="receive.main_warehouse_receive!=null" class="btn btn-success btn-xs" v-on:click="getMainWarehouseReceive(receive)" title="Receive">Add Items</button>
                               <button v-if="receive.main_warehouse_receive==null" class="btn btn-success btn-xs" v-on:click="createMainWarehouseReceive(receive)" title="Receive">Receive</button></td>
@@ -112,7 +112,23 @@
                             <div class="col-md-3">
                                 <input type="text" v-model="imei" class="textbox">
                             </div>
-                            <div class="col-md-1"></div>
+                            <!-- <div class="col-md-1"></div> -->
+                            <div v-if="manual == false" class="col-md-1" style="margin-left: -14px; margin-top: 5px;">
+                              <button class="btn btn-primary btn-xs" @click="addIMEI">Add IMEI</button>
+                            </div>
+                            <div v-else class="col-md-1"></div>
+
+                            <div class="col-md-1">
+                              <label for="">Manual</label>
+                            </div>
+                            <div class="col-md-1" style="margin-left: -28px;">
+                              <label class="switch">
+                              <input v-model="manual" type="checkbox">
+                              <span class="slider round"></span></label>
+                            </div>
+                            <div class="col-md-2" style="margin-left: -40px;">
+                                <label for="">Automatic</label>
+                            </div>
                           </div>
                           <div class="row">
                             <div class="col-md-12" style="margin-top: 10px;">
@@ -240,6 +256,7 @@ import vSelect from "vue-select"
               quantity:0,
               warehouse_id:'',
           },
+          manual:true,
           all_receive_orders:[],
           showReceive:false,
           mainWarehouseReceive:'',
@@ -308,8 +325,10 @@ import vSelect from "vue-select"
             })
         },
         watch:{
+
           imei:function(){
-              if(this.imei!=''){
+              if(this.manual==true){
+                if(this.imei!=''){
                  if(this.newItems.quantity < this.product_qty){
                   this.newItems.imei.push(this.imei);
                   this.newItems.quantity +=1;
@@ -319,7 +338,9 @@ import vSelect from "vue-select"
                 }
                 
                 //console.log(this.newItems.imei);
-            }
+            }  
+          }
+              
           },
           product:function(){
             if(this.product.id!=''){
@@ -344,6 +365,18 @@ import vSelect from "vue-select"
 
         },
         methods:{
+          addIMEI(e){
+            e.preventDefault();
+            if(this.imei!=''){
+                 if(this.newItems.quantity < this.product_qty){
+                  this.newItems.imei.push(this.imei);
+                  this.newItems.quantity +=1;
+                  this.imei='';  
+                }else{
+                  alert("Product Limit Exceeded");
+                }               
+            } 
+          },
           showDetails(index){
             //console.log(this.all_receive_orders[index]);
            
@@ -492,5 +525,62 @@ import vSelect from "vue-select"
           $("#consignment_table").DataTable().destroy();
         }
 </script>
+<style type="text/css">
+  .switch {
+  position: relative;
+  display: inline-block;
+  width: 30px;
+  height: 15px;
+  margin-top: 7px;
+}
 
+.switch input {display:none;}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 15px;
+  width: 15px;
+  left: 1px;
+  bottom: 1px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(15px);
+  -ms-transform: translateX(15px);
+  transform: translateX(15px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+</style>
 

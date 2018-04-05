@@ -53,8 +53,10 @@
                                 </div>
                                 <hr/>
 
+
+
                                 <div class="panel-group">
-                                    <div class="panel panel-default">
+                                    <div class="panel panel-info">
                                         <div class="panel-heading">
                                             <h4 class="panel-title">
                                                 <a data-toggle="collapse" href="#collapse-network"><b>Network:</b></a>
@@ -64,35 +66,34 @@
                                             <div class="panel-body">
                                                 <div class="row">
                                                     <div class="col-md-2">Technology</div>
-                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-3"><input type="text" class="textbox" v-model="newProduct.technology_name" name="technology"></div>
                                                     <div class="col-md-1"></div>
                                                     <div class="col-md-2">2G Bands</div>
-                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-3"><input type="text" class="textbox" v-model="newProduct.two_G_name" name="technology"></div>
                                                     <div class="col-md-1"></div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-2">3G Bands</div>
-                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-3"><input type="text" class="textbox" v-model="newProduct.three_G_name" name="technology"></div>
                                                     <div class="col-md-1"></div>
                                                     <div class="col-md-2">4G Bands</div>
-                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-3"><input type="text" class="textbox" v-model="newProduct.four_G_name" name="technology"></div>
                                                     <div class="col-md-1"></div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-2">GPRS</div>
-                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-3"><input type="text" class="textbox" v-model="newProduct.gprs_name" name="technology"></div>
                                                     <div class="col-md-1"></div>
                                                     <div class="col-md-2">Edge</div>
-                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-3"><input type="text" class="textbox" v-model="newProduct.edge_name" name="technology"></div>
                                                     <div class="col-md-1"></div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="panel-group">
-                                    <div class="panel panel-default">
+                                    <div class="panel panel-info">
                                         <div class="panel-heading">
                                             <h4 class="panel-title">
                                                 <a data-toggle="collapse" href="#collapse-body"><b>Body:</b></a>
@@ -120,9 +121,8 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="panel-group">
-                                    <div class="panel panel-default">
+                                    <div class="panel panel-info">
                                         <div class="panel-heading">
                                             <h4 class="panel-title">
                                                 <a data-toggle="collapse" href="#collapse-camera"><b>Camera:</b></a>
@@ -150,9 +150,8 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="panel-group">
-                                    <div class="panel panel-default">
+                                    <div class="panel panel-info">
                                         <div class="panel-heading">
                                             <h4 class="panel-title">
                                                 <a data-toggle="collapse" href="#collapse-Platform"><b>Platform:</b></a>
@@ -180,9 +179,8 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="panel-group">
-                                    <div class="panel panel-default">
+                                    <div class="panel panel-info">
                                         <div class="panel-heading">
                                             <h4 class="panel-title">
                                                 <a data-toggle="collapse" href="#collapse-Memory"><b>Memory:</b></a>
@@ -203,7 +201,7 @@
                                     </div>
                                 </div>
                                 <div class="panel-group">
-                                    <div class="panel panel-default">
+                                    <div class="panel panel-info">
                                         <div class="panel-heading">
                                             <h4 class="panel-title">
                                                 <a data-toggle="collapse" href="#collapse-Comms"><b>Comms:</b></a>
@@ -239,9 +237,8 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="panel-group">
-                                    <div class="panel panel-default">
+                                    <div class="panel panel-info">
                                         <div class="panel-heading">
                                             <h4 class="panel-title">
                                                 <a data-toggle="collapse" href="#collapse-Battery"><b>Battery:</b></a>
@@ -267,9 +264,8 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="panel-group">
-                                    <div class="panel panel-default">
+                                    <div class="panel panel-info">
                                         <div class="panel-heading">
                                             <h4 class="panel-title">
                                                 <a data-toggle="collapse" href="#collapse-Features"><b>Features:</b></a>
@@ -287,16 +283,15 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-2">Browser</div>
-                                                    <div class="col-md-3"><input type="text" class="textbox"  required></div>
+                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
                                                     <div class="col-md-1"></div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="panel-group">
-                                    <div class="panel panel-default">
+                                    <div class="panel panel-info">
                                         <div class="panel-heading">
                                             <h4 class="panel-title">
                                                 <a data-toggle="collapse" href="#collapse-Display"><b>Display:</b></a>
@@ -314,15 +309,15 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-2">Resolution</div>
-                                                    <div class="col-md-3"><input type="text" class="textbox"  required></div>
+                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
                                                     <div class="col-md-1"></div>
                                                     <div class="col-md-2">Multi-Touch</div>
-                                                    <div class="col-md-3"><input type="text" class="textbox"  required></div>
+                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
                                                     <div class="col-md-1"></div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-2">Protection</div>
-                                                    <div class="col-md-3"><input type="text" class="textbox"  required></div>
+                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
                                                     <div class="col-md-1"></div>
 
                                                 </div>
@@ -330,9 +325,8 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="panel-group">
-                                    <div class="panel panel-default">
+                                    <div class="panel panel-info">
                                         <div class="panel-heading">
                                             <h4 class="panel-title">
                                                 <a data-toggle="collapse" href="#collapse-Sound"><b>Sound:</b></a>
@@ -350,7 +344,7 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-2">3.5mm Jack</div>
-                                                    <div class="col-md-3"><input type="text" class="textbox"  required></div>
+                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
                                                     <div class="col-md-1"></div>
 
                                                 </div>
@@ -582,27 +576,12 @@
                 productCategory:'',
                 releaseDate:'',
                 finds: [],
-                network:{
-                    technology:'',
-                    twog_bands:'',
-                    threeg_bands:'',
-                    fourg_bands:'',
-                    gprs:'',
-                    edge:'',
-                },
-                body:{
-                    dimension:'',
-                    weight:'',
-                    build:'',
-                    fourg_bands:'',
-                    sim:'',
-                },
-                camera:{
-                    primary:'',
-                    secondary:'',
-                    video:'',
-                    features:'',
-                },
+                technology_name:'',
+                two_G_name:'',
+                three_G_name:'',
+                four_G_name:'',
+                gprs:'',
+                edge:'',
             }
           }
         },
@@ -677,6 +656,7 @@
             createProduct:function(e){
                 e.preventDefault();
                 axios.post('./createProduct',this.newProduct).then(response=>{
+                    alert(response.data);
                     if(response.data.replay==0){
                       console.log(response.data.data[0]);
                       this.allProducts.unshift(response.data.data[0]);

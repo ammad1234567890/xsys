@@ -2963,16 +2963,16 @@ table.table thead .sorting_desc_disabled,
   font-size: 16px;
 }
 .sorting:before {
-  content: "\f0dc";
+  /* content: "\f0de"; */
   color: #bbb;
 }
 .sorting_asc:before,
 .sorting_asc_disabled:before {
-  content: "\f0de";
+  /* content: "\f0de"; */
 }
 .sorting_desc:before,
 .sorting_desc_disabled:before {
-  content: "\f0dd";
+  /* content: "\f0dd"; */
 }
 .sorting_asc_disabled:before,
 .sorting_desc_disabled:before {

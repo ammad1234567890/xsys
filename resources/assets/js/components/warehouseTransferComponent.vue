@@ -43,18 +43,19 @@
                                 </tr>
                               </thead>
                               <tbody>
-                                <tr v-for="(stock,index) in showDetails">
-                                  <td><input type="checkbox"  name=""></td>
+                                <tr v-for="(stock,index) in newTransfer.details">
+                                  <td><input type="checkbox" v-model="stock.isTrue"  name=""></td>
                                   <td>{{index + 1}}</td>                                 
-                                  <td>{{stock.product_color.product.name}}</td>
-                                  <td>{{stock.product_color.color}}</td>
-                                  <td>{{stock.product_qty}}</td>
-                                  <td><input type="number" name="" min="0" v-bind:max="stock.product_qty"></td>
+                                  <td>{{stock.productColor.product.name}}</td>
+                                  <td>{{stock.productColor.color}}</td>
+                                  <td>{{stock.productQuantity}}</td>
+                                  <td><input type="number" v-model="stock.transferQty" name="" min="0" v-bind:max="stock.productQuantity"></td>
                                   
                                 </tr>
                               </tbody>
                             </table>
                             </div>
+                            <button @click="transfer">Transfer</button>
                     </div>
                 </div>
             </div>
@@ -84,19 +85,8 @@
         },
         created(){
             axios.get('./currentWarehouse').then(response=>{
-            this.currentWarehouse=response.data.name;
-            this.currentWarehouseId=response.data.id;            
-            //console.log(response.data);
-                // axios.get('./currentWarehouseData/'+this.currentWarehouseId).then(response=>{
-                //     this.productDetails=response.data;
-                //     this.productColor=this.productDetails.product_color;
-                //     console.log(this.productDetails);
-                //     let idArray=[];
-                //     for(var i=0;i<this.productDetails.length;i++){
-                //         idArray.push(this.productDetails[i].productColor.product.id);
-                //     }  
-                //});
-
+                this.currentWarehouse=response.data.name;
+                this.currentWarehouseId=response.data.id;
             });  
 
             axios.get('./allWarehouse').then(response=>{
@@ -106,16 +96,23 @@
 
            axios.get('./allStock').then(response=>{            
             this.showDetails=response.data;
-            this.newTransfer.details=response.data;
             console.log(response.data);
+            console.log(response.data);
+            for(var i=0;i<response.data.length;i++){
+                this.newTransfer.details.push({isTrue:false,warehouseId:response.data[i].id,productColor:response.data[i].product_color,productColorId:response.data[i].product_color_id,productQuantity:response.data[i].product_qty,transferQty:0});
+            }
+            
+            console.log(this.newTransfer.details);
           });
         },
         methods:{
-            //     isNumber: function (evt) {
-            //     var theEvent = evt || window.event;
-            //     theEvent.returnValue = false;
-            // }
-            
+            transfer(e){
+                e.preventDefault();
+                console.log(this.newTransfer);
+                axios.post('./transferReq',this.newTransfer).then(response=>{
+                    console.log(response.data);
+                });
+            }            
         }
     }
 </script>

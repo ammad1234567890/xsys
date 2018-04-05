@@ -312,10 +312,11 @@ Route::get('/productDetailsView','ProductController@productDetailView');
 //warehouseTransfer
 Route::get('/warehouseTransfer','WarehouseTransferController@index');
 Route::get('/currentWarehouseData/{id}','WarehouseTransferController@warehouseProductDetails');
+Route::post('/transferReq','WarehouseTransferController@transferReq');
 //warehouseTransfer
 
 
 //ProductSpecs
-Route::get('/product_specs','ProductController@product_specs');
+Route::get('/our_products','ProductController@our_products');
 
 //ProductSpecs

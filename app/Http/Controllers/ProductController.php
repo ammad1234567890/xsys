@@ -10,6 +10,7 @@ use App\ProductColor;
 use App\ProductImage;
 use App\Warehouse;
 use Response;
+use App\SpecProduct;
 
 class ProductController extends Controller
 {
@@ -106,11 +107,60 @@ class ProductController extends Controller
         $userId=Auth::user()->id;
         $productColors=$request->input('finds');
 
-        echo $twoG_name= $request->input('two_G_name');
-       /* try{
+        $technology= $request->input('technology_name');
+        $twoG_name= $request->input('two_G_name');
+        $threeG_name= $request->input('three_G_name');
+        $fourG_name= $request->input('four_G_name');
+        $gprs= $request->input('gprs');
+        $edge= $request->input('edge');
+        $dimension= $request->input('dimension');
+        $weight= $request->input('weight');
+        $build= $request->input('build');
+        $sim= $request->input('sim');
+
+        $primary= $request->input('primary');
+        $secondary= $request->input('secondary');
+        $video= $request->input('video');
+        $feature= $request->input('feature');
+
+        $os= $request->input('os');
+        $chipset= $request->input('chipset');
+        $cpu= $request->input('cpu');
+        $gpu= $request->input('gpu');
+
+        $card_slot= $request->input('card_slot');
+        $internal= $request->input('internal');
+
+        $wlan= $request->input('wlan');
+        $bluetooth= $request->input('bluetooth');
+        $gps= $request->input('gps');
+        $nfc= $request->input('nfc');
+        $radio= $request->input('radio');
+        $usb= $request->input('usb');
+
+        $type= $request->input('type');
+        $talk_type= $request->input('talk_type');
+        $music_play= $request->input('music_play');
+
+        $sensor= $request->input('sensor');
+        $messaging= $request->input('messaging');
+        $browser= $request->input('browser');
+
+        $display_type= $request->input('display_type');
+        $size= $request->input('size');
+        $resolution= $request->input('resolution');
+        $multi_touch= $request->input('multi_touch');
+        $protection= $request->input('protection');
+
+        $alert_types= $request->input('alert_types');
+        $loud_speaker= $request->input('loud_speaker');
+        $jack= $request->input('jack');
+        try{
         DB::beginTransaction();
         $product=Product::create(['category_id'=>$productCategoryId,'name'=>$name,'release_date'=>$releaseDate,'created_by'=>$userId]);//create product
-        foreach ($productColors as $productColor) {
+
+
+            foreach ($productColors as $productColor) {
             $createProductColor=ProductColor::create(['product_id'=>$product->id,'color'=>$productColor['color'],'price'=>$productColor['price'],'discount'=>$productColor['discount'],'created_by'=>$userId]);//create product color
             $images=$productColor['product_images'];
             foreach($images as $image) {
@@ -140,9 +190,53 @@ class ProductController extends Controller
         return $return;
       }
       DB::commit();
+        $product_id=$product->id;
+        $insert_array=array(
+            array('specs_sub_category_id'=>1, 'product_id'=>$product_id, 'detail_name'=>$technology),
+            array('specs_sub_category_id'=>2, 'product_id'=>$product_id, 'detail_name'=>$twoG_name),
+            array('specs_sub_category_id'=>3, 'product_id'=>$product_id, 'detail_name'=>$threeG_name),
+            array('specs_sub_category_id'=>4, 'product_id'=>$product_id, 'detail_name'=>$fourG_name),
+            array('specs_sub_category_id'=>5, 'product_id'=>$product_id, 'detail_name'=>$gprs),
+            array('specs_sub_category_id'=>6, 'product_id'=>$product_id, 'detail_name'=>$edge),
+            array('specs_sub_category_id'=>11, 'product_id'=>$product_id, 'detail_name'=>$dimension),
+            array('specs_sub_category_id'=>12, 'product_id'=>$product_id, 'detail_name'=>$weight),
+            array('specs_sub_category_id'=>13, 'product_id'=>$product_id, 'detail_name'=>$build),
+            array('specs_sub_category_id'=>14, 'product_id'=>$product_id, 'detail_name'=>$sim),
+            array('specs_sub_category_id'=>7, 'product_id'=>$product_id, 'detail_name'=>$primary),
+            array('specs_sub_category_id'=>8, 'product_id'=>$product_id, 'detail_name'=>$secondary),
+            array('specs_sub_category_id'=>9, 'product_id'=>$product_id, 'detail_name'=>$video),
+            array('specs_sub_category_id'=>10, 'product_id'=>$product_id, 'detail_name'=>$feature),
+            array('specs_sub_category_id'=>16, 'product_id'=>$product_id, 'detail_name'=>$os),
+            array('specs_sub_category_id'=>17, 'product_id'=>$product_id, 'detail_name'=>$chipset),
+            array('specs_sub_category_id'=>18, 'product_id'=>$product_id, 'detail_name'=>$cpu),
+            array('specs_sub_category_id'=>19, 'product_id'=>$product_id, 'detail_name'=>$gpu),
+            array('specs_sub_category_id'=>20, 'product_id'=>$product_id, 'detail_name'=>$card_slot),
+            array('specs_sub_category_id'=>21, 'product_id'=>$product_id, 'detail_name'=>$internal),
+            array('specs_sub_category_id'=>22, 'product_id'=>$product_id, 'detail_name'=>$wlan),
+            array('specs_sub_category_id'=>23, 'product_id'=>$product_id, 'detail_name'=>$bluetooth),
+            array('specs_sub_category_id'=>24, 'product_id'=>$product_id, 'detail_name'=>$gps),
+            array('specs_sub_category_id'=>25, 'product_id'=>$product_id, 'detail_name'=>$nfc),
+            array('specs_sub_category_id'=>26, 'product_id'=>$product_id, 'detail_name'=>$radio),
+            array('specs_sub_category_id'=>27, 'product_id'=>$product_id, 'detail_name'=>$usb),
+            array('specs_sub_category_id'=>29, 'product_id'=>$product_id, 'detail_name'=>$type),
+            array('specs_sub_category_id'=>30, 'product_id'=>$product_id, 'detail_name'=>$talk_type),
+            array('specs_sub_category_id'=>31, 'product_id'=>$product_id, 'detail_name'=>$music_play),
+        array('specs_sub_category_id'=>32, 'product_id'=>$product_id, 'detail_name'=>$sensor),
+        array('specs_sub_category_id'=>33, 'product_id'=>$product_id, 'detail_name'=>$messaging),
+        array('specs_sub_category_id'=>34, 'product_id'=>$product_id, 'detail_name'=>$browser),
+        array('specs_sub_category_id'=>35, 'product_id'=>$product_id, 'detail_name'=>$display_type),
+        array('specs_sub_category_id'=>36, 'product_id'=>$product_id, 'detail_name'=>$size),
+        array('specs_sub_category_id'=>37, 'product_id'=>$product_id, 'detail_name'=>$resolution),
+        array('specs_sub_category_id'=>38, 'product_id'=>$product_id, 'detail_name'=>$multi_touch),
+        array('specs_sub_category_id'=>39, 'product_id'=>$product_id, 'detail_name'=>$protection),
+        array('specs_sub_category_id'=>41, 'product_id'=>$product_id, 'detail_name'=>$alert_types),
+        array('specs_sub_category_id'=>42, 'product_id'=>$product_id, 'detail_name'=>$loud_speaker),
+        array('specs_sub_category_id'=>43, 'product_id'=>$product_id, 'detail_name'=>$jack),
+        );
+        SpecProduct::insert($insert_array);
       $CreatedProduct=Product::where('id',$product->id)->with('productColor.productImages')->with('productCategory')->get();
       $return=array('replay'=>0,'data'=>$CreatedProduct);
-      return $return; */
+      return $return;
     }
 
     /**
@@ -284,7 +378,9 @@ class ProductController extends Controller
     }
 
 
-    public function product_specs(){
-        return View('product_specs');
+    public function our_products(){
+        return View('our_products');
     }
+
+
 }

@@ -372,8 +372,8 @@
                                     </li>
 
                                     <li>
-                                        <a href="{{ url('/product_specs') }}">
-                                            Add Product Specification
+                                        <a href="{{ url('/our_products') }}">
+                                            Our Products
                                         </a>
                                     </li>
 
@@ -526,8 +526,8 @@
                                     <a href="{{ url('importIMEI') }}">
                                         <li> Import IMEI</li>
                                     </a>
-                                    <a href="{{ url('/product_specs') }}">
-                                        <li> Add Product Specification</li>
+                                    <a href="{{ url('/our_products') }}">
+                                        <li> Our Products</li>
                                     </a>
                                 </ul>
                             </div>
@@ -706,11 +706,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-
-
-
-
     <!-- Scripts -->
     <footer class="footer">
 
@@ -817,6 +812,11 @@
         </div> <!-- /.container -->
 
     </footer>
+        </div>
+
+
+
+
 
     </div>
 

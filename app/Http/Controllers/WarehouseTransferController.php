@@ -15,4 +15,21 @@ class WarehouseTransferController extends Controller
     	$warehouseData=WarehouseStock::where('warehouse_id',$id)->with('productColor.product')->get();
     	return $warehouseData;
     }
+
+    public function transferReq(Request $request)
+    {
+    	$subWarehouse=$request->input('subWarehouse');
+    	$details=$request->input('details');    	
+    	foreach ($details as $detail) {
+    		if($detail['isTrue']==True){    			
+    			$warehouseId=$detail['warehouseId'];
+    			$productColorId=$detail['productColorId'];
+    			// if(WarehouseStock::where('warehouse_id',$subWarehouse['id']))
+    		}
+
+    	}
+    	return $data;
+    }
+
+    
 }

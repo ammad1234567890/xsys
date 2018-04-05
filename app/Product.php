@@ -28,6 +28,10 @@ class Product extends Model
         return $this->hasMany('App\IMEI');
     }
 
+    public function specification(){
+        return $this->hasMany('App\SpecProduct','product_id');
+    }
+
 
     protected $table="tbl_product";
 }

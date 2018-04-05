@@ -4,35 +4,25 @@
             <div class="card headcolor">
                 <div class="card-header">
                     <h3 class="card-title pad-bot">
-                        <h4 class="heading-inline" style="text-transform: uppercase; "> Add Product Specification</h4> </h3>
+                        <h4 class="heading-inline" style="text-transform: uppercase; "> Our Products</h4> </h3>
                 </div>
                 <hr/>
             </div>
 
-                <div class="panel panel-info">
-                    <div class="panel-heading">
-                        <h2 class="panel-title">Product Specification</h2>
+            <div class="row">
+                <div class="col-md-3" v-for="(product, index) in allProducts">
+                    <div class="image" v-for="(product_color,index) in product.product_color" v-if="index<1" style="height:200px; width: 100%;">
+                        <img :src="'../public/product_img/'+product_color.product_images[0].image" height="100%" width="100%" style="text-align:center;"/>
                     </div>
-                    <div class="panel-body">
-                        <div class="col-md-2"><label>Phone Category</label></div>
-                        <div class="col-md-3">
-                            <select class="textbox_dropdown" required>
-                                <option>Select Phone Category</option>
+                    <div v-else>
 
-                            </select>
-                        </div>
-                        <div class="col-md-1"></div>
-
-                        <div class="col-md-2"><label>Products</label></div>
-                        <div class="col-md-3">
-                            <select class="textbox_dropdown" required>
-                                <option>Select Products</option>
-
-                            </select>
-                        </div>
-                        <div class="col-md-1"></div>
                     </div>
+                    <div class="heading" style="text-align:center;">
+                        <h3>{{product.name}}</h3>
+                    </div>
+
                 </div>
+            </div>
 
         </div>
     </div>
@@ -43,16 +33,22 @@
     export default {
         components: {vSelect},
         data() {
-            return {}
+            return {
+                allProducts:[],
+            }
         },
         mounted() {
             console.log('Component mounted.')
         },
         created() {
+            axios.get('./allProducts').then(response=>{
+                this.allProducts=response.data.data;
+                this.path=response.data.path;
+                console.log(this.allProducts);
+            });
         },
         methods: {
 
         }
 
-    }
-</script>
+   

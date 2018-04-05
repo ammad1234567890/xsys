@@ -82,10 +82,10 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-2">GPRS</div>
-                                                    <div class="col-md-3"><input type="text" class="textbox" v-model="newProduct.gprs_name" name="technology"></div>
+                                                    <div class="col-md-3"><input type="text" class="textbox" v-model="newProduct.gprs" name="technology"></div>
                                                     <div class="col-md-1"></div>
                                                     <div class="col-md-2">Edge</div>
-                                                    <div class="col-md-3"><input type="text" class="textbox" v-model="newProduct.edge_name" name="technology"></div>
+                                                    <div class="col-md-3"><input type="text" class="textbox" v-model="newProduct.edge" name="technology"></div>
                                                     <div class="col-md-1"></div>
                                                 </div>
                                             </div>
@@ -103,18 +103,18 @@
                                             <div class="panel-body">
                                                 <div class="row">
                                                     <div class="col-md-2">Dimension</div>
-                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-3"><input type="text" class="textbox" v-model="newProduct.dimension"></div>
                                                     <div class="col-md-1"></div>
                                                     <div class="col-md-2">Weight</div>
-                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-3"><input type="text" class="textbox" v-model="newProduct.weight"></div>
                                                     <div class="col-md-1"></div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-2">Build</div>
-                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-3"><input type="text" class="textbox" v-model="newProduct.build"></div>
                                                     <div class="col-md-1"></div>
                                                     <div class="col-md-2">SIM</div>
-                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-3"><input type="text" class="textbox" v-model="newProduct.sim"></div>
                                                     <div class="col-md-1"></div>
                                                 </div>
                                             </div>
@@ -132,18 +132,18 @@
                                             <div class="panel-body">
                                                 <div class="row">
                                                     <div class="col-md-2">Primary</div>
-                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-3"><input type="text" class="textbox" v-model="newProduct.primary"></div>
                                                     <div class="col-md-1"></div>
                                                     <div class="col-md-2">Secondary</div>
-                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-3"><input type="text" class="textbox" v-model="newProduct.secondary"></div>
                                                     <div class="col-md-1"></div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-2">Video</div>
-                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-3"><input type="text" class="textbox" v-model="newProduct.video"></div>
                                                     <div class="col-md-1"></div>
                                                     <div class="col-md-2">Features</div>
-                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-3"><input type="text" class="textbox" v-model="newProduct.feature"></div>
                                                     <div class="col-md-1"></div>
                                                 </div>
                                             </div>
@@ -161,18 +161,18 @@
                                             <div class="panel-body">
                                                 <div class="row">
                                                     <div class="col-md-2">OS</div>
-                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-3"><input type="text" class="textbox" v-model="newProduct.os"></div>
                                                     <div class="col-md-1"></div>
                                                     <div class="col-md-2">Chipset</div>
-                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-3"><input type="text" class="textbox" v-model="newProduct.chipset"></div>
                                                     <div class="col-md-1"></div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-2">CPU</div>
-                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-3"><input type="text" class="textbox" v-model="newProduct.cpu"></div>
                                                     <div class="col-md-1"></div>
                                                     <div class="col-md-2">GPU</div>
-                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-3"><input type="text" class="textbox" v-model="newProduct.gpu"></div>
                                                     <div class="col-md-1"></div>
                                                 </div>
                                             </div>
@@ -190,10 +190,10 @@
                                             <div class="panel-body">
                                                 <div class="row">
                                                     <div class="col-md-2">Card Slot</div>
-                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-3"><input type="text" class="textbox" v-model="newProduct.card_slot"></div>
                                                     <div class="col-md-1"></div>
                                                     <div class="col-md-2">Internal</div>
-                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-3"><input type="text" class="textbox" v-model="newProduct.internal"></div>
                                                     <div class="col-md-1"></div>
                                                 </div>
                                             </div>
@@ -211,26 +211,26 @@
                                             <div class="panel-body">
                                                 <div class="row">
                                                     <div class="col-md-2">WLAN</div>
-                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-3"><input type="text" class="textbox" v-model="newProduct.wlan"></div>
                                                     <div class="col-md-1"></div>
                                                     <div class="col-md-2">Bluetooth</div>
-                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-3"><input type="text" class="textbox" v-model="newProduct.bluetooth"></div>
                                                     <div class="col-md-1"></div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-2">GPS</div>
-                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-3"><input type="text" class="textbox" v-model="newProduct.gps"></div>
                                                     <div class="col-md-1"></div>
                                                     <div class="col-md-2">NFC</div>
-                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-3"><input type="text" class="textbox" v-model="newProduct.nfc"></div>
                                                     <div class="col-md-1"></div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-2">Radio</div>
-                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-3"><input type="text" class="textbox" v-model="newProduct.radio"></div>
                                                     <div class="col-md-1"></div>
                                                     <div class="col-md-2">USB</div>
-                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-3"><input type="text" class="textbox" v-model="newProduct.usb"></div>
                                                     <div class="col-md-1"></div>
                                                 </div>
                                             </div>
@@ -248,15 +248,15 @@
                                             <div class="panel-body">
                                                 <div class="row">
                                                     <div class="col-md-2">Type</div>
-                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-3"><input type="text" class="textbox" v-model="newProduct.type"></div>
                                                     <div class="col-md-1"></div>
                                                     <div class="col-md-2">Talk Type</div>
-                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-3"><input type="text" class="textbox" v-model="newProduct.talk_type"></div>
                                                     <div class="col-md-1"></div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-2">Music Play</div>
-                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-3"><input type="text" class="textbox" v-model="newProduct.music_play"></div>
                                                     <div class="col-md-1"></div>
 
                                                 </div>
@@ -274,16 +274,17 @@
                                         <div id="collapse-Features" class="panel-collapse collapse">
                                             <div class="panel-body">
                                                 <div class="row">
+
                                                     <div class="col-md-2">Sensors</div>
-                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-3"><input type="text" class="textbox" v-model="newProduct.sensor"></div>
                                                     <div class="col-md-1"></div>
                                                     <div class="col-md-2">Messaging</div>
-                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-3"><input type="text" class="textbox" v-model="newProduct.messaging"></div>
                                                     <div class="col-md-1"></div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-2">Browser</div>
-                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-3"><input type="text" class="textbox" v-model="newProduct.browser"></div>
                                                     <div class="col-md-1"></div>
                                                 </div>
                                             </div>
@@ -298,26 +299,29 @@
                                             </h4>
                                         </div>
                                         <div id="collapse-Display" class="panel-collapse collapse">
+
+
+
                                             <div class="panel-body">
                                                 <div class="row">
                                                     <div class="col-md-2">Type</div>
-                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-3"><input type="text" class="textbox" v-model="newProduct.display_type"></div>
                                                     <div class="col-md-1"></div>
                                                     <div class="col-md-2">Size</div>
-                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-3"><input type="text" class="textbox" v-model="newProduct.size"></div>
                                                     <div class="col-md-1"></div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-2">Resolution</div>
-                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-3"><input type="text" class="textbox" v-model="newProduct.resolution"></div>
                                                     <div class="col-md-1"></div>
                                                     <div class="col-md-2">Multi-Touch</div>
-                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-3"><input type="text" class="textbox" v-model="newProduct.multi_touch"></div>
                                                     <div class="col-md-1"></div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-2">Protection</div>
-                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-3"><input type="text" class="textbox" v-model="newProduct.protection"></div>
                                                     <div class="col-md-1"></div>
 
                                                 </div>
@@ -336,15 +340,15 @@
                                             <div class="panel-body">
                                                 <div class="row">
                                                     <div class="col-md-2">Alert Types</div>
-                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-3"><input type="text" class="textbox" v-model="newProduct.alert_types"></div>
                                                     <div class="col-md-1"></div>
                                                     <div class="col-md-2">Loud Speaker</div>
-                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-3"><input type="text" class="textbox" v-model="newProduct.loud_speaker"></div>
                                                     <div class="col-md-1"></div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-2">3.5mm Jack</div>
-                                                    <div class="col-md-3"><input type="text" class="textbox"></div>
+                                                    <div class="col-md-3"><input type="text" class="textbox" v-model="newProduct.jack"></div>
                                                     <div class="col-md-1"></div>
 
                                                 </div>
@@ -576,12 +580,61 @@
                 productCategory:'',
                 releaseDate:'',
                 finds: [],
+                //Network
                 technology_name:'',
                 two_G_name:'',
                 three_G_name:'',
                 four_G_name:'',
                 gprs:'',
                 edge:'',
+                //body
+                dimension:'',
+                weight:'',
+                build:'',
+                sim:'',
+                //Camera
+                primary:'',
+                secondary:'',
+                video:'',
+                feature:'',
+                //plateform
+                os:'',
+                chipset:'',
+                cpu:'',
+                gpu:'',
+                //Memory
+                card_slot:'',
+                internal:'',
+                //COMMS
+                wlan:'',
+                bluetooth:'',
+                gps:'',
+                nfc:'',
+                radio:'',
+                usb:'',
+
+                //battery
+                type:'',
+                talk_type:'',
+                music_play:'',
+
+                //Features
+                sensor:'',
+                messaging:'',
+                browser:'',
+
+                //display
+                display_type:'',
+                size:'',
+                resolution:'',
+                multi_touch:'',
+                protection:'',
+
+                //Sound
+                alert_types:'',
+                loud_speaker:'',
+                jack:'',
+
             }
           }
         },
@@ -656,7 +709,7 @@
             createProduct:function(e){
                 e.preventDefault();
                 axios.post('./createProduct',this.newProduct).then(response=>{
-                    alert(response.data);
+                    //alert(response.data);
                     if(response.data.replay==0){
                       console.log(response.data.data[0]);
                       this.allProducts.unshift(response.data.data[0]);

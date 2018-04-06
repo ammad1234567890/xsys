@@ -81,7 +81,7 @@
             }
         },
         mounted() {
-            console.log('Component mounted.')
+            console.log('Component mounted.44')
         },
         created(){
             axios.get('./currentWarehouse').then(response=>{
@@ -94,15 +94,14 @@
             });
             
 
-           axios.get('./allStock').then(response=>{            
+           axios.get('./warehouseStockDetail').then(response=>{            
             this.showDetails=response.data;
-            console.log(response.data);
-            console.log(response.data);
+            // console.log(warehouseId:response.data[0].id);
             for(var i=0;i<response.data.length;i++){
-                this.newTransfer.details.push({isTrue:false,warehouseId:response.data[i].id,productColor:response.data[i].product_color,productColorId:response.data[i].product_color_id,productQuantity:response.data[i].product_qty,transferQty:0});
+                this.newTransfer.details.push({isTrue:false,warehouseId:response.data[i].warehouse_id,productColor:response.data[i].product_color,productColorId:response.data[i].product_color_id,productQuantity:response.data[i].product_qty,transferQty:0});
             }
             
-            console.log(this.newTransfer.details);
+           //console.log(this.newTransfer.details);
           });
         },
         methods:{

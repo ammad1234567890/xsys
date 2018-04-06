@@ -101,6 +101,7 @@ Vue.component('productdetail-component',require('./components/productDetailCompo
 Vue.component('warehousetransfer-component',require('./components/warehouseTransferComponent.vue'));
 Vue.component('retailerinvoicereversal-component', require('./components/RetailerInvoiceReversalComponent.vue'));
 Vue.component('productspecs-component', require('./components/ProductSpecsComponent.vue'));
+Vue.component('productspecification-component',require('./components/productSpecificationComponent.vue'));
 const app = new Vue({
     el: '#app'
 

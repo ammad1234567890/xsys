@@ -382,5 +382,14 @@ class ProductController extends Controller
         return View('our_products');
     }
 
+    public function product_specification(){
+        return View('product_specification');
+    }
+
+    public function get_product_specification($id){
+        $return=array('data'=>Product::with('productCategory','specification','specification.spec_sub_cat','specification.spec_sub_cat.spec_cat')->with('productColor.productImages')->where('is_deleted',0)->where('id',$id)->get(),'path'=>public_path());
+        return $return;
+    }
+
 
 }

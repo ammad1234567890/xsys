@@ -283,4 +283,8 @@ table thead tr th {
 
 
 
+.field_border_null{ border-color:#fff; font-weight:bold;}
+.field_border_null:hover{ border-color:#ccc; font-weight:normal;}
+
+
 

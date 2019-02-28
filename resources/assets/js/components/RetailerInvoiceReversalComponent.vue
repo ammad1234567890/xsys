@@ -16,7 +16,6 @@
                             </div>
                             <div class="col-md-6 text-right"><label><span
                                     class="h3"><strong>INVOICE Reversal</strong></span></label></div>
-
                             <div class="col-md-12">
                                 <hr>
                             </div>
@@ -43,7 +42,7 @@
                                         Logistics
                                     </div>
                                     <div class="col-md-12"><label><b>Company Tel</b> :</label> 021-35899116-7</div>
-                                    <div class="col-md-12"><label><b>Address</b> :</label> 46-C Jami Commercial</div>
+                                    <div class="col-md-12"><label><b>Address</b> :</label> Office No 1410, 14th Floor, Al.Najibi Plaza Zaibunnisa Street, Saddar, Karachi</div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="col-md-12"><label><b>Outlet Name</b> : {{ retailer_outlet.name}}</label></div>
@@ -51,15 +50,10 @@
                                     </div>
                                     <div class="col-md-12 hidden"><label><b>Payment type</b> : </label>
                                         <input type="text" :value="all_orders.payment_type_id" id="payment_type_id"/>
-                                        <!--<select id="payment_type_id">
-                                            <option v-for="(type, index) in all_payment_type" v-bind:value="type.id"
-                                                    :selected="type.id == 2">{{type.type}}
-                                            </option>
-                                        </select>-->
                                     </div>
                                     <div class="col-md-12"><label><b>Previous Balance</b> :
                                         Rs.{{previous_balance>0?previous_balance:0 | currency('')}}</label></div>
-                                    <div class="col-md-12"><label><b>Due Date</b> : {{ duedate }} </label></div>
+                                    <div class="col-md-12"><label><b>Aging Date</b> : {{ duedate }} </label></div>
                                 </div>
                             </div>
                         </div>
@@ -68,20 +62,18 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="table-responsive">
-                                <table class="table table-bordered">
+                                <table class="table table-bordered" style="margin-bottom: 0px">
                                     <thead>
                                     <tr>
-                                        <th>S.No</th>
-                                        <th>Model Name</th>
-                                        <th>Colour</th>
-                                        <th>Unit Cost (PKR)</th>
-                                        <th>Quantity</th>
-                                        <th>Discount</th>
-                                        <th>Amount (PKR)</th>
-                                        <th style="display:none;">Extra</th>
-                                        <th>Discount</th>
-                                        <th>Total Amount (PKR)</th>
-                                        <th>Action</th>
+                                        <th width="4%">S.No</th>
+                                        <th width="21%">Model Name</th>
+                                        <th width="21%">Colour</th>
+                                        <th width="10%">Unit Cost (PKR)</th>
+                                        <th width="7%">Quantity</th>
+                                        <th width="7%">Discount</th>
+                                        <th width="10%">Amount (PKR)</th>
+                                        <th width="10%">Discount</th>
+                                        <th width="10%">Total Amount (PKR)</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -105,26 +97,21 @@
                                                    :value="order.product_color.price | currency('')"
                                                    v-bind:data-id="`unit_view`+index" readonly/>
                                         </td>
-                                        <td>
+                                        <td class="text-center">
                                             <input type="number" min="1" v-bind:data-id="`qty`+index"
-                                                   @keypress="isNumber(this)"
-                                                   class="width60px bordernone"
+                                                   class="width60px bordernone text-center"
                                                    :value="order.product_qty"
                                                    @click="qty(order.id,$event.target.value,order.product_color.price)"
-                                                   @keyup="qty(order.id,$event.target.value,order.product_color.price)"
-                                                   :max="order.product_qty"/>
-                                            <!--<input type="text" class=" "
-                                                   :value="order.product_qty"
-                                                   v-bind:data-id="`qty_db`+index"/>-->
+                                                   @keypress="isNumber(this.event),qty(order.id,$event.target.value,order.product_color.price)"
+                                                   :max="order.product_qty" readonly/>
                                         </td>
-                                        <td><input type="text" v-bind:data-id="`discount_amount`+order.id"
+                                        <td class="text-center"><input type="text" v-bind:data-id="`discount_amount`+order.id"
                                                    :value="order.product_color.discount"
                                                    v-on:keyup="discount($event.target.value,order.id)"
-                                                   class=" width60px bordernone hidden" maxlength="5" readonly/>
+                                                   class=" width60px bordernone hidden " maxlength="5" readonly/>
 
                                             <input type="text" :value="order.product_color.discount+'%'"
-                                                   class=" width60px bordernone" readonly/>
-
+                                                   class=" width60px bordernone text-center" readonly/>
                                         </td>
                                         <td>
                                             <input type="text" value="15" min="1" class="hidden"
@@ -136,11 +123,7 @@
                                                    :value="order.product_color.price*order.product_qty | currency('')"
                                                    readonly
                                                    v-bind:id="`amount_view`+order.id"
-                                                   v-bind:data-id="`amount_view`+index">
-                                        </td>
-                                        <td style="display:none;"><input type="text" class="size90 "
-                                                                         v-bind:data-id="`extra`+index"
-                                                                         v-bind:id="`extra`+order.id" maxlength="3"/>
+                                                   v-bind:data-id="`amount_view`+index" >
                                         </td>
                                         <td>
                                             <input type="text" v-bind:id="`discountamount`+order.id"
@@ -160,63 +143,37 @@
                                                    v-bind:data-id="`count_view`+index" readonly
                                                    class="amount bordernone text-right pull-right"/>
                                         </td>
-                                        <td>
-                                            <button type="button" class="btn btn-primary pull-right"
-                                                    v-on:click="remove(index)">X
-                                            </button>
-                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan=7></td>
+                                        <td  class="text-right">Sub Total</td>
+                                        <td class="text-right">  <input type="text" class="hidden" id="subamount"
+                                                                        :value="subamount" readonly>
+                                            <input type="text" class="bordernone text-right " id="subamount_view"
+                                                     readonly></td>
+                                    </tr>
+                                    <tr>
+                                        <td  colspan=7></td>
+                                        <td  class="text-right">Discount</td>
+                                        <td  class="text-right"> <input type="text" class="hidden" id="discount_amount"
+                                                                        :value="discountamount" readonly>
+                                            <input type="text" class="bordernone text-right " id="discount_amount_view"
+                                                    readonly></td>
+                                    </tr>
+                                    <tr>
+                                        <td width="80%" colspan=7></td>
+                                        <td width="10%" class="text-right"><b>Total</b></td>
+                                        <td width="10%" class="text-right"> <b>      <input type="text" class="hidden" id="finalamount"
+                                                                                            :value="totalamount" readonly>
+                                            <input type="text" class="bordernone text-right " id="finalamount_view"
+                                                       readonly> </b></td>
                                     </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
-                    <br><br>
                     <div class="row">
-                        <div class="col-md-6 col-md-offset-7">
-                            <div class="col-md-4 text-right">
-                                <label><span class="h4">Sub Total : </span></label></div>
-                            <div class="col-md-6">
-                                <span class="h4">
-                                    <div class='col-md-9'>
-                                    <input type="text" class="hidden" id="subamount"
-                                           :value="subamount" readonly>
-                                        <input type="text" class="bordernone text-right " id="subamount_view"
-                                               :value="subamount | currency('')"   readonly>
-                                    </div>
-                                </span></div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 col-md-offset-7">
-                            <div class="col-md-4 text-right">
-                                <label><span class="h4">Discount : </span></label></div>
-                            <div class="col-md-6">
-                                <span class="h4">
-                                    <div class='col-md-9'>
-                                    <input type="text" class="hidden" id="discount_amount"
-                                           :value="discountamount" readonly>
-                                        <input type="text" class="bordernone text-right " id="discount_amount_view"
-                                               :value="discountamount | currency('')"  readonly>
-                                    </div>
-                                </span></div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 col-md-offset-7">
-                            <div class="col-md-4 text-right">
-                                <label><span class="h4">Total : </span></label></div>
-                            <div class="col-md-6">
-                                <span class="h4">
-                                    <div class='col-md-9'>
-                                    <input type="text" class="hidden" id="finalamount"
-                                           :value="totalamount" readonly>
-                                            <input type="text" class="bordernone text-right " id="finalamount_view"
-                                                   :value="totalamount | currency('')"     readonly>
-                                    </div>
-                                </span></div>
-                        </div>
-                        <br><br>
                         <div class="col-md-7 "><label>Remarks</label>
                             <textarea class="form-control" id="decs" rows="4"></textarea>
                         </div>
@@ -226,8 +183,7 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12"><br>
-                            <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-check"></i> Create
-                                Invoice
+                            <button type="submit" id="btn_invoice" class="btn btn-primary pull-right"><i class="fa fa-check"></i> Reverse Invoice
                             </button>
                         </div>
                     </div>
@@ -276,8 +232,7 @@
                 order_no: '',
                 s_no: 1,
                 retailer_outlet:[],
-
-
+                created_date:'',
             }
         },
         mounted() {
@@ -298,13 +253,11 @@
         methods: {
             init: function () {
                 this.get_all_orders();
-
             },
             get_all_orders: function () {
-                axios.get('../../invoice/generate_invoice/' + window.location.pathname.split('/')[5]).then((response) => {
-
+                axios.get('../../invoice/invoice_reverse/' + window.location.pathname.split('/')[5]).then((response) => {
+                    this.created_date=response.data.created_at;                   
                     this.all_payment_type = response.data.payment_type;
-                    //this.all_discount_type = response.data.discount_type;
                     this.retailer_outlet=response.data.retailer_order.retailer_outlet;
                     this.all_orders = response.data;
                     this.order_no=this.all_orders.retailer_order.order_no;
@@ -314,33 +267,11 @@
                     this.duedate = moment(this.all_orders.created_at).add(this.retailer_outlet.credit_duration, 'days').format('DD-MM-YYYY');
                     this.order_id_pattern += moment().format('YY');
                     this.order_id_pattern += this.all_orders.retailer_order.retailer_outlet.city.name.substr(0, 1) + this.all_orders.retailer_order.retailer_outlet.region.name.substr(0, 1);
-                  //  console.log(this.all_orders.invoice__products.length);
                     for(var i=0;i<this.all_orders.invoice__products.length;i++){
                         this.subamount+=this.all_orders.invoice__products[i].product_color.price*this.all_orders.invoice__products[i].product_qty;
                         this.countrow++;
                     }
                     this.discountamount=this.subamount-this.totalamount;
-                    this.retailer_balance();
-                   // alert(this.duedate);
-                    /*
-
-                    this.retailer_name = this.all_orders.retailer.name;
-                    this.outlet_name = this.all_orders.retailer_outlet.name;
-                    this.outlet_address = this.all_orders.retailer_outlet.address;
-                    this.retailer_id = this.all_orders.retailer_outlet.id;
-                    this.order_no = this.all_orders.order_no;
-                    this.order_id_pattern += moment().format('YY');
-                    this.order_id_pattern += this.all_orders.retailer_outlet.city.name.substr(0, 1) + this.all_orders.retailer_outlet.region.name.substr(0, 1);
-                    this.current_date = moment().format('DD-MM-YYYY');
-                    this.duedate = moment().add(this.all_orders.retailer_outlet.credit_duration, 'days').format('DD-MM-YYYY');
-                    var pro_qty = 0;
-                    for (var i = 0; i < this.all_orders.order_products.length; i++) {
-                        this.countrow++;
-                        pro_qty = this.all_orders.order_products[i].remaining_qty == 0 ? this.all_orders.order_products[i].product_qty : this.all_orders.order_products[i].remaining_qty
-                        this.subamount += this.all_orders.order_products[i].unit_price * pro_qty
-                        this.totalamount += this.all_orders.order_products[i].unit_price * pro_qty - this.all_orders.order_products[i].unit_price * pro_qty / 100 * this.all_orders.order_products[i].product_color.discount;
-                    }
-                    this.discountamount = this.subamount - this.totalamount;
                     $("#subamount_view").val("Rs. " + accounting.formatMoney(this.subamount, {
                         symbol: "",
                         format: "%v %s"
@@ -353,9 +284,8 @@
                         symbol: "",
                         format: "%v %s"
                     }));
-                    this.retailer_balance();*/
+                    this.retailer_balance();
                 });
-
             },
             retailer_balance: function () {
                 var retailer = {'retailer_id': this.retailer_id};
@@ -364,7 +294,6 @@
                 });
             },
             remove: function (id) {
-                //$("#row" + id).remove();
                 $("[data-id='count" + id + "']").val(0);
                 $("[data-id='discountamount" + id + "']").val(0);
                 $("[data-id='amount" + id + "']").val(0);
@@ -372,7 +301,6 @@
                 $("#row" + id).hide();
             },
             type_discount: function (id, value) {
-
                 $("[data-id='discount_amount" + id + "']").val("");
                 $("#finalprice" + id).val($("#amount" + id).val());
                 this.totalamount_method();
@@ -389,7 +317,6 @@
                     var discount = "[data-id='discountamount" + i + "']";
                     contdiscount += parseFloat($(discount).val());
                 }
-               // alert(cont);
                 $('#discount_amount').val(contdiscount);
                 $('#finalamount').val(cont);
                 $('#subamount').val(contsub);
@@ -430,13 +357,15 @@
                 this.totalamount_method();
                 $("#discount_id" + id).val([]);
             },
-            isNumber: function (e) {
-                return false;
+            isNumber: function (evt) {
+                var theEvent = evt || window.event;
+                theEvent.returnValue = false;
             },
             add_invoice: function (e) {
+                $("#btn_invoice").hide();
                 this.payment_type_id = $("#payment_type_id").val();
                 this.finalamount = $("#finalamount").val();
-                this.decs = $("#decs").val();
+                this.finalamount = Math.round($("#finalamount").val());
                 var count = 0;
                 for (var i = 0; i < this.countrow; i++) {
                     if ($("[data-id='amount" + i + "']").val() != 0) {
@@ -458,14 +387,18 @@
                     'colorid': this.colorid, 'unitcost': this.unitcost, 'quantity': this.quantity,
                     'amount': this.amount, 'product_id': this.product_id, 'qty_db': this.qty_db,
                     'productamount': this.productamount, 'extra': '', 'retailer_id': this.retailer_id,
-                    'order_id_pattern': this.order_id_pattern,'order_no':this.order_no
+                    'order_id_pattern': this.order_id_pattern,'order_no':this.order_no,'invoice_id':window.location.pathname.split('/')[5],
+                    'warehouseissue':this.all_orders.warehouse_issue[0].is_issued,'created_date':this.created_date
                 };
-                console.log(this.invoice);
                 axios.post('../../invoice/add_reversal', this.invoice).then((response) => {
-                    // console.log(response.data);
-                    if (response.data == 201) {
+                    //console.log(response.data);
+                   if (response.data == 201) {
                         location.assign("../../invoice/list");
                     }
+                    if (response.data == 401) {
+                        alert('Invoice reversal cannot be done after sale return');
+                    }
+                    //alert(response.data);
                 });
             },
         }

@@ -2,6 +2,60 @@
 
         <div class="row">
 
+              <!-- Alert Dialog with user action required -->
+                <div class="modal  fade" id="div_detailed_message" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-md" role="document">
+                    <div class="modal-content">
+                
+                        <div class="modal-body">
+                        
+                        <div class="row">
+                        <div class="col-md-2 paddingtop5">
+                        <img src="img/xsys_info.png" />
+                        </div>
+                        <div class="col-md-8 paddingtop5">
+
+
+                        <p class="  text-center " style=" padding-top:12px;">{{detailedMessage}}</p>       
+                        </div>
+                        <div class="col-md-2">
+                        
+                        <button type="button" class="  close close_btn_settings" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        </div>
+                        </div>
+                        </div>
+                    <!-- <div class="modal-footer  " style="text-align:center; margin-top:0;">
+                        <button type="button" class="btn btn-primary ">  Login Account</button>
+                        <button type="button" class="btn btn-primary"  data-dismiss="modal">Cancel</button>
+                        </div> -->
+                    </div>
+                    </div>
+                </div>
+
+            <!-- Alert Modal Start-->
+            <div class="modal fade bs-add-Model-modal-md" tabindex="5" role="dialog"  id="alert_info_modal" aria-labelledby="bs-add-Model-modal-md">
+                <div class="modal-dialog modal-md" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">Xsys - Alert</h4>
+                        </div>
+                        <div class="modal-body">
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    Content
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-github" data-dismiss="modal">OK</button>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Alert Modal END -->
 
             
                 <div class="panel panel-info">
@@ -10,7 +64,7 @@
                     </div>
 
                     <div class="panel-body">
-                        <div class="alert alert-success"  v-if="message">
+                        <div class="alert alert-success" id="div_short_message" v-if="message">
                             <strong>{{message}}</strong>
                         </div>
                         <form @submit.prevent="add_outlet">
@@ -51,7 +105,7 @@
                                     <div class="col-md-3">
                                         <select class="textbox_dropdown" name="region_id" v-model="outlet.region_id" required>
                                             <option value="">Select Locality</option>
-                                            <option v-for="region in regionsData"   v-bind:value="region.id">{{region.name}}</option>
+                                            <option v-for="region in regionsData" v-if="region.city_id==outlet.city_id"  v-bind:value="region.id">{{region.name}}</option>
                                         </select>
                                     </div>
                                     <div class="col-md-1"></div>
@@ -102,6 +156,15 @@
                                     </div>
                                     <div class="col-md-1"></div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-md-2"><label>Sales Officer<span style="color: red;">*</span></label></div>
+                                    <div class="col-md-3">
+                                        <select class="textbox_dropdown" name="sales_officer_id" v-model="outlet.sales_officer_id"  required>
+                                            <option value="">Select Sales Officers</option>
+                                            <option v-for="sales_officer in sales_officer"  v-bind:value="sales_officer.id">{{sales_officer.name}}</option>
+                                        </select>
+                                    </div>
+                                </div>
 
                             </div>
                             <br/>
@@ -134,10 +197,10 @@
                                     </div>
                                     <div class="col-md-1"></div>
                                     <div class="col-md-2">
-                                        <label>Image<span style="color: red;">*</span></label>
+                                        <label>Image<span style="color: red;"></span></label>
                                     </div>
                                     <div class="col-md-3" v-if="!outlet.uploadImage">
-                                        <input type="file" class="textbox" v-on:change="retailer_image_file_preview" ref="imageInput" name="image" autocomplete="off" required>
+                                        <input type="file" class="textbox" v-on:change="retailer_image_file_preview" ref="imageInput" name="image" autocomplete="off">
                                     </div>
                                     <div class="col-md-3" v-else>
                                         <img :src="outlet.uploadImage" class="img img-responsive form-control" style="    width: 100px; height: 90px;" />
@@ -169,53 +232,86 @@
                     </div>
                 </div>
                 
+    
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h2 class="panel-title">Outlets</h2>
+            </div>
+            Cheque Image*
 
 
-                <!-- RETAILER SHOW GRID -->
-                <div class="panel panel-info">
-                    <div class="panel-heading">
-                        <h2 class="panel-title">Outlet - Details</h2>
+            <!-- RETAILER SHOW GRID -->
+            <div class="panel-body">
+
+                    <div class="projects">
+        <div class="tableFilters">
+            
+           <div class="row">
+            <div class="col-md-8">
+                <div class="control">
+                    <div class="select">
+                        <Label>Records:</Label>
+                        <select v-model="tableData.length" @change="getProjects()">
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                        </select>
                     </div>
-
-                    <div class="panel-body">
-                        <table id="outlet_table" class="table table-bordered">
-                            <thead>
-                            <tr>
-                                <th>Outlet Name</th>
-                                <th>Dealer Code</th>
-                                <th>Contact Person</th>
-                                <th>Contact No.</th>
-                                <th>City</th>
-                                <th>Locality</th>
-                                <th>Address</th>
-                                <th>Action</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-
-                            <tr v-for="(outlets,index) in outletsData">
-                                <td>{{outlets.name}}</td>
-                                <td>{{outlets.retailer.retailer_no}}</td>
+                </div>
+            </div>
+            <div class="col-md-4">
+                 
+                    <input class="textbox" type="text" v-model="tableData.search" placeholder="Search..."
+                   @input="getProjects()">
+            </div>
+            </div>
+        </div>
+        <datatable :columns="columns" :sortKey="sortKey" :sortOrders="sortOrders" @sort="sortBy">
+            <tbody>
+                <tr v-for="(outlets, index) in outletsData" :key="outlets.id">
+                    <td>{{outlets.name}}</td>
+								                <td>{{outlets.retailer.retailer_no}}</td>
                                 <td>{{outlets.business_person_name}}</td>
                                 <td>{{outlets.phone_no}}</td>
                                 <td>{{outlets.city.name}}</td>
-                                <td>{{outlets.region.name}}</td>
-                                <td>{{outlets.address}}</td>
+                                <td :title=outlets.region.name>{{outlets.region.name.slice(0,30)}}...</td>
+                                <td :title=outlets.address>{{outlets.address.slice(0,30)}}...</td>
 
 
                                 <td>
                                     <div class="dropdown">
-                                        <button class="btn btn-primary btn-xs" v-on:click="enable_edit_mode(index)"><i class="fa fa-pencil" title="Edit"></i></button>
-
-                                        -
-                                        <button class="btn btn-success btn-xs" type="button" v-on:click="view_outlet_details(index)" title="View Detail"><i class="fa fa-eye"></i></button>
+                                        <!-- <button class="btn btn-primary btn-xs dropdown-toggle" type="button" data-toggle="dropdown">Action
+                                            <span class="caret"></span></button>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="#" v-on:click="enable_edit_mode(index)">Edit</a></li>
+                                        
+                                        
+                                        
+                                        </ul> -->
+                                       <!-- <button v-on:click="enable_edit_mode(index)" class="btn btn-info btn-xs"><i class="fa fa-edit" title="Edit"></i></button> -->
+                                        <button class="btn btn-success btn-xs" v-on:click="view_outlet_details(index)" title="View Detail"><i class="fa fa-eye"></i></button>
+                                    <button class="btn btn-primary btn-xs" v-on:click="enable_edit_mode(index)"><i class="fa fa-pencil" title="Edit"></i></button>
                                     </div>
                                 </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+
+
+               
+
+                    
+                </tr>
+            </tbody>
+        </datatable>
+        <pagination :pagination="pagination"
+                    @prev="getProjects(pagination.prevPageUrl)"
+                    @next="getProjects(pagination.nextPageUrl)">
+        </pagination>
+    </div>
+
+            </div>
+        </div>
+
+
+                
 
                 <!-- View Details Modal Start-->
             <div class="modal fade bs-add-Model-modal-md" tabindex="5" role="dialog"  id="outlet_info_modal" aria-labelledby="bs-add-Model-modal-md">
@@ -283,6 +379,12 @@
                                                     </div>
                                                     <div class="col-md-3">
                                                         <label>{{outlet_view.outlet_phone}}</label>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <label><strong>Sales Officer :</strong></label>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <label>{{outlet_view.sales_officer_id}}</label>
                                                     </div>
                                                     <!-- <table class="table table-hovered">
                                                       <tr>
@@ -607,6 +709,7 @@
 
     import Vue from 'vue';
     import VeeValidate from 'vee-validate';
+    import {constant} from '../constant.js';
     var base_url = window.location.origin;
 
     const config = {
@@ -634,10 +737,51 @@
     };
 
     Vue.use(VeeValidate, config);
+    import Datatable from './DatatableComponent.vue';
+    import Pagination from './PaginationComponent.vue';
     export default {
+        components: {datatable: Datatable, pagination: Pagination},
         data(){
+            let sortOrders = {};
+            let columns = [
+                {width: '15%', label: 'Outlet', name: 'Outlet' },
+                {width: '10%', label: 'Dealer Code', name: 'Dealer Code'},
+                {width: '10%', label: 'Dealer Name', name: 'Dealer Name'},
+                {width: '10%', label: 'Contact No', name: 'Contact No'},
+                {width: '10%', label: 'City', name: 'City'},
+                {width: '5%', label: 'Locality', name: 'Locality'},
+                {width: '10%', label: 'Address', name: 'Address'},
+                {width: '10%', label: 'Action', name: 'Action'},
+            ];
+            columns.forEach((column) => {
+                sortOrders[column.name] = -1;
+            });
             return{
+                projects:[],
+            columns: columns,
+            sortKey: 'Dealer Code',
+            sortOrders: sortOrders,
+            tableData: {
+                draw: 0,
+                length: 10,
+                search: '',
+                column: 0,
+                dir: 'desc',
+            },
+            pagination: {
+                lastPage: '',
+                currentPage: '',
+                total: '',
+                lastPageUrl: '',
+                nextPageUrl: '',
+                prevPageUrl: '',
+                from: '',
+                to: ''
+            },
+
                 add_city_mode:0,
+                shortMessage:'',
+                detailedMessage:'',
                 add_region_mode:0,
                 btndisabled:false,
                 edit_enable:0,
@@ -667,7 +811,8 @@
                     security_check_amount:'',
                     copy_image:'',
                     credit_limit:'',
-                    credit_duration:''
+                    credit_duration:'',
+                    sales_officer_id:''
                 },
                 outlet_view:{
                     id:'',
@@ -696,7 +841,9 @@
                     retailer_image:'',
 
                     city_name:'',
-                    region_name:''
+                    region_name:'',
+                    sales_officer:'',
+                    sales_officer_id:''
                 },
 
                 regionsData:[],
@@ -712,10 +859,51 @@
             this.init();
         },
         methods: {
+            showDetailedMessage(message){
+                this.detailedMessage = message;
+                $('#div_detailed_message').modal("show");
+            },
             init: function(){
                 this.get_cities();
                 this.get_regions();
-                this.get_all_outlets();
+               // this.get_all_outlets();
+                this.getProjects();
+                this.get_sales_officer();
+            },
+            getProjects(url = './get_all_outlets_dataTable') {
+            this.tableData.draw++;
+            axios.get(url, {params: this.tableData})
+                .then(response => {
+                    let data = response.data;
+                    if (this.tableData.draw == data.draw) {
+                        this.outletsData = data.data.data;
+                        console.log(this.outletsData);
+                        this.configPagination(data.data);
+                    }
+                })
+                .catch(errors => {
+                    console.log(errors);
+                });
+        },
+            configPagination(data) {
+                this.pagination.lastPage = data.last_page;
+                this.pagination.currentPage = data.current_page;
+                this.pagination.total = data.total;
+                this.pagination.lastPageUrl = data.last_page_url;
+                this.pagination.nextPageUrl = data.next_page_url;
+                this.pagination.prevPageUrl = data.prev_page_url;
+                this.pagination.from = data.from;
+                this.pagination.to = data.to;
+            },
+            sortBy(key) {
+                this.sortKey = key;
+                this.sortOrders[key] = this.sortOrders[key] * -1;
+                this.tableData.column = this.getIndex(this.columns, 'name', key);
+                this.tableData.dir = this.sortOrders[key] === 1 ? 'asc' : 'desc';
+                this.getProjects();
+            },
+            getIndex(array, key, value) {
+                return array.findIndex(i => i[key] == value)
             },
             removeCopyImage:function(e){
                 e.preventDefault();
@@ -724,6 +912,11 @@
             removeRetailerImage:function(e){
                 e.preventDefault();
                 this.outlet.uploadImage="";
+                axios.post(constant.base_url+'retailer/delete_retailer_image',this.outlet).then(response=>{
+                    if(response.data==201){
+                        this.message="Image has been Deleted";
+                    }
+                });
             },
             retailer_image_file_preview(e){
                 console.log(e.target.files[0])
@@ -732,7 +925,17 @@
                 fileReader.readAsDataURL(e.target.files[0])
 
                 fileReader.onload = (e) => {
-                    this.outlet.uploadImage= e.target.result
+                    this.outlet.uploadImage= e.target.result;
+                    if(this.edit_enable==1){
+                        axios.post(constant.base_url+'retailer/edit_retailer_image',this.outlet).then(response=>{
+                            if(response.data==201){
+                                this.message="New Image has been Uploaded";
+                            }
+                        });
+                    }
+                    else{
+                        alert(response.data);
+                    }
                 }
 
                 console.log(this.outlet);
@@ -746,7 +949,7 @@
                 fileReader.onload = (e) => {
                     this.outlet.copy_image= e.target.result;
                     if(this.edit_enable==1){
-                        axios.post('../outlet/change_outlet_image',this.outlet).then(response=>{
+                        axios.post(constant.base_url+'outlet/change_outlet_image',this.outlet).then(response=>{
                             if(response.data==201){
                                 this.message="New Image has been Uploaded";
                             }
@@ -760,10 +963,15 @@
                 console.log(this.outlet);
             },
             add_outlet:function(){
-                axios.post('./outlet/create_outlet',this.outlet).then(response=>{
+                this.submit_btn_text="Please wait ...";
+                this.btndisabled=true;
+                axios.post(constant.base_url+'outlet/create_outlet',this.outlet).then(response=>{
                     //alert(response.data);
                     if(response.data==201){
-                        this.get_all_outlets();
+                        this.submit_btn_text="Create Account";
+                        this.btndisabled=false;
+                       // this.get_all_outlets();
+
                         this.outlet.id='';
                         this.outlet.retailer_id='';
                         this.outlet.outlet_name='';
@@ -782,22 +990,25 @@
                         this.outlet.copy_image='';
                         this.outlet.credit_limit='';
                         this.outlet.credit_duration='';
-
+                        this.outlet.sales_officer_id='';
                         this.outlet.uploadImage='';
                         this.outlet.fullname='';
                         this.outlet.cnic='';
                         this.outlet.phone_no='';
-                        this.message="New Retailer has been created!";
+                        this.message="Retailer registered successfully";
+                        setTimeout(function() {
+                            $('#div_short_message').fadeOut(1000);
+                            // window.location.reload();
+                        }, 1000);
                         $("html, body").animate({
                             scrollTop: 0
                         }, 600);
                         demo.swal({title:this.message});
+                        this.getProjects();
                         demo.showSwal('success-message');
-
-                    }
-                    else if(response.data==406){
-                        this.get_all_outlets();
-                        this.message="Account has already exist!";
+                    } else if(response.data==406){
+                        //this.get_all_outlets();
+                        this.getProjects();
                         this.edit_enable=0;
                         this.submit_btn_text="Create Outlet";
                         this.outlet.id='';
@@ -818,18 +1029,16 @@
                         this.outlet.copy_image='';
                         this.outlet.credit_limit='';
                         this.outlet.credit_duration='';
-                        $("html, body").animate({
-                            scrollTop: 0
-                        }, 600);
-                        
+                        this.outlet.sales_officer_id='';
+                        this.showDetailedMessage("Account already exists");
                     }
                     else{
-                        alert(response.data);
+                        this.showDetailedMessage("Error registering dealer");
                     }
                 });
             },
             get_all_outlets:function(){
-                axios.get('./outlet/get_all_outlets').then(response=>{
+                axios.get(constant.base_url+'outlet/get_all_outlets').then(response=>{
                     this.outletsData=response.data;
                 });
             },
@@ -844,7 +1053,7 @@
                     this.outlet_view.bussiness_person_phone=this.outletsData[index].mobile_no;
                     this.outlet_view.retailer_no=this.outletsData[index].retailer.retailer_no;
                     this.outlet_view.city_id=this.outletsData[index].city_id;;
-                    this.outlet_view.region_id=this.outletsData[index].region_id;;
+                    this.outlet_view.region_id=this.outletsData[index].region_id;
                     this.outlet_view.address=this.outletsData[index].address;
                     this.outlet_view.longitude=this.outletsData[index].longitude;
                     this.outlet_view.latitude=this.outletsData[index].latitude;
@@ -857,7 +1066,15 @@
                     this.outlet_view.retailer_name=this.outletsData[index].retailer.name;
                     this.outlet_view.retailer_phone=this.outletsData[index].retailer.phone_no;
                     this.outlet_view.retailer_cnic=this.outletsData[index].retailer.cnic;
-                    this.outlet_view.retailer_image='./retailers_img/'+this.outletsData[index].retailer.image;
+                  this.outlet_view.sales_officer_id=this.outletsData[index].sales_officer_id;
+                 //   console.log(this.outlet_view.sales_officer_id);
+                    if(this.outletsData[index].retailer.image==null){
+                        this.outlet_view.retailer_image='./retailers_img/avatar.png';
+                    }
+                    else{
+                        this.outlet_view.retailer_image='./retailers_img/'+this.outletsData[index].retailer.image;
+                    }
+
 
                     this.outlet_view.city_name=this.outletsData[index].city.name;
                     this.outlet_view.region_name=this.outletsData[index].region.name;
@@ -868,7 +1085,8 @@
                 axios.post('./outlet/delete_outlet',this.outlet).then(response=>{
                     if(response.data==201){
                         this.message="Outlet has been Deleted";
-                        this.get_all_outlets();
+                        //this.get_all_outlets();
+                        this.getProjects();
                     }
                     else{
                         alert(response.data);
@@ -895,6 +1113,20 @@
                 this.outlet.copy_image="./deposit_check_img/"+this.outletsData[index].security_deposit_image;
                 this.outlet.credit_limit=this.outletsData[index].credit_limit;
                 this.outlet.credit_duration=this.outletsData[index].credit_duration;
+
+                this.outlet.fullname=this.outletsData[index].retailer.name;
+                this.outlet.cnic=this.outletsData[index].retailer.cnic;
+                this.outlet.phone_no=this.outletsData[index].retailer.phone_no;
+                this.outlet.sales_officer_id=this.outletsData[index].sales_officer_id;
+                if(this.outletsData[index].retailer.image!=null){
+                    this.outlet.uploadImage='./retailers_img/'+this.outletsData[index].retailer.image;
+                }
+                else{
+                    this.outlet.uploadImage='./retailers_img/avatar.png';
+                }
+
+
+
                 this.edit_enable=1;
                 this.submit_btn_text="Update Outlet";
             },
@@ -919,11 +1151,17 @@
                 this.outlet.copy_image='';
                 this.outlet.credit_limit='';
                 this.outlet.credit_duration='';
+
+                this.outlet.fullname='';
+                this.outlet.cnic='';
+                this.outlet.phone_no='';
+                this.outlet.uploadImage='';
+                this.outlet.sales_officer_id='';
             },
             update_outlet:function(){
-                axios.post('../outlet/update_outlet',this.outlet).then(response=>{
+                axios.post(constant.base_url+'outlet/update_outlet',this.outlet).then(response=>{
                     if(response.data==201){
-                        this.get_all_outlets();
+                        this.getProjects();
                         this.message="Outlet has been updated!";
                         this.edit_enable=0;
                         this.submit_btn_text="Create Outlet";
@@ -945,6 +1183,22 @@
                         this.outlet.copy_image='';
                         this.outlet.credit_limit='';
                         this.outlet.credit_duration='';
+                        this.outlet.sales_officer_id='';
+
+                        this.outlet.fullname='';
+                        this.outlet.cnic='';
+                        this.outlet.phone_no='';
+                        this.outlet.uploadImage='';
+                        setTimeout(function() {
+                            $('#div_short_message').fadeIn(1000);
+                            // window.location.reload();
+                        }, 1000);
+                        $("html, body").animate({
+                            scrollTop: 0
+                        }, 600);
+
+
+
                     }
 
                     else{
@@ -957,6 +1211,14 @@
             get_cities:function(){
                 axios.get('./allCities').then(response=>{
                     this.citiesData=response.data;
+                });
+            },
+            get_sales_officer:function(){
+                axios.get('get_sales_officer/all/all').then((response) => {
+                    if (response.data.status == true) {
+                        this.sales_officer = response.data.data;
+                      //  console.log(this.sales_officer);
+                    }
                 });
             },
             get_regions:function(){

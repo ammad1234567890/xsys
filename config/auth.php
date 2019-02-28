@@ -45,6 +45,11 @@ return [
             'driver' => 'passport',
             'provider' => 'users',
         ],
+
+       'DealerAuth-api'  => [
+            'driver'  => 'passport',
+            'provider' => 'DealerAuth',
+        ],
     ],
 
     /*
@@ -69,6 +74,11 @@ return [
             'driver' => 'eloquent',
             'model' => App\User::class,
         ],
+
+       /* 'DealerAuth' => [
+            'driver' => 'eloquent',
+            'model' => App\DealerAuth::class,
+        ],*/
 
         // 'users' => [
         //     'driver' => 'database',
@@ -96,6 +106,11 @@ return [
             'provider' => 'users',
             'table' => 'password_resets',
             'expire' => 60,
+        ],
+        'DealerAuth' => [
+            'provider' => 'DealerAuth',
+            'table' => 'password_resets',
+            'expire' => 15,
         ],
     ],
 

@@ -26,9 +26,9 @@
     <link rel="shortcut icon" href="{{asset('img/icon.ico')}}"/>
     <!-- Datatable -->
   <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
-
+<link rel="stylesheet" href="{{ asset('css/slick.css')}}">
   <link href="{{ asset('css/style.css')}}" rel="stylesheet" />
-
+   <link rel="stylesheet" href="{{ asset('css/freeze.css')}}">
     <style>
         .modal-backdrop{
             display:none;
@@ -58,10 +58,13 @@
         }
 
         .product-image{
-            height:200px;
+            height:350px;
+            display: inline-block;
         }
         .product-image img{
             height:100%;
+            text-align: center;
+            width: 100%;
         }
         .product-heading{
             border-top:1px solid #d9d9d9;
@@ -87,13 +90,58 @@
             color:#000;
             width:100%;
         }
+        .slider-for .slick-list{
+            width:100%;
+        }
+
+        .slider-nav .slick-prev{
+            position: absolute;
+            left: 0px;
+            z-index: 999;
+            height: 100%;
+            text-indent: -1999px;
+            background-image:url('../img/back.png');
+            background-size:100% 45%;
+            background-position: center; 
+            background-repeat: no-repeat;
+            background-color: #b3c8c7;
+            border: none;
+        }
+        .slider-nav .slick-next{
+            position: absolute;
+            right: 0px;
+            top:0px;
+            z-index: 999;
+            height: 100%;
+            text-indent: -1999px;
+            background-image:url('../img/next.png');
+            background-size:100% 45%;
+            background-position: center; 
+            background-repeat: no-repeat;
+            background-color: #b3c8c7;
+            border: none;
+        }
+        .sidebar_btn {
+             position: absolute; z-index: 999; top: -3px;  left: -8px; font-size: 25px;
+            }
+.display_none{ display:none;}
+
+
+
     </style>
 
+    <script>
+        window.laravel={!! json_encode([
 
+            'csrfToken'=>csrf_token(),
+
+        ]) !!};
+    </script>
 
 </head>
 <body>
     <div id="app" v-cloak>
+    <notificationpopup-component :userid="{{Auth::user()->id}}"></notificationpopup-component>
     <!--  -->
         <div class="navbar ">
 
@@ -162,23 +210,64 @@
     font-size: 14px;
     margin-right: 15px;">Welcome: {{ Auth::user()->name }}</span>
                                 <img src="{{ asset('img/avatars/avatar-1-xs.jpg')}}" class="navbar-profile-avatar" alt="">
-                                <span class="navbar-profile-label">rod@rod.me &nbsp;</span>
+                                <span class="navbar-profile-label"> &nbsp;</span>
                                 <i class="fa fa-caret-down"></i>
                             </a>
 
-                            <ul class="dropdown-menu" role="menu">
 
+
+
+                            <ul class="dropdown-menu" role="menu">
                                 <li>
-                                    <a href="page-profile.html">
-                                        <i class="fa fa-user"></i>
-                                        &nbsp;&nbsp;My Profile
+                                    <a href="javascript:;">
+                                        <i class="fa fa-home"></i>
+                                        &nbsp;&nbsp;
+                                        <?php $warehouse_staff_data=""; ?>
+                                        @foreach(\App\WarehouseStaff::with('warehouse','staff.staffType')->where('staff_id', Auth::user()->staff_id)->get() as $data)
+                                            {{ $data->warehouse->name }}
+                                            <?php $warehouse_staff_data = $data;?>
+                                             <?php $staff_type= $data->staff->staffType->type; ?>
+
+                                        @endforeach
+
+
+                                        <?php
+                                            if($warehouse_staff_data==""){  ?>
+                                                @foreach(\App\User::with('staffRecord', 'staffRecord.staffType')->where('id', Auth::user()->id)->get() as $data)
+                                                    {{ $data->staffRecord->staffType->type }}
+                                            <?php $staff_type= $data->staffRecord->staffType->type; ?>
+                                                @endforeach
+                                         <?php   }
+                                        ?>
+
+
                                     </a>
                                 </li>
 
                                 <li>
-                                    <a href="page-settings.html">
+                                    <a href="javascript:;">
+                                        <i class="fa fa-envelope">
+
+                                            {{ Auth::user()->email }}
+                                        </i>
+                                        &nbsp;&nbsp;
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="javascript:;">
+                                        <i class="fa fa-user">
+
+                                            <?php echo $staff_type; ?>
+                                        </i>
+                                        &nbsp;&nbsp;
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="{{url('change_pass')}}">
                                         <i class="fa fa-cogs"></i>
-                                        &nbsp;&nbsp;Settings
+                                        &nbsp;&nbsp;Change Password
                                     </a>
                                 </li>
 
@@ -202,141 +291,32 @@
 
                             </ul>
 
+
                         </li>
 
                     </ul>
 
 
 
-                    <ul class="nav navbar-nav noticebar navbar-right  " style=" padding-right:50px;">
+
+
+                        <!-- Notification -->
+
+                        <headernotification-component
+
+                                :allnotifications="{{auth()->user()->Notifications->sortBy('created_at')->take(10)}}"
+                                :unread_notification_count="{{auth()->user()->unreadNotifications->count()}}"
+                                :userid="{{Auth::user()->id}}"
+                                :unreads="{{auth()->user()->Notifications->take(10)}}"
+
+                        >
+                        </headernotification-component>
 
 
 
-                        <li class="dropdown">
-                            <a href="page-notifications.html" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-bell"></i>
-                                <span class="navbar-visible-collapsed">&nbsp;Notifications&nbsp;</span>
-                                <span class="badge">3</span>
-                            </a>
-
-                            <ul class="dropdown-menu noticebar-menu" role="menu">
-                                <li class="nav-header">
-                                    <div class="pull-left">
-                                        Notifications
-                                    </div>
-
-                                    <div class="pull-right">
-                                        <a href="javascript:;">Mark as Read</a>
-                                    </div>
-                                </li>
-
-                                <li>
-                                    <a href="page-notifications.html" class="noticebar-item">
-                <span class="noticebar-item-image">
-                  <i class="fa fa-cloud-upload text-success"></i>
-                </span>
-                                        <span class="noticebar-item-body">
-                  <strong class="noticebar-item-title">Templates Synced</strong>
-                  <span class="noticebar-item-text">20 Templates have been synced to the Mashon Demo instance.</span>
-                  <span class="noticebar-item-time"><i class="fa fa-clock-o"></i> 12 minutes ago</span>
-                </span>
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="page-notifications.html" class="noticebar-item">
-                <span class="noticebar-item-image">
-                  <i class="fa fa-ban text-danger"></i>
-                </span>
-                                        <span class="noticebar-item-body">
-                  <strong class="noticebar-item-title">Sync Error</strong>
-                  <span class="noticebar-item-text">5 Designs have been failed to be synced to the Mashon Demo instance.</span>
-                  <span class="noticebar-item-time"><i class="fa fa-clock-o"></i> 20 minutes ago</span>
-                </span>
-                                    </a>
-                                </li>
-
-                                <li class="noticebar-menu-view-all">
-                                    <a href="page-notifications.html">View All Notifications</a>
-                                </li>
-                            </ul>
-                        </li>
 
 
-                        <li class="dropdown">
-                            <a href="page-notifications.html" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-envelope"></i>
-                                <span class="navbar-visible-collapsed">&nbsp;Messages&nbsp;</span>
-                            </a>
 
-                            <ul class="dropdown-menu noticebar-menu" role="menu">
-                                <li class="nav-header">
-                                    <div class="pull-left">
-                                        Messages
-                                    </div>
-
-                                    <div class="pull-right">
-                                        <a href="javascript:;">New Message</a>
-                                    </div>
-                                </li>
-
-                                <li>
-                                    <a href="page-notifications.html" class="noticebar-item">
-                <span class="noticebar-item-image">
-                  <!--<img src="img/avatars/avatar-1-md.jpg" style="width: 50px" alt="">-->
-                </span>
-
-                                        <span class="noticebar-item-body">
-                  <strong class="noticebar-item-title">New Message</strong>
-                  <span class="noticebar-item-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit...</span>
-                  <span class="noticebar-item-time"><i class="fa fa-clock-o"></i> 20 minutes ago</span>
-                </span>
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="page-notifications.html" class="noticebar-item">
-                <span class="noticebar-item-image">
-                 <!-- <img src="img/avatars/avatar-2-md.jpg" style="width: 50px" alt="">-->
-                </span>
-
-                                        <span class="noticebar-item-body">
-                  <strong class="noticebar-item-title">New Message</strong>
-                  <span class="noticebar-item-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit...</span>
-                  <span class="noticebar-item-time"><i class="fa fa-clock-o"></i> 5 hours ago</span>
-                </span>
-                                    </a>
-                                </li>
-
-                                <li class="noticebar-menu-view-all">
-                                    <a href="page-notifications.html">View All Messages</a>
-                                </li>
-                            </ul>
-                        </li>
-
-
-                        <li class="dropdown">
-                            <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-exclamation-triangle"></i>
-                                <span class="navbar-visible-collapsed">&nbsp;Alerts&nbsp;</span>
-                            </a>
-
-                            <ul class="dropdown-menu noticebar-menu noticebar-hoverable" role="menu">
-                                <li class="nav-header">
-                                    <div class="pull-left">
-                                        Alerts
-                                    </div>
-                                </li>
-
-                                <li class="noticebar-empty">
-                                    <h4 class="noticebar-empty-title">No alerts here.</h4>
-                                    <p class="noticebar-empty-text">Check out what other makers are doing on Explore!</p>
-                                </li>
-                            </ul>
-                        </li>
-
-
-                    </ul>
 
 
 
@@ -438,7 +418,6 @@
                                     <br/>
                                     Staff
                                     <span class="caret"></span>
-
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a href="{{ url('/staff') }}">Create Staff</a></li>
@@ -474,11 +453,14 @@
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a href="{{url('finance/orders_approval')}}">Orders Approval</a></li>
-                                    <li><a href="{{ url('/invoice/list/') }}">Invoice History</a></li>
-                                    <li><a href="{{ url('warehouseStock') }}">Stock Report</a></li>
+                                    <li><a href="{{url('/invoice/list/') }}">Invoice History</a></li>
+                                    <li><a href="{{url('warehouseStock') }}">Stock Report</a></li>
                                     <li><a href="{{url('/retailer_order/payment')}}">Receive Payment</a></li>
+                                    <li><a href="{{url('/retailer_order/order_payment_reversal')}}">Payment Reverse</a></li>
                                     <li><a href="{{url('/bank')}}">Registered Banks</a></li>
                                     <li><a href="{{url('/ledger')}}">Ledger</a></li>
+                                    <li><a href="{{url('/so_tasks')}}">Survey Tasks</a></li>
+                                    <li><a href="{{url('/order_list')}}">Online Orders</a></li>
                                 </ul>
 
                             </li>
@@ -486,19 +468,22 @@
                                 <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">
                                     <img src="{{ asset('img/factory-stock-house-white.png')}}" alt="dashboard" width="35px" />
                                     <br/>
-                                    Warehouse
+                                    Warehouse 
                                     <span class="caret"></span>
 
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="{{ url('createNewWarehouse') }}">Create Warehouse</a></li>
+                                    <li><a href="{{ url('createNewWarehouse') }}">New Warehouse</a></li>
                                     <li><a href="{{ url('warehouse') }}">Warehouse List</a></li>
                                     <li><a href="{{ url('warehouseStaff') }}">Allocate Staff</a></li>
                                     <li><a href="{{ url('warehouseStaffView') }}">Warehouse Staff</a></li>
-                                    <li><a href="{{ url('mainWarehouseReceive') }}">Consigment Receive</a></li>
+                                    <!--<li><a href="{{ url('mainWarehouseReceive') }}">Consignment Receive</a></li>-->
+                                    <li><a href="{{ url('receive_stock') }}">Consignment Receive</a></li>
                                     <li><a href="{{ url('warehouseIssue') }}">Sales Invoice</a></li>
-                                    <li><a href="{{ url('itemDetail') }}">Item Detail</a></li>
-                                    <li><a href="{{ url('productDetailsView') }}">Product Detail</a></li>
+                                    <li><a href="{{ url('cons_stock_item_detail') }}">Stock Details</a></li>
+                                    <li><a href="{{ url('warehouse/change_stock_type') }}">Change Stock Type</a></li>
+                                    <!-- <li><a href="{{ url('itemDetail') }}">Find IMEI</a></li>
+                                    <li><a href="{{ url('productDetailsView') }}">Product Detail</a></li> -->
                                 </ul>
 
                             </li>
@@ -512,13 +497,9 @@
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li><a href="#">Finance Report</a></li>
-
                                 </ul>
-
                             </li>
-
                         </ul>
-
                     </div> <!-- /.navbar-collapse -->
                 </div>
             </div> <!-- /.container -->
@@ -529,9 +510,13 @@
             <div class="content">
 
                 <div class="row">
-                    <div class=" col-md-2 " style="border-right: 1px solid #dadada;">
+                    
+                    <div class="sidebar_btn">
+                    <a  href="#" id="btn_expand"><i class=" fa fa-chevron-circle-right"></i></a>
+                    </div>
+                    <div class="col-md-2" id="sidebar">
                         <div class="verticalmenu text-center">
-                            <h3 class="h2box ">Modules</h3>
+                        <h3 class="h2box "> <a href="#" id="btn_collapse"><i class=" fa fa-chevron-circle-left"></i></a> Modules</h3>
                             <div class="menutab active">
                                 <a href="{{ url('home') }}">
                                     <div class="menuitem cursorpointer" >
@@ -539,6 +524,192 @@
                                         Dashboard
                                     </div>
                                 </a>
+                            </div>
+                            <div class="menutab active">
+                                <div class="menuitem cursorpointer" role="button" data-toggle="collapse" href="#collapseExample5" aria-expanded="false" aria-controls="collapseExample">
+                                    <img src="{{ asset('img/store.png')}}" alt="dashboard" width="40px"/><br />
+                                    Outlets
+                                </div>
+                                <ul class="collapse " id="collapseExample5">
+                                    <a href="{{ url('retailer/create_order') }}">
+                                        <li>Create Order </li>
+                                    </a>
+
+                                    <a href="{{ url('retailer_order/orders') }}">
+                                        <li>All Orders</li>
+                                    </a>
+                                    <a href="{{ url('/retailer') }}">
+                                        <li>Create Outlet</li>
+                                    </a>
+                                    <a href="{{ url('/retailer_list') }}">
+                                        <li>Outlets List </li>
+                                    </a>
+
+
+                                </ul>
+                            </div>
+                            
+                            <div class="menutab active">
+                                <div class="menuitem cursorpointer" role="button" data-toggle="collapse" href="#collapseExample7" aria-expanded="false" aria-controls="collapseExample">
+                                    <img src="{{ asset('img/factory-stock-house.png')}}" alt="dashboard" width="40px"/><br />
+                                    Warehouse
+                                </div>
+                                <ul class="collapse " id="collapseExample7">
+                                    <a href="{{ url('createNewWarehouse') }}">
+                                        <li>New Warehouse </li>
+                                    </a>
+                                    <a href="{{ url('warehouse') }}">
+                                        <li>All Warehouses</li>
+                                    </a>
+									
+									<a href="{{ url('/invoice/list/') }}">
+                                        <li>Invoice History </li>
+                                    </a>
+                                   <!-- <a href="{{ url('mainWarehouseReceive') }}">
+                                        <li>Consignment Receive</li>
+                                    </a>-->
+
+                                    <a href="{{ url('receive_stock') }}">
+                                        <li>Consignment Receive</li>
+                                    </a>
+
+
+                                    <a href="{{ url('warehouseIssue') }}">
+                                        <li>Sales Invoice </li>
+                                    </a>
+
+                                    <!-- <a href="{{ url('itemDetail') }}">
+                                        <li>Find IMEI</li>
+                                    </a> -->
+
+                                    <a href="{{ url('warehouse/change_stock_type') }}">
+                                        <li>Change Stock Type</li>
+                                    </a>
+
+
+                                    <a href="{{ url('cons_stock_item_detail') }}">
+                                        <li>Stock Details</li>
+                                    </a>
+                                </ul>
+                            </div>
+
+                            <div class="menutab active">
+                                <div class="menuitem cursorpointer" role="button" data-toggle="collapse" href="#collapseExample15" aria-expanded="false" aria-controls="collapseExample">
+                                    <img src="{{ asset('img/transfer.png')}}" alt="dashboard" width="40px"/><br />
+                                    Stock Transfer
+                                </div>
+                                <ul class="collapse " id="collapseExample15">
+                                    <a href="{{ url('issue_note') }}">
+                                        <li>Create Transfer Request</li>
+                                    </a>
+                                    <a href="{{ url('transfer_requests') }}">
+                                        <li>Approved</li>
+                                    </a>
+
+                                    <a href="{{ url('display_issue_note') }}">
+                                        <li>View Issue Note</li>
+                                    </a>
+
+                                    <a href="{{ url('non_approved_issue_note') }}">
+                                        <li>Requests Approval</li>
+                                    </a>
+									<a href="{{ url('receive_TransferStock') }}">
+                                        <li>Receive Stock</li>
+                                    </a>
+
+                                </ul>
+                            </div>
+                            <div class="menutab active">
+                                <div class="menuitem cursorpointer" role="button" data-toggle="collapse" href="#collapseExample6" aria-expanded="false" aria-controls="collapseExample">
+                                    <img src="{{ asset('img/bars.png')}}" alt="dashboard" width="40px"/><br />
+                                    Finance
+                                </div>
+                                <ul class="collapse " id="collapseExample6">
+                                    <a href="{{ url('finance/orders_approval') }}">
+                                        <li>Orders Approval </li>
+                                    </a>
+                                    <a href="{{ url('/invoice/list/') }}">
+                                        <li>Invoice History </li>
+                                    </a>
+
+                                    <a href="{{url('/retailer_order/payment')}}">
+                                        <li>Receive Payment </li>
+                                    </a>
+
+                                    <a href="{{url('/retailer/payment_slips')}}">
+                                        <li>Payment Slips </li>
+                                    </a>
+
+                                    <a href="{{url('/bank')}}">
+                                        <li>Registered Banks </li>
+                                    </a>
+
+                                    <a href="{{url('/ledger')}}">
+                                        <li>Ledger </li>
+                                    </a>
+
+                                    <a href="{{url('/so_tasks')}}">
+                                        <li>Survey Tasks </li>
+                                    </a>
+                                    <a href="{{url('/order_list')}}"><li>Online Orders</li></a>
+                                </ul>
+                            </div>
+                            <div class="menutab active">
+                                <div class="menuitem cursorpointer" role="button" data-toggle="collapse" href="#collapseExample8" aria-expanded="false" aria-controls="collapseExample">
+                                    <img src="{{ asset('img/newspaper.png')}}" alt="dashboard" width="40px" /><br />
+                                    Reports
+                                </div>
+                                <ul class="collapse " id="collapseExample8">
+                                    <a href="{{url('/report')}}">
+                                        <li>Sales and Collection</li>
+                                    </a>
+                                   <a href="{{ url('warehouseStock') }}">
+                                        <li>Stock Report </li>
+                                    </a>
+                                </ul>
+                            </div>
+                            <div class="menutab active">
+                                <div class="menuitem cursorpointer" role="button" data-toggle="collapse" href="#collapseExample3" aria-expanded="false" aria-controls="collapseExample">
+                                    <img src="{{ asset('img/four-blocks-cube.png')}}" alt="dashboard" style="width:40px;"/><br />
+                                    Purchase Orders
+                                </div>
+                                <ul class="collapse " id="collapseExample3">
+                                    <a href="{{ url('order/create') }}">
+                                        <li>Create Order</li>
+                                    </a>
+                                    <a href="{{ url('order/all_orders') }}">
+                                        <li>All Orders</li>
+                                    </a>
+                                    <a href="{{ url('order/receive') }}">
+                                        <li>New Consigment</li>
+                                    </a>
+                                    <a href="{{ url('order/payment') }}">
+                                        <li>PO Payment</li>
+                                    </a>
+                                    <a href="{{ url('order/received_orders') }}">
+                                        <li>Received Orders</li>
+                                    </a>
+                                </ul>
+                            </div>
+                            <div class="menutab active">
+                                <div class="menuitem cursorpointer" role="button" data-toggle="collapse" href="#collapseExample4" aria-expanded="false" aria-controls="collapseExample">
+                                    <img src="{{ asset('img/hotel-staff.png')}}" alt="dashboard" width="40px" /><br />
+                                    Staff Management
+                                </div>
+                                <ul class="collapse " id="collapseExample4">
+                                    <a href="{{ url('staff') }}">
+                                        <li>New Enrollment</li>
+                                    </a>
+                                    <a href="{{ url('viewStaff') }}">
+                                        <li>Staff List</li>
+                                    </a>
+                                    <a href="{{ url('warehouseStaff') }}">
+                                        <li>Allocate Staff</li>
+                                    </a>
+                                    <a href="{{ url('warehouseStaffView') }}">
+                                        <li>Warehouse Staff List</li>
+                                    </a>
+                                </ul>
                             </div>
                             <div class="menutab active">
                                 <div class="menuitem cursorpointer" role="button" data-toggle="collapse" href="#collapseExample2" aria-expanded="false" aria-controls="collapseExample">
@@ -567,158 +738,21 @@
                                 </ul>
                             </div>
                             <div class="menutab active">
-                                <div class="menuitem cursorpointer" role="button" data-toggle="collapse" href="#collapseExample3" aria-expanded="false" aria-controls="collapseExample">
-                                    <img src="{{ asset('img/four-blocks-cube.png')}}" alt="dashboard" style="width:40px;"/><br />
-                                    Purchase Orders
-                                </div>
-                                <ul class="collapse " id="collapseExample3">
-                                    <a href="{{ url('order/create') }}">
-                                        <li> Create Order</li>
-                                    </a>
-                                    <a href="{{ url('order/all_orders') }}">
-                                        <li> Orders List</li>
-                                    </a>
-                                    <a href="{{ url('order/receive') }}">
-                                        <li> New Shipment</li>
-                                    </a>
-                                    <a href="{{ url('order/payment') }}">
-                                        <li> PO Payment</li>
-                                    </a>
-                                    <a href="{{ url('order/received_orders') }}">
-                                        <li> Received Orders</li>
-                                    </a>
-                                </ul>
-                            </div>
-                            <div class="menutab active">
-                                <div class="menuitem cursorpointer" role="button" data-toggle="collapse" href="#collapseExample4" aria-expanded="false" aria-controls="collapseExample">
-                                    <img src="{{ asset('img/hotel-staff.png')}}" alt="dashboard" width="40px" /><br />
-                                    Staff
-                                </div>
-                                <ul class="collapse " id="collapseExample4">
-                                    <a href="{{ url('staff') }}">
-                                        <li>Create Staff</li>
-                                    </a>
-                                    <a href="{{ url('viewStaff') }}">
-                                        <li>Staff List</li>
-                                    </a>
-
-                                </ul>
-                            </div>
-                            <div class="menutab active">
-                                <div class="menuitem cursorpointer" role="button" data-toggle="collapse" href="#collapseExample5" aria-expanded="false" aria-controls="collapseExample">
-                                    <img src="{{ asset('img/store.png')}}" alt="dashboard" width="40px"/><br />
-                                    Outlets
-                                </div>
-                                <ul class="collapse " id="collapseExample5">
-                                    <a href="{{ url('/retailer') }}">
-                                        <li>Create Outlet</li>
-                                    </a>
-                                    <a href="{{ url('/retailer_list') }}">
-                                        <li>Outlets List </li>
-                                    </a>
-                                    <a href="{{ url('retailer/create_order') }}">
-                                        <li>Create Retail Order </li>
-                                    </a>
-
-                                    <a href="{{ url('retailer_order/orders') }}">
-                                        <li>Retail Orders </li>
-                                    </a>
-
-
-                                </ul>
-                            </div>
-                            
-                            <div class="menutab active">
-                                <div class="menuitem cursorpointer" role="button" data-toggle="collapse" href="#collapseExample7" aria-expanded="false" aria-controls="collapseExample">
-                                    <img src="{{ asset('img/factory-stock-house.png')}}" alt="dashboard" width="40px"/><br />
-                                    Warehouse
-                                </div>
-                                <ul class="collapse " id="collapseExample7">
-                                    <a href="{{ url('createNewWarehouse') }}">
-                                        <li>Create Warehouse </li>
-                                    </a>
-                                    <a href="{{ url('warehouse') }}">
-                                        <li>Warehouse List</li>
-                                    </a>
-                                    <a href="{{ url('warehouseStaff') }}">
-                                        <li>Allocate Staff </li>
-                                    </a>
-                                    <a href="{{ url('warehouseStaffView') }}">
-                                        <li>Warehouse Staff </li>
-                                    </a>
-
-                                    <a href="{{ url('mainWarehouseReceive') }}">
-                                        <li>Consigment Receive</li>
-                                    </a>
-
-                                    <a href="{{ url('warehouseIssue') }}">
-                                        <li>Sales Invoice </li>
-                                    </a>
-
-                                    <a href="{{ url('itemDetail') }}">
-                                        <li>Item Detail </li>
-                                    </a>
-
-                                    <a href="{{ url('productDetailsView') }}">
-                                        <li>Product Detail </li>
-                                    </a>
-
-                                </ul>
-                            </div>
-                            <div class="menutab active">
-                                <div class="menuitem cursorpointer" role="button" data-toggle="collapse" href="#collapseExample6" aria-expanded="false" aria-controls="collapseExample">
-                                    <img src="{{ asset('img/bars.png')}}" alt="dashboard" width="40px"/><br />
-                                    Finance
-                                </div>
-                                <ul class="collapse " id="collapseExample6">
-                                    <a href="{{ url('finance/orders_approval') }}">
-                                        <li>Orders Approval </li>
-                                    </a>
-                                    <a href="{{ url('/invoice/list/') }}">
-                                        <li>Invoice History </li>
-                                    </a>
-
-                                    <a href="{{ url('warehouseStock') }}">
-                                        <li>Stock Report </li>
-                                    </a>
-
-                                    <a href="{{url('/retailer_order/payment')}}">
-                                        <li>Receive Payment </li>
-                                    </a>
-
-                                    <a href="{{url('/bank')}}">
-                                        <li>Registered Banks </li>
-                                    </a>
-
-                                    <a href="{{url('/ledger')}}">
-                                        <li>Ledger </li>
-                                    </a>
-
-                                </ul>
-                            </div>
-                            <div class="menutab active">
-                                <div class="menuitem cursorpointer" role="button" data-toggle="collapse" href="#collapseExample8" aria-expanded="false" aria-controls="collapseExample">
-                                    <img src="{{ asset('img/newspaper.png')}}" alt="dashboard" width="40px" /><br />
-                                    Report
-                                </div>
-                                <ul class="collapse " id="collapseExample8">
-                                    <a href="#">
-                                        <li>Finance Report </li>
-                                    </a>
-
-                                </ul>
-                            </div>
-                            <div class="menutab active">
                                 <div class="menuitem cursorpointer" role="button" data-toggle="collapse" href="#collapseExample9" aria-expanded="false" aria-controls="collapseExample">
                                     <img src="{{ asset('img/key.png')}}" alt="dashboard" width="40px"/><br />
                                     Access Control
                                 </div>
                                 <ul class="collapse " id="collapseExample9">
+
+                                    <a href="{{ url('permission_manage') }}">
+                                        <li>Create Permissions </li>
+                                    </a>
+
                                     <a href="{{ url('access') }}">
-                                        <li>Access </li>
+                                        <li>Create Roles </li>
                                     </a>
                                     <a href="{{ url('userrole') }}">
-                                        <li>User Role</li>
+                                        <li>Assign Roles</li>
                                     </a>
 
 
@@ -734,7 +768,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-10 ">
+                    <div class="col-md-10" id="content_placeholder">
                         <div class="content-container ">
                             @yield('content')
                         </div>
@@ -859,11 +893,40 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.21.0/moment.min.js"></script>
     <script src="{{ asset('js/app.js') }}"></script>
+	  <script src="{{ asset('js/gridviewscroll.js') }}"></script>
   <script src="{{ asset('js/prettify.js') }}"></script>
+  <script src="{{ asset('js/slick.js') }}"></script>
   <script src="{{ asset('js/accounting.js') }}"></script>
     <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 
+    <script>
 
+$(document).ready(function () {
+    // sidebar is pre-collapsed on the document load
+    $("#btn_expand").hide();
+
+    // collapse the sidebar
+    $('#btn_collapse').click(function () {
+        $(this).hide();
+        $('#btn_expand').show();
+
+        $('#sidebar').hide();
+        $('#content_placeholder').removeClass('col-md-10');
+        $('#content_placeholder').addClass('col-md-12');
+    });
+
+    // expand the sidebar
+    $('#btn_expand').click(function () {
+        $(this).hide();
+        $('#btn_collapse').show();
+
+        $('#sidebar').show('slow');
+        $('#content_placeholder').removeClass('col-md-12');
+        $('#content_placeholder').addClass('col-md-10');
+    });
+});
+
+</script>
 
 
 

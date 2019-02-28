@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use DB;
+use App\StockStatusHistory;
 use App\Item;
 use App\IMEI;
 class ItemController extends Controller
@@ -24,9 +25,31 @@ class ItemController extends Controller
       $getItem=Item::where('is_deleted',0)->with('imei')->with('productColor')->with('receiveBy')->get();
     }
 
-    public function itemDetails($imei){
-      $imei=IMEI::where('imei1',$imei)->with('item.receive.Order','item.receive.mainWarehouseReceive.warehouse','item.productColor.product','item.productColor.productImages','item.warehouseIssueItem')->first();
-      return $imei;
+    public function itemDetails($imei) {
+        $imei = IMEI::where('imei1', $imei)->orWhere('imei2', $imei)->with('item.receive.Order', 'item.receive.mainWarehouseReceive.warehouse', 'item.mainWarehouseReceiveItem.warehouse', 'item.productColor.product', 'item.productColor.productImages', 'item.warehouseIssueItem')->first();
+        if ($imei != null) {
+            $outlet_details = DB::table('tbl_warehouse_issue_items')->where(['item_id' => $imei->id])
+                    ->join('tbl_warehouse_issue', 'tbl_warehouse_issue.id', '=', 'tbl_warehouse_issue_items.warehouse_issue_id')
+                    ->join('tbl_invoice', 'tbl_invoice.id', '=', 'tbl_warehouse_issue.invoice_id')
+                    ->join('tbl_retailer_order', 'tbl_retailer_order.id', '=', 'tbl_invoice.order_id')
+                    ->join('tbl_retailer_outlet', 'tbl_retailer_outlet.id', '=', 'tbl_retailer_order.outlet_id')
+                    ->join('tbl_city', 'tbl_city.id', '=', 'tbl_retailer_outlet.city_id')
+                    ->join('tbl_region', 'tbl_region.id', '=', 'tbl_retailer_outlet.region_id')
+                    ->select('tbl_city.name as city_name', 'tbl_retailer_outlet.name as outlet_name', 'tbl_region.name as region_name')
+                    ->first();
+            if ($outlet_details != "") {
+                $imei['outlet_details'] = $outlet_details;
+            } else {
+                $imei['outlet_details'] = "";
+            }
+            return $imei;
+        } else {
+            return 404;
+        }
+    }
+
+    public function get_all_stock_type_history($item_id){
+      return StockStatusHistory::where('item_id', $item_id)->with('warehouse')->get();
     }
 
     public function store(Request $request)

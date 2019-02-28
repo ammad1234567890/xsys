@@ -2,6 +2,8 @@
 
 @section('content')
         <div class="container-fluid">
-        	<warehousestock-component></warehousestock-component>
+        	<!--<stockitemdetail-component></stockitemdetail-component> -->
+            <warehousestock-component></warehousestock-component>
+
         </div>
 @endsection

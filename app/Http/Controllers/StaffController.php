@@ -147,9 +147,11 @@ class StaffController extends Controller
       return $manager;
     }
 
+
+    //THis is for Finance Function
     public function accountant()
     {
-      $type=StaffType::where('type','Accountant')->first();
+      $type=StaffType::where('type','Finance')->first();
       $accoutnant=Staff::where('staff_type_id',$type->id)->with('city')->with('region')->with('department')->with('staffType')->with('designation')->with('user')->where('is_deleted',0)->get();
       return $accoutnant;
     }
@@ -157,6 +159,10 @@ class StaffController extends Controller
     public function viewStaff()
     {
       return view('viewStaff');
+    }
+	
+	public function get_all_sales_officer(){
+        return Staff::where("staff_type_id", 5)->get();
     }
 
 }

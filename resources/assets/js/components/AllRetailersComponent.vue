@@ -3,36 +3,104 @@
         <div class="row">     
                 <!-- RETAILER SHOW GRID -->
                 <div class="panel panel-info">
-                    <div class="panel-heading">
-                        <h2 class="panel-title">Outlet - Details</h2>
+            <div class="panel-heading">
+
+                <h2 class="panel-title" style="float:left; display: inline-block;">Outlets</h2>
+
+
+
+                <div class="dropdown" style="float:right;">
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" style="color:#fff;">Export to Excel
+                        <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        <li><input type="text" v-model="tableData.excel_filename" placeholder="Filename"/> </li>
+                        <li><a :href="'./get_all_outlets_dataTable?draw='+this.tableData.draw+'&length='+this.tableData.length+'&search='+this.tableData.search+'&column='+this.tableData.column+'&dir='+this.tableData.dir+'&selected_sales_officer='+this.tableData.selected_sales_officer+'&selected_state='+this.tableData.selected_state+'&selected_city='+this.tableData.selected_city+'&excel_export=1&file_name='+this.tableData.excel_filename">Current Grid Records</a></li>
+                        <li><a :href="'./get_all_outlets_dataTable?draw='+this.tableData.draw+'&length='+this.tableData.length+'&search='+this.tableData.search+'&column='+this.tableData.column+'&dir='+this.tableData.dir+'&selected_sales_officer='+this.tableData.selected_sales_officer+'&selected_state='+this.tableData.selected_state+'&selected_city='+this.tableData.selected_city+'&excel_export=1&excel_type=1&file_name='+this.tableData.excel_filename">All Records</a></li>
+                    </ul>
+                </div>
+
+                <div style="clear:both;"></div>
+            </div>
+
+
+
+            <!-- RETAILER SHOW GRID -->
+            <div class="panel-body">
+
+                    <div class="projects">
+        <div class="tableFilters">
+            <h5 style="font-weight:bold;">Filters:</h5>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <select v-model="tableData.selected_sales_officer" class="form-control">
+                        <option value="">SalesOfficer Wise</option>
+                        <option v-for="(so, index) in SalesOfficerData" :value="so.id">{{so.name}}</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <select v-model="tableData.selected_state" @change="get_cities_by_state()" class="form-control">
+                        <option value="">State Wise</option>
+                        <option value="1">Central</option>
+                        <option value="2">South</option>
+                        <option value="3">North</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row" style="margin-top:10px;">
+                <div class="col-md-6">
+                    <select v-model="tableData.selected_city" class="form-control">
+                        <option value="">City Wise</option>
+                        <option v-for="(c, index) in all_cities" :value="c.id">
+                            {{c.name}}
+                        </option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <button class="btn btn-primary" @click="filterDataBtn()">Filter Outlets</button>
+                </div>
+            </div>
+
+            <hr/>
+
+
+           <div class="row">
+            <div class="col-md-8">
+                <div class="control">
+                    <div class="select">
+                        <Label>Records:</Label>
+                        <select v-model="tableData.length" @change="getProjects()">
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                            <option value="200">200</option>
+                        </select>
                     </div>
-
-                    <div class="panel-body">
-                        <table id="outlet_table" class="table table-bordered">
-                            <thead>
-                            <tr>
-                                <th>Outlet</th>
-								                <th>Dealer Code</th>
-                                <th>Dealer</th>
-                                <th>Contact No.</th>
-                                <th>City</th>
-                                <th>Locality</th>
-                                <th>Address</th>
+                </div>
+            </div>
+            <div class="col-md-4">
+                 
+                    <input class="textbox" type="text" v-model="tableData.search" placeholder="Search..."
+                   @input="getProjects()">
+            </div>
+            </div>
 
 
-                                <th>Action</th>
-                            </tr>
-                            </thead>
-                            <tbody>
+        </div>
+        <datatable :columns="columns" :sortKey="sortKey" :sortOrders="sortOrders" @sort="sortBy">
+            <tbody>
+                <tr v-for="(outlets, index) in outletsData" :key="outlets.id">
 
-                            <tr v-for="(outlets,index) in outletsData">
-                                <td>{{outlets.name}}</td>
-								                <td>{{outlets.retailer.retailer_no}}</td>
+                    <td>{{outlets.name}}</td>
+                    <td>{{outlets.sales_officer.name}}</td>
+                    <td>{{outlets.retailer.retailer_no}}</td>
                                 <td>{{outlets.business_person_name}}</td>
                                 <td>{{outlets.phone_no}}</td>
                                 <td>{{outlets.city.name}}</td>
-                                <td>{{outlets.region.name}}</td>
-                                <td>{{outlets.address}}</td>
+                                <td :title=outlets.region.name>{{outlets.region.name.slice(0,30)}}...</td>
+                                <td :title=outlets.address>{{outlets.address.slice(0,30)}}...</td>
 
 
                                 <td>
@@ -45,15 +113,31 @@
                                         
                                         
                                         </ul> -->
-                                        <button v-on:click="enable_edit_mode(index)" class="btn btn-info btn-xs"><i class="fa fa-edit" title="Edit"></i></button> 
+                                       <!-- <button v-on:click="enable_edit_mode(index)" class="btn btn-info btn-xs"><i class="fa fa-edit" title="Edit"></i></button> -->
                                         <button class="btn btn-success btn-xs" v-on:click="view_outlet_details(index)" title="View Detail"><i class="fa fa-eye"></i></button>
+                                    <button  v-on:click="sale_return(outlets.id)" style="color:#999"><i class="fa fa-retweet" aria-hidden="true"></i></button>
                                     </div>
                                 </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+
+
+               
+
+                    
+                </tr>
+            </tbody>
+        </datatable>
+        <pagination :pagination="pagination"
+                    @prev="getProjects(pagination.prevPageUrl)"
+                    @next="getProjects(pagination.nextPageUrl)">
+        </pagination>
+    </div>
+
+            </div>
+        </div>
+
+
+
+                
 
                 <!-- View Details Modal Start-->
                 <div class="modal fade bs-add-Model-modal-md" tabindex="5" role="dialog"  id="outlet_info_modal" aria-labelledby="bs-add-Model-modal-md">
@@ -445,6 +529,7 @@
 
     import Vue from 'vue';
     import VeeValidate from 'vee-validate';
+    import {constant} from '../constant.js';
     var base_url = window.location.origin;
 
     const config = {
@@ -472,9 +557,57 @@
     };
 
     Vue.use(VeeValidate, config);
+    import Datatable from './DatatableComponent.vue';
+    import Pagination from './PaginationComponent.vue';
     export default {
+        components: {datatable: Datatable, pagination: Pagination},
         data(){
+            let sortOrders = {};
+            let columns = [
+                {width: '10%', label: 'Outlet', name: 'Outlet' },
+                {width: '10%', label: 'SalesOfficer', name: 'SalesOfficer'},
+                {width: '10%', label: 'Dealer Code', name: 'Dealer Code'},
+                {width: '20%', label: 'Dealer Name', name: 'Dealer Name'},
+                {width: '10%', label: 'Contact No', name: 'Contact No'},
+                {width: '10%', label: 'City', name: 'City'},
+                {width: '10%', label: 'Locality', name: 'Locality'},
+                {width: '20%', label: 'Address', name: 'Address'},
+                {width: '20%', label: 'Action', name: 'Action'},
+            ];
+            columns.forEach((column) => {
+                sortOrders[column.name] = -1;
+            });
             return{
+
+                projects:[],
+                columns: columns,
+                sortKey: 'Dealer Code',
+                sortOrders: sortOrders,
+                tableData: {
+                    draw: 0,
+                    length: 10,
+                    search: '',
+                    column: 0,
+                    dir: 'desc',
+                    selected_filters:[],
+                    selected_sales_officer:'',
+                    selected_state:'',
+                    selected_city:'',
+                    excel_export:0,
+                    excel_filename:""
+                },
+                pagination: {
+                    lastPage: '',
+                    currentPage: '',
+                    total: '',
+                    lastPageUrl: '',
+                    nextPageUrl: '',
+                    prevPageUrl: '',
+                    from: '',
+                    to: ''
+                },
+
+
                 add_city_mode:0,
                 add_region_mode:0,
                 btndisabled:false,
@@ -536,11 +669,11 @@
                     city_name:'',
                     region_name:''
                 },
-
+                all_cities:[],
                 regionsData:[],
                 outletsData:[],
                 citiesData:[],
-
+                SalesOfficerData:[],
             }
         },
         mounted() {
@@ -553,7 +686,47 @@
             init: function(){
                 this.get_cities();
                 this.get_regions();
-                this.get_all_outlets();
+               // this.get_all_outlets();
+                this.getProjects();
+                this.get_all_sales_officers();
+            },
+            getProjects(url = './get_all_outlets_dataTable') {
+            this.tableData.draw++;
+            axios.get(url, {params: this.tableData})
+                .then(response => {
+                    let data = response.data;
+                    if (this.tableData.draw == data.draw) {
+                        this.outletsData = data.data.data;
+                        console.log(this.outletsData);
+                        this.configPagination(data.data);
+                    }
+                })
+                .catch(errors => {
+                    console.log(errors);
+                });
+        },
+            configPagination(data) {
+                this.pagination.lastPage = data.last_page;
+                this.pagination.currentPage = data.current_page;
+                this.pagination.total = data.total;
+                this.pagination.lastPageUrl = data.last_page_url;
+                this.pagination.nextPageUrl = data.next_page_url;
+                this.pagination.prevPageUrl = data.prev_page_url;
+                this.pagination.from = data.from;
+                this.pagination.to = data.to;
+            },
+            sortBy(key) {
+                this.sortKey = key;
+                this.sortOrders[key] = this.sortOrders[key] * -1;
+                this.tableData.column = this.getIndex(this.columns, 'name', key);
+                this.tableData.dir = this.sortOrders[key] === 1 ? 'asc' : 'desc';
+                this.getProjects();
+            },
+            getIndex(array, key, value) {
+                return array.findIndex(i => i[key] == value)
+            },
+            sale_return:function(id){
+                window.location.assign("sale_find/"+id);
             },
             removeCopyImage:function(e){
                 e.preventDefault();
@@ -801,6 +974,27 @@
                 axios.get('./allRegions').then(response=>{
                     this.regionsData=response.data;
                 });
+            },
+            get_all_sales_officers:function(){
+                axios.get(constant.base_url+"/get_all_sales_officers").then((response)=>{
+                    this.SalesOfficerData=response.data;
+                });
+            },
+            get_cities_by_state:function(){
+                axios.get(constant.base_url+"get_cities_by_state/"+this.tableData.selected_state).then((response)=>{
+                    this.all_cities=response.data;
+                    console.log(this.all_cities);
+                });
+            },
+            filterDataBtn:function(){
+                this.getProjects();
+            },
+            excel_export(url = './get_all_outlets_dataTable') {
+                this.tableData.excel_export=1;
+                axios.get(url, {params: this.tableData})
+                    .then(response => {
+                        this.tableData.excel_export=0;
+                    });
             }
         }
     }

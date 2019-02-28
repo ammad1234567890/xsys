@@ -1,0 +1,145 @@
+﻿
+.GridViewScrollHeader TH, .GridViewScrollHeader TD {
+       padding: 8px;
+    /*  padding-left: 3px;
+      padding-top:10px;
+      padding-bottom:10px;*/
+    font-size: 12px;
+    font-weight: normal;
+
+    border-right: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    background-color: #bce8f1;
+    color: #444;
+    text-align: left;
+    vertical-align: middle;
+
+}
+
+.GridViewScrollItem TD {
+    font-size: 12px;
+        padding: 8px;
+    /*  padding-left: 3px;*/
+    width: 80px;
+    border-right: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    background-color: #FFFFFF;
+    color: #444444;
+   /* text-align: left;*/
+    vertical-align: middle;
+}
+
+.GridViewScrollItemFreeze TD {
+    font-size: 12px;
+       padding: 8px;
+    /*  padding-left:3px; */
+      width: 80px;
+      border-right: 1px solid #ddd;
+      border-bottom: 1px solid #ddd;
+      background-color: #FAFAFA;
+      color: #444444;
+      text-align: left;
+      vertical-align: middle;
+  }
+.GridViewScrollFooterFreeze TD {
+    font-size: 12px;
+    padding: 8px;
+    /*  padding-left:3px;
+      padding-top:10px;
+      padding-bottom:10px;*/
+    width: 80px;
+    border-right: 1px solid #ddd;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    background-color: #F4F4F4;
+    color: #444444;
+   /* text-align: left; */
+    vertical-align: middle;
+}
+
+.GridViewScrollFooterFreeze_invoice_outstanding TD {
+    font-size: 12px;
+    padding:10px 10px 10px 5px;
+    /*  padding-left:3px;
+      padding-top:10px;
+      padding-bottom:10px;*/
+    width: 80px;
+
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    background-color: #F4F4F4;
+    color: #444444;
+    text-align: left;
+    vertical-align: middle;
+}
+
+  .GridViewScrollFooterFreeze_outstanding TD {
+      font-size: 12px;
+      padding:10px 20px 10px 20px;
+     /* padding-top:10px;
+       padding-bottom:10px;*/
+    width: 80px !important;
+
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    background-color: #F4F4F4;
+    color: #444444;
+    /*text-align: left;*/
+    vertical-align: middle;
+}
+
+.white {
+    color: white !important;
+}
+
+.table_custom {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.width {
+    width: 100px;
+}
+
+.tr {
+    border-bottom: 1px solid #ddd;
+}
+
+.display_none {
+    display: none;
+}
+
+.border_table {
+    border-left: 1px solid #ddd;
+}
+
+.red {
+    color: red !important;
+    text-align: center !important;
+}
+
+.m-p-0 {
+    margin: 0px;
+    padding: 0px
+}
+
+.v-a-t {
+    vertical-align: top !important;
+}
+
+.w-150 {
+    width: 180px;
+}
+
+p {
+    text-align: center;
+}
+
+.GridViewScrollItem.numRight{
+
+text-align: right !important;
+}

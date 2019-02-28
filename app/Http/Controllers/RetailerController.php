@@ -37,10 +37,29 @@ class RetailerController extends Controller
     }
 
     public function make_number($order_id){
-        $order_zeros='';
-        for($i=0; $i<=strlen($order_id); $i++){
-            $order_zeros.=0;
+
+        $id_length= strlen($order_id);
+
+        if($id_length==1){
+            $order_zeros='0000';
         }
+        if($id_length==2){
+            $order_zeros='000';
+        }
+        if($id_length==3){
+            $order_zeros='00';
+        }
+        if($id_length==4){
+            $order_zeros='0';
+        }
+        if($id_length==5){
+            $order_zeros='';
+        }
+
+        /* $order_zeros='';
+         for($i=0; $i<=strlen($order_id); $i++){
+             $order_zeros.=0;
+         }*/
         $current_month=date('m');
         $current_year=date('y');
         $number=$current_month.$current_year.$order_zeros.$order_id;
@@ -257,7 +276,15 @@ class RetailerController extends Controller
     }
 
 
-
+    public function get_outlet_details($id) {
+        $query = DB::table('tbl_retailer_outlet')
+                        ->join('tbl_retailer', 'tbl_retailer.id', '=', 'tbl_retailer_outlet.retailer_id')
+                        ->join('tbl_city', 'tbl_city.id', '=', 'tbl_retailer_outlet.city_id')
+                        ->select('tbl_retailer_outlet.name', 'tbl_retailer.retailer_no', 'tbl_city.name as cname'
+                                , 'tbl_retailer_outlet.address')
+                        ->where(['tbl_retailer_outlet.id' => $id])->get();
+        return $query;
+    }
     //Registered a route with the name of 'retailer/create_order'
     public function create_order(){
         return View('create_retailer_order');

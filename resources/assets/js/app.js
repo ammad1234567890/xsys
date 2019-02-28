@@ -1,4 +1,3 @@
-
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -11,10 +10,12 @@ import VeeValidate from 'vee-validate';
 import DatePicker from 'vue2-datepicker';
 const VueInputMask = require('vue-inputmask').default
 import alert  from 'vue-strap';
+var FileSaver = require('file-saver');
 import DatatableFactory from 'vuejs-datatable';
 import VueNumeric from 'vue-numeric';
 import VueCurrencyFilter from 'vue-currency-filter'
 import $ from 'jquery';
+
 import 'datatables.net';
 
 Vue.use(VueInputMask)
@@ -22,6 +23,7 @@ Vue.use(DatatableFactory);
 Vue.use(DatePicker);
 Vue.use(VueNumeric);
 Vue.use(alert);
+Vue.use(FileSaver);
 Vue.use(VueCurrencyFilter,
     {
         symbol : '$',
@@ -47,6 +49,7 @@ Vue.component('product-component', require('./components/ProductComponent.vue'))
 Vue.component('showproduct-component', require('./components/showProductComponent.vue'));
 Vue.component('role-component', require('./components/RoleComponent.vue'));
 Vue.component('userrole-component', require('./components/UserRoleComponent.vue'));
+Vue.component('permission-component', require('./components/PermissionComponent.vue'));
 Vue.component('category-component', require('./components/categoryComponent.vue'));
 Vue.component('showcategory-component', require('./components/showCategoryComponent.vue'));
 //Vue.component('product-component', require('./components/productComponent.vue'));
@@ -102,9 +105,37 @@ Vue.component('warehousetransfer-component',require('./components/warehouseTrans
 Vue.component('retailerinvoicereversal-component', require('./components/RetailerInvoiceReversalComponent.vue'));
 Vue.component('productspecs-component', require('./components/ProductSpecsComponent.vue'));
 Vue.component('productspecification-component',require('./components/productSpecificationComponent.vue'));
+Vue.component('stockitemdetail-component',require('./components/StockItemDetailComponent.vue'));
+Vue.component('consolidated-stockitemdetail-component',require('./components/ConsolidatedStockItemDetailComponent.vue'));
+Vue.component('stockitemhistory-component',require('./components/StockItemHistoryComponent.vue'));
+Vue.component('reports-component',require('./components/reports.vue'));
+Vue.component('issuenoteform-component',require('./components/IsueNoteFormComponent.vue'));
+Vue.component('displayissuenote-component',require('./components/ViewIssueNotes.vue'));
+Vue.component('issuenoteapproval-component',require('./components/IssueNoteApproval.vue'));
+Vue.component('transferrequest-component',require('./components/TransferRequestComponent.vue'));
+Vue.component('consignmentstockentry-component',require('./components/ConsignmentStockEntryComponent.vue'));
+Vue.component('retailerorderimeiprint-component',require('./components/RetailerOrderImeiPrint.vue'));
+Vue.component('retailerorderimeireturnprint-component',require('./components/RetailerOrderImeiReturnPrint.vue'));
+Vue.component('paymentreverse-component',require('./components/PaymentReverse.vue'));
+Vue.component('paymentslips-component',require('./components/PaymentSlipsComponent.vue'));
+Vue.component('changestocktype-component',require('./components/ChangeStockTypeComponent.vue'));
+Vue.component('salefind-component', require('./components/SaleFindComponent.vue'));
+Vue.component('headernotification-component', require('./components/HeaderNotificationComponent.vue'));
+Vue.component('notificationpopup-component', require('./components/NotificationPopupComponent.vue'));
+Vue.component('receivestock-component', require('./components/ReceiveStockComponent.vue'));
+Vue.component('transferimeiinvoice-component', require('./components/TransferImeiInvoice.vue'));
+
+
+Vue.component('onlineorderlist-component', require('./components/OnlineOrderList.vue'));
+Vue.component('ReportTable-component', require('./components/ReportTableComponent.vue'));
+
+Vue.component('receivetransferstock-component', require('./components/ReceiveTransferStockComponent.vue'));
+Vue.component('transferinvoice-component', require('./components/TransferInvoicePrint.vue'));
+Vue.component("changepassword-component", require('./components/ChangePasswordComponent.vue'));
+Vue.component('transferinvoice-component', require('./components/TransferInvoicePrint.vue'));
+Vue.component("surveytasks-component",require("./components/surveyTaskComponent.vue"));
+Vue.component("taskonshelfreport-component",require("./components/TaskShelfReportComponent.vue"));
 const app = new Vue({
     el: '#app'
-
-
 });
 

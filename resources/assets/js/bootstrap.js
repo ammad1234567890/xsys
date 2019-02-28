@@ -43,13 +43,16 @@ if (token) {
  * allows your team to easily build robust real-time web applications.
  */
 
-// import Echo from 'laravel-echo'
+import Echo from 'laravel-echo'
 
-// window.Pusher = require('pusher-js');
-
-// window.Echo = new Echo({
-//     broadcaster: 'pusher',
-//     key: 'your-pusher-key',
-//     cluster: 'mt1',
-//     encrypted: true
-// });
+ window.Pusher = require('pusher-js');
+var base_url="http://172.16.1.250:82/xsys_new_version/public/";
+//var base_url="http://portal.xcell.com.pk/system/public/";
+//var base_url="http://testportal.xcell.com.pk/system/public/";
+ window.Echo = new Echo({
+     authEndpoint : base_url+'broadcasting/auth',
+     broadcaster: 'pusher',
+     key: '210c69d7b1c3a83cdf9c',
+    cluster: 'ap2',
+     encrypted: true
+ });

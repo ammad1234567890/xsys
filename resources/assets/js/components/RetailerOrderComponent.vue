@@ -2,31 +2,134 @@
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-info">
-                <div class="panel-heading">
-                    <h2 class="panel-title">Retailer Order List</h2>
-                </div>
+            <div class="panel-heading">
+                <h2 class="panel-title" >All Sales Orders List</h2>
+            </div>
 
-                <div class="panel-body">
-                    <div class="alert alert-success"  v-if="message">
+
+
+            <!-- RETAILER SHOW GRID -->
+            <div class="panel-body">
+
+                    <div class="alert alert-success" id="message_div" v-if="message">
                         <strong>{{message}}</strong>
                     </div>
-                    <div class="table-responsive">
-                        <table id="example" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%" style="width:100%">
-                            <thead>
-                            <tr>
-                                <th  class="col-md-1">Date</th>
-                                <th>Order No</th>
-                                <th>Outlet</th>
-                                <th>City</th>
-                                <th>Total Amount (PKR)</th>
-                                <th class="col-md-1 text-center">Action</th>
-                                <th class="col-md-1">Clearance</th>
 
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr v-for="(order, index) in all_orders">
-                                <td>{{order.created_at | moment}}</td>
+                    <div class="projects">
+        <div class="tableFilters">
+            <h5 style="font-weight:bold;">Filters:</h5>
+
+            <div class="row">
+
+                <div class="col-md-6">
+                    <select v-model="tableData.selected_state" @change="get_cities_by_state()" class="form-control">
+                        <option value="">State Wise</option>
+                        <option value="1">Central</option>
+                        <option value="2">South</option>
+                        <option value="3">North</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <select v-model="tableData.selected_city" class="form-control" @change="get_outlet_by_city_state()">
+                        <option value="">All</option>
+                        <option v-for="(c, index) in all_cities" :value="c.id">
+                            {{c.name}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row" style="margin-top:10px;">
+                <div class="col-md-6">
+                    <select v-model="tableData.selected_filter_type" class="form-control">
+                        <option value="">Filter Type</option>
+                        <option value="1">SalesOfficer Wise</option>
+                        <option value="2">Outlet Wise</option>
+                        <option value="3">Product Wise</option>
+                    </select>
+                </div>
+
+
+                <div class="col-md-6" v-if="tableData.selected_filter_type==1">
+                    <select v-model="tableData.selected_sales_officer" class="form-control">
+                        <option value="">SalesOfficers</option>
+                        <option v-for="(so, index) in SalesOfficerData" :value="so.id">{{so.name}}</option>
+                    </select>
+                </div>
+
+                <div class="col-md-6" v-if="tableData.selected_filter_type==2">
+                    <select v-model="tableData.selected_outlet" class="form-control">
+                        <option value="">Outlets</option>
+                        <option v-for="(outlets, index) in all_outlets" :value="outlets.id">
+                            {{outlets.name}}
+                        </option>
+                    </select>
+                </div>
+
+                <div class="col-md-3" v-if="tableData.selected_filter_type==3">
+                    <select v-model="tableData.selected_product" class="form-control" @change="change_product()">
+                        <option value="">Products</option>
+                        <option v-for="(product, index) in allProducts"  v-bind:value="product.id">{{product.name}}</option>
+                    </select>
+                </div>
+
+                <div class="col-md-3" v-if="tableData.selected_filter_type==3">
+                    <select v-model="tableData.selected_product_color" class="form-control">
+                        <option value="">Product Colors</option>
+                        <option v-for="(product_color, index) in product_colors"  v-bind:value="product_color.id">{{product_color.color}}</option>
+                    </select>
+                </div>
+
+
+
+
+            </div>
+            <div class="row" style="margin-top:10px;">
+                <div class="col-md-12">
+                    <button class="btn btn-primary" @click="filterDataBtn()">Filter Orders</button>
+                    <div class="dropdown" style="float:right;">
+                        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" style="color:#fff;">Export to Excel
+                            <span class="caret"></span></button>
+                        <ul class="dropdown-menu">
+                            <li><input type="text" v-model="tableData.excel_filename" placeholder="Filename"/> </li>
+                            <li><a :href="'../get_all_orders_warehouse_datatable/'+currentWarehouseId+'?draw='+this.tableData.draw+'&length='+this.tableData.length+'&search='+this.tableData.search+'&column='+this.tableData.column+'&dir='+this.tableData.dir+'&selected_sales_officer='+this.tableData.selected_sales_officer+'&selected_state='+this.tableData.selected_state+'&selected_city='+this.tableData.selected_city+'&excel_export=1&file_name='+this.tableData.excel_filename">Current Grid Records</a></li>
+                            <li><a :href="'../get_all_orders_warehouse_datatable?'+currentWarehouseId+'draw='+this.tableData.draw+'&length='+this.tableData.length+'&search='+this.tableData.search+'&column='+this.tableData.column+'&dir='+this.tableData.dir+'&selected_sales_officer='+this.tableData.selected_sales_officer+'&selected_state='+this.tableData.selected_state+'&selected_city='+this.tableData.selected_city+'&excel_export=1&excel_type=1&file_name='+this.tableData.excel_filename">All Records</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <hr/>
+           <div class="row">
+            <div class="col-md-8">
+                <div class="control">
+                    <div class="select">
+                        <Label>Records:</Label>
+                        <select v-model="tableData.length" @change="getProjects()">
+                            <option value="10">10</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                            <option value="200">200</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                 
+                    <input class="textbox" type="text" v-model="tableData.search" placeholder="Search By Order No, Outlet Name"
+                   @input="getProjects()">
+            </div>
+            </div>
+        </div>
+        <datatable :columns="columns" :sortKey="sortKey" :sortOrders="sortOrders" @sort="sortBy">
+            <tbody>
+                <tr v-for="(order, index) in all_orders" :key="order.id">
+                    
+
+
+                   <td>{{order.created_at | moment}}</td>
+                    <td>{{order.sales_officer.name}}</td>
                                 <td>{{order.order_no}}</td>
                                 <td>{{order.retailer_outlet.name}}</td>
                                 <td>{{order.retailer_outlet.city.name}}</td>
@@ -38,28 +141,33 @@
 
                                         <a class="btn btn-primary btn-xs" v-bind:href="'../invoice/create/'+order.id" v-if="order.is_account_clearance==1" title="Generate invoice"><i class="fa fa-file"></i></a>
                                         <!-- <button class="btn btn-danger btn-xs" type="button" v-if="order.is_account_clearance==0" v-on:click="order_delete(index)">Delete </button> -->
+                                        <a class="btn btn-danger btn-xs"  title="Delete Order" v-if="order.is_account_clearance==0" v-on:click="delete_order(order.id)">
+                                            <i class="fa fa-trash-o"></i>
+                                        </a>
                                     </div>
                                 </td>
 
                                 <td v-if="order.is_account_clearance==1" class="col-md-1"><i class="fa fa-check" title="Cleared from Finance" style="text-align:center; display:block; font-size:25px; color:green;"></i> </td>
                                 <td v-else><i class="fa fa-times" style="text-align:center; display:block; font-size:25px; color:red;"></i></td>
-                            </tr>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th>Date</th>
-                                    <th>Order No</th>
-                                    <th>Outlet</th>
-                                    <th>City</th>
-                                    <th>Total Amount</th>
-                                    <th></th>
-                                    <th>Account Clearance</th>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
-                </div>
+
+                    
+                </tr>
+            </tbody>
+        </datatable>
+        <pagination :pagination="pagination"
+                    @prev="getProjects(pagination.prevPageUrl)"
+                    @next="getProjects(pagination.nextPageUrl)">
+        </pagination>
+    </div>
+
             </div>
+        </div>
+
+
+
+
+
+            
 
             <!-- View Details Modal Start-->
             <div class="modal fade bs-add-Model-modal-md" tabindex="5" role="dialog"  id="order_info_modal" aria-labelledby="bs-add-Model-modal-md">
@@ -78,7 +186,7 @@
                                     <h5><b>{{view_order.order_no}}</b> <span class="pull-right"><b>Date:</b> <i> {{view_order.created_at | moment}}</i> </span></h5>
                                     <div class="row">
                                         <div class="col-md-3">
-                                            <label><strong>Total Cost :</strong></label>
+                                            <label><strong>Total Price :</strong></label>
                                         </div>
                                         <div class="col-md-3 m-p-0">
                                             <label>{{view_order.total_cost | currency('Rs')}} </label>
@@ -128,7 +236,7 @@
                                    
                                    </table> -->
                                     <hr/>
-                                    <h4>Product Detail</h4>
+                                    <h4>Products</h4>
                                     <table class="table table-bordered">
                                         <thead>
                                         <tr>
@@ -171,11 +279,59 @@
 
 </template>
 <script>
-
+import {constant} from '../constant.js';
     import Vue from 'vue';
+    import Datatable from './DatatableComponent.vue';
+    import Pagination from './PaginationComponent.vue';
     export default {
+        components: {datatable: Datatable, pagination: Pagination},
         data(){
+            let sortOrders = {};
+            let columns = [
+                {width: '10%', label: 'Date', name: 'Date' },
+                {width: '25%', label: 'Sales Officer', name: 'Sales Officer' },
+                {width: '10%', label: 'Order No', name: 'Order No'},
+                {width: '25%', label: 'Outlet', name: 'Outlet'},
+                {width: '15%', label: 'City', name: 'City'},
+                {width: '10%', label: 'Price(PKR)', name: 'Price(PKR)'},
+                {width: '33%', label: 'Action', name: 'Action'},
+                {width: '10%', label: 'Clearance', name: 'Clearance'},
+            ];
+            columns.forEach((column) => {
+                sortOrders[column.name] = -1;
+            });
             return{
+                projects:[],
+            columns: columns,
+            sortKey: 'Dealer ID',
+            sortOrders: sortOrders,
+            tableData: {
+                draw: 0,
+                length: 10,
+                search: '',
+                column: 0,
+                dir: 'desc',
+                selected_sales_officer:'',
+                selected_state:'',
+                selected_city:'',
+                selected_filter_type:'',
+                selected_product:'',
+                selected_product_color:'',
+                selected_outlet:'',
+                excel_export:0,
+                excel_filename:""
+            },
+            pagination: {
+                lastPage: '',
+                currentPage: '',
+                total: '',
+                lastPageUrl: '',
+                nextPageUrl: '',
+                prevPageUrl: '',
+                from: '',
+                to: ''
+            },
+
                 message:'',
                 all_orders:[],
                 view_order:{
@@ -200,7 +356,12 @@
                 change_order_status:{
                     id:'',
                     status:'',
-                }
+                },
+                all_cities:[],
+                SalesOfficerData:[],
+                all_outlets:[],
+                allProducts:[],
+                product_colors:[]
             }
         },
         mounted() {
@@ -224,10 +385,55 @@
         },
         methods:{
             init:function(){
-                this.get_all_orders();
+                axios.get(constant.base_url+'currentWarehouse').then(response=>{
+                    this.currentWarehouse=response.data.name;
+                    this.currentWarehouseId=response.data.id;
+                    this.get_all_sales_officers();
+                    //this.get_all_orders(this.currentWarehouseId);
+                    this.get_all_outlets();
+                    this.get_products();
+                    this.getProjects();
+                });
+                
             },
-            get_all_orders:function(){
-                axios.get('../retailer_order/get_orders').then((response)=>{
+            getProjects(url = '../get_all_orders_warehouse_datatable/'+this.currentWarehouseId) {
+            this.tableData.draw++;
+            axios.get(url, {params: this.tableData})
+                .then(response => {
+                    let data = response.data;
+                    if (this.tableData.draw == data.draw) {
+                        this.all_orders = data.data.data;
+                        console.log(this.projects);
+                        this.configPagination(data.data);
+                    }
+                })
+                .catch(errors => {
+                    console.log(errors);
+                });
+        },
+        configPagination(data) {
+            this.pagination.lastPage = data.last_page;
+            this.pagination.currentPage = data.current_page;
+            this.pagination.total = data.total;
+            this.pagination.lastPageUrl = data.last_page_url;
+            this.pagination.nextPageUrl = data.next_page_url;
+            this.pagination.prevPageUrl = data.prev_page_url;
+            this.pagination.from = data.from;
+            this.pagination.to = data.to;
+        },
+        sortBy(key) {
+            this.sortKey = key;
+            this.sortOrders[key] = this.sortOrders[key] * -1;
+            this.tableData.column = this.getIndex(this.columns, 'name', key);
+            this.tableData.dir = this.sortOrders[key] === 1 ? 'asc' : 'desc';
+            this.getProjects();
+        },
+        getIndex(array, key, value) {
+            return array.findIndex(i => i[key] == value)
+        },
+
+            get_all_orders:function(warehouse_id){
+                axios.get('../retailer_order/get_warehouse_orders/'+warehouse_id).then((response)=>{
                     this.all_orders=response.data;
                 });
             },
@@ -288,6 +494,58 @@
 
 
             },
+            delete_order(id){
+                var result= confirm("Are you sure, You want to delete this Order?");
+                if(result){
+                    axios.post('../retailer_order/delete',{id: id}).then((response)=>{
+                        if(response.data==201){
+                            alert("Order has been Deleted!");
+                            this.getProjects();
+                        }
+                    });
+                }
+            },
+            get_all_sales_officers:function(){
+                axios.get(constant.base_url+"/get_all_sales_officers").then((response)=>{
+                    this.SalesOfficerData=response.data;
+                });
+            },
+            get_cities_by_state:function(){
+                this.selected_city="";
+                axios.get(constant.base_url+"get_cities_by_state/"+this.tableData.selected_state).then((response)=>{
+                    this.all_cities=response.data;
+                });
+
+                axios.get(constant.base_url+"get_outlet_by_city_state/"+this.tableData.selected_state).then((response)=>{
+                    this.all_outlets=response.data;
+                });
+            },
+            get_all_outlets:function(){
+                axios.get(constant.base_url+"outlet/get_all_outlets").then((response)=>{
+                    this.all_outlets=response.data;
+                });
+            },
+            get_products:function(){
+                axios.get(constant.base_url+"allProducts").then((response) => {
+                    this.allProducts= response.data.data;
+                });
+            },
+            change_product:function(){
+                this.tableData.selected_product_color="";
+                axios.post(constant.base_url+'get_product_colors',{product_id:this.tableData.selected_product}).then((response) => {
+                    this.product_colors=response.data;
+                    console.log(response.data);
+                    // alert(response.data);
+                });
+            },
+            filterDataBtn:function(){
+                this.getProjects();
+            },
+            get_outlet_by_city_state(){
+                axios.get(constant.base_url+"get_outlet_by_city_state/"+this.tableData.selected_state+"/"+this.tableData.selected_city).then((response)=>{
+                    this.all_outlets=response.data;
+                });
+            }
 
 
         }

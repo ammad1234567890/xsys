@@ -7,6 +7,7 @@ use App\Warehouse;
 use App\WarehouseStaff;
 use Auth;
 use Response;
+use DB;
 class WarehouseController extends Controller
 {
 
@@ -29,7 +30,9 @@ class WarehouseController extends Controller
     {
       return Warehouse::where('is_deleted',0)->with('warehouseType')->with('city')->with('region')->with('manager')->with('accountant')->get();
     }
-
+    public function allWarehouses_details() {
+        return Warehouse::where('is_deleted', 0)->select('id', 'name')->get();
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -135,9 +138,45 @@ class WarehouseController extends Controller
     //Route /warehouse_products
     public function warehouse_products(Request $request)
     {
+		DB::getPdo()->setAttribute(\PDO::ATTR_EMULATE_PREPARES,true);
         $warehouse_id= $request->input('warehouse_id');
         $records=warehouse::with('warehouseStock','warehouseStock.productColor','warehouseStock.productColor.product')->where('id',$warehouse_id)->get();
+
+        /*$query="Select order_prod.product_qty from tbl_warehouse_stock stock inner join tbl_retailer_order r_order on r_order.warehouse_id=stock.warehouse_id inner join tbl_retailer_order_products order_prod on order_prod.retailer_order_id=r_order.id where stock.product_color_id=order_prod.product_color_id AND r_order.is_delivered=0 AND stock.warehouse_id='"$warehouse_id"'";
+
+        DB::select($query);*/
         return Response::json($records);
     }
+
+
+    public function get_warehouse_products_with_pending(Request $request){
+		DB::getPdo()->setAttribute(\PDO::ATTR_EMULATE_PREPARES,true);
+      $warehouse_id= $request->input('warehouse_id');
+        $records=warehouse::with('warehouseStock','warehouseStock.warehouse_stock_details','warehouseStock.productColor','warehouseStock.productColor.product')->where('id',$warehouse_id)->get()->toArray();
+
+       // $query="Select stock.product_color_id, SUM(order_prod.product_qty) as pending_qty from tbl_warehouse_stock stock inner join tbl_retailer_order r_order on r_order.warehouse_id=stock.warehouse_id inner join tbl_retailer_order_products order_prod on order_prod.retailer_order_id=r_order.id where stock.product_color_id=order_prod.product_color_id AND r_order.is_delivered=0 AND stock.warehouse_id='".$warehouse_id."' AND r_order.is_deleted=0 group by stock.product_color_id order by stock.product_color_id ASC";
+
+
+        
+        //$pending_Record=DB::select($query);
+$pending_Record=[];
+        
+
+        $final_Record=array_merge($records, $pending_Record);
+        return Response::json($final_Record);
+    }
+
+    function array_push_assoc($array, $key, $value){
+      $array[$key] = $value;
+      return $array;
+    }
+
+    public function warehouse_by_city(Request $request)
+    {
+        $city_id= $request->input('city_id');
+        $records=warehouse::where('city_id',$city_id)->get();
+        return Response::json($records);
+    }
+
 
 }

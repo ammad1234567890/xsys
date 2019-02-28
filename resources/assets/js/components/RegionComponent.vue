@@ -8,12 +8,12 @@
           <form @submit="createRegion">
             <div class="row">
               <div class="col-md-2">
-                      <label for="City" >Locality</label>
+                      <label for="City" >Select City</label>
               </div>
               <div class="col-md-3">
                     <select name="city" class="textbox" v-model="regionData.cityId"  v-validate="'required'">
                       <option>Select City</option>
-                      <option  v-for="city in cities" v-bind:value="city.id">{{city.name}}</option>
+                      <option  v-for="citi in cities" v-bind:value="citi.id">{{citi.name}}</option>
                     </select>
                     <span class="text-danger" v-show="errors.has('city')">
                       {{errors.first('city')}}
@@ -88,16 +88,21 @@
          },
         mounted() {
             console.log('Component mounted.')
-             axios.get('./allCities').then(response=>{
-              this.cities=response.data;
-              console.log(this.cities);
-            })
+
         },
         created(){
-            axios.get('./allRegions').then(response=>{
+
+            axios.get('./allCities').then(response=>{
+                this.cities=response.data;
+
+            });
+
+
+
+           /* axios.get('./allRegions').then(response=>{
               this.allRegions=response.data;
               console.log(this.allRegions);
-            })
+            }); */
 
 
         },
@@ -106,6 +111,8 @@
             e.preventDefault();
             axios.post('./createRegion',this.regionData).then(response=>{
               if(response.data.return==0){
+                  alert("Successfully Added new Locality");
+                  window.location.reload();
                 this.allRegions.push(response.data.data);
                 this.regionData={
                   region:'',
@@ -113,7 +120,7 @@
                 }
                 console.log(response.data.data);
               }else{
-                alert('Fail to create Region');
+                alert('Fail to create Locality');
                 console.log(response.data.data);
               }
             })

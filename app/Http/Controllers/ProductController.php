@@ -11,6 +11,9 @@ use App\ProductImage;
 use App\Warehouse;
 use Response;
 use App\SpecProduct;
+use App\SpecSubCategory;
+use App\SpecCategory;
+
 
 class ProductController extends Controller
 {
@@ -130,6 +133,7 @@ class ProductController extends Controller
 
         $card_slot= $request->input('card_slot');
         $internal= $request->input('internal');
+        $ram= $request->input('ram');
 
         $wlan= $request->input('wlan');
         $bluetooth= $request->input('bluetooth');
@@ -155,14 +159,24 @@ class ProductController extends Controller
         $alert_types= $request->input('alert_types');
         $loud_speaker= $request->input('loud_speaker');
         $jack= $request->input('jack');
+
+        $colors_text="";
+        $price_text="";
         try{
         DB::beginTransaction();
         $product=Product::create(['category_id'=>$productCategoryId,'name'=>$name,'release_date'=>$releaseDate,'created_by'=>$userId]);//create product
+        $product_id = $product->id;
 
-
+        
+        
             foreach ($productColors as $productColor) {
-            $createProductColor=ProductColor::create(['product_id'=>$product->id,'color'=>$productColor['color'],'price'=>$productColor['price'],'discount'=>$productColor['discount'],'created_by'=>$userId]);//create product color
-            $images=$productColor['product_images'];
+              // generating SKU on the formula
+              // NAME[initial 2 characters] + COLOR[initial 2 characters] -> PRODUCT_ID
+            $sku = strtoupper(substr($name, 0, 2)).strtoupper(substr($productColor['color'], 0, 2)).$product_id;
+            $createProductColor=ProductColor::create(['sku'=>$sku,'product_id'=>$product_id,'color'=>$productColor['color'],'price'=>$productColor['price'],'discount'=>$productColor['discount'],'created_by'=>$userId]);//create product color
+                $colors_text.=$productColor['color'].' ';
+                $price_text.=$productColor['price'].'('.$productColor['discount'].'%) ';
+                $images=$productColor['product_images'];
             foreach($images as $image) {
                 ////////////////////////////////
                 $exploded = explode(',', $image);
@@ -232,6 +246,9 @@ class ProductController extends Controller
         array('specs_sub_category_id'=>41, 'product_id'=>$product_id, 'detail_name'=>$alert_types),
         array('specs_sub_category_id'=>42, 'product_id'=>$product_id, 'detail_name'=>$loud_speaker),
         array('specs_sub_category_id'=>43, 'product_id'=>$product_id, 'detail_name'=>$jack),
+            array('specs_sub_category_id'=>45, 'product_id'=>$product_id, 'detail_name'=>$colors_text),
+            array('specs_sub_category_id'=>46, 'product_id'=>$product_id, 'detail_name'=>$price_text),
+            array('specs_sub_category_id'=>47, 'product_id'=>$product_id, 'detail_name'=>$ram),
         );
         SpecProduct::insert($insert_array);
       $CreatedProduct=Product::where('id',$product->id)->with('productColor.productImages')->with('productCategory')->get();
@@ -377,6 +394,12 @@ class ProductController extends Controller
       return $productColor;
     }
 
+    public function get_products_by_color_id($id)
+    {
+        $productColor=ProductColor::with('product')->where('id',$id)->where('is_deleted',0)->get();
+        return $productColor;
+    }
+
 
     public function our_products(){
         return View('our_products');
@@ -387,9 +410,38 @@ class ProductController extends Controller
     }
 
     public function get_product_specification($id){
-        $return=array('data'=>Product::with('productCategory','specification','specification.spec_sub_cat','specification.spec_sub_cat.spec_cat')->with('productColor.productImages')->where('is_deleted',0)->where('id',$id)->get(),'path'=>public_path());
-        return $return;
+        $return=Product::
+        with(['productCategory','specification',
+            'specification.spec_sub_cat',
+            'specification.spec_sub_cat.spec_cat'
+        ])
+            ->with('productColor.productImages')
+            ->where('is_deleted',0)
+            ->where('id',$id)->get();
+
+
+
+        $specs=SpecCategory::with(['sub_cat',
+            'sub_cat.sub_cat_specs'=>function($q) use ($id)
+            {
+                $q->where('product_id',$id);
+            }
+            ])->get();
+
+
+        $return_data=array(['data'=>$return,'path'=>public_path(), 'specs'=>$specs]);
+       return $return_data;
+
+
+
+    }
+    public function get_all_products() {
+         return Product::select('id', 'name')->orderBy('name')->get();
     }
 
+    public function get_all_product_colors($id) {
+        $productColor=new ProductColor();
+        return $productColor->product_colors($id);   
+    }
 
 }

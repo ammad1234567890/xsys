@@ -35,6 +35,6 @@
         </form>
     </div>
 
-
+version 2.0
 
 @endsection
